@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Logica\Bitacora\" />
+    <Folder Include="Logica\Empleado\" />
+    <Folder Include="Logica\Asistencia\" />
+    <Folder Include="Logica\Insumo\" />
+    <Folder Include="Logica\CategoriaInsumo\" />
+    <Folder Include="Logica\CategoriaReceta\" />
+    <Folder Include="Logica\HistorialTarifa\" />
+    <Folder Include="Logica\Promocion\" />
+    <Folder Include="Logica\Receta\" />
+    <Folder Include="Logica\SolicitudVacaciones\" />
+    <Folder Include="Logica\Planilla\" />
+    <Folder Include="Logica\Rol\" />
+    <Folder Include="Logica\Permisos\" />
+  </ItemGroup>
+
+</Project>

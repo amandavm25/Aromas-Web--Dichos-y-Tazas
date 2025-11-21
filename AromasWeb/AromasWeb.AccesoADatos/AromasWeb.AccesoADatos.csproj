@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AromasWeb.Abstracciones\AromasWeb.Abstracciones.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Asistencia\" />
+    <Folder Include="Bitacora\" />
+    <Folder Include="CategoriaInsumo\" />
+    <Folder Include="CategoriaReceta\" />
+    <Folder Include="Empleado\" />
+    <Folder Include="HistorialTarifa\" />
+    <Folder Include="Insumo\" />
+    <Folder Include="Permisos\" />
+    <Folder Include="Planilla\" />
+    <Folder Include="Promocion\" />
+    <Folder Include="Receta\" />
+    <Folder Include="Rol\" />
+    <Folder Include="SolicitudVacaciones\" />
+  </ItemGroup>
+
+</Project>
