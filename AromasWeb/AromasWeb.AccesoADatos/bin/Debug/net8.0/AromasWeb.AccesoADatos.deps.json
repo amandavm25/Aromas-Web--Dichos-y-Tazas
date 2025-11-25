@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "AromasWeb.AccesoADatos/1.0.0": {
+        "dependencies": {
+          "AromasWeb.Abstracciones": "1.0.0"
+        },
+        "runtime": {
+          "AromasWeb.AccesoADatos.dll": {}
+        }
+      },
+      "AromasWeb.Abstracciones/1.0.0": {
+        "runtime": {
+          "AromasWeb.Abstracciones.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AromasWeb.AccesoADatos/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AromasWeb.Abstracciones/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,8 +1,806 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section con Parallax 3D -->
+<section class="hero" id="inicio">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+
+    <div class="container hero-container">
+        <div class="hero-content" data-aos="fade-right">
+            <span class="hero-badge">
+                <i class="fas fa-award"></i>
+                Café Premium desde 2025
+            </span>
+            <h1 class="hero-title">
+                <span class="hero-title-small">Bienvenidos a</span>
+                Entre Dichos
+                <span class="hero-title-accent">y Tazas</span>
+            </h1>
+            <p class="hero-subtitle">
+                Donde cada sorbo es una conversación y cada momento se convierte en un recuerdo.
+                Descubre el arte del café artesanal en un ambiente único.
+            </p>
+            <div class="hero-buttons">
+                <a class="btn btn-primary btn-3d">
+                    <span>Explora Nuestro Menú</span>
+                    <i class="fas fa-coffee"></i>
+                </a>
+                <a href="#contacto" class="btn btn-secondary btn-3d">
+                    <span>Reservar Mesa</span>
+                    <i class="fas fa-calendar-check"></i>
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" data-count="1500">0</span>
+                    <span class="stat-label">Clientes Felices</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="50">0</span>
+                    <span class="stat-label">Variedades de Café</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="1">0</span>
+                    <span class="stat-label">Años de Experiencia</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-image" data-aos="fade-left">
+            <div class="hero-image-card card-3d">
+                <div class="placeholder-image hero-placeholder">
+                    <i class="fas fa-mug-hot"></i>
+                </div>
+                <div class="floating-elements">
+                    <div class="floating-element" style="--delay: 0s;">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <div class="floating-element" style="--delay: 1s;">
+                        <i class="fas fa-cookie"></i>
+                    </div>
+                    <div class="floating-element" style="--delay: 2s;">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h3>100% Orgánico</h3>
+                <p>Granos de café seleccionados de las mejores fincas sostenibles</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <h3>Tostado Artesanal</h3>
+                <p>Cada lote es tostado con precisión para realzar sus sabores únicos</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>Hecho con Pasión</h3>
+                <p>Baristas expertos que aman lo que hacen en cada preparación</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <h3>WiFi Gratis</h3>
+                <p>Ambiente perfecto para trabajar o estudiar con conexión de alta velocidad</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sobre Nosotros -->
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-images" data-aos="fade-right">
+                <div class="about-image-main card-3d">
+                    <div class="placeholder-image">
+                        <i class="fas fa-store"></i>
+                    </div>
+                </div>
+                <div class="about-image-float card-3d">
+                    <div class="placeholder-image">
+                        <i class="fas fa-coffee-bean"></i>
+                    </div>
+                </div>
+                <div class="about-badge">
+                    <i class="fas fa-award"></i>
+                    <span>Mejor Café 2025</span>
+                </div>
+            </div>
+
+            <div class="about-text" data-aos="fade-left">
+                <span class="section-badge">Nuestra Historia</span>
+                <h2 class="section-title">
+                    Un Espacio Donde las
+                    <span class="title-accent">Historias Cobran Vida</span>
+                </h2>
+                <p>
+                    "Entre Dichos y Tazas" nació de la pasión por crear un espacio donde las personas
+                    puedan conectar genuinamente. Más que una cafetería, somos un punto de encuentro
+                    donde cada conversación importa y cada taza es preparada con amor.
+                </p>
+                <p>
+                    Desde 2025, nos hemos dedicado a seleccionar los mejores granos de café de
+                    productores locales, apoyando el comercio justo y la sostenibilidad. Nuestro
+                    equipo de baristas expertos transforma cada grano en una experiencia única.
+                </p>
+
+                <div class="about-features">
+                    <div class="about-feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Café de origen único certificado</span>
+                    </div>
+                    <div class="about-feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Repostería artesanal diaria</span>
+                    </div>
+                    <div class="about-feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Ambiente acogedor y moderno</span>
+                    </div>
+                    <div class="about-feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Eventos y talleres mensuales</span>
+                    </div>
+                </div>
+
+                <div class="about-cta">
+                    <a href="#" class="btn btn-primary btn-3d">
+                        <span>Conoce Más</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <div class="about-founder">
+                        <div class="founder-image">
+                            <div class="placeholder-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <div class="founder-info">
+                            <strong>Kenneth Alfaro y David Rodríguez</strong>
+                            <span>Fundadores & Administradores</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Menú Section con Tabs Interactivos -->
+<section class="menu-section" id="menu">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-badge">Nuestro Menú</span>
+            <h2 class="section-title">
+                Explora Nuestras
+                <span class="title-accent">Deliciosas Opciones</span>
+            </h2>
+            <p class="section-subtitle">
+                Cada bebida y alimento es preparado con ingredientes frescos y de la más alta calidad
+            </p>
+        </div>
+
+        <div class="menu-tabs" data-aos="fade-up" data-aos-delay="100">
+            <button class="menu-tab active" data-category="cafes">
+                <i class="fas fa-mug-hot"></i>
+                <span>Cafés</span>
+            </button>
+            <button class="menu-tab" data-category="bebidas">
+                <i class="fas fa-glass-whiskey"></i>
+                <span>Bebidas Frías</span>
+            </button>
+            <button class="menu-tab" data-category="postres">
+                <i class="fas fa-cookie-bite"></i>
+                <span>Postres</span>
+            </button>
+            <button class="menu-tab" data-category="desayunos">
+                <i class="fas fa-bread-slice"></i>
+                <span>Desayunos</span>
+            </button>
+        </div>
+
+        <div class="menu-content active" data-category="cafes">
+            <div class="menu-grid">
+                <!-- Café 1 -->
+                <div class="menu-card card-3d" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="menu-card-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <span class="menu-badge">Popular</span>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3>Espresso Doble</h3>
+                            <span class="menu-price">₡2,500</span>
+                        </div>
+                        <p>Intenso y aromático, nuestro espresso signature con notas de chocolate</p>
+                        <div class="menu-card-footer">
+                            <div class="menu-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                            <button class="btn-add-cart">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Café 2 -->
+                <div class="menu-card card-3d" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="menu-card-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-mug-hot"></i>
+                        </div>
+                        <span class="menu-badge badge-new">Nuevo</span>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3>Cappuccino Clásico</h3>
+                            <span class="menu-price">₡3,200</span>
+                        </div>
+                        <p>Espresso con espuma de leche cremosa y un toque de canela</p>
+                        <div class="menu-card-footer">
+                            <div class="menu-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                            <button class="btn-add-cart">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Café 3 -->
+                <div class="menu-card card-3d" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="menu-card-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-coffee-pot"></i>
+                        </div>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3>Latte Vainilla</h3>
+                            <span class="menu-price">₡3,500</span>
+                        </div>
+                        <p>Suave latte con jarabe natural de vainilla de Madagascar</p>
+                        <div class="menu-card-footer">
+                            <div class="menu-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.7</span>
+                            </div>
+                            <button class="btn-add-cart">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Café 4 -->
+                <div class="menu-card card-3d" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="menu-card-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-mug-saucer"></i>
+                        </div>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3>Mocha Chocolate</h3>
+                            <span class="menu-price">₡3,800</span>
+                        </div>
+                        <p>Espresso con chocolate belga y crema batida</p>
+                        <div class="menu-card-footer">
+                            <div class="menu-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                            <button class="btn-add-cart">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-content" data-category="bebidas">
+            <div class="menu-grid">
+                <div class="menu-card card-3d" data-aos="zoom-in">
+                    <div class="menu-card-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-glass-water-droplet"></i>
+                        </div>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3>Cold Brew</h3>
+                            <span class="menu-price">₡3,000</span>
+                        </div>
+                        <p>Café de extracción en frío, suave y refrescante</p>
+                        <div class="menu-card-footer">
+                            <div class="menu-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                            <button class="btn-add-cart">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-content" data-category="postres">
+            <div class="menu-grid">
+                <div class="menu-card card-3d" data-aos="zoom-in">
+                    <div class="menu-card-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-cake-slice"></i>
+                        </div>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3>Cheesecake</h3>
+                            <span class="menu-price">₡4,200</span>
+                        </div>
+                        <p>Cremoso cheesecake con salsa de frutos rojos</p>
+                        <div class="menu-card-footer">
+                            <div class="menu-rating">
+                                <i class="fas fa-star"></i>
+                                <span>5.0</span>
+                            </div>
+                            <button class="btn-add-cart">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-content" data-category="desayunos">
+            <div class="menu-grid">
+                <div class="menu-card card-3d" data-aos="zoom-in">
+                    <div class="menu-card-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-bread-slice"></i>
+                        </div>
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3>Tostadas Francesas</h3>
+                            <span class="menu-price">₡5,500</span>
+                        </div>
+                        <p>Tostadas con miel, fresas y crema batida</p>
+                        <div class="menu-card-footer">
+                            <div class="menu-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                            <button class="btn-add-cart">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Especialidades del Chef -->
+<section class="specialties-section" id="especialidades">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-badge">Especialidades</span>
+            <h2 class="section-title">
+                Las Creaciones de
+                <span class="title-accent">Nuestro Chef</span>
+            </h2>
+        </div>
+
+        <div class="specialties-slider">
+            <div class="specialty-card card-3d" data-aos="fade-up">
+                <div class="specialty-number">01</div>
+                <div class="specialty-image">
+                    <div class="placeholder-image">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+                <div class="specialty-content">
+                    <h3>Café de Origen</h3>
+                    <p>Selección exclusiva de granos de una sola finca, tostados para resaltar sus características únicas</p>
+                    <div class="specialty-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Tarrazú, CR</span>
+                        <span class="specialty-price">₡4,500</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="specialty-card card-3d" data-aos="fade-up" data-aos-delay="100">
+                <div class="specialty-number">02</div>
+                <div class="specialty-image">
+                    <div class="placeholder-image">
+                        <i class="fas fa-ice-cream"></i>
+                    </div>
+                </div>
+                <div class="specialty-content">
+                    <h3>Affogato Especial</h3>
+                    <p>Helado artesanal de vainilla con espresso doble y crujiente de almendra</p>
+                    <div class="specialty-meta">
+                        <span><i class="fas fa-star"></i> Edición Limitada</span>
+                        <span class="specialty-price">₡5,200</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="specialty-card card-3d" data-aos="fade-up" data-aos-delay="200">
+                <div class="specialty-number">03</div>
+                <div class="specialty-image">
+                    <div class="placeholder-image">
+                        <i class="fas fa-wine-bottle"></i>
+                    </div>
+                </div>
+                <div class="specialty-content">
+                    <h3>Cascara Tea</h3>
+                    <p>Infusión de cáscara de café con notas afrutadas y floral</p>
+                    <div class="specialty-meta">
+                        <span><i class="fas fa-leaf"></i> 100% Natural</span>
+                        <span class="specialty-price">₡3,200</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Galería -->
+<section class="gallery-section" id="galeria">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-badge">Galería</span>
+            <h2 class="section-title">
+                Momentos que
+                <span class="title-accent">Nos Inspiran</span>
+            </h2>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item gallery-large" data-aos="zoom-in">
+                <div class="placeholder-image">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                <div class="placeholder-image">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
+                <div class="placeholder-image">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
+                <div class="placeholder-image">
+                    <i class="fas fa-photo-film"></i>
+                </div>
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item gallery-tall" data-aos="zoom-in" data-aos-delay="400">
+                <div class="placeholder-image">
+                    <i class="fas fa-camera-retro"></i>
+                </div>
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="500">
+                <div class="placeholder-image">
+                    <i class="fas fa-panorama"></i>
+                </div>
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonios -->
+<section class="testimonials-section" id="testimonios">
+    <div class="testimonials-bg"></div>
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-badge">Testimonios</span>
+            <h2 class="section-title">
+                Lo Que Dicen
+                <span class="title-accent">Nuestros Clientes</span>
+            </h2>
+        </div>
+
+        <div class="testimonials-slider">
+            <div class="testimonial-card card-3d" data-aos="fade-up">
+                <div class="testimonial-quote">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">
+                    "Sin duda el mejor café que he probado en San José. El ambiente es acogedor y
+                    el personal siempre amable. Mi lugar favorito para trabajar."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-image">
+                        <div class="placeholder-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="author-info">
+                        <strong>Carlos Méndez</strong>
+                        <span>Diseñador Gráfico</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card card-3d" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-quote">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">
+                    "Los postres son increíbles y el café espectacular. Perfecto para una tarde
+                    con amigos. ¡Totalmente recomendado!"
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-image">
+                        <div class="placeholder-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="author-info">
+                        <strong>Ana Jiménez</strong>
+                        <span>Estudiante</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card card-3d" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-quote">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">
+                    "Calidad excepcional en todo. Desde el café hasta el servicio. Es mi cafetería
+                    de confianza para reuniones importantes."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-image">
+                        <div class="placeholder-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="author-info">
+                        <strong>Roberto Castro</strong>
+                        <span>Empresario</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contacto y Reservas -->
+<section class="contact-section" id="contacto">
+    <div class="container">
+        <div class="contact-wrapper">
+            <div class="contact-info" data-aos="fade-right">
+                <span class="section-badge">Contáctanos</span>
+                <h2 class="section-title">
+                    Hagamos Que
+                    <span class="title-accent">Suceda</span>
+                </h2>
+                <p>¿Tienes preguntas o quieres reservar una mesa? Estamos aquí para ayudarte.</p>
+
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <strong>Ubicación</strong>
+                            <span>Grecia, Alajuela, Costa Rica</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <strong>Teléfono</strong>
+                            <span>+506 6138-3502</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <strong>Email</strong>
+                            <span>info@entredichosytazas.com</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <strong>Horario</strong>
+                            <span>Mar - Dom: 8am - 7pm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-social">
+                    <h4>Síguenos</h4>
+                    <div class="social-links-contact">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-wrapper" data-aos="fade-left">
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user"></i>
+                            Nombre Completo
+                        </label>
+                        <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i>
+                                Email
+                            </label>
+                            <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">
+                                <i class="fas fa-phone"></i>
+                                Teléfono
+                            </label>
+                            <input type="tel" id="phone" name="phone" placeholder="+506 0000-0000">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">
+                                <i class="fas fa-calendar"></i>
+                                Fecha
+                            </label>
+                            <input type="date" id="date" name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="time">
+                                <i class="fas fa-clock"></i>
+                                Hora
+                            </label>
+                            <input type="time" id="time" name="time">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guests">
+                            <i class="fas fa-users"></i>
+                            Número de Personas
+                        </label>
+                        <select id="guests" name="guests">
+                            <option value="1">1 persona</option>
+                            <option value="2">2 personas</option>
+                            <option value="3">3 personas</option>
+                            <option value="4">4 personas</option>
+                            <option value="5">5+ personas</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">
+                            <i class="fas fa-comment"></i>
+                            Mensaje o Solicitudes Especiales
+                        </label>
+                        <textarea id="message" name="message" rows="4" placeholder="Cuéntanos más sobre tu reserva..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-3d btn-block">
+                        <span>Enviar Reserva</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-content" data-aos="zoom-in">
+            <div class="newsletter-icon">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <div class="newsletter-text">
+                <h3>Suscríbete a Nuestro Newsletter</h3>
+                <p>Recibe ofertas exclusivas, novedades y eventos especiales directamente en tu correo</p>
+            </div>
+            <form class="newsletter-form-inline">
+                <input type="email" placeholder="Ingresa tu email" required>
+                <button type="submit" class="btn btn-primary">
+                    <span>Suscribirse</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
