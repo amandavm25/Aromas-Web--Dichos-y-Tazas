@@ -1,0 +1,182 @@
+﻿<div class="modal fade" id="modalDetallesReceta" tabindex="-1" aria-labelledby="modalDetallesRecetaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+            <!-- Header -->
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: var(--white); border: none; padding: 2rem;">
+                <h5 class="modal-title" id="modalDetallesRecetaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
+                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    Detalles de la Receta
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+                <!-- Título de la Receta -->
+                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--teal);">
+                    <h5 id="detalles-nombre-receta" style="color: var(--dark-teal); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <!-- Columna Izquierda: Información General -->
+                    <div>
+                        <h6 style="color: var(--dark-teal); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i> Información General
+                        </h6>
+
+                        <div style="display: grid; gap: 1rem;">
+                            <!-- Categoría -->
+                            <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-tag" style="color: var(--teal);"></i> Categoría
+                                </label>
+                                <p id="detalles-categoria-receta" style="color: var(--dark-teal); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            </div>
+
+                            <!-- Porciones -->
+                            <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-cookie-bite" style="color: var(--teal);"></i> Cantidad de Porciones
+                                </label>
+                                <p id="detalles-porciones-receta" style="color: var(--dark-teal); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            </div>
+                        </div>
+
+                        <!-- Análisis Financiero -->
+                        <h6 style="color: var(--dark-teal); margin: 2rem 0 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-chart-line" style="color: var(--coral);"></i> Análisis Financiero
+                        </h6>
+
+                        <div style="background: linear-gradient(135deg, var(--cream) 0%, #f5ede4 100%); padding: 1.5rem; border-radius: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--white);">
+                                <span style="color: var(--gray); font-weight: 600;">Costo Total:</span>
+                                <strong id="detalles-costo-receta" style="color: var(--coral); font-size: 1.2rem;">₡0.00</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--white);">
+                                <span style="color: var(--gray); font-weight: 600;">Precio de Venta:</span>
+                                <strong id="detalles-precio-receta" style="color: var(--green); font-size: 1.2rem;">₡0.00</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--white);">
+                                <span style="color: var(--gray); font-weight: 600;">Ganancia Neta:</span>
+                                <strong id="detalles-ganancia-receta" style="color: var(--teal); font-size: 1.2rem;">₡0.00</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: var(--dark-teal); font-weight: 700; font-size: 1.1rem;">Margen:</span>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div style="flex: 1; background: var(--white); height: 10px; border-radius: 5px; overflow: hidden; min-width: 100px;">
+                                        <div id="barra-margen" style="height: 100%; background: linear-gradient(90deg, var(--coral), var(--amber)); width: 0%; transition: width 0.5s ease;"></div>
+                                    </div>
+                                    <strong id="detalles-margen-receta" style="color: var(--amber); font-size: 1.5rem; font-family: var(--font-primary);">0%</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Ingredientes -->
+                    <div>
+                        <h6 style="color: var(--dark-teal); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-shopping-basket" style="color: var(--coral);"></i> Ingredientes
+                        </h6>
+
+                        <div id="lista-ingredientes" style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+                            <!-- Los ingredientes se cargarán dinámicamente aquí -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <span><i class="fas fa-times"></i> Cerrar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Datos de demo de ingredientes
+    const ingredientesDemoData = {
+        1: [
+            { nombre: "Harina de Trigo", cantidad: 2.5, unidad: "kg", costo: 6250.00 },
+            { nombre: "Azúcar Blanca", cantidad: 1.5, unidad: "kg", costo: 1800.00 },
+            { nombre: "Chocolate en Polvo", cantidad: 0.5, unidad: "kg", costo: 4000.00 },
+            { nombre: "Mantequilla", cantidad: 0.5, unidad: "kg", costo: 2250.00 },
+            { nombre: "Huevos", cantidad: 12, unidad: "Unid", costo: 2400.00 }
+        ],
+        2: [
+            { nombre: "Café Molido", cantidad: 20, unidad: "g", costo: 400.00 },
+            { nombre: "Leche Entera", cantidad: 0.2, unidad: "L", costo: 300.00 },
+            { nombre: "Azúcar Blanca", cantidad: 0.01, unidad: "kg", costo: 12.00 }
+        ]
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesDetalles = document.querySelectorAll('.btn-detalles-receta');
+
+        botonesDetalles.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = parseInt(this.getAttribute('data-id'));
+                const nombre = this.getAttribute('data-nombre');
+                const categoria = this.getAttribute('data-categoria');
+                const porciones = this.getAttribute('data-porciones');
+                const costo = this.getAttribute('data-costo');
+                const precio = this.getAttribute('data-precio');
+                const ganancia = this.getAttribute('data-ganancia');
+                const margen = parseFloat(this.getAttribute('data-margen'));
+
+                // Llenar información general
+                document.getElementById('detalles-nombre-receta').textContent = nombre;
+                document.getElementById('detalles-categoria-receta').textContent = categoria;
+                document.getElementById('detalles-porciones-receta').textContent = porciones + ' porciones';
+                document.getElementById('detalles-costo-receta').textContent = '₡' + costo;
+                document.getElementById('detalles-precio-receta').textContent = '₡' + precio;
+                document.getElementById('detalles-ganancia-receta').textContent = '₡' + ganancia;
+                document.getElementById('detalles-margen-receta').textContent = margen.toFixed(2) + '%';
+
+                // Actualizar barra de margen
+                const barraMargen = document.getElementById('barra-margen');
+                barraMargen.style.width = Math.min(margen, 100) + '%';
+
+                // Cambiar color según rentabilidad
+                if (margen >= 50) {
+                    barraMargen.style.background = 'linear-gradient(90deg, #27ae60, #2ecc71)';
+                } else if (margen >= 30) {
+                    barraMargen.style.background = 'linear-gradient(90deg, #f39c12, #f1c40f)';
+                } else {
+                    barraMargen.style.background = 'linear-gradient(90deg, #e74c3c, #ec7063)';
+                }
+
+                // Cargar ingredientes
+                const ingredientes = ingredientesDemoData[id] || [];
+                const listaIngredientes = document.getElementById('lista-ingredientes');
+                listaIngredientes.innerHTML = '';
+
+                if (ingredientes.length === 0) {
+                    listaIngredientes.innerHTML = '<p style="text-align: center; color: var(--gray); padding: 2rem;">No hay ingredientes registrados</p>';
+                } else {
+                    ingredientes.forEach(ing => {
+                        const div = document.createElement('div');
+                        div.className = 'feature-card';
+                        div.style.cssText = 'padding: 1rem; margin-bottom: 0.7rem;';
+                        div.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div style="flex: 1;">
+                                    <strong style="color: var(--dark-teal); font-size: 1rem;">${ing.nombre}</strong>
+                                    <div style="color: var(--gray); font-size: 0.9rem; margin-top: 0.3rem;">
+                                        ${ing.cantidad} ${ing.unidad}
+                                    </div>
+                                </div>
+                                <strong style="color: var(--coral); font-size: 1.1rem; white-space: nowrap;">₡${ing.costo.toLocaleString('es-CR', { minimumFractionDigits: 2 })}</strong>
+                            </div>
+                        `;
+                        listaIngredientes.appendChild(div);
+                    });
+                }
+            });
+        });
+    });
+</script>

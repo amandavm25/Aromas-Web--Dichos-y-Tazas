@@ -1,0 +1,78 @@
+﻿@model AromasWeb.Abstracciones.ModeloUI.CategoriaInsumo
+
+@{
+    ViewBag.Title = "Agregar Categoría";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-plus-circle"></i>
+                Nueva Categoría
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Agregar Categoría
+            </h1>
+            <p class="hero-subtitle">
+                Registra una nueva categoría para organizar el inventario
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 900px;">
+        @using (Html.BeginForm("CrearCategoriaInsumo", "CategoriaInsumo", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Nombre de la Categoría -->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NombreCategoria, new { @class = "form-label" })
+                        <i class="fas fa-tag"></i>
+                        Nombre de la Categoría
+                        @Html.EditorFor(model => model.NombreCategoria, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Harinas" } })
+                        @Html.ValidationMessageFor(model => model.NombreCategoria, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-align-left"></i>
+                            Descripción
+                        </label>
+                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4", placeholder = "Describe el tipo de insumos que incluirá esta categoría..." })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Máximo 500 caracteres
+                        </small>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoCategoriasInsumos", "CategoriaInsumo")'" style="flex: 1;">
+                            <span><i class="fas fa-times"></i> Cancelar</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
+                            <span><i class="fas fa-save"></i> Agregar Categoría</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/categoriaInsumo.js"></script>
+}

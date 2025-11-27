@@ -1,0 +1,176 @@
+﻿@model List<AromasWeb.Abstracciones.ModeloUI.CategoriaInsumo>
+
+@{
+    ViewBag.Title = "Categorías de Insumos";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-tags"></i>
+                Gestión de Categorías
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Categorías de Insumos
+            </h1>
+            <p class="hero-subtitle">
+                Administra y organiza las categorías del inventario
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1400px;">
+
+        <!-- Barra de búsqueda y botones -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
+            <form method="get" action="@Url.Action("ListadoCategoriasInsumos", "CategoriaInsumo")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
+                <div style="position: relative; flex: 1;">
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--teal); z-index: 1;"></i>
+                    <input type="text"
+                           name="buscar"
+                           value="@ViewBag.Buscar"
+                           placeholder="Buscar por nombre o descripción..."
+                           style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
+                </div>
+                <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
+                    <span><i class="fas fa-search"></i> Buscar</span>
+                </button>
+            </form>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="@Url.Action("CrearCategoriaInsumo", "CategoriaInsumo")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                    <span><i class="fas fa-plus"></i> Agregar Categoría</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Información de búsqueda -->
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+        {
+            <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
+                <p style="margin: 0; color: var(--dark-teal); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                    Mostrando resultados para <strong style="color: var(--coral);">"@ViewBag.Buscar"</strong>
+                    - <strong>@(Model?.Count ?? 0)</strong> categoría(s) encontrada(s)
+                </p>
+            </div>
+        }
+
+        <!-- Tabla Principal -->
+        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
+            <div class="table-responsive">
+                <table id="laTablaDeCategoria" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
+                    <thead style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
+                        <tr>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Descripción</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Creación</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var categoriasDemo = new List<dynamic>
+                                                {
+                                                new { Id = 1, Nombre = "Harinas", Descripcion = "Harinas y derivados para panificación", Fecha = "01/10/2024", Estado = true },
+                                                new { Id = 2, Nombre = "Endulzantes", Descripcion = "Azúcares, mieles y edulcorantes", Fecha = "01/10/2024", Estado = true },
+                                                new { Id = 3, Nombre = "Lácteos", Descripcion = "Leche, mantequilla, crema y derivados", Fecha = "01/10/2024", Estado = true },
+                                                new { Id = 4, Nombre = "Ingredientes Frescos", Descripcion = "Frutas, huevos y productos frescos", Fecha = "01/10/2024", Estado = true },
+                                                new { Id = 5, Nombre = "Chocolates", Descripcion = "Chocolate en polvo, barra y coberturas", Fecha = "01/10/2024", Estado = true },
+                                                new { Id = 6, Nombre = "Esencias", Descripcion = "Vainilla, extractos y aromatizantes", Fecha = "01/10/2024", Estado = true },
+                                                new { Id = 7, Nombre = "Leudantes", Descripcion = "Levadura, polvo de hornear y bicarbonato", Fecha = "01/10/2024", Estado = true }
+                                                };
+                        }
+
+                        @foreach (var cat in categoriasDemo)
+                        {
+                            <tr style="border-bottom: 1px solid rgba(32, 116, 118, 0.1); transition: all 0.3s;">
+                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@cat.Id</td>
+                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; font-size: 1.05rem;">
+                                    <i class="fas fa-tag" style="color: var(--coral); margin-right: 0.5rem;"></i>
+                                    @cat.Nombre
+                                </td>
+                                <td style="padding: 1.2rem; color: var(--black); max-width: 400px;">@cat.Descripcion</td>
+                                <td style="padding: 1.2rem; color: var(--gray);">
+                                    <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--teal);"></i>
+                                    @cat.Fecha
+                                </td>
+                                <td style="padding: 1.2rem;">
+                                    @if (cat.Estado)
+                                    {
+                                        <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activa</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactiva</span>
+                                    }
+                                </td>
+                                <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                    <button type="button"
+                                            class="btn btn-sm"
+                                            onclick="window.location.href='@Url.Action("EditarCategoriaInsumo", "CategoriaInsumo", new { id = cat.Id })'"
+                                            style="background: var(--teal); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-sm btn-detalles-categoria"
+                                            data-id="@cat.Id"
+                                            data-nombre="@cat.Nombre"
+                                            data-descripcion="@cat.Descripcion"
+                                            data-fecha="@cat.Fecha"
+                                            data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
+                                            style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalDetallesCategoria">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-sm btn-eliminar-categoria"
+                                            data-id="@cat.Id"
+                                            data-nombre="@cat.Nombre"
+                                            data-descripcion="@cat.Descripcion"
+                                            data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
+                                            style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalEliminarCategoria">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer de paginación -->
+            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(32, 116, 118, 0.1); flex-wrap: wrap; gap: 1rem;">
+                <div style="color: var(--dark-teal); font-size: 0.95rem;">
+                    Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">7</span></strong> de <strong id="totalRecords">7</strong> categorías
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
+                        &lt; Anterior
+                    </button>
+                    <button id="btnSiguiente" class="btn btn-primary" onclick="paginaSiguiente()" style="border-radius: 50px; padding: 0.8rem 2rem;">
+                        Siguiente &gt;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="_ModalDetallesCategoriaInsumo" />
+<partial name="_ModalEliminarCategoriaInsumo" />
+
+@section Scripts {
+    <script src="~/js/categoriaInsumo.js"></script>
+}

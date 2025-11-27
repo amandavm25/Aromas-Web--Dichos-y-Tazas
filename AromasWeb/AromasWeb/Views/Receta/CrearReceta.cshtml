@@ -1,0 +1,232 @@
+﻿@model AromasWeb.Abstracciones.ModeloUI.Receta
+
+@{
+    ViewBag.Title = "Nueva Receta";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-plus-circle"></i>
+                Nuevo Registro
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Crear Nueva Receta
+            </h1>
+            <p class="hero-subtitle">
+                Registra una nueva receta con sus ingredientes y pasos de preparación
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1200px;">
+        @using (Html.BeginForm("CrearReceta", "Receta", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Información Básica -->
+                    <h4 style="color: var(--dark-teal); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-info-circle"></i> Información Básica
+                    </h4>
+
+                    <!-- Nombre de la Receta -->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Nombre, new { @class = "form-label" })
+                        <i class="fas fa-utensils"></i>
+                        Nombre de la Receta
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Torta de Chocolate" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Categoría y Porciones -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-tag"></i>
+                                Categoría
+                            </label>
+                            @{
+                                var categoriasReceta = new List<dynamic>
+                                                {
+                                                new { Id = 1, Nombre = "Pasteles" },
+                                                new { Id = 2, Nombre = "Galletas" },
+                                                new { Id = 3, Nombre = "Panadería" },
+                                                new { Id = 4, Nombre = "Bebidas Calientes" },
+                                                new { Id = 5, Nombre = "Bebidas Frías" },
+                                                new { Id = 6, Nombre = "Postres" }
+                                                };
+                            }
+                            <select name="IdCategoriaReceta" class="form-control">
+                                <option value="">-- Selecciona una categoría --</option>
+                                @foreach (var cat in categoriasReceta)
+                                {
+                                    <option value="@cat.Id">@cat.Nombre</option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.IdCategoriaReceta, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-cookie-bite"></i>
+                                Cantidad de Porciones
+                            </label>
+                            @Html.EditorFor(model => model.CantidadPorciones, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", placeholder = "1" } })
+                            @Html.ValidationMessageFor(model => model.CantidadPorciones, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-align-left"></i>
+                            Descripción (Opcional)
+                        </label>
+                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "3", placeholder = "Breve descripción de la receta..." })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Precio de Venta -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-dollar-sign"></i>
+                            Precio de Venta (Opcional)
+                        </label>
+                        @Html.EditorFor(model => model.PrecioVenta, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" } })
+                        @Html.ValidationMessageFor(model => model.PrecioVenta, "", new { @class = "text-danger" })
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Si dejas este campo vacío, no se calculará la ganancia
+                        </small>
+                    </div>
+
+                    <!-- Ingredientes -->
+                    <h4 style="color: var(--dark-teal); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-shopping-basket"></i> Ingredientes
+                    </h4>
+
+                    <div id="ingredientes-container">
+                        <!-- Los ingredientes se agregarán dinámicamente aquí -->
+                    </div>
+
+                    <button type="button" id="btnAgregarIngrediente" class="btn btn-secondary" style="width: 100%; margin-bottom: 2rem;">
+                        <span><i class="fas fa-plus"></i> Agregar Ingrediente</span>
+                    </button>
+
+                    <!-- Resumen de Costos -->
+                    <div class="testimonial-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white; padding: 2rem; margin-bottom: 2rem;">
+                        <h5 style="margin: 0 0 1rem; color: white; font-weight: 600;">
+                            <i class="fas fa-calculator"></i> Resumen de Costos
+                        </h5>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Costo total de ingredientes:</span>
+                            <strong id="costoTotalReceta">₡0.00</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>Costo por porción:</span>
+                            <strong id="costoPorPorcion">₡0.00</strong>
+                        </div>
+                        <div id="resumenGanancia" style="border-top: 2px solid rgba(255,255,255,0.3); padding-top: 1rem; display: none;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Precio de venta:</span>
+                                <strong id="precioVentaMostrar">₡0.00</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 1.1rem;">Ganancia neta:</span>
+                                <strong id="gananciaNeta" style="font-size: 1.8rem;">₡0.00</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                                <span>Margen de ganancia:</span>
+                                <strong id="margenGanancia">0.00%</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pasos de Preparación -->
+                    <h4 style="color: var(--dark-teal); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-list-ol"></i> Pasos de Preparación
+                    </h4>
+
+                    <div class="form-group">
+                        @Html.TextAreaFor(model => model.PasosPreparacion, new { @class = "form-control", rows = "6", placeholder = "1. Primer paso...\n2. Segundo paso...\n3. Tercer paso..." })
+                        @Html.ValidationMessageFor(model => model.PasosPreparacion, "", new { @class = "text-danger" })
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Describe los pasos de preparación de forma detallada y numerada
+                        </small>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoRecetas", "Receta")'" style="flex: 1;">
+                            <span><i class="fas fa-times"></i> Cancelar</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
+                            <span><i class="fas fa-save"></i> Guardar Receta</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Template de Ingrediente (oculto) -->
+<template id="ingrediente-template">
+    <div class="ingrediente-item feature-card" style="margin-bottom: 1rem; padding: 1.5rem; position: relative;">
+        <button type="button" class="btn-eliminar-ingrediente" style="position: absolute; top: 10px; right: 10px; width: 35px; height: 35px; background: #e74c3c; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="form-row">
+            <div class="form-group" style="flex: 2;">
+                <label>
+                    <i class="fas fa-box"></i>
+                    Insumo
+                </label>
+                <select name="Ingredientes[INDEX].IdInsumo" class="form-control select-insumo" required>
+                    <option value="">-- Selecciona un insumo --</option>
+                    <!-- Se llenará con los insumos disponibles -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <i class="fas fa-balance-scale"></i>
+                    Cantidad
+                </label>
+                <input type="number" name="Ingredientes[INDEX].CantidadUtilizada" class="form-control input-cantidad" step="0.01" min="0.01" placeholder="0.00" required>
+            </div>
+
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-dollar-sign"></i>
+                    Costo
+                </label>
+                <input type="text" class="form-control costo-ingrediente" readonly style="background: var(--gray-light);" value="₡0.00">
+            </div>
+        </div>
+
+        <div class="alerta-stock" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+            <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span class="mensaje-alerta"></span>
+            </p>
+        </div>
+    </div>
+</template>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/receta.js"></script>
+}

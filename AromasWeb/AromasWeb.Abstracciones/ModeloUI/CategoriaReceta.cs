@@ -1,13 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace AromasWeb.Abstracciones.ModeloUI
 {
     public class CategoriaReceta
     {
+        public int IdCategoriaReceta { get; set; }
 
+        [DisplayName("Nombre de la categoría")]
+        [Required(ErrorMessage = "El nombre es requerido")]
+        [StringLength(100, ErrorMessage = "El nombre no puede exceder 100 caracteres")]
+        public string Nombre { get; set; }
+
+        [DisplayName("Descripción")]
+        [StringLength(500, ErrorMessage = "La descripción no puede exceder 500 caracteres")]
+        public string Descripcion { get; set; }
+
+        [DisplayName("Estado")]
+        public bool Estado { get; set; }
+
+        [DisplayName("Estado")]
+        public string EstadoTexto
+        {
+            get
+            {
+                return Estado ? "Activa" : "Inactiva";
+            }
+        }
     }
 }

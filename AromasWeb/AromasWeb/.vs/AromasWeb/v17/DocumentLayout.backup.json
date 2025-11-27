@@ -3,44 +3,36 @@
   "WorkspaceRootPath": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\insumo\\listadoinsumos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\insumo\\listadoinsumos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\insumo\\historialmovimientos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\insumo\\historialmovimientos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\categoriareceta\\listadocategoriasrecetas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\categoriareceta\\listadocategoriasrecetas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\insumo\\_modaleliminarinsumo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\insumo\\_modaleliminarinsumo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\categoriareceta\\crearcategoriareceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\categoriareceta\\crearcategoriareceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\insumo\\_modaldetallesinsumo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\insumo\\_modaldetallesinsumo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\categoriareceta\\editarcategoriareceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\categoriareceta\\editarcategoriareceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\categoriareceta\\_modaldetallescategoriareceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\categoriareceta\\_modaldetallescategoriareceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\insumo\\registrarmovimiento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\insumo\\registrarmovimiento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\categoriareceta\\_modaleliminarcategoriareceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\categoriareceta\\_modaleliminarcategoriareceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\insumo\\crearinsumo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\insumo\\crearinsumo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\wwwroot\\js\\categoriareceta.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:wwwroot\\js\\categoriareceta.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\insumo\\editarinsumo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\insumo\\editarinsumo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\wwwroot\\js\\insumo.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:wwwroot\\js\\insumo.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\controllers\\categoriarecetacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:controllers\\categoriarecetacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -62,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,130 +66,111 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "_ModalDetallesInsumo.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\_ModalDetallesInsumo.cshtml",
-              "RelativeDocumentMoniker": "Views\\Insumo\\_ModalDetallesInsumo.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\_ModalDetallesInsumo.cshtml",
-              "RelativeToolTip": "Views\\Insumo\\_ModalDetallesInsumo.cshtml",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAUwFMAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T01:56:13.343Z"
+              "DocumentIndex": 7,
+              "Title": "CategoriaRecetaController.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\CategoriaRecetaController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CategoriaRecetaController.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\CategoriaRecetaController.cs",
+              "RelativeToolTip": "Controllers\\CategoriaRecetaController.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAwGwAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T04:35:37.093Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "RegistrarMovimiento.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\RegistrarMovimiento.cshtml",
-              "RelativeDocumentMoniker": "Views\\Insumo\\RegistrarMovimiento.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\RegistrarMovimiento.cshtml",
-              "RelativeToolTip": "Views\\Insumo\\RegistrarMovimiento.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T01:55:56.269Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CrearInsumo.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\CrearInsumo.cshtml",
-              "RelativeDocumentMoniker": "Views\\Insumo\\CrearInsumo.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\CrearInsumo.cshtml",
-              "RelativeToolTip": "Views\\Insumo\\CrearInsumo.cshtml",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAAAA4AAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T01:55:27.741Z"
+              "Title": "categoriaReceta.js",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\categoriaReceta.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\categoriaReceta.js",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\categoriaReceta.js",
+              "RelativeToolTip": "wwwroot\\js\\categoriaReceta.js",
+              "ViewState": "AgIAAAwBAAAAAAAAAADwvysBAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-27T04:35:32.503Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "ListadoCategoriasRecetas.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\ListadoCategoriasRecetas.cshtml",
+              "RelativeDocumentMoniker": "Views\\CategoriaReceta\\ListadoCategoriasRecetas.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\ListadoCategoriasRecetas.cshtml",
+              "RelativeToolTip": "Views\\CategoriaReceta\\ListadoCategoriasRecetas.cshtml",
+              "ViewState": "AgIAAIgAAAAAAAAAAADwv6cAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T04:34:32.782Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EditarCategoriaReceta.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\EditarCategoriaReceta.cshtml",
+              "RelativeDocumentMoniker": "Views\\CategoriaReceta\\EditarCategoriaReceta.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\EditarCategoriaReceta.cshtml",
+              "RelativeToolTip": "Views\\CategoriaReceta\\EditarCategoriaReceta.cshtml",
+              "ViewState": "AgIAAD8AAAAAAAAAAADwv14AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T04:34:17.005Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CrearCategoriaReceta.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\CrearCategoriaReceta.cshtml",
+              "RelativeDocumentMoniker": "Views\\CategoriaReceta\\CrearCategoriaReceta.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\CrearCategoriaReceta.cshtml",
+              "RelativeToolTip": "Views\\CategoriaReceta\\CrearCategoriaReceta.cshtml",
+              "ViewState": "AgIAAC4AAAAAAAAAAADwv00AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T04:33:59.663Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_ModalEliminarCategoriaReceta.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\_ModalEliminarCategoriaReceta.cshtml",
+              "RelativeDocumentMoniker": "Views\\CategoriaReceta\\_ModalEliminarCategoriaReceta.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\_ModalEliminarCategoriaReceta.cshtml",
+              "RelativeToolTip": "Views\\CategoriaReceta\\_ModalEliminarCategoriaReceta.cshtml",
+              "ViewState": "AgIAADoAAAAAAAAAAAAAwFkAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T04:33:46.769Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_ModalDetallesCategoriaReceta.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\_ModalDetallesCategoriaReceta.cshtml",
+              "RelativeDocumentMoniker": "Views\\CategoriaReceta\\_ModalDetallesCategoriaReceta.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\CategoriaReceta\\_ModalDetallesCategoriaReceta.cshtml",
+              "RelativeToolTip": "Views\\CategoriaReceta\\_ModalDetallesCategoriaReceta.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAwDoAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T04:33:07.798Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAABcAAAAAAAAAAAAUwCoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABoAAAAAAAAAAAAUwCYAAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-22T18:28:26.015Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "site.css",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\css\\site.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\css\\site.css",
-              "RelativeToolTip": "wwwroot\\css\\site.css",
-              "ViewState": "AgIAAJoCAAAAAAAAAAAmwL4CAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-22T18:36:52.481Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "insumo.js",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\insumo.js",
-              "RelativeDocumentMoniker": "wwwroot\\js\\insumo.js",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\insumo.js",
-              "RelativeToolTip": "wwwroot\\js\\insumo.js",
-              "ViewState": "AgIAAKQAAAAAAAAAAAAIwLQAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-26T01:56:45.318Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ListadoInsumos.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\ListadoInsumos.cshtml",
-              "RelativeDocumentMoniker": "Views\\Insumo\\ListadoInsumos.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\ListadoInsumos.cshtml",
-              "RelativeToolTip": "Views\\Insumo\\ListadoInsumos.cshtml",
-              "ViewState": "AgIAADMBAAAAAAAAAAAUwFIBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T01:55:08.517Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HistorialMovimientos.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\HistorialMovimientos.cshtml",
-              "RelativeDocumentMoniker": "Views\\Insumo\\HistorialMovimientos.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\HistorialMovimientos.cshtml",
-              "RelativeToolTip": "Views\\Insumo\\HistorialMovimientos.cshtml",
-              "ViewState": "AgIAALgAAAAAAAAAAAAIwMkAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T01:57:09.806Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "_ModalEliminarInsumo.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\_ModalEliminarInsumo.cshtml",
-              "RelativeDocumentMoniker": "Views\\Insumo\\_ModalEliminarInsumo.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\_ModalEliminarInsumo.cshtml",
-              "RelativeToolTip": "Views\\Insumo\\_ModalEliminarInsumo.cshtml",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAUwE4AAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T01:56:25.855Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "EditarInsumo.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\EditarInsumo.cshtml",
-              "RelativeDocumentMoniker": "Views\\Insumo\\EditarInsumo.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Insumo\\EditarInsumo.cshtml",
-              "RelativeToolTip": "Views\\Insumo\\EditarInsumo.cshtml",
-              "ViewState": "AgIAAH0AAAAAAAAAAAAIwKUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T01:55:39.226Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
               "Title": "site.js",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\site.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\site.js",
@@ -209,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 10,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
@@ -221,7 +194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 8,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",

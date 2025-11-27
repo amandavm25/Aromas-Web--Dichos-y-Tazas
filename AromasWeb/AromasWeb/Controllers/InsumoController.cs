@@ -317,7 +317,7 @@ namespace AromasWeb.Controllers
                     Cantidad = 5.00m,
                     Motivo = "Preparación de pasteles",
                     CostoUnitario = 2500.00m,
-                    IdUsuario = 1,
+                    IdEmpleado = 1,
                     FechaMovimiento = DateTime.Now
                 },
                 new MovimientoInsumo
@@ -328,7 +328,7 @@ namespace AromasWeb.Controllers
                     Cantidad = 20.00m,
                     Motivo = "Compra a proveedor ABC",
                     CostoUnitario = 1200.00m,
-                    IdUsuario = 1,
+                    IdEmpleado = 1,
                     FechaMovimiento = DateTime.Now.AddHours(-4)
                 }
             };

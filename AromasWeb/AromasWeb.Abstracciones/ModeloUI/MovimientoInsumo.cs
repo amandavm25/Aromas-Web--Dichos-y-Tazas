@@ -29,8 +29,8 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [DisplayName("Costo unitario al momento del movimiento")]
         public decimal CostoUnitario { get; set; }
 
-        [DisplayName("Usuario")]
-        public int IdUsuario { get; set; }
+        [DisplayName("Empleado")]
+        public int IdEmpleado { get; set; }
 
         [DisplayName("Fecha del movimiento")]
         [Required(ErrorMessage = "La fecha es requerida")]

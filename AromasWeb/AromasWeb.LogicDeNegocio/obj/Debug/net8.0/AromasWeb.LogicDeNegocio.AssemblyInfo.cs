@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AromasWeb.LogicDeNegocio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+804cbd01bc9d5334a4d0218e868ab5c5a9d5c2c1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+155da76b867554a9a371abfa730c6d78a49196b3")]
 [assembly: System.Reflection.AssemblyProductAttribute("AromasWeb.LogicDeNegocio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AromasWeb.LogicDeNegocio")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
