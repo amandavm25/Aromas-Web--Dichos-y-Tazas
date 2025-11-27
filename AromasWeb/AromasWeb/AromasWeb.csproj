@@ -19,7 +19,6 @@
     <Folder Include="Views\CategoriaReceta\" />
     <Folder Include="Views\Empleado\" />
     <Folder Include="Views\HistorialTarifa\" />
-    <Folder Include="Views\Insumo\" />
     <Folder Include="Views\Permisos\" />
     <Folder Include="Views\Planilla\" />
     <Folder Include="Views\Promocion\" />

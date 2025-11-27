@@ -1,0 +1,262 @@
+﻿@model AromasWeb.Abstracciones.ModeloUI.MovimientoInsumo
+
+@{
+    ViewBag.Title = "Registrar Movimiento";
+    var insumo = ViewBag.Insumo as dynamic;
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-exchange-alt"></i>
+                Gestión de Stock
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Registrar Movimiento
+            </h1>
+            <p class="hero-subtitle">
+                Registra entradas y salidas de insumos del inventario
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1000px;">
+
+        <!-- Información del Insumo -->
+        <div class="testimonial-card card-3d" style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); color: white; margin-bottom: 3rem; padding: 2.5rem;" data-aos="fade-up">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <i class="fas fa-box" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
+                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Insumo</p>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">Harina de Trigo</h4>
+                </div>
+                <div>
+                    <i class="fas fa-boxes" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
+                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Cantidad Actual</p>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">50.00 kg</h4>
+                </div>
+                <div>
+                    <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
+                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Stock Mínimo</p>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">10.00 kg</h4>
+                </div>
+                <div>
+                    <i class="fas fa-dollar-sign" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
+                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Costo Unitario</p>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">₡2,500.00</h4>
+                </div>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("RegistrarMovimiento", "Insumo", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.IdInsumo)
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Tipo de Movimiento -->
+                    <div class="form-group">
+                        <label style="display: block; margin-bottom: 1rem; font-size: 1.1rem;">
+                            <i class="fas fa-exchange-alt"></i>
+                            Tipo de Movimiento
+                        </label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <label class="feature-card card-3d" style="padding: 2rem; cursor: pointer; border: 3px solid var(--cream); margin: 0;" id="entradaLabel">
+                                <input type="radio" name="TipoMovimiento" value="Entrada" style="width: 24px; height: 24px; cursor: pointer; margin-bottom: 1rem;" checked>
+                                <div style="text-align: center;">
+                                    <div class="feature-icon" style="background: linear-gradient(135deg, #27ae60, #229954); margin: 0 auto 1rem;">
+                                        <i class="fas fa-arrow-down" style="color: white;"></i>
+                                    </div>
+                                    <strong style="color: var(--dark-teal); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Entrada</strong>
+                                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Agregar insumo al inventario</p>
+                                </div>
+                            </label>
+
+                            <label class="feature-card card-3d" style="padding: 2rem; cursor: pointer; border: 3px solid var(--cream); margin: 0;" id="salidaLabel">
+                                <input type="radio" name="TipoMovimiento" value="Salida" style="width: 24px; height: 24px; cursor: pointer; margin-bottom: 1rem;">
+                                <div style="text-align: center;">
+                                    <div class="feature-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b); margin: 0 auto 1rem;">
+                                        <i class="fas fa-arrow-up" style="color: white;"></i>
+                                    </div>
+                                    <strong style="color: var(--dark-teal); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Salida</strong>
+                                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Retirar insumo del inventario</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Cantidad -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-boxes"></i>
+                            Cantidad del Movimiento
+                        </label>
+                        @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0.01", placeholder = "0.00", id = "cantidadMovimiento" } })
+                        @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
+
+                        <!-- Alerta de stock insuficiente -->
+                        <div id="alertaStockInsuficiente" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                            <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>No se puede realizar la salida: stock insuficiente</span>
+                            </p>
+                        </div>
+
+                        <!-- Vista previa de nueva cantidad -->
+                        <div id="previsualizacion" class="feature-card" style="margin-top: 1rem; padding: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: var(--dark-teal); font-weight: 600;">Nueva cantidad después del movimiento:</span>
+                                <strong id="nuevaCantidad" style="color: var(--coral); font-size: 1.3rem;">50.00 kg</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Motivo -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-comment"></i>
+                            Motivo del Movimiento
+                        </label>
+                        @Html.TextAreaFor(model => model.Motivo, new { @class = "form-control", rows = "4", placeholder = "Describe el motivo del movimiento..." })
+                        @Html.ValidationMessageFor(model => model.Motivo, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Resumen del costo (solo para entradas) -->
+                    <div id="resumenCosto" class="testimonial-card" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white; padding: 2rem;">
+                        <h5 style="margin: 0 0 1rem; color: white; font-weight: 600;">
+                            <i class="fas fa-calculator"></i> Resumen del Costo
+                        </h5>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Costo unitario:</span>
+                            <strong>₡2,500.00</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>Cantidad:</span>
+                            <strong id="cantidadResumen">0.00 kg</strong>
+                        </div>
+                        <div style="border-top: 2px solid rgba(255,255,255,0.3); padding-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 1.1rem;">Costo total del movimiento:</span>
+                                <strong id="costoTotal" style="font-size: 1.8rem;">₡0.00</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoInsumos", "Insumo")'" style="flex: 1;">
+                            <span><i class="fas fa-times"></i> Cancelar</span>
+                        </button>
+                        <button type="submit" id="btnRegistrar" class="btn btn-primary btn-3d" style="flex: 1;">
+                            <span><i class="fas fa-check"></i> Registrar Movimiento</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+
+        <!-- Enlace al Historial -->
+        <div class="specialty-card card-3d" style="margin-top: 3rem; text-align: center;" data-aos="zoom-in">
+            <div class="specialty-content" style="padding: 3rem;">
+                <div class="feature-icon" style="background: linear-gradient(135deg, var(--amber), var(--coral)); margin: 0 auto 1.5rem;">
+                    <i class="fas fa-history" style="color: white;"></i>
+                </div>
+                <h4 style="margin: 0 0 1rem; font-weight: 600;">¿Necesitas ver el historial completo?</h4>
+                <p style="margin: 0 0 2rem; color: var(--gray);">Consulta todos los movimientos de entradas y salidas con filtros avanzados</p>
+                <a href="@Url.Action("HistorialMovimientos", "Insumo")" class="btn btn-primary btn-3d">
+                    <span><i class="fas fa-chart-line"></i> Ver Historial Completo</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/insumo.js"></script>
+
+    <script>
+        const cantidadActual = 50.00;
+        const costoUnitario = 2500.00;
+        const unidad = "kg";
+
+        const inputCantidad = document.getElementById('cantidadMovimiento');
+        const nuevaCantidadSpan = document.getElementById('nuevaCantidad');
+        const alertaStock = document.getElementById('alertaStockInsuficiente');
+        const btnRegistrar = document.getElementById('btnRegistrar');
+        const resumenCosto = document.getElementById('resumenCosto');
+        const cantidadResumen = document.getElementById('cantidadResumen');
+        const costoTotalSpan = document.getElementById('costoTotal');
+
+        const radioEntrada = document.querySelector('input[value="Entrada"]');
+        const radioSalida = document.querySelector('input[value="Salida"]');
+        const entradaLabel = document.getElementById('entradaLabel');
+        const salidaLabel = document.getElementById('salidaLabel');
+
+        function actualizarEstilosRadio() {
+            if (radioEntrada.checked) {
+                entradaLabel.style.borderColor = '#27ae60';
+                entradaLabel.style.background = 'rgba(39, 174, 96, 0.05)';
+                salidaLabel.style.borderColor = 'var(--cream)';
+                salidaLabel.style.background = '';
+                resumenCosto.style.display = 'block';
+            } else {
+                salidaLabel.style.borderColor = '#e74c3c';
+                salidaLabel.style.background = 'rgba(231, 76, 60, 0.05)';
+                entradaLabel.style.borderColor = 'var(--cream)';
+                entradaLabel.style.background = '';
+                resumenCosto.style.display = 'none';
+            }
+        }
+
+        radioEntrada.addEventListener('change', function() {
+            actualizarEstilosRadio();
+            calcularNuevaCantidad();
+        });
+
+        radioSalida.addEventListener('change', function() {
+            actualizarEstilosRadio();
+            calcularNuevaCantidad();
+        });
+
+        function calcularNuevaCantidad() {
+            const cantidad = parseFloat(inputCantidad.value) || 0;
+            let nuevaCantidad;
+
+            if (radioEntrada.checked) {
+                nuevaCantidad = cantidadActual + cantidad;
+                alertaStock.style.display = 'none';
+                btnRegistrar.disabled = false;
+
+                const costoTotal = costoUnitario * cantidad;
+                cantidadResumen.textContent = cantidad.toFixed(2) + ' ' + unidad;
+                costoTotalSpan.textContent = '₡' + costoTotal.toLocaleString('es-CR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            } else {
+                nuevaCantidad = cantidadActual - cantidad;
+
+                if (nuevaCantidad < 0) {
+                    alertaStock.style.display = 'block';
+                    btnRegistrar.disabled = true;
+                } else {
+                    alertaStock.style.display = 'none';
+                    btnRegistrar.disabled = false;
+                }
+            }
+
+            nuevaCantidadSpan.textContent = nuevaCantidad.toFixed(2) + ' ' + unidad;
+        }
+
+        inputCantidad.addEventListener('input', calcularNuevaCantidad);
+
+        actualizarEstilosRadio();
+        calcularNuevaCantidad();
+    </script>
+}

@@ -1,0 +1,147 @@
+﻿@model AromasWeb.Abstracciones.ModeloUI.Insumo
+
+@{
+    ViewBag.Title = "Agregar Insumo";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-plus-circle"></i>
+                Nuevo Registro
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Agregar Insumo
+            </h1>
+            <p class="hero-subtitle">
+                Registra un nuevo insumo en el inventario del negocio
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 900px;">
+        @using (Html.BeginForm("CrearInsumo", "Insumo", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Nombre del Insumo -->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NombreInsumo, new { @class = "form-label" })
+                        <i class="fas fa-box"></i>
+                        Nombre del Insumo
+                        @Html.EditorFor(model => model.NombreInsumo, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Harina de Trigo" } })
+                        @Html.ValidationMessageFor(model => model.NombreInsumo, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Categoría y Unidad -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-tag"></i>
+                                Categoría
+                            </label>
+                            @{
+                                var categoriasInsumo = new List<dynamic>
+                                                {
+                                                new { Id = 1, Nombre = "Harinas" },
+                                                new { Id = 2, Nombre = "Endulzantes" },
+                                                new { Id = 3, Nombre = "Lácteos" },
+                                                new { Id = 4, Nombre = "Ingredientes Frescos" },
+                                                new { Id = 5, Nombre = "Chocolates" },
+                                                new { Id = 6, Nombre = "Esencias" },
+                                                new { Id = 7, Nombre = "Leudantes" }
+                                                };
+                            }
+                            <select name="IdCategoriaInsumo" class="form-control">
+                                <option value="">-- Selecciona una categoría --</option>
+                                @foreach (var cat in categoriasInsumo)
+                                {
+                                    <option value="@cat.Id">@cat.Nombre</option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-balance-scale"></i>
+                                Unidad de Medida
+                            </label>
+                            <select name="UnidadMedida" class="form-control">
+                                <option value="">-- Selecciona una unidad --</option>
+                                <option value="Kilogramos">Kilogramos (kg)</option>
+                                <option value="Gramos">Gramos (g)</option>
+                                <option value="Litros">Litros (L)</option>
+                                <option value="Mililitros">Mililitros (mL)</option>
+                                <option value="Unidades">Unidades</option>
+                                <option value="Libras">Libras (lb)</option>
+                                <option value="Onzas">Onzas (oz)</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.UnidadMedida, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Costo y Cantidad -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-dollar-sign"></i>
+                                Costo Unitario
+                            </label>
+                            @Html.EditorFor(model => model.CostoUnitario, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" } })
+                            @Html.ValidationMessageFor(model => model.CostoUnitario, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-boxes"></i>
+                                Cantidad Inicial
+                            </label>
+                            @Html.EditorFor(model => model.CantidadDisponible, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0" } })
+                            @Html.ValidationMessageFor(model => model.CantidadDisponible, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Stock Mínimo -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-chart-line"></i>
+                            Stock Mínimo
+                        </label>
+                        @Html.EditorFor(model => model.StockMinimo, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0" } })
+                        @Html.ValidationMessageFor(model => model.StockMinimo, "", new { @class = "text-danger" })
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Se mostrará una alerta cuando la cantidad sea igual o menor a este valor
+                        </small>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoInsumos", "Insumo")'" style="flex: 1;">
+                            <span><i class="fas fa-times"></i> Cancelar</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
+                            <span><i class="fas fa-save"></i> Agregar Insumo</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/insumo.js"></script>
+}

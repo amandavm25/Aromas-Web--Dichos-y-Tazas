@@ -1,0 +1,339 @@
+﻿@model List<AromasWeb.Abstracciones.ModeloUI.Insumo>
+
+@{
+    ViewBag.Title = "Inventario de Insumos";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-warehouse"></i>
+                Gestión de Inventario
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Inventario de Insumos
+            </h1>
+            <p class="hero-subtitle">
+                Administra y visualiza todos los insumos del negocio
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1600px;">
+
+        <!-- Barra de búsqueda y botones -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
+            <form method="get" action="@Url.Action("ListadoInsumos", "Insumo")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
+                <div style="position: relative; flex: 1;">
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--teal); z-index: 1;"></i>
+                    <input type="text"
+                           name="buscar"
+                           value="@ViewBag.Buscar"
+                           placeholder="Buscar por nombre, unidad de medida o ID..."
+                           style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
+                </div>
+                <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
+                    <span><i class="fas fa-search"></i> Buscar</span>
+                </button>
+            </form>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="@Url.Action("HistorialMovimientos", "Insumo")" class="btn btn-secondary" style="white-space: nowrap;">
+                    <span><i class="fas fa-history"></i> Historial</span>
+                </a>
+                <a href="@Url.Action("CrearInsumo", "Insumo")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                    <span><i class="fas fa-plus"></i> Agregar Insumo</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Información de búsqueda -->
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+        {
+            <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
+                <p style="margin: 0; color: var(--dark-teal); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                    Mostrando resultados para <strong style="color: var(--coral);">"@ViewBag.Buscar"</strong>
+                    - <strong>@(Model?.Count ?? 0)</strong> insumo(s) encontrado(s)
+                </p>
+            </div>
+        }
+
+        <!-- Filtro por categoría -->
+        <div style="margin-bottom: 3rem;" data-aos="fade-up">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+                <span style="color: var(--dark-teal); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                    <i class="fas fa-filter" style="color: var(--coral);"></i> Filtrar por categoría:
+                </span>
+                <a href="@Url.Action("ListadoInsumos", "Insumo")"
+                   class="btn @(ViewBag.Categoria == null && string.IsNullOrWhiteSpace(ViewBag.Buscar as string) ? "btn-primary" : "btn-secondary")"
+                   style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                    <span><i class="fas fa-th"></i> Todas</span>
+                </a>
+
+                @if (ViewBag.TodasCategorias != null)
+                {
+                    @foreach (var categoria in (List<AromasWeb.Abstracciones.ModeloUI.CategoriaInsumo>)ViewBag.TodasCategorias)
+                    {
+                        <a href="@Url.Action("ListadoInsumos", "Insumo", new { categoria = categoria.IdCategoria })"
+                           class="btn @(ViewBag.Categoria == categoria.IdCategoria ? "btn-primary" : "btn-secondary")"
+                           style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                            <span>@categoria.NombreCategoria</span>
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Layout Principal: Tabla + Alertas -->
+        <div style="display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start;" data-aos="fade-up">
+
+            <!-- Tabla Principal -->
+            <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
+                <div class="table-responsive">
+                    <table id="laTablaDeInsumos" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
+                        <thead style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
+                            <tr>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Categoría</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Unidad</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Costo</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Cantidad</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Stock Mín</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var insumosDemo = new List<dynamic>
+                                                        {
+                                                        new { Id = 1, Nombre = "Harina de Trigo", Categoria = "Harinas", Unidad = "kg", Costo = 2500.00m, Cantidad = 50.00m, StockMinimo = 10.00m, Estado = true },
+                                                        new { Id = 2, Nombre = "Azúcar Blanca", Categoria = "Endulzantes", Unidad = "kg", Costo = 1200.00m, Cantidad = 8.00m, StockMinimo = 15.00m, Estado = true },
+                                                        new { Id = 3, Nombre = "Mantequilla", Categoria = "Lácteos", Unidad = "kg", Costo = 4500.00m, Cantidad = 25.00m, StockMinimo = 5.00m, Estado = true },
+                                                        new { Id = 4, Nombre = "Huevos", Categoria = "Frescos", Unidad = "Unid", Costo = 200.00m, Cantidad = 150.00m, StockMinimo = 50.00m, Estado = true },
+                                                        new { Id = 5, Nombre = "Chocolate", Categoria = "Chocolates", Unidad = "g", Costo = 8000.00m, Cantidad = 3.00m, StockMinimo = 5.00m, Estado = true },
+                                                        new { Id = 6, Nombre = "Vainilla", Categoria = "Esencias", Unidad = "mL", Costo = 3500.00m, Cantidad = 500.00m, StockMinimo = 100.00m, Estado = true },
+                                                        new { Id = 7, Nombre = "Leche Entera", Categoria = "Lácteos", Unidad = "L", Costo = 1500.00m, Cantidad = 2.00m, StockMinimo = 10.00m, Estado = true },
+                                                        new { Id = 8, Nombre = "Levadura", Categoria = "Leudantes", Unidad = "g", Costo = 2800.00m, Cantidad = 1.00m, StockMinimo = 2.00m, Estado = false }
+                                                        };
+                            }
+
+                            @foreach (var insumo in insumosDemo)
+                            {
+                                var stockBajo = insumo.Cantidad <= insumo.StockMinimo;
+                                var rowStyle = stockBajo ? "background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c;" : "";
+
+                                <tr style="border-bottom: 1px solid rgba(32, 116, 118, 0.1); transition: all 0.3s; @rowStyle">
+                                    <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@insumo.Id</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 500;">
+                                        @insumo.Nombre
+                                        @if (stockBajo)
+                                        {
+                                            <i class="fas fa-exclamation-triangle" style="color: #e74c3c; margin-left: 0.5rem;" title="Stock bajo"></i>
+                                        }
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--black);">@insumo.Categoria</td>
+                                    <td style="padding: 1.2rem; color: var(--black);">@insumo.Unidad</td>
+                                    <td style="padding: 1.2rem; color: var(--coral); font-weight: 600;">₡@insumo.Costo.ToString("N2")</td>
+                                    <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">
+                                        <span style="@(stockBajo ? "color: #e74c3c;" : "")">@insumo.Cantidad.ToString("N2")</span>
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--black);">@insumo.StockMinimo.ToString("N2")</td>
+                                    <td style="padding: 1.2rem;">
+                                        @if (insumo.Estado)
+                                        {
+                                            <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activo</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactivo</span>
+                                        }
+                                    </td>
+                                    <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        <button type="button"
+                                                class="btn btn-sm"
+                                                onclick="window.location.href='@Url.Action("EditarInsumo", "Insumo", new { id = insumo.Id })'"
+                                                style="background: var(--teal); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-detalles"
+                                                data-id="@insumo.Id"
+                                                data-nombre="@insumo.Nombre"
+                                                data-categoria="@insumo.Categoria"
+                                                data-unidad="@insumo.Unidad"
+                                                data-costo="@insumo.Costo.ToString("N2")"
+                                                data-cantidad="@insumo.Cantidad.ToString("N2")"
+                                                data-stockminimo="@insumo.StockMinimo.ToString("N2")"
+                                                data-estado="@(insumo.Estado ? "Activo" : "Inactivo")"
+                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalDetallesInsumo">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm"
+                                                onclick="window.location.href='@Url.Action("RegistrarMovimiento", "Insumo", new { id = insumo.Id })'"
+                                                style="background: var(--amber); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Registrar Entrada/Salida">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-eliminar"
+                                                data-id="@insumo.Id"
+                                                data-nombre="@insumo.Nombre"
+                                                data-categoria="@insumo.Categoria"
+                                                data-unidad="@insumo.Unidad"
+                                                data-cantidad="@insumo.Cantidad.ToString("N2")"
+                                                data-estado="@(insumo.Estado ? "Activo" : "Inactivo")"
+                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEliminarInsumo">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer de paginación -->
+                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(32, 116, 118, 0.1); flex-wrap: wrap; gap: 1rem;">
+                    <div style="color: var(--dark-teal); font-size: 0.95rem;">
+                        Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">8</span></strong> de <strong id="totalRecords">8</strong> insumos
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
+                            &lt; Anterior
+                        </button>
+                        <button id="btnSiguiente" class="btn btn-primary" onclick="paginaSiguiente()" style="border-radius: 50px; padding: 0.8rem 2rem;">
+                            Siguiente &gt;
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de Alertas (Derecha) -->
+            <div style="position: sticky; top: 100px;">
+                <!-- Alertas de Stock Bajo -->
+                <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
+                    <div style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem;"></i>
+                            <div>
+                                <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Stock Bajo</h5>
+                                <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">Atención requerida</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="alertasStockBajo" style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 600px; overflow-y: auto;">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen Estadísticas (Abajo) -->
+        <div style="margin-top: 3rem;" data-aos="fade-up">
+            <div style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
+                <h5 style="margin: 0 0 2rem; color: white; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.3rem;">
+                    <i class="fas fa-chart-pie"></i> Resumen del Inventario
+                </h5>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
+                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
+                            <i class="fas fa-dollar-sign" style="font-size: 1.5rem; color: white;"></i>
+                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Valor Total del Inventario</span>
+                        </div>
+                        <h4 id="valorTotal" style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">₡0.00</h4>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
+                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
+                            <i class="fas fa-boxes" style="font-size: 1.5rem; color: white;"></i>
+                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Total de Insumos</span>
+                        </div>
+                        <h4 style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">8</h4>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
+                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; color: white;"></i>
+                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Alertas de Stock Bajo</span>
+                        </div>
+                        <h4 id="stockBajoCount" style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">0</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="_ModalDetallesInsumo" />
+<partial name="_ModalEliminarInsumo" />
+
+@section Scripts {
+    <script src="~/js/insumo.js"></script>
+
+    <script>
+        // Calcular valor total del inventario y alertas
+        document.addEventListener('DOMContentLoaded', function() {
+            const insumos = [
+                { costo: 2500, cantidad: 50, stockMinimo: 10, nombre: "Harina de Trigo" },
+                { costo: 1200, cantidad: 8, stockMinimo: 15, nombre: "Azúcar Blanca" },
+                { costo: 4500, cantidad: 25, stockMinimo: 5, nombre: "Mantequilla" },
+                { costo: 200, cantidad: 150, stockMinimo: 50, nombre: "Huevos" },
+                { costo: 8000, cantidad: 3, stockMinimo: 5, nombre: "Chocolate en Polvo" },
+                { costo: 3500, cantidad: 500, stockMinimo: 100, nombre: "Vainilla Líquida" },
+                { costo: 1500, cantidad: 2, stockMinimo: 10, nombre: "Leche Entera" },
+                { costo: 2800, cantidad: 1, stockMinimo: 2, nombre: "Levadura en Polvo" }
+            ];
+
+            let valorTotal = 0;
+            let stockBajoCount = 0;
+            const alertasContainer = document.getElementById('alertasStockBajo');
+            let alertasHTML = '';
+
+            insumos.forEach(insumo => {
+                valorTotal += insumo.costo * insumo.cantidad;
+
+                if (insumo.cantidad <= insumo.stockMinimo) {
+                    stockBajoCount++;
+                    const porcentaje = ((insumo.cantidad / insumo.stockMinimo) * 100).toFixed(0);
+                    const colorBarra = porcentaje <= 50 ? '#e74c3c' : '#f39c12';
+
+                    alertasHTML += `
+                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid #e74c3c;">
+                            <div style="margin-bottom: 0.5rem;">
+                                <strong style="color: var(--dark-teal); font-size: 0.95rem;">${insumo.nombre}</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--gray); margin-bottom: 0.5rem;">
+                                <span>${insumo.cantidad} / ${insumo.stockMinimo}</span>
+                                <span style="font-weight: 600; color: #e74c3c;">${porcentaje}%</span>
+                            </div>
+                            <div style="background: #f5f5f5; height: 6px; border-radius: 3px; overflow: hidden;">
+                                <div style="width: ${porcentaje}%; height: 100%; background: ${colorBarra}; transition: width 0.3s;"></div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            document.getElementById('valorTotal').textContent = '₡' + valorTotal.toLocaleString('es-CR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('stockBajoCount').textContent = stockBajoCount;
+
+            if (stockBajoCount === 0) {
+                alertasContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--gray);"><i class="fas fa-check-circle" style="font-size: 2rem; color: #27ae60; margin-bottom: 0.5rem; display: block;"></i><p style="margin: 0;">No hay alertas</p></div>';
+            } else {
+                alertasContainer.innerHTML = alertasHTML;
+            }
+        });
+    </script>
+}
