@@ -3,8 +3,10 @@ wwwroot\favicon.ico
 wwwroot\js\categoriaInsumo.js
 wwwroot\js\categoriaReceta.js
 wwwroot\js\insumo.js
+wwwroot\js\promocion.js
 wwwroot\js\receta.js
 wwwroot\js\site.js
+wwwroot\js\tipoPromocion.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap.min.css

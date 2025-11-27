@@ -35,7 +35,8 @@
                         <i class="fas fa-book-open" style="color: var(--teal);"></i> Detalles de la Categoría a Eliminar
                     </h6>
 
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                    <!-- Grid de 2 columnas -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                         <!-- ID -->
                         <div class="feature-card" style="padding: 1.2rem; margin: 0;">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
@@ -44,29 +45,29 @@
                             <p id="eliminar-id-display-categoria" style="color: var(--dark-teal); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
-                        <!-- Nombre -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-book" style="color: var(--teal);"></i> Nombre
-                            </label>
-                            <p id="eliminar-nombre-categoria" style="color: var(--dark-teal); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
-                        </div>
-
-                        <!-- Descripción -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0; grid-column: 1 / -1;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-align-left" style="color: var(--teal);"></i> Descripción
-                            </label>
-                            <p id="eliminar-descripcion-categoria" style="color: var(--dark-teal); font-size: 1rem; margin: 0;"></p>
-                        </div>
-
                         <!-- Estado -->
                         <div class="feature-card" style="padding: 1.2rem; margin: 0;">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-toggle-on" style="color: var(--teal);"></i> Estado
+                                <i class="fas fa-toggle-on" style="color: var(--teal);"></i> ESTADO
                             </label>
                             <span id="eliminar-estado-badge-categoria" class="badge" style="font-size: 0.9rem; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600;"></span>
                         </div>
+
+                        <!-- Nombre - Ancho completo -->
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; grid-column: 1 / -1;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-book" style="color: var(--teal);"></i> NOMBRE
+                            </label>
+                            <p id="eliminar-nombre-categoria" style="color: var(--dark-teal); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
+                            <i class="fas fa-align-left" style="color: var(--teal);"></i> DESCRIPCIÓN
+                        </label>
+                        <p id="eliminar-descripcion-categoria" style="color: var(--dark-teal); font-size: 1rem; margin: 0;"></p>
                     </div>
                 </div>
             </div>

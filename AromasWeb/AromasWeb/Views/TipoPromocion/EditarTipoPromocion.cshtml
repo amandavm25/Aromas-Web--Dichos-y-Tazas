@@ -1,0 +1,95 @@
+﻿@model AromasWeb.Abstracciones.ModeloUI.TipoPromocion
+
+@{
+    ViewBag.Title = "Editar Tipo de Promoción";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-edit"></i>
+                Actualizar Información
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Editar Tipo de Promoción
+            </h1>
+            <p class="hero-subtitle">
+                Modifica la información del tipo
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 900px;">
+        @using (Html.BeginForm("EditarTipoPromocion", "TipoPromocion", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.IdTipoPromocion)
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Nombre del Tipo -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-tag"></i>
+                            Nombre del Tipo
+                        </label>
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Descuento por Temporada" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-align-left"></i>
+                            Descripción
+                        </label>
+                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4", placeholder = "Describe las características de este tipo de promoción..." })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Máximo 300 caracteres
+                        </small>
+                    </div>
+
+                    <!-- Estado del Tipo -->
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--gray-light); border-radius: 15px; cursor: pointer;">
+                            @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
+                            <span style="flex: 1;">
+                                <i class="fas fa-toggle-on"></i>
+                                Estado del Tipo (Activo/Inactivo)
+                            </span>
+                        </label>
+                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--coral);"></i>
+                            Al desactivar un tipo, las promociones existentes no se afectarán
+                        </small>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoTiposPromociones", "TipoPromocion")'" style="flex: 1;">
+                            <span><i class="fas fa-times"></i> Cancelar</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
+                            <span><i class="fas fa-check"></i> Guardar Cambios</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/tipopromocion.js"></script>
+}

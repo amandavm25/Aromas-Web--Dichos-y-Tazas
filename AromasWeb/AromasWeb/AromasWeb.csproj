@@ -19,7 +19,6 @@
     <Folder Include="Views\HistorialTarifa\" />
     <Folder Include="Views\Permisos\" />
     <Folder Include="Views\Planilla\" />
-    <Folder Include="Views\Promocion\" />
     <Folder Include="Views\Rol\" />
     <Folder Include="Views\SolicitudVacaciones\" />
   </ItemGroup>

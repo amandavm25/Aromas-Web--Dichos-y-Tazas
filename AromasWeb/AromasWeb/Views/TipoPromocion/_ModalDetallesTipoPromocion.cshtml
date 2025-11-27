@@ -1,0 +1,83 @@
+﻿<div class="modal fade" id="modalDetallesTipo" tabindex="-1" aria-labelledby="modalDetallesTipoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+            <!-- Header -->
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: var(--white); border: none; padding: 2rem;">
+                <h5 class="modal-title" id="modalDetallesTipoLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
+                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    Detalles del Tipo
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+                <!-- Título del Tipo -->
+                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--teal);">
+                    <h5 id="detalles-nombre-tipo" style="color: var(--dark-teal); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
+                </div>
+
+                <!-- Grid de 2 columnas -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <!-- ID -->
+                    <div class="feature-card" style="padding: 1.5rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                            <i class="fas fa-hashtag" style="color: var(--teal); font-size: 1.1rem;"></i> ID DEL TIPO
+                        </label>
+                        <p id="detalles-id-tipo" style="color: var(--dark-teal); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="feature-card" style="padding: 1.5rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                            <i class="fas fa-toggle-on" style="color: var(--teal); font-size: 1.1rem;"></i> ESTADO
+                        </label>
+                        <span id="detalles-estado-badge-tipo" class="badge" style="font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
+                    </div>
+                </div>
+
+                <!-- Descripción - Ancho completo -->
+                <div class="feature-card" style="padding: 1.5rem; margin: 0;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                        <i class="fas fa-align-left" style="color: var(--teal); font-size: 1.1rem;"></i> DESCRIPCIÓN
+                    </label>
+                    <p id="detalles-descripcion-tipo" style="color: var(--black); font-size: 1rem; margin: 0; line-height: 1.6;"></p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <span><i class="fas fa-times"></i> Cerrar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesDetalles = document.querySelectorAll('.btn-detalles-tipo');
+
+        botonesDetalles.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const nombre = this.getAttribute('data-nombre');
+                const descripcion = this.getAttribute('data-descripcion');
+                const estado = this.getAttribute('data-estado');
+
+                // Llenar información
+                document.getElementById('detalles-id-tipo').textContent = id;
+                document.getElementById('detalles-nombre-tipo').textContent = nombre;
+                document.getElementById('detalles-descripcion-tipo').textContent = descripcion || 'Sin descripción';
+
+                // Estado badge
+                const estadoBadge = document.getElementById('detalles-estado-badge-tipo');
+                estadoBadge.textContent = estado;
+                estadoBadge.style.background = estado === 'Activo' ? '#27ae60' : '#e74c3c';
+            });
+        });
+    });
+</script>
