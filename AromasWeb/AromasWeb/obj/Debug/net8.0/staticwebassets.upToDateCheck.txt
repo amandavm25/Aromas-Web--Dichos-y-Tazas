@@ -2,9 +2,11 @@ wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\js\categoriaInsumo.js
 wwwroot\js\categoriaReceta.js
+wwwroot\js\cliente.js
 wwwroot\js\insumo.js
 wwwroot\js\promocion.js
 wwwroot\js\receta.js
+wwwroot\js\reserva.js
 wwwroot\js\site.js
 wwwroot\js\tipoPromocion.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css

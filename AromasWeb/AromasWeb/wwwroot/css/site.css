@@ -2209,3 +2209,151 @@ section {
         align-items: flex-start;
     }
 }
+
+/* ===================================
+   DROPDOWN MENU
+   =================================== */
+.nav-dropdown {
+    position: relative;
+}
+
+    .nav-dropdown > .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .nav-dropdown .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--white);
+        min-width: 250px;
+        border-radius: 15px;
+        box-shadow: var(--shadow-xl);
+        padding: 0.5rem 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        margin-top: 0.5rem;
+        list-style: none;
+    }
+
+    .nav-dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-dropdown .dropdown-menu li {
+        list-style: none;
+    }
+
+    .nav-dropdown .dropdown-menu a {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.8rem 1.5rem;
+        color: var(--dark-teal);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .nav-dropdown .dropdown-menu a:hover {
+            background: var(--cream);
+            color: var(--teal);
+            padding-left: 2rem;
+        }
+
+        .nav-dropdown .dropdown-menu a i {
+            color: var(--coral);
+            font-size: 0.9rem;
+        }
+
+/* ===================================
+   BOTÓN MIS RESERVAS
+   =================================== */
+.btn-mis-reservas {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%);
+    color: var(--white);
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+    transition: all 0.3s ease;
+}
+
+    .btn-mis-reservas:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(230, 126, 34, 0.4);
+        color: var(--white);
+    }
+
+    .btn-mis-reservas i {
+        font-size: 1.1rem;
+    }
+
+/* ===================================
+   BOTÓN RESERVA (ajuste si ya existe)
+   =================================== */
+.btn-reserva {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ===================================
+   RESPONSIVE - MOBILE MENU
+   =================================== */
+@media (max-width: 968px) {
+    .nav-dropdown .dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        background: var(--cream);
+        margin: 0.5rem 0 0 1rem;
+        display: none;
+    }
+
+    .nav-dropdown.active .dropdown-menu {
+        display: block;
+    }
+
+    .nav-dropdown > .nav-link {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .btn-mis-reservas,
+    .btn-reserva {
+        width: 100%;
+        justify-content: center;
+        margin: 0.5rem 0;
+    }
+}
+
+/* ===================================
+   ANIMACIÓN CHEVRON
+   =================================== */
+.nav-dropdown > .nav-link i.fa-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+.nav-dropdown:hover > .nav-link i.fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 968px) {
+    .nav-dropdown.active > .nav-link i.fa-chevron-down {
+        transform: rotate(180deg);
+    }
+}

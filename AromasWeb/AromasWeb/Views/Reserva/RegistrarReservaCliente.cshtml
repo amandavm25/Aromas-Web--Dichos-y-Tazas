@@ -1,0 +1,314 @@
+﻿@model AromasWeb.Abstracciones.ModeloUI.Reserva
+
+@{
+    ViewBag.Title = "Registrar Reserva";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-user-plus"></i>
+                Registro de Reserva
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Registrar
+                <span class="hero-title-accent">Reserva</span>
+            </h1>
+            <p class="hero-subtitle">
+                Registra una nueva reserva para un cliente existente
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section class="contact-section" style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 900px;">
+        @using (Html.BeginForm("RegistrarReservaCliente", "Reserva", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.IdCliente, new { id = "IdCliente" })
+
+            <div class="contact-form-wrapper data-aos="fade-up">
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                <form class="contact-form">
+                    <!-- Buscar Cliente -->
+                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin-bottom: 2.5rem; box-shadow: var(--shadow-md);">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem; font-size: 1.2rem;">
+                            <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            Buscar Cliente
+                        </h5>
+                    </div>
+
+                    <!-- Identificación del Cliente -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-id-card"></i>
+                            Identificación del Cliente
+                        </label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text"
+                                   id="buscarIdentificacion"
+                                   class="form-control"
+                                   placeholder="1-1234-5678"
+                                   style="flex: 1;" />
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    onclick="buscarCliente()"
+                                    style="border-radius: 15px; padding: 0 2rem;">
+                                <span><i class="fas fa-search"></i> Buscar</span>
+                            </button>
+                        </div>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Ingrese la identificación del cliente y presione Buscar
+                        </small>
+                    </div>
+
+                    <!-- Información del Cliente (Se llena automáticamente) -->
+                    <div id="infoCliente" style="display: none;">
+                        <div class="feature-card" style="margin: 2rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(39, 174, 96, 0.08) 0%, rgba(46, 204, 113, 0.08) 100%); border-left: 4px solid var(--green); border-radius: 15px;">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--green), #27ae60); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
+                                    <i class="fas fa-user-check" style="font-size: 1.8rem; color: white;"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h6 style="color: var(--green); margin: 0 0 0.3rem; font-weight: 700; font-size: 1.1rem;">
+                                        <i class="fas fa-check-circle"></i> Cliente Encontrado
+                                    </h6>
+                                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Los datos del cliente se han cargado correctamente</p>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                <div style="background: var(--white); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
+                                    <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                        <i class="fas fa-user" style="color: var(--teal);"></i> Nombre
+                                    </label>
+                                    <p id="clienteNombre" style="margin: 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;"></p>
+                                </div>
+                                <div style="background: var(--white); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
+                                    <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                        <i class="fas fa-phone" style="color: var(--teal);"></i> Teléfono
+                                    </label>
+                                    <p id="clienteTelefono" style="margin: 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alerta de cliente no encontrado -->
+                    <div id="clienteNoEncontrado" style="display: none; background: rgba(231, 76, 60, 0.08); border-left: 4px solid #e74c3c; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                        <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
+                            <span>Cliente no encontrado. Verifique la identificación ingresada.</span>
+                        </p>
+                    </div>
+
+                    <!-- Detalles de la Reserva -->
+                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin: 2.5rem 0; box-shadow: var(--shadow-md);">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem; font-size: 1.2rem;">
+                            <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            Detalles de la Reserva
+                        </h5>
+                    </div>
+
+                    <!-- Fecha y Hora -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-calendar"></i>
+                                Fecha de la Reserva
+                            </label>
+                            @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", type = "date", min = DateTime.Now.ToString("yyyy-MM-dd") } })
+                            @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-clock"></i>
+                                Hora de la Reserva
+                            </label>
+                            <select name="Hora" class="form-control" required>
+                                <option value="">-- Selecciona una hora --</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="11:30">11:30 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="12:30">12:30 PM</option>
+                                <option value="13:00">1:00 PM</option>
+                                <option value="13:30">1:30 PM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="14:30">2:30 PM</option>
+                                <option value="18:00">6:00 PM</option>
+                                <option value="18:30">6:30 PM</option>
+                                <option value="19:00">7:00 PM</option>
+                                <option value="19:30">7:30 PM</option>
+                                <option value="20:00">8:00 PM</option>
+                                <option value="20:30">8:30 PM</option>
+                                <option value="21:00">9:00 PM</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.Hora, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Cantidad de Personas -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-users"></i>
+                            Cantidad de Personas
+                        </label>
+                        @Html.EditorFor(model => model.CantidadPersonas, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", max = "20", placeholder = "1" } })
+                        @Html.ValidationMessageFor(model => model.CantidadPersonas, "", new { @class = "text-danger" })
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Máximo 20 personas por reserva
+                        </small>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-check-circle"></i>
+                            Estado de la Reserva
+                        </label>
+                        <select name="Estado" class="form-control" required>
+                            <option value="">-- Selecciona el estado --</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Confirmada" selected>Confirmada</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Observaciones -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-comment"></i>
+                            Observaciones o Notas Especiales
+                        </label>
+                        <textarea name="Observaciones" class="form-control" rows="4" placeholder="Alergias, preferencias de mesa, celebraciones, etc." style="resize: vertical;"></textarea>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
+                            <i class="fas fa-info-circle" style="color: var(--teal);"></i>
+                            Opcional - Máximo 500 caracteres
+                        </small>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2.5rem;">
+                        <button type="button" class="btn btn-secondary btn-3d" onclick="window.location.href='@Url.Action("ListadoReservas", "Reserva")'" style="flex: 1; padding: 1rem 2rem;">
+                            <span><i class="fas fa-times"></i> Cancelar</span>
+                        </button>
+                        <button type="submit" id="btnRegistrar" class="btn btn-primary btn-3d" style="flex: 1; padding: 1rem 2rem;" disabled>
+                            <span><i class="fas fa-save"></i> Registrar Reserva</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" style="padding: 4rem 0;">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Búsqueda Rápida</h3>
+                <p>Encuentra clientes por su identificación al instante</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Registro Ágil</h3>
+                <p>Crea reservas en menos de un minuto</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>Datos Automáticos</h3>
+                <p>Información del cliente cargada automáticamente</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-check-double"></i>
+                </div>
+                <h3>Validación Completa</h3>
+                <p>Sistema verifica todos los datos antes de guardar</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/reserva.js"></script>
+
+    <script>
+        function buscarCliente() {
+            const identificacion = document.getElementById('buscarIdentificacion').value.trim();
+
+            if (!identificacion) {
+                mostrarNotificacion('Por favor ingrese una identificación', 'warning');
+                return;
+            }
+
+            // Ocultar mensajes anteriores
+            document.getElementById('infoCliente').style.display = 'none';
+            document.getElementById('clienteNoEncontrado').style.display = 'none';
+
+            // Llamada AJAX
+            fetch('@Url.Action("BuscarClientePorIdentificacion", "Reserva")?identificacion=' + encodeURIComponent(identificacion))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Llenar los datos del cliente
+                        document.getElementById('IdCliente').value = data.data.Id;
+                        document.getElementById('clienteNombre').textContent = data.data.Nombre;
+                        document.getElementById('clienteTelefono').textContent = data.data.Telefono;
+
+                        // Mostrar la información del cliente
+                        document.getElementById('infoCliente').style.display = 'block';
+
+                        // Habilitar el botón de registrar
+                        document.getElementById('btnRegistrar').disabled = false;
+
+                        mostrarNotificacion('Cliente encontrado correctamente', 'success');
+                    } else {
+                        // Mostrar mensaje de error
+                        document.getElementById('clienteNoEncontrado').style.display = 'block';
+                        document.getElementById('btnRegistrar').disabled = true;
+                        mostrarNotificacion(data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    mostrarNotificacion('Error al buscar el cliente', 'error');
+                });
+        }
+
+        // Permitir buscar con Enter
+        document.getElementById('buscarIdentificacion').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                buscarCliente();
+            }
+        });
+    </script>
+}

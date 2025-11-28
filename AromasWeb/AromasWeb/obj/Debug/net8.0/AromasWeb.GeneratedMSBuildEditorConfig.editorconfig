@@ -60,6 +60,46 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhUmVjZXRhXF9Nb2RhbEVsaW1pbmFyQ2F0ZWdvcmlhUmVjZXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/CrearCliente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxDcmVhckNsaWVudGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/EditarCliente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxFZGl0YXJDbGllbnRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/EditarMiReserva.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxFZGl0YXJNaVJlc2VydmEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/HistorialReservas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxIaXN0b3JpYWxSZXNlcnZhcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/ListadoClientes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxMaXN0YWRvQ2xpZW50ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/MisReservas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxNaXNSZXNlcnZhcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalCancelarReserva.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxfTW9kYWxDYW5jZWxhclJlc2VydmEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalDetallesCliente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxfTW9kYWxEZXRhbGxlc0NsaWVudGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalDetallesReserva.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxfTW9kYWxEZXRhbGxlc1Jlc2VydmEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalEliminarCliente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxfTW9kYWxFbGltaW5hckNsaWVudGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -134,6 +174,30 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/_ModalEliminarReceta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZXRhXF9Nb2RhbEVsaW1pbmFyUmVjZXRhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/CrearReserva.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxDcmVhclJlc2VydmEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/EditarReserva.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxFZGl0YXJSZXNlcnZhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/ListadoReservas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxMaXN0YWRvUmVzZXJ2YXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/RegistrarReservaCliente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxSZWdpc3RyYXJSZXNlcnZhQ2xpZW50ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/_ModalCancelarReserva.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxfTW9kYWxDYW5jZWxhclJlc2VydmEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/_ModalDetallesReserva.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxfTW9kYWxEZXRhbGxlc1Jlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Shared/Error.cshtml]

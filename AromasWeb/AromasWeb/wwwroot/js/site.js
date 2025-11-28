@@ -459,3 +459,55 @@ console.log('%c¡Bienvenido a Entre Dichos y Tazas! ☕',
     'color: #207476; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);');
 console.log('%cDesarrollado con ❤️ por AromasWeb',
     'color: #E06E49; font-size: 14px;');
+
+// ===================================
+// DROPDOWN MENU MOBILE
+// ===================================
+document.addEventListener('DOMContentLoaded', function () {
+    // Manejar dropdowns en móvil
+    const navDropdowns = document.querySelectorAll('.nav-dropdown');
+
+    navDropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('.nav-link');
+
+        if (link) {
+            link.addEventListener('click', function (e) {
+                // Solo prevenir en móvil
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+
+                    // Cerrar otros dropdowns
+                    navDropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+
+                    // Toggle del dropdown actual
+                    dropdown.classList.toggle('active');
+                }
+            });
+        }
+    });
+
+    // Cerrar dropdown al hacer clic en un item del menú
+    const dropdownItems = document.querySelectorAll('.dropdown-menu a');
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', function () {
+            if (window.innerWidth <= 968) {
+                const dropdown = this.closest('.nav-dropdown');
+                if (dropdown) {
+                    dropdown.classList.remove('active');
+                }
+
+                // Cerrar menú hamburguesa
+                const navMenu = document.getElementById('navMenu');
+                const hamburger = document.getElementById('hamburger');
+                if (navMenu && hamburger) {
+                    navMenu.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            }
+        });
+    });
+});
