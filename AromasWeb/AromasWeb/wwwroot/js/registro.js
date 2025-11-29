@@ -1,0 +1,368 @@
+﻿// ============================================
+// REGISTRO.JS - Validaciones y funcionalidad
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Inicializar funcionalidades
+    initPasswordToggle();
+    initPasswordStrength();
+    initPasswordMatch();
+    initFormValidation();
+    initInputAnimations();
+});
+
+// ============================================
+// TOGGLE PASSWORD VISIBILITY
+// ============================================
+function initPasswordToggle() {
+    // Toggle para contraseña principal
+    const togglePassword = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password-input');
+    const eyeIcon = document.getElementById('eye-icon');
+
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            if (type === 'password') {
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            } else {
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            }
+        });
+    }
+
+    // Toggle para confirmar contraseña
+    const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
+    const confirmPasswordInput = document.getElementById('confirm-password-input');
+    const eyeIconConfirm = document.getElementById('eye-icon-confirm');
+
+    if (toggleConfirmPassword && confirmPasswordInput) {
+        toggleConfirmPassword.addEventListener('click', function () {
+            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPasswordInput.setAttribute('type', type);
+
+            if (type === 'password') {
+                eyeIconConfirm.classList.remove('fa-eye-slash');
+                eyeIconConfirm.classList.add('fa-eye');
+            } else {
+                eyeIconConfirm.classList.remove('fa-eye');
+                eyeIconConfirm.classList.add('fa-eye-slash');
+            }
+        });
+    }
+}
+
+// ============================================
+// PASSWORD STRENGTH INDICATOR
+// ============================================
+function initPasswordStrength() {
+    const passwordInput = document.getElementById('password-input');
+    if (!passwordInput) return;
+
+    const strength1 = document.getElementById('strength-1');
+    const strength2 = document.getElementById('strength-2');
+    const strength3 = document.getElementById('strength-3');
+    const strength4 = document.getElementById('strength-4');
+    const strengthText = document.getElementById('strength-text');
+
+    passwordInput.addEventListener('input', function () {
+        const password = this.value;
+        const strength = calculatePasswordStrength(password);
+
+        // Reset all bars
+        [strength1, strength2, strength3, strength4].forEach(bar => {
+            bar.style.background = 'var(--gray-light)';
+        });
+
+        // Update based on strength
+        if (strength === 0) {
+            strengthText.textContent = '';
+        } else if (strength === 1) {
+            strength1.style.background = '#e74c3c';
+            strengthText.textContent = 'Muy débil';
+            strengthText.style.color = '#e74c3c';
+        } else if (strength === 2) {
+            strength1.style.background = '#f39c12';
+            strength2.style.background = '#f39c12';
+            strengthText.textContent = 'Débil';
+            strengthText.style.color = '#f39c12';
+        } else if (strength === 3) {
+            strength1.style.background = '#f39c12';
+            strength2.style.background = '#f39c12';
+            strength3.style.background = '#f39c12';
+            strengthText.textContent = 'Aceptable';
+            strengthText.style.color = '#f39c12';
+        } else if (strength === 4) {
+            strength1.style.background = '#27ae60';
+            strength2.style.background = '#27ae60';
+            strength3.style.background = '#27ae60';
+            strength4.style.background = '#27ae60';
+            strengthText.textContent = 'Fuerte';
+            strengthText.style.color = '#27ae60';
+        }
+    });
+}
+
+function calculatePasswordStrength(password) {
+    if (password.length === 0) return 0;
+
+    let strength = 0;
+
+    // Longitud
+    if (password.length >= 8) strength++;
+    if (password.length >= 12) strength++;
+
+    // Tiene números
+    if (/\d/.test(password)) strength++;
+
+    // Tiene mayúsculas y minúsculas
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+
+    // Tiene caracteres especiales
+    if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+    return Math.min(strength, 4);
+}
+
+// ============================================
+// PASSWORD MATCH VALIDATION
+// ============================================
+function initPasswordMatch() {
+    const passwordInput = document.getElementById('password-input');
+    const confirmPasswordInput = document.getElementById('confirm-password-input');
+    const matchMessage = document.getElementById('password-match-message');
+
+    if (!passwordInput || !confirmPasswordInput || !matchMessage) return;
+
+    function checkMatch() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+
+        if (confirmPassword.length === 0) {
+            matchMessage.innerHTML = '';
+            confirmPasswordInput.style.borderColor = '';
+            return;
+        }
+
+        if (password === confirmPassword) {
+            matchMessage.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.5rem; color: #27ae60; font-size: 0.9rem;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Las contraseñas coinciden</span>
+                </div>
+            `;
+            confirmPasswordInput.style.borderColor = '#27ae60';
+        } else {
+            matchMessage.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.5rem; color: #e74c3c; font-size: 0.9rem;">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Las contraseñas no coinciden</span>
+                </div>
+            `;
+            confirmPasswordInput.style.borderColor = '#e74c3c';
+        }
+    }
+
+    passwordInput.addEventListener('input', checkMatch);
+    confirmPasswordInput.addEventListener('input', checkMatch);
+}
+
+// ============================================
+// FORM VALIDATION
+// ============================================
+function initFormValidation() {
+    const form = document.querySelector('form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        // Validar nombre completo
+        const nombreCompleto = document.querySelector('input[name="NombreCompleto"]');
+        if (nombreCompleto && nombreCompleto.value.trim().length < 3) {
+            e.preventDefault();
+            mostrarNotificacion('El nombre completo debe tener al menos 3 caracteres', 'error');
+            nombreCompleto.focus();
+            return;
+        }
+
+        // Validar identificación
+        const identificacion = document.querySelector('input[name="Identificacion"]');
+        if (identificacion && identificacion.value.trim().length < 5) {
+            e.preventDefault();
+            mostrarNotificacion('Ingresa una identificación válida', 'error');
+            identificacion.focus();
+            return;
+        }
+
+        // Validar teléfono
+        const telefono = document.querySelector('input[name="Telefono"]');
+        if (telefono && telefono.value.trim().length < 8) {
+            e.preventDefault();
+            mostrarNotificacion('Ingresa un teléfono válido', 'error');
+            telefono.focus();
+            return;
+        }
+
+        // Validar correo
+        const correo = document.querySelector('input[name="Correo"]');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (correo && !emailRegex.test(correo.value)) {
+            e.preventDefault();
+            mostrarNotificacion('Ingresa un correo electrónico válido', 'error');
+            correo.focus();
+            return;
+        }
+
+        // Validar contraseña
+        const password = document.getElementById('password-input');
+        if (password && password.value.length < 8) {
+            e.preventDefault();
+            mostrarNotificacion('La contraseña debe tener al menos 8 caracteres', 'error');
+            password.focus();
+            return;
+        }
+
+        // Validar coincidencia de contraseñas
+        const confirmPassword = document.getElementById('confirm-password-input');
+        if (password && confirmPassword && password.value !== confirmPassword.value) {
+            e.preventDefault();
+            mostrarNotificacion('Las contraseñas no coinciden', 'error');
+            confirmPassword.focus();
+            return;
+        }
+
+        // Validar términos y condiciones
+        const terminos = document.getElementById('terminos-checkbox');
+        if (terminos && !terminos.checked) {
+            e.preventDefault();
+            mostrarNotificacion('Debes aceptar los términos y condiciones', 'warning');
+            terminos.focus();
+            return;
+        }
+
+        // Mostrar loading en el botón
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span><i class="fas fa-spinner fa-spin"></i> Creando cuenta...</span>';
+            submitBtn.disabled = true;
+
+            // Si hay error, restaurar el botón después de 2 segundos
+            setTimeout(() => {
+                if (!form.checkValidity()) {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 2000);
+        }
+    });
+}
+
+// ============================================
+// INPUT ANIMATIONS
+// ============================================
+function initInputAnimations() {
+    const inputs = document.querySelectorAll('.form-control');
+
+    inputs.forEach(input => {
+        input.addEventListener('focus', function () {
+            this.style.transform = 'scale(1.02)';
+            this.style.boxShadow = '0 0 0 4px rgba(32, 116, 118, 0.1)';
+        });
+
+        input.addEventListener('blur', function () {
+            this.style.transform = '';
+            this.style.boxShadow = '';
+        });
+
+        // Limpiar borde de error al escribir
+        input.addEventListener('input', function () {
+            if (this.style.borderColor === 'rgb(231, 76, 60)') {
+                this.style.borderColor = '';
+            }
+        });
+    });
+}
+
+// ============================================
+// NOTIFICACIONES
+// ============================================
+function mostrarNotificacion(mensaje, tipo) {
+    const iconos = {
+        'success': 'fa-check-circle',
+        'error': 'fa-exclamation-triangle',
+        'warning': 'fa-exclamation-triangle',
+        'info': 'fa-info-circle'
+    };
+
+    const colores = {
+        'success': '#27ae60',
+        'error': '#e74c3c',
+        'warning': '#f39c12',
+        'info': '#3498db'
+    };
+
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${colores[tipo]};
+        color: white;
+        padding: 1.5rem 2rem;
+        border-radius: 10px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        z-index: 10001;
+        animation: slideIn 0.3s ease;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        min-width: 300px;
+    `;
+
+    notification.innerHTML = `
+        <i class="fas ${iconos[tipo]}" style="font-size: 1.5rem;"></i>
+        <span>${mensaje}</span>
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 4000);
+}
+
+// Animaciones
+const style = document.createElement('style');
+style.innerHTML = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+console.log('%c✓ Script de registro cargado correctamente', 'color: #27ae60; font-weight: bold;');

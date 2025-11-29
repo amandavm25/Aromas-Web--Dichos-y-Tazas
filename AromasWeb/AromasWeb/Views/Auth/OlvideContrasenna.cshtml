@@ -1,0 +1,336 @@
+﻿@{
+    ViewBag.Title = "Recuperar Contraseña";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-key"></i>
+                Recuperación de Cuenta
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                ¿Olvidaste tu
+                <span class="hero-title-accent">Contraseña?</span>
+            </h1>
+            <p class="hero-subtitle">
+                No te preocupes, te ayudaremos a recuperar tu cuenta
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 700px;">
+        @using (Html.BeginForm("OlvideContrasenna", "Auth", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Mensaje de éxito -->
+                    @if (TempData["Mensaje"] != null)
+                    {
+                        <div style="background: linear-gradient(135deg, rgba(98, 170, 118, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; border-left: 4px solid #27ae60;">
+                            <div style="display: flex; align-items: start; gap: 1rem;">
+                                <i class="fas fa-check-circle" style="color: #27ae60; font-size: 1.5rem; margin-top: 0.2rem;"></i>
+                                <div>
+                                    <h6 style="color: #229954; margin: 0 0 0.5rem; font-weight: 700;">¡Correo enviado!</h6>
+                                    <p style="margin: 0; color: #229954; line-height: 1.6;">@TempData["Mensaje"]</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Información -->
+                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-info-circle"></i> Recuperar Acceso
+                        </h5>
+                    </div>
+
+                    <!-- Instrucciones -->
+                    <div class="feature-card" style="margin-bottom: 2rem; padding: 2rem; background: var(--white);">
+                        <div style="display: flex; gap: 1.5rem;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--coral), var(--amber)); border-radius: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <i class="fas fa-envelope" style="font-size: 1.8rem; color: white;"></i>
+                            </div>
+                            <div>
+                                <h6 style="color: var(--dark-teal); margin: 0 0 0.7rem; font-weight: 700; font-size: 1.1rem;">
+                                    ¿Cómo funciona?
+                                </h6>
+                                <p style="color: var(--gray); margin: 0; line-height: 1.7;">
+                                    Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña. El enlace será válido por <strong>24 horas</strong>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Correo Electrónico -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-envelope"></i>
+                            Correo Electrónico Registrado
+                        </label>
+                        <input type="email"
+                               name="Correo"
+                               class="form-control"
+                               placeholder="correo@ejemplo.com"
+                               required
+                               style="font-size: 1.1rem; padding: 1.2rem 1.5rem;" />
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Ingresa el correo con el que te registraste
+                        </small>
+                    </div>
+
+                    <!-- Proceso de recuperación -->
+                    <div style="background: var(--cream); padding: 2rem; border-radius: 20px; margin: 2rem 0;">
+                        <h6 style="color: var(--dark-teal); margin: 0 0 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-list-ol" style="color: var(--coral);"></i>
+                            Pasos a seguir
+                        </h6>
+
+                        <div style="display: grid; gap: 1.2rem;">
+                            <!-- Paso 1 -->
+                            <div style="display: flex; gap: 1rem; align-items: start;">
+                                <div style="width: 35px; height: 35px; background: linear-gradient(135deg, var(--teal), var(--dark-teal)); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">
+                                    1
+                                </div>
+                                <div style="flex: 1;">
+                                    <h6 style="color: var(--dark-teal); margin: 0 0 0.3rem; font-weight: 600;">Ingresa tu correo</h6>
+                                    <p style="color: var(--gray); margin: 0; font-size: 0.95rem;">Escribe el correo electrónico asociado a tu cuenta</p>
+                                </div>
+                            </div>
+
+                            <!-- Paso 2 -->
+                            <div style="display: flex; gap: 1rem; align-items: start;">
+                                <div style="width: 35px; height: 35px; background: linear-gradient(135deg, var(--teal), var(--dark-teal)); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">
+                                    2
+                                </div>
+                                <div style="flex: 1;">
+                                    <h6 style="color: var(--dark-teal); margin: 0 0 0.3rem; font-weight: 600;">Revisa tu correo</h6>
+                                    <p style="color: var(--gray); margin: 0; font-size: 0.95rem;">Te enviaremos un enlace de recuperación (revisa spam)</p>
+                                </div>
+                            </div>
+
+                            <!-- Paso 3 -->
+                            <div style="display: flex; gap: 1rem; align-items: start;">
+                                <div style="width: 35px; height: 35px; background: linear-gradient(135deg, var(--teal), var(--dark-teal)); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">
+                                    3
+                                </div>
+                                <div style="flex: 1;">
+                                    <h6 style="color: var(--dark-teal); margin: 0 0 0.3rem; font-weight: 600;">Crea una nueva contraseña</h6>
+                                    <p style="color: var(--gray); margin: 0; font-size: 0.95rem;">Haz clic en el enlace y establece tu nueva contraseña</p>
+                                </div>
+                            </div>
+
+                            <!-- Paso 4 -->
+                            <div style="display: flex; gap: 1rem; align-items: start;">
+                                <div style="width: 35px; height: 35px; background: linear-gradient(135deg, var(--green), #229954); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h6 style="color: var(--dark-teal); margin: 0 0 0.3rem; font-weight: 600;">¡Listo!</h6>
+                                    <p style="color: var(--gray); margin: 0; font-size: 0.95rem;">Ya puedes iniciar sesión con tu nueva contraseña</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advertencia -->
+                    <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin: 2rem 0; border: 2px dashed var(--amber);">
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--amber); font-size: 1.5rem; margin-top: 0.2rem;"></i>
+                            <div>
+                                <h6 style="color: var(--dark-teal); margin: 0 0 0.5rem; font-weight: 700;">Importante</h6>
+                                <ul style="margin: 0; padding-left: 1.2rem; color: var(--gray); line-height: 1.7;">
+                                    <li>El enlace de recuperación expira en 24 horas</li>
+                                    <li>Solo puedes usar el enlace una vez</li>
+                                    <li>Si no recibes el correo en 5 minutos, revisa tu carpeta de spam</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2.5rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Login", "Auth")'" style="flex: 1;">
+                            <span><i class="fas fa-arrow-left"></i> Volver al Login</span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-3d" onclick="window.location.href='@Url.Action("RestablecerContrasenna", "Auth")'" style="flex: 1;">
+                            <span><i class="fas fa-paper-plane"></i> Enviar Enlace</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="features" style="padding: 4rem 0;">
+    <div class="container" style="max-width: 900px;">
+        <div class="section-header">
+            <span class="section-badge">¿Necesitas ayuda?</span>
+            <h2 class="section-title">
+                Preguntas <span class="title-accent">Frecuentes</span>
+            </h2>
+        </div>
+
+        <div style="display: grid; gap: 1.5rem;">
+            <!-- Pregunta 1 -->
+            <div class="feature-card" style="padding: 2rem; margin: 0;" data-aos="fade-up">
+                <h5 style="color: var(--dark-teal); margin: 0 0 1rem; display: flex; align-items: center; gap: 0.7rem;">
+                    <i class="fas fa-question-circle" style="color: var(--coral);"></i>
+                    ¿Qué hago si no recibo el correo?
+                </h5>
+                <p style="color: var(--gray); margin: 0; line-height: 1.7; padding-left: 2.2rem;">
+                    Primero revisa tu carpeta de spam o correo no deseado. Si después de 10 minutos no lo encuentras, intenta solicitar un nuevo enlace o contacta a soporte.
+                </p>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="feature-card" style="padding: 2rem; margin: 0;" data-aos="fade-up" data-aos-delay="100">
+                <h5 style="color: var(--dark-teal); margin: 0 0 1rem; display: flex; align-items: center; gap: 0.7rem;">
+                    <i class="fas fa-question-circle" style="color: var(--coral);"></i>
+                    ¿El enlace expiró, qué hago?
+                </h5>
+                <p style="color: var(--gray); margin: 0; line-height: 1.7; padding-left: 2.2rem;">
+                    No hay problema, simplemente regresa a esta página y solicita un nuevo enlace de recuperación. Puedes hacerlo cuantas veces necesites.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var emailInput = document.querySelector('input[type="email"]');
+
+            if (emailInput) {
+                emailInput.addEventListener('focus', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.boxShadow = '0 0 0 4px rgba(32, 116, 118, 0.1)';
+                });
+
+                emailInput.addEventListener('blur', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            }
+
+            var btnEnviar = document.querySelector('.btn-primary.btn-3d');
+            if (btnEnviar) {
+                btnEnviar.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    var email = emailInput.value;
+                    var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+
+                    if (!email || email.trim() === '') {
+                        mostrarNotificacion('Por favor ingresa tu correo electrónico', 'warning');
+                        emailInput.style.borderColor = '#f39c12';
+                        emailInput.focus();
+                        return;
+                    }
+
+                    if (!emailRegex.test(email)) {
+                        mostrarNotificacion('Por favor ingresa un correo electrónico válido', 'error');
+                        emailInput.style.borderColor = '#e74c3c';
+                        emailInput.focus();
+                        return;
+                    }
+
+                    var originalText = this.innerHTML;
+                    this.innerHTML = '<span><i class="fas fa-spinner fa-spin"></i> Enviando...</span>';
+                    this.disabled = true;
+
+                    setTimeout(function() {
+                        mostrarNotificacion('Correo enviado correctamente. Redirigiendo...', 'success');
+                        setTimeout(function() {
+                            window.location.href = '/Auth/RestablecerContrasena';
+                        }, 1500);
+                    }, 1000);
+                });
+            }
+
+            if (emailInput) {
+                emailInput.addEventListener('input', function() {
+                    this.style.borderColor = '';
+                });
+            }
+        });
+
+        function mostrarNotificacion(mensaje, tipo) {
+            var iconos = {
+                'success': 'fa-check-circle',
+                'error': 'fa-exclamation-triangle',
+                'warning': 'fa-exclamation-triangle',
+                'info': 'fa-info-circle'
+            };
+
+            var colores = {
+                'success': '#27ae60',
+                'error': '#e74c3c',
+                'warning': '#f39c12',
+                'info': '#3498db'
+            };
+
+            var notification = document.createElement('div');
+            notification.style.cssText =
+                'position: fixed;' +
+                'top: 100px;' +
+                'right: 20px;' +
+                'background: ' + colores[tipo] + ';' +
+                'color: white;' +
+                'padding: 1.5rem 2rem;' +
+                'border-radius: 10px;' +
+                'box-shadow: 0 8px 32px rgba(0,0,0,0.2);' +
+                'z-index: 10001;' +
+                'animation: slideIn 0.3s ease;' +
+                'font-weight: 600;' +
+                'display: flex;' +
+                'align-items: center;' +
+                'gap: 1rem;' +
+                'min-width: 300px;';
+
+            notification.innerHTML =
+                '<i class="fas ' + iconos[tipo] + '" style="font-size: 1.5rem;"></i>' +
+                '<span>' + mensaje + '</span>';
+
+            document.body.appendChild(notification);
+
+            setTimeout(function() {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(function() {
+                    notification.remove();
+                }, 300);
+            }, 4000);
+        }
+
+        var style = document.createElement('style');
+        style.innerHTML =
+            '@@keyframes slideIn {' +
+                'from { transform: translateX(400px); opacity: 0; }' +
+                'to { transform: translateX(0); opacity: 1; }' +
+            '}' +
+            '@@keyframes slideOut {' +
+                'from { transform: translateX(0); opacity: 1; }' +
+                'to { transform: translateX(400px); opacity: 0; }' +
+            '}';
+        document.head.appendChild(style);
+    </script>
+}

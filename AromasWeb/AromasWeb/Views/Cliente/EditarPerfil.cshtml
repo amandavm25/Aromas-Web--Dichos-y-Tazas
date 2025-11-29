@@ -1,0 +1,177 @@
+﻿@model AromasWeb.Abstracciones.ModeloUI.Cliente
+
+@{
+    ViewBag.Title = "Editar Mi Perfil";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-user-edit"></i>
+                Actualizar Información
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Editar Mi
+                <span class="hero-title-accent">Perfil</span>
+            </h1>
+            <p class="hero-subtitle">
+                Actualiza tu información personal
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 900px;">
+        @using (Html.BeginForm("EditarPerfil", "Cliente", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.IdCliente)
+            @Html.HiddenFor(model => model.FechaRegistro)
+            @Html.HiddenFor(model => model.Estado)
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Información Personal -->
+                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-user"></i> Información Personal
+                        </h5>
+                    </div>
+
+                    <!-- Nombre Completo -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-user"></i>
+                            Nombre Completo
+                        </label>
+                        @Html.EditorFor(model => model.NombreCompleto, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Juan Pérez Rodríguez" } })
+                        @Html.ValidationMessageFor(model => model.NombreCompleto, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Identificación y Teléfono -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-id-card"></i>
+                                Identificación
+                            </label>
+                            @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", placeholder = "1-1234-5678" } })
+                            @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-phone"></i>
+                                Teléfono
+                            </label>
+                            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", placeholder = "8888-1234" } })
+                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Correo Electrónico -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-envelope"></i>
+                            Correo Electrónico
+                        </label>
+                        @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", type = "email", placeholder = "correo@ejemplo.com" } })
+                        @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Este correo será utilizado para iniciar sesión
+                        </small>
+                    </div>
+
+                    <!-- Información Adicional -->
+                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-calendar-plus" style="color: var(--teal);"></i> Miembro Desde
+                                </label>
+                                <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600;">@Model.FechaRegistroFormateada</p>
+                            </div>
+                            <div>
+                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-calendar-check" style="color: var(--teal);"></i> Última Reserva
+                                </label>
+                                <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600;">@Model.UltimaReservaFormateada</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cambiar Contraseña -->
+                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-lock"></i> Cambiar Contraseña (Opcional)
+                        </h5>
+                    </div>
+
+                    <div style="background: var(--white); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; border: 2px dashed var(--gray);">
+                        <small style="color: var(--gray); display: block;">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Solo completa estos campos si deseas cambiar tu contraseña. De lo contrario, déjalos vacíos.
+                        </small>
+                    </div>
+
+                    <!-- Contraseña Actual -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-lock"></i>
+                            Contraseña Actual
+                        </label>
+                        <input type="password" name="ContrasenaActual" class="form-control" placeholder="Ingresa tu contraseña actual" />
+                    </div>
+
+                    <!-- Nueva Contraseña y Confirmar -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-key"></i>
+                                Nueva Contraseña
+                            </label>
+                            <input type="password" name="ContrasenaNueva" class="form-control" placeholder="Mínimo 8 caracteres" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-key"></i>
+                                Confirmar Nueva Contraseña
+                            </label>
+                            <input type="password" name="ConfirmarContrasenaNueva" class="form-control" placeholder="Repite la nueva contraseña" />
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("MiPerfil", "Cliente")'" style="flex: 1;">
+                            <span><i class="fas fa-times"></i> Cancelar</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
+                            <span><i class="fas fa-save"></i> Guardar Cambios</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/cliente.js"></script>
+}

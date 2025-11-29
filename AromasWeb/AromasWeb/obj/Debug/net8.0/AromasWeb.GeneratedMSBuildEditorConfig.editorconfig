@@ -20,6 +20,22 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/OlvideContrasenna.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxPbHZpZGVDb250cmFzZW5uYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/Registro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZWdpc3Ryby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/RestablecerContrasenna.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZXN0YWJsZWNlckNvbnRyYXNlbm5hLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/CrearCategoriaInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhSW5zdW1vXENyZWFyQ2F0ZWdvcmlhSW5zdW1vLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -72,12 +88,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxFZGl0YXJNaVJlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/EditarPerfil.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxFZGl0YXJQZXJmaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/HistorialReservas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxIaXN0b3JpYWxSZXNlcnZhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/ListadoClientes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxMaXN0YWRvQ2xpZW50ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/MiPerfil.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxNaVBlcmZpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/MisReservas.cshtml]

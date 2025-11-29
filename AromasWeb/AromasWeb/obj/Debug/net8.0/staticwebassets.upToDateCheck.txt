@@ -6,6 +6,8 @@ wwwroot\js\cliente.js
 wwwroot\js\insumo.js
 wwwroot\js\promocion.js
 wwwroot\js\receta.js
+wwwroot\js\recuperarContrasenna.js
+wwwroot\js\registro.js
 wwwroot\js\reserva.js
 wwwroot\js\site.js
 wwwroot\js\tipoPromocion.js

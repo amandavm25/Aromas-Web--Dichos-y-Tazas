@@ -339,5 +339,94 @@ namespace AromasWeb.Controllers
 
             return RedirectToAction(nameof(EditarCliente), new { id = idCliente });
         }
+
+        // GET: Cliente/MiPerfil
+        public IActionResult MiPerfil()
+        {
+            // En producción, obtener el IdCliente de la sesión
+            int idCliente = 1; // Simulación
+
+            var cliente = new Cliente
+            {
+                IdCliente = idCliente,
+                Identificacion = "1-1234-5678",
+                NombreCompleto = "María González Rodríguez",
+                Correo = "maria.gonzalez@email.com",
+                Telefono = "8888-1234",
+                Estado = true,
+                FechaRegistro = DateTime.Now.AddMonths(-6),
+                UltimaReserva = DateTime.Now.AddDays(-5)
+            };
+
+            return View(cliente);
+        }
+
+        // GET: Cliente/EditarPerfil
+        public IActionResult EditarPerfil()
+        {
+            // En producción, obtener el IdCliente de la sesión
+            int idCliente = 1; // Simulación
+
+            var cliente = new Cliente
+            {
+                IdCliente = idCliente,
+                Identificacion = "1-1234-5678",
+                NombreCompleto = "María González Rodríguez",
+                Correo = "maria.gonzalez@email.com",
+                Telefono = "8888-1234",
+                Estado = true,
+                FechaRegistro = DateTime.Now.AddMonths(-6),
+                UltimaReserva = DateTime.Now.AddDays(-5)
+            };
+
+            return View(cliente);
+        }
+
+        // POST: Cliente/EditarPerfil
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarPerfil(Cliente cliente, string contrasenaActual, string contrasenaNueva, string confirmarContrasenaNueva)
+        {
+            if (ModelState.IsValid)
+            {
+                // Actualizar información básica del cliente en base de datos
+                // ...
+
+                // Si se proporcionaron campos de contraseña, cambiarla también
+                if (!string.IsNullOrWhiteSpace(contrasenaActual) &&
+                    !string.IsNullOrWhiteSpace(contrasenaNueva) &&
+                    !string.IsNullOrWhiteSpace(confirmarContrasenaNueva))
+                {
+                    // Verificar contraseña actual
+                    // En producción: verificar contra base de datos
+
+                    // Validar que la nueva contraseña cumpla requisitos
+                    if (contrasenaNueva != confirmarContrasenaNueva)
+                    {
+                        TempData["Error"] = "Las contraseñas nuevas no coinciden";
+                        return View(cliente);
+                    }
+
+                    if (contrasenaNueva.Length < 8)
+                    {
+                        TempData["Error"] = "La contraseña debe tener al menos 8 caracteres";
+                        return View(cliente);
+                    }
+
+                    // Actualizar contraseña en base de datos
+                    // ...
+
+                    TempData["Mensaje"] = "Tu perfil y contraseña han sido actualizados correctamente";
+                }
+                else
+                {
+                    TempData["Mensaje"] = "Tu perfil ha sido actualizado correctamente";
+                }
+
+                return RedirectToAction(nameof(MiPerfil));
+            }
+
+            return View(cliente);
+        }
     }
 }

@@ -511,3 +511,40 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+// ===================================
+// DROPDOWN PERFIL DE USUARIO
+// ===================================
+document.addEventListener('DOMContentLoaded', function () {
+    const navDropdowns = document.querySelectorAll('.nav-dropdown');
+
+    navDropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('.nav-link');
+
+        if (link) {
+            // Para móvil
+            link.addEventListener('click', function (e) {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    navDropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+                    dropdown.classList.toggle('active');
+                }
+            });
+        }
+
+        // Para desktop - hover
+        if (window.innerWidth > 968) {
+            dropdown.addEventListener('mouseenter', function () {
+                this.querySelector('.dropdown-menu').style.display = 'block';
+            });
+
+            dropdown.addEventListener('mouseleave', function () {
+                this.querySelector('.dropdown-menu').style.display = 'none';
+            });
+        }
+    });
+});

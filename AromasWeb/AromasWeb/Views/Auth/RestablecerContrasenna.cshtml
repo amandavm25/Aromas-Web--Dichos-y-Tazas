@@ -1,0 +1,213 @@
+﻿@{
+    ViewBag.Title = "Restablecer Contraseña";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-lock-open"></i>
+                Nueva Contraseña
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Restablecer
+                <span class="hero-title-accent">Contraseña</span>
+            </h1>
+            <p class="hero-subtitle">
+                Crea una nueva contraseña segura para tu cuenta
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 700px;">
+        @using (Html.BeginForm("RestablecerContrasena", "Auth", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Mensaje de confirmación -->
+                    <div style="background: linear-gradient(135deg, rgba(98, 170, 118, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; border-left: 4px solid #27ae60;">
+                        <div style="display: flex; align-items: start; gap: 1rem;">
+                            <i class="fas fa-check-circle" style="color: #27ae60; font-size: 1.5rem; margin-top: 0.2rem;"></i>
+                            <div>
+                                <h6 style="color: #229954; margin: 0 0 0.5rem; font-weight: 700;">¡Enlace verificado!</h6>
+                                <p style="margin: 0; color: #229954; line-height: 1.6;">Tu identidad ha sido confirmada. Ahora puedes establecer una nueva contraseña para tu cuenta.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Header -->
+                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-shield-alt"></i> Nueva Contraseña
+                        </h5>
+                    </div>
+
+                    <!-- Nueva Contraseña -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-key"></i>
+                            Nueva Contraseña
+                        </label>
+                        <div style="position: relative;">
+                            <input type="password"
+                                   name="NuevaContrasena"
+                                   id="password-input"
+                                   class="form-control"
+                                   placeholder="Ingresa tu nueva contraseña"
+                                   required
+                                   style="font-size: 1.1rem; padding: 1.2rem 3.5rem 1.2rem 1.5rem;" />
+                            <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.2rem;">
+                                <i class="fas fa-eye" id="eye-icon"></i>
+                            </button>
+                        </div>
+
+                        <!-- Indicador de fortaleza -->
+                        <div style="margin-top: 0.7rem;">
+                            <div style="display: flex; gap: 0.3rem; height: 4px; margin-bottom: 0.5rem;">
+                                <div id="strength-1" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-2" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-3" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-4" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
+                            </div>
+                            <small id="strength-text" style="color: var(--gray); font-size: 0.85rem;"></small>
+                        </div>
+
+                        <small style="display: block; margin-top: 0.7rem; color: var(--gray);">
+                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números
+                        </small>
+                    </div>
+
+                    <!-- Confirmar Nueva Contraseña -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-check-circle"></i>
+                            Confirmar Nueva Contraseña
+                        </label>
+                        <div style="position: relative;">
+                            <input type="password"
+                                   name="ConfirmarNuevaContrasena"
+                                   id="confirm-password-input"
+                                   class="form-control"
+                                   placeholder="Confirma tu nueva contraseña"
+                                   required
+                                   style="font-size: 1.1rem; padding: 1.2rem 3.5rem 1.2rem 1.5rem;" />
+                            <button type="button" id="toggle-confirm-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.2rem;">
+                                <i class="fas fa-eye" id="eye-icon-confirm"></i>
+                            </button>
+                        </div>
+                        <div id="password-match-message" style="margin-top: 0.5rem;"></div>
+                    </div>
+
+                    <!-- Requisitos de contraseña -->
+                    <div class="feature-card" style="margin: 2rem 0; padding: 2rem; background: var(--white);">
+                        <h6 style="color: var(--dark-teal); margin: 0 0 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-list-check" style="color: var(--teal);"></i>
+                            Requisitos de seguridad
+                        </h6>
+
+                        <div style="display: grid; gap: 0.8rem;">
+                            <div id="req-length" style="display: flex; align-items: center; gap: 0.7rem; color: var(--gray);">
+                                <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
+                                <span>Mínimo 8 caracteres</span>
+                            </div>
+                            <div id="req-uppercase" style="display: flex; align-items: center; gap: 0.7rem; color: var(--gray);">
+                                <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
+                                <span>Al menos una letra mayúscula (A-Z)</span>
+                            </div>
+                            <div id="req-lowercase" style="display: flex; align-items: center; gap: 0.7rem; color: var(--gray);">
+                                <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
+                                <span>Al menos una letra minúscula (a-z)</span>
+                            </div>
+                            <div id="req-number" style="display: flex; align-items: center; gap: 0.7rem; color: var(--gray);">
+                                <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
+                                <span>Al menos un número (0-9)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información de seguridad -->
+                    <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.1) 0%, rgba(230, 126, 34, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin: 2rem 0; border-left: 4px solid var(--amber);">
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <i class="fas fa-shield-alt" style="color: var(--amber); font-size: 1.5rem; margin-top: 0.2rem;"></i>
+                            <div>
+                                <h6 style="color: var(--dark-teal); margin: 0 0 0.5rem; font-weight: 700;">Consejos de seguridad</h6>
+                                <ul style="margin: 0; padding-left: 1.2rem; color: var(--gray); line-height: 1.8;">
+                                    <li>No uses información personal (nombre, fecha de nacimiento)</li>
+                                    <li>Evita contraseñas que hayas usado antes</li>
+                                    <li>No compartas tu contraseña con nadie</li>
+                                    <li>Usa una contraseña diferente para cada sitio</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2.5rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Login", "Auth")'" style="flex: 1;">
+                            <span><i class="fas fa-arrow-left"></i> Cancelar</span>
+                        </button>
+                        <button type="button" id="btn-restablecer" class="btn btn-primary btn-3d" style="flex: 2;">
+                            <span><i class="fas fa-check"></i> Restablecer Contraseña</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Información adicional -->
+<section class="features" style="padding: 4rem 0;">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Seguridad Total</h3>
+                <p>Tu contraseña se encripta con los más altos estándares</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3>Cambios Registrados</h3>
+                <p>Recibirás un correo de confirmación del cambio</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3>Alertas Activas</h3>
+                <p>Te notificaremos si detectamos actividad sospechosa</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Soporte 24/7</h3>
+                <p>Estamos aquí para ayudarte en todo momento</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/recuperarContrasenna.js"></script>
+}

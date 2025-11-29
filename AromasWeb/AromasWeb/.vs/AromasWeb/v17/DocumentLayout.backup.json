@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\cliente\\crearcliente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\cliente\\crearcliente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\cliente\\miperfil.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\cliente\\miperfil.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\controllers\\clientecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:controllers\\clientecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\cliente\\editarperfil.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\cliente\\editarperfil.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -13,6 +21,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\auth\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\auth\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,45 +67,123 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CrearCliente.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Cliente\\CrearCliente.cshtml",
-              "RelativeDocumentMoniker": "Views\\Cliente\\CrearCliente.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Cliente\\CrearCliente.cshtml",
-              "RelativeToolTip": "Views\\Cliente\\CrearCliente.cshtml",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Title": "MiPerfil.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Cliente\\MiPerfil.cshtml",
+              "RelativeDocumentMoniker": "Views\\Cliente\\MiPerfil.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Cliente\\MiPerfil.cshtml",
+              "RelativeToolTip": "Views\\Cliente\\MiPerfil.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-28T03:11:36.64Z",
+              "WhenOpened": "2025-11-29T02:05:45.289Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "ClienteController.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\ClienteController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ClienteController.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\ClienteController.cs",
+              "RelativeToolTip": "Controllers\\ClienteController.cs",
+              "ViewState": "AgIAAJwBAAAAAAAAAAAAAK4BAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-29T02:04:47.299Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EditarPerfil.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Cliente\\EditarPerfil.cshtml",
+              "RelativeDocumentMoniker": "Views\\Cliente\\EditarPerfil.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Cliente\\EditarPerfil.cshtml",
+              "RelativeToolTip": "Views\\Cliente\\EditarPerfil.cshtml",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAAKYAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-29T02:04:33.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_ViewImports.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\_ViewImports.cshtml",
+              "RelativeDocumentMoniker": "Views\\_ViewImports.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\_ViewImports.cshtml",
+              "RelativeToolTip": "Views\\_ViewImports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-29T01:26:58.441Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AgIAAJEAAAAAAAAAAAAgwKIAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-29T01:20:09.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Auth\\Login.cshtml",
+              "RelativeDocumentMoniker": "Views\\Auth\\Login.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Auth\\Login.cshtml",
+              "RelativeToolTip": "Views\\Auth\\Login.cshtml",
+              "ViewState": "AgIAANIAAAAAAAAAAAAIwOQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-29T01:19:57.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAIwCgAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-29T01:19:27.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAACMAAAAAAAAAAAAwwDEAAABIAAAAAAAAAA==",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAowIMAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-22T18:28:26.015Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "site.js",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\site.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\site.js",
               "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\site.js",
               "RelativeToolTip": "wwwroot\\js\\site.js",
-              "ViewState": "AgIAALcBAAAAAAAAAAAAAM8BAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAABMCAAAAAAAAAAAIwCUCAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-11-22T18:35:57.982Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
@@ -93,7 +195,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
