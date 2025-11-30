@@ -1,83 +1,106 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using AromasWeb.Abstracciones.ModeloUI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AromasWeb.Controllers
 {
     public class RolController : Controller
     {
-        // GET: RolController
-        public ActionResult Index()
+        // GET: Rol/ListadoRoles
+        public IActionResult ListadoRoles(string buscar, string filtroEstado)
+        {
+            ViewBag.Buscar = buscar;
+            ViewBag.FiltroEstado = filtroEstado;
+
+            // Roles de ejemplo
+            var roles = new List<Rol>
+            {
+                new Rol
+                {
+                    IdRol = 1,
+                    Nombre = "Administrador",
+                    Descripcion = "Acceso completo al sistema",
+                    Estado = true
+                },
+                new Rol
+                {
+                    IdRol = 2,
+                    Nombre = "Empleado",
+                    Descripcion = "Usuario estándar",
+                    Estado = true
+                }
+            };
+
+            return View(roles);
+        }
+
+        // GET: Rol/CrearRol
+        public IActionResult CrearRol()
         {
             return View();
         }
 
-        // GET: RolController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: RolController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: RolController/Create
+        // POST: Rol/CrearRol
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult CrearRol(Rol rol)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                TempData["Mensaje"] = "Rol registrado correctamente";
+                return RedirectToAction(nameof(ListadoRoles));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(rol);
         }
 
-        // GET: RolController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Rol/EditarRol/5
+        public IActionResult EditarRol(int id)
         {
-            return View();
+            // Rol de ejemplo
+            var rol = new Rol
+            {
+                IdRol = id,
+                Nombre = "Administrador",
+                Descripcion = "Acceso completo al sistema",
+                Estado = true
+            };
+
+            return View(rol);
         }
 
-        // POST: RolController/Edit/5
+        // POST: Rol/EditarRol
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult EditarRol(Rol rol)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                TempData["Mensaje"] = "Rol actualizado correctamente";
+                return RedirectToAction(nameof(ListadoRoles));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(rol);
         }
 
-        // GET: RolController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: RolController/Delete/5
+        // POST: Rol/EliminarRol/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult EliminarRol(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            TempData["Mensaje"] = "Rol eliminado correctamente";
+            return RedirectToAction(nameof(ListadoRoles));
+        }
+
+        // POST: Rol/CambiarEstado/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CambiarEstado(int id)
+        {
+            TempData["Mensaje"] = "Estado del rol actualizado correctamente";
+            return RedirectToAction(nameof(ListadoRoles));
         }
     }
 }

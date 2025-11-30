@@ -5,6 +5,7 @@
     var estaAutenticado = !string.IsNullOrEmpty(usuarioTipo);
     var esAdmin = usuarioTipo == "admin";
     var esCliente = usuarioTipo == "cliente";
+    var esEmpleado = usuarioTipo == "empleado";
 }
 
 <!DOCTYPE html>
@@ -76,9 +77,33 @@
                         </ul>
                     </li>
 
+                    <!-- Dropdown de Empleados -->
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link">Empleados</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Empleado/ListadoEmpleados">Empleados</a></li>
+                            <li><a href="/HistorialTarifa/ListadoTarifas">Historial de Tarifas</a></li>
+                            <li><a href="/Asistencia/ListadoAsistencias">Asistencias</a></li>
+                            <li><a href="/Planilla/ListadoPlanillas">Planillas</a></li>
+                            <li><a href="/SolicitudVacaciones/ListadoSolicitudes">Solicitudes de Vacaciones</a></li>
+                        </ul>
+                    </li>
+
                     <!-- Links directos -->
                     <li><a href="/Cliente/ListadoClientes" class="nav-link">Clientes</a></li>
                     <li><a href="/Reserva/ListadoReservas" class="nav-link">Reservas</a></li>
+                    <li><a href="/Modulo/ListadoModulos" class="nav-link">Módulos</a></li>
+                    <li><a href="/Rol/ListadoRoles" class="nav-link">Roles</a></li>
+                    <li><a href="/Permiso/ListadoPermisos" class="nav-link">Permisos</a></li>
+                    <li><a href="/Bitacora/ListadoBitacoras" class="nav-link">Auditoría</a></li>
+                }
+                else if (esEmpleado)
+                {
+                    <!-- MENÚ PARA EMPLEADO -->
+                    <li><a href="/" class="nav-link">Inicio</a></li>
+                    <li><a href="/HistorialTarifa/MiHistorial">Mi Historial de Tarifas</a></li>
+                    <li><a href="/Planilla/MiPlanilla">Mis Planillas</a></li>
+                    <li><a href="/SolicitudVacaciones/MisSolicitudes">Mis Vacaciones</a></li>
                 }
                 else
                 {
@@ -86,7 +111,6 @@
                     <li><a href="/#inicio" class="nav-link">Inicio</a></li>
                     <li><a href="/#productos" class="nav-link">Productos</a></li>
                     <li><a href="/#menu" class="nav-link">Menú</a></li>
-
                     <li><a href="/#especialidades" class="nav-link">Especialidades</a></li>
                     <li><a href="/#galeria" class="nav-link">Galería</a></li>
                     <li><a href="/#testimonios" class="nav-link">Reseñas</a></li>
@@ -101,7 +125,6 @@
                         <!-- Botón Mis Reservas solo para clientes -->
                         <li>
                             <a href="/Cliente/MisReservas" class="btn-nav" style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%);">
-                                <i class="fas fa-history"></i>
                                 <span>Mis Reservas</span>
                             </a>
                         </li>
@@ -110,9 +133,7 @@
                     <!-- Dropdown de perfil -->
                     <li class="nav-dropdown">
                         <a href="#" class="btn-nav" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
-                            <i class="fas fa-user-circle"></i>
                             <span>@usuarioNombre</span>
-                            <i class="fas fa-chevron-down"></i>
                         </a>
                         <ul class="dropdown-menu" style="right: 0; left: auto;">
                             <li style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--gray-light); background: var(--cream);">
@@ -122,12 +143,16 @@
                             @if (esCliente)
                             {
                                 <li><a href="/Cliente/MiPerfil">Mi Perfil</a></li>
+                                <li><a href="/Auth/CerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+                            }
+                            @if (esEmpleado)
+                            {
+                                <li><a href="/Auth/CerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                             }
                             @if (esAdmin)
                             {
-                                <li><a href="/"><i class="fas fa-home"></i> Ver Sitio Web</a></li>
+                                <li><a href="/Auth/CerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                             }
-                            <li><a href="/Auth/CerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                         </ul>
                     </li>
                 }
@@ -244,6 +269,12 @@
                         @if (esCliente)
                         {
                             <li><a href="/Cliente/MisReservas"><i class="fas fa-chevron-right"></i> Mis Reservas</a></li>
+                        }
+                        @if (esEmpleado)
+                        {
+                            <li><a href="/HistorialTarifa/MiHistorial"><i class="fas fa-chevron-right"></i> Mi Historial de Tarifas</a></li>
+                            <li><a href="/Planilla/MiPlanilla"><i class="fas fa-chevron-right"></i> Mis Planillas</a></li>
+                            <li><a href="/SolicitudVacaciones/MisSolicitudes"><i class="fas fa-chevron-right"></i> Mis Vacaciones</a></li>
                         }
                         <li><a href="/#galeria"><i class="fas fa-chevron-right"></i> Galería</a></li>
                         @if (!estaAutenticado)

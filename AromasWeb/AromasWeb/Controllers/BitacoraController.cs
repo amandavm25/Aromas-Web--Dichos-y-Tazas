@@ -1,83 +1,100 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using AromasWeb.Abstracciones.ModeloUI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AromasWeb.Controllers
 {
     public class BitacoraController : Controller
     {
-        // GET: BitacoraController
-        public ActionResult Index()
+        // GET: Bitacora/ListadoBitacoras
+        public IActionResult ListadoBitacoras(string buscar, string filtroModulo, DateTime? fechaInicio, DateTime? fechaFin)
         {
-            return View();
-        }
+            ViewBag.Buscar = buscar;
+            ViewBag.FiltroModulo = filtroModulo;
+            ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd");
+            ViewBag.FechaFin = fechaFin?.ToString("yyyy-MM-dd");
 
-        // GET: BitacoraController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: BitacoraController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: BitacoraController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            // Registros de ejemplo
+            var bitacoras = new List<Bitacora>
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                new Bitacora
+                {
+                    IdBitacora = 1,
+                    IdEmpleado = 1,
+                    NombreEmpleado = "Juan Pérez",
+                    IdModulo = 1,
+                    NombreModulo = "Empleados",
+                    Accion = "Crear",
+                    TablaAfectada = "Empleado",
+                    Descripcion = "Se registró un nuevo empleado",
+                    DatosAnteriores = null,
+                    DatosNuevos = "{\"Nombre\":\"María López\",\"Identificacion\":\"123456789\"}",
+                    Fecha = DateTime.Now.AddHours(-2)
+                },
+                new Bitacora
+                {
+                    IdBitacora = 2,
+                    IdEmpleado = 1,
+                    NombreEmpleado = "Juan Pérez",
+                    IdModulo = 2,
+                    NombreModulo = "Roles",
+                    Accion = "Actualizar",
+                    TablaAfectada = "Rol",
+                    Descripcion = "Se actualizó el rol Administrador",
+                    DatosAnteriores = "{\"Nombre\":\"Admin\",\"Estado\":true}",
+                    DatosNuevos = "{\"Nombre\":\"Administrador\",\"Estado\":true}",
+                    Fecha = DateTime.Now.AddHours(-5)
+                },
+                new Bitacora
+                {
+                    IdBitacora = 3,
+                    IdEmpleado = 2,
+                    NombreEmpleado = "Ana García",
+                    IdModulo = 3,
+                    NombreModulo = "Asistencia",
+                    Accion = "Registrar Entrada",
+                    TablaAfectada = "Asistencia",
+                    Descripcion = "Registro de entrada de jornada",
+                    DatosAnteriores = null,
+                    DatosNuevos = "{\"HoraEntrada\":\"08:00:00\"}",
+                    Fecha = DateTime.Now.AddDays(-1)
+                }
+            };
 
-        // GET: BitacoraController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+            // Aplicar filtros
+            if (!string.IsNullOrWhiteSpace(buscar))
+            {
+                bitacoras = bitacoras.Where(b =>
+                    b.NombreEmpleado.Contains(buscar, StringComparison.OrdinalIgnoreCase) ||
+                    b.NombreModulo.Contains(buscar, StringComparison.OrdinalIgnoreCase) ||
+                    b.Accion.Contains(buscar, StringComparison.OrdinalIgnoreCase) ||
+                    b.Descripcion.Contains(buscar, StringComparison.OrdinalIgnoreCase)
+                ).ToList();
+            }
 
-        // POST: BitacoraController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            if (!string.IsNullOrWhiteSpace(filtroModulo))
             {
-                return RedirectToAction(nameof(Index));
+                bitacoras = bitacoras.Where(b =>
+                    b.NombreModulo.Equals(filtroModulo, StringComparison.OrdinalIgnoreCase)
+                ).ToList();
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: BitacoraController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+            if (fechaInicio.HasValue)
+            {
+                bitacoras = bitacoras.Where(b => b.Fecha.Date >= fechaInicio.Value.Date).ToList();
+            }
 
-        // POST: BitacoraController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            if (fechaFin.HasValue)
             {
-                return RedirectToAction(nameof(Index));
+                bitacoras = bitacoras.Where(b => b.Fecha.Date <= fechaFin.Value.Date).ToList();
             }
-            catch
-            {
-                return View();
-            }
+
+            // Ordenar por fecha descendente
+            bitacoras = bitacoras.OrderByDescending(b => b.Fecha).ToList();
+
+            return View(bitacoras);
         }
     }
 }

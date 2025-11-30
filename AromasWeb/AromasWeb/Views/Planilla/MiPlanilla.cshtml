@@ -1,0 +1,227 @@
+﻿@model List<AromasWeb.Abstracciones.ModeloUI.Planilla>
+
+@{
+    ViewBag.Title = "Mi Planilla";
+    var empleado = (dynamic)ViewBag.EmpleadoInfo;
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 50vh; padding: 8rem 0 4rem; background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);"></div>
+
+    <div class="container" style="position: relative; z-index: 2;">
+        <div style="text-align: center; color: white;" data-aos="fade-up">
+            <span style="display: inline-block; padding: 0.7rem 1.5rem; background: rgba(255, 255, 255, 0.2); border-radius: 50px; font-weight: 600; font-size: 0.9rem; margin-bottom: 2rem; backdrop-filter: blur(10px);">
+                <i class="fas fa-file-invoice-dollar"></i> Mis Planillas de Pago
+            </span>
+
+            <h1 style="font-size: 3.5rem; margin-bottom: 1rem; font-family: var(--font-primary); font-weight: 700;">
+                Hola, <span style="color: var(--amber);">@empleado.NombreCompleto</span>
+            </h1>
+
+            <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto 2rem;">
+                Consulta tus planillas de pago y deducciones
+            </p>
+
+            <!-- Info rápida del empleado -->
+            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem;">
+                <div>
+                    <i class="fas fa-briefcase" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
+                    <strong style="display: block; font-size: 1.1rem;">@empleado.Cargo</strong>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Puesto Actual</span>
+                </div>
+                <div>
+                    <i class="fas fa-id-card" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
+                    <strong style="display: block; font-size: 1.1rem;">@empleado.Identificacion</strong>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Identificación</span>
+                </div>
+                <div>
+                    <i class="fas fa-dollar-sign" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
+                    <strong style="display: block; font-size: 1.1rem;">₡@empleado.TarifaActual.ToString("N2")/h</strong>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Tarifa Actual</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1400px;">
+
+        <!-- Planilla Más Reciente -->
+        @if (Model.Any())
+        {
+            var planillaReciente = Model.First();
+
+            <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); border-radius: 30px; padding: 3rem; box-shadow: var(--shadow-xl); margin-bottom: 3rem; color: white; position: relative; overflow: hidden;" data-aos="zoom-in">
+                <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; z-index: 0;"></div>
+                <div style="position: absolute; bottom: -30px; left: -30px; width: 150px; height: 150px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; z-index: 0;"></div>
+
+                <div style="position: relative; z-index: 1;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                        <div style="width: 70px; height: 70px; background: rgba(255, 255, 255, 0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+                            <i class="fas fa-star" style="font-size: 2rem;"></i>
+                        </div>
+                        <div>
+                            <p style="margin: 0; opacity: 0.9; font-size: 0.95rem;">Tu Planilla Más Reciente</p>
+                            <h2 style="margin: 0; font-size: 3rem; font-weight: 700; font-family: var(--font-primary);">
+                                ₡@planillaReciente.PagoNeto.ToString("N0")
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; background: rgba(255, 255, 255, 0.15); padding: 2rem; border-radius: 20px; backdrop-filter: blur(10px);">
+                        <div>
+                            <p style="margin: 0 0 0.5rem; opacity: 0.9; font-size: 0.9rem;">
+                                <i class="fas fa-calendar-check"></i> Período
+                            </p>
+                            <strong style="font-size: 1.1rem;">@planillaReciente.PeriodoFormateado</strong>
+                        </div>
+                        <div>
+                            <p style="margin: 0 0 0.5rem; opacity: 0.9; font-size: 0.9rem;">
+                                <i class="fas fa-clock"></i> Horas Trabajadas
+                            </p>
+                            <strong style="font-size: 1.1rem;">@planillaReciente.TotalHorasTrabajadas.ToString("N2")h</strong>
+                        </div>
+                        <div>
+                            <p style="margin: 0 0 0.5rem; opacity: 0.9; font-size: 0.9rem;">
+                                <i class="fas fa-money-bill-wave"></i> Pago Bruto
+                            </p>
+                            <strong style="font-size: 1.1rem;">₡@planillaReciente.PagoBruto.ToString("N0")</strong>
+                        </div>
+                        <div>
+                            <p style="margin: 0 0 0.5rem; opacity: 0.9; font-size: 0.9rem;">
+                                <i class="fas fa-minus-circle"></i> Deducciones
+                            </p>
+                            <strong style="font-size: 1.1rem;">₡@planillaReciente.TotalDeducciones.ToString("N0")</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Estadísticas -->
+        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white;">
+                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                    <i class="fas fa-file-invoice" style="color: white;"></i>
+                </div>
+                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@Model.Count</h3>
+                <p style="margin: 0; opacity: 0.9;">Planillas Totales</p>
+            </div>
+
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--green) 0%, #4d9160 100%); color: white;">
+                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                    <i class="fas fa-dollar-sign" style="color: white;"></i>
+                </div>
+                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@Model.Sum(p => p.PagoNeto).ToString("N0")</h3>
+                <p style="margin: 0; opacity: 0.9;">Total Recibido</p>
+            </div>
+
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%); color: white;">
+                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                    <i class="fas fa-chart-line" style="color: white;"></i>
+                </div>
+                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@(Model.Any() ? Model.Average(p => p.PagoNeto).ToString("N0") : "0")</h3>
+                <p style="margin: 0; opacity: 0.9;">Promedio por Planilla</p>
+            </div>
+        </div>
+
+        <!-- Historial de Planillas -->
+        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
+            <h4 style="color: var(--dark-teal); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                <i class="fas fa-history"></i> Historial de Mis Planillas
+            </h4>
+
+            @if (Model.Any())
+            {
+                <div style="display: grid; gap: 2rem;">
+                    @foreach (var planilla in Model)
+                    {
+                        var esReciente = planilla == Model.First();
+                        var colorEstado = planilla.Estado == "Pagado" ? "var(--green)" : "var(--amber)";
+
+                        <div class="feature-card" style="position: relative; padding: 2rem; border-left: 5px solid @colorEstado; @(esReciente ? "background: linear-gradient(135deg, rgba(39, 174, 96, 0.05) 0%, rgba(39, 174, 96, 0.02) 100%);" : "")">
+                            @if (esReciente)
+                            {
+                                <div style="position: absolute; top: 1rem; right: 1rem;">
+                                    <span style="background: var(--amber); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                        <i class="fas fa-star"></i> Más Reciente
+                                    </span>
+                                </div>
+                            }
+
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 2rem; align-items: center;">
+                                <div>
+                                    <h5 style="margin: 0 0 0.5rem; color: var(--dark-teal); font-weight: 700; font-size: 1.3rem;">
+                                        @planilla.PeriodoFormateado
+                                    </h5>
+                                    <p style="margin: 0; color: var(--gray); font-size: 0.95rem;">
+                                        <i class="fas fa-calendar-alt" style="color: var(--teal);"></i>
+                                        @planilla.DiasPeriodo días laborables
+                                    </p>
+                                </div>
+
+                                <div style="text-align: center;">
+                                    <p style="margin: 0 0 0.3rem; color: var(--gray); font-size: 0.85rem;">Horas Totales</p>
+                                    <strong style="color: var(--teal); font-size: 1.3rem;">@planilla.TotalHorasTrabajadas.ToString("N2")h</strong>
+                                </div>
+
+                                <div style="text-align: center;">
+                                    <p style="margin: 0 0 0.3rem; color: var(--gray); font-size: 0.85rem;">Pago Bruto</p>
+                                    <strong style="color: var(--dark-teal); font-size: 1.3rem;">₡@planilla.PagoBruto.ToString("N0")</strong>
+                                </div>
+
+                                <div style="text-align: center;">
+                                    <p style="margin: 0 0 0.3rem; color: var(--gray); font-size: 0.85rem;">Pago Neto</p>
+                                    <strong style="color: var(--green); font-size: 1.5rem; font-family: var(--font-primary);">₡@planilla.PagoNeto.ToString("N0")</strong>
+                                </div>
+
+                                <div>
+                                    <a href="@Url.Action("VerDetallePlanilla", "Planilla", new { id = planilla.IdPlanilla })"
+                                       class="btn btn-primary"
+                                       style="white-space: nowrap; padding: 0.7rem 1.5rem;">
+                                        <span><i class="fas fa-eye"></i> Ver Detalle</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--cream); display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                                <div>
+                                    <span style="color: var(--gray); font-size: 0.85rem;"><i class="fas fa-clock"></i> H. Regulares:</span>
+                                    <strong style="color: var(--teal); margin-left: 0.5rem;">@planilla.TotalHorasRegulares.ToString("N2")h</strong>
+                                </div>
+                                <div>
+                                    <span style="color: var(--gray); font-size: 0.85rem;"><i class="fas fa-star"></i> H. Extras:</span>
+                                    <strong style="color: var(--amber); margin-left: 0.5rem;">@planilla.TotalHorasExtras.ToString("N2")h</strong>
+                                </div>
+                                <div>
+                                    <span style="color: var(--gray); font-size: 0.85rem;"><i class="fas fa-minus-circle"></i> Deducciones:</span>
+                                    <strong style="color: var(--coral); margin-left: 0.5rem;">₡@planilla.TotalDeducciones.ToString("N0")</strong>
+                                </div>
+                                <div>
+                                    <span style="color: var(--gray); font-size: 0.85rem;"><i class="fas fa-toggle-on"></i> Estado:</span>
+                                    <span style="background: @colorEstado; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600; margin-left: 0.5rem;">
+                                        @planilla.Estado
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div style="text-align: center; padding: 3rem; color: var(--gray);">
+                    <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                    <p style="margin: 0; font-size: 1.1rem; font-weight: 600;">No hay planillas disponibles</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/planilla.js"></script>
+}

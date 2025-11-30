@@ -20,6 +20,30 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/EditarAsistencia.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxFZGl0YXJBc2lzdGVuY2lhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/ListadoAsistencias.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxMaXN0YWRvQXNpc3RlbmNpYXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/RegistrarEntrada.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxSZWdpc3RyYXJFbnRyYWRhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/RegistrarSalida.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxSZWdpc3RyYXJTYWxpZGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/_ModalDetallesAsistencia.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxfTW9kYWxEZXRhbGxlc0FzaXN0ZW5jaWEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/_ModalEliminarAsistencia.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxfTW9kYWxFbGltaW5hckFzaXN0ZW5jaWEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -34,6 +58,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/RestablecerContrasenna.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZXN0YWJsZWNlckNvbnRyYXNlbm5hLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Bitacora/ListadoBitacoras.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQml0YWNvcmFcTGlzdGFkb0JpdGFjb3Jhcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Bitacora/_ModalDetallesBitacora.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQml0YWNvcmFcX01vZGFsRGV0YWxsZXNCaXRhY29yYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/CrearCategoriaInsumo.cshtml]
@@ -124,6 +156,50 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxfTW9kYWxFbGltaW5hckNsaWVudGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/CrearEmpleado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cQ3JlYXJFbXBsZWFkby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/EditarEmpleado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cRWRpdGFyRW1wbGVhZG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/HistorialEmpleado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cSGlzdG9yaWFsRW1wbGVhZG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/ListadoEmpleados.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cTGlzdGFkb0VtcGxlYWRvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/_ModalDetallesEmpleado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cX01vZGFsRGV0YWxsZXNFbXBsZWFkby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/_ModalEliminarEmpleado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cX01vZGFsRWxpbWluYXJFbXBsZWFkby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/CrearTarifa.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXENyZWFyVGFyaWZhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/ListadoTarifas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXExpc3RhZG9UYXJpZmFzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/MiHistorial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXE1pSGlzdG9yaWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/VerHistorialEmpleado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXFZlckhpc3RvcmlhbEVtcGxlYWRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/_ModalDetallesTarifa.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXF9Nb2RhbERldGFsbGVzVGFyaWZhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -158,6 +234,74 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/_ModalEliminarInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXF9Nb2RhbEVsaW1pbmFySW5zdW1vLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/CrearModulo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXENyZWFyTW9kdWxvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/EditarModulo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXEVkaXRhck1vZHVsby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/ListadoModulos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXExpc3RhZG9Nb2R1bG9zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/_ModalDetallesModulo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXF9Nb2RhbERldGFsbGVzTW9kdWxvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/_ModalEliminarModulo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXF9Nb2RhbEVsaW1pbmFyTW9kdWxvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/AsignarPermisos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xBc2lnbmFyUGVybWlzb3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/CrearPermiso.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xDcmVhclBlcm1pc28uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/EditarPermiso.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xFZGl0YXJQZXJtaXNvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/ListadoPermisos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xMaXN0YWRvUGVybWlzb3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/_ModalDetallesPermiso.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xfTW9kYWxEZXRhbGxlc1Blcm1pc28uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/_ModalEliminarPermiso.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xfTW9kYWxFbGltaW5hclBlcm1pc28uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/CalcularPlanilla.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcQ2FsY3VsYXJQbGFuaWxsYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/ListadoPlanillas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcTGlzdGFkb1BsYW5pbGxhcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/MiPlanilla.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcTWlQbGFuaWxsYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/PlanillasEmpleado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcUGxhbmlsbGFzRW1wbGVhZG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/VerDetallePlanilla.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcVmVyRGV0YWxsZVBsYW5pbGxhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/_ModalPagarPlanilla.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcX01vZGFsUGFnYXJQbGFuaWxsYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/CrearPromocion.cshtml]
@@ -224,12 +368,68 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxfTW9kYWxEZXRhbGxlc1Jlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/CrearRol.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXENyZWFyUm9sLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/EditarRol.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXEVkaXRhclJvbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/ListadoRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXExpc3RhZG9Sb2xlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/_ModalDetallesRol.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXF9Nb2RhbERldGFsbGVzUm9sLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/_ModalEliminarRol.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXF9Nb2RhbEVsaW1pbmFyUm9sLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/CrearSolicitud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xDcmVhclNvbGljaXR1ZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/ListadoSolicitudes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xMaXN0YWRvU29saWNpdHVkZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/MisSolicitudes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xNaXNTb2xpY2l0dWRlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/ReporteVacaciones.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xSZXBvcnRlVmFjYWNpb25lcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/VerSolicitudesEmpleado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xWZXJTb2xpY2l0dWRlc0VtcGxlYWRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalAprobarSolicitud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xfTW9kYWxBcHJvYmFyU29saWNpdHVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalDetallesSolicitud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xfTW9kYWxEZXRhbGxlc1NvbGljaXR1ZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalEliminarSolicitud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xfTW9kYWxFbGltaW5hclNvbGljaXR1ZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalRechazarSolicitud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xfTW9kYWxSZWNoYXphclNvbGljaXR1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/CrearTipoPromocion.cshtml]

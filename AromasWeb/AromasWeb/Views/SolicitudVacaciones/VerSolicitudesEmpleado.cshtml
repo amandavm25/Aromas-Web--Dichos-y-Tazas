@@ -1,0 +1,259 @@
+﻿@model List<AromasWeb.Abstracciones.ModeloUI.SolicitudVacaciones>
+
+@{
+    ViewBag.Title = "Solicitudes de Vacaciones del Empleado";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-umbrella-beach"></i>
+                Historial de Vacaciones
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Solicitudes de Vacaciones
+            </h1>
+            <p class="hero-subtitle">
+                @ViewBag.NombreEmpleado • @ViewBag.CargoEmpleado
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1400px;">
+
+        <!-- Información del Empleado -->
+        <div class="testimonial-card card-3d" style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); color: white; margin-bottom: 3rem; padding: 2.5rem;" data-aos="fade-up">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <i class="fas fa-user" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
+                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Nombre Completo</p>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">@ViewBag.NombreEmpleado</h4>
+                </div>
+                <div>
+                    <i class="fas fa-id-card" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
+                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Identificación</p>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">@ViewBag.IdentificacionEmpleado</h4>
+                </div>
+                <div>
+                    <i class="fas fa-briefcase" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
+                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Cargo</p>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">@ViewBag.CargoEmpleado</h4>
+                </div>
+                <div>
+                    <i class="fas fa-calendar" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
+                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Fecha de Contratación</p>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">@ViewBag.FechaContratacion.ToString("dd/MM/yyyy")</h4>
+                </div>
+                <div>
+                    <i class="fas fa-hourglass-half" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
+                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Meses Trabajados</p>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">@ViewBag.MesesTrabajados meses</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas de Vacaciones -->
+        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white;">
+                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                    <i class="fas fa-calendar-plus" style="color: white;"></i>
+                </div>
+                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@ViewBag.DiasAcumulados</h3>
+                <p style="margin: 0; opacity: 0.9;">Días Acumulados</p>
+            </div>
+
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); color: white;">
+                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                    <i class="fas fa-umbrella-beach" style="color: white;"></i>
+                </div>
+                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@ViewBag.DiasTomados</h3>
+                <p style="margin: 0; opacity: 0.9;">Días Tomados</p>
+            </div>
+
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--green) 0%, #4d9160 100%); color: white;">
+                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                    <i class="fas fa-calendar-check" style="color: white;"></i>
+                </div>
+                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@ViewBag.DiasDisponibles</h3>
+                <p style="margin: 0; opacity: 0.9;">Días Disponibles</p>
+            </div>
+
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--amber) 0%, #c75a3a 100%); color: white;">
+                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                    <i class="fas fa-file-alt" style="color: white;"></i>
+                </div>
+                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@Model.Count</h3>
+                <p style="margin: 0; opacity: 0.9;">Total Solicitudes</p>
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div style="display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;" data-aos="fade-up">
+            <a href="@Url.Action("CrearSolicitud", "SolicitudVacaciones")" class="btn btn-primary btn-3d">
+                <span><i class="fas fa-plus"></i> Nueva Solicitud</span>
+            </a>
+            <a href="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")" class="btn btn-secondary">
+                <span><i class="fas fa-arrow-left"></i> Volver al Listado</span>
+            </a>
+            <a href="@Url.Action("ReporteVacaciones", "SolicitudVacaciones", new { idEmpleado = ViewBag.IdEmpleado })" class="btn" style="background: var(--amber); color: white; border: none;">
+                <span><i class="fas fa-file-pdf"></i> Ver Reporte Completo</span>
+            </a>
+            <button onclick="window.print()" class="btn" style="background: var(--green); color: white; border: none; margin-left: auto;">
+                <span><i class="fas fa-print"></i> Imprimir Historial</span>
+            </button>
+        </div>
+
+        <!-- Timeline de Solicitudes -->
+        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
+            <h4 style="color: var(--dark-teal); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                <i class="fas fa-clock"></i> Historial de Solicitudes
+            </h4>
+
+            @if (Model.Any())
+            {
+                <div style="position: relative; padding-left: 3rem;">
+                    <!-- Línea vertical -->
+                    <div style="position: absolute; left: 1rem; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--teal) 0%, var(--coral) 100%);"></div>
+
+                    @foreach (var solicitud in Model)
+                    {
+                        var estadoColor = solicitud.EstadoBadgeColor;
+                        var estadoIcon = solicitud.Estado switch
+                        {
+                            "Aprobada" => "fa-check-circle",
+                            "Rechazada" => "fa-times-circle",
+                            "Pendiente" => "fa-clock",
+                            _ => "fa-question-circle"
+                        };
+
+                        <div class="feature-card" style="position: relative; margin-bottom: 2rem; padding: 2rem; border-left: 5px solid @estadoColor;">
+                            <!-- Punto en la línea -->
+                            <div style="position: absolute; left: -3rem; top: 2rem; width: 20px; height: 20px; background: @estadoColor; border-radius: 50%; border: 4px solid var(--white); box-shadow: 0 0 0 3px @estadoColor;"></div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                                        <h5 style="margin: 0; color: var(--dark-teal); font-weight: 700; font-size: 1.3rem;">
+                                            Solicitud #@solicitud.IdSolicitud
+                                        </h5>
+                                        <span style="background: @estadoColor; color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
+                                            <i class="fas @estadoIcon"></i> @solicitud.Estado
+                                        </span>
+                                    </div>
+                                    <div style="color: var(--gray); font-size: 0.95rem; line-height: 1.8;">
+                                        <p style="margin: 0.3rem 0;">
+                                            <i class="fas fa-calendar" style="color: var(--teal); width: 20px;"></i>
+                                            <strong>Período:</strong> @solicitud.PeriodoVacaciones
+                                        </p>
+                                        <p style="margin: 0.3rem 0;">
+                                            <i class="fas fa-clock" style="color: var(--amber); width: 20px;"></i>
+                                            <strong>Días solicitados:</strong> @solicitud.DiasSolicitados días laborables
+                                        </p>
+                                        <p style="margin: 0.3rem 0;">
+                                            <i class="fas fa-calendar-plus" style="color: var(--coral); width: 20px;"></i>
+                                            <strong>Solicitado el:</strong> @solicitud.FechaSolicitudFormateada
+                                        </p>
+                                        @if (solicitud.FechaRespuesta.HasValue)
+                                        {
+                                            <p style="margin: 0.3rem 0;">
+                                                <i class="fas fa-reply" style="color: var(--green); width: 20px;"></i>
+                                                <strong>Respondido el:</strong> @solicitud.FechaRespuestaFormateada (@solicitud.TiempoRespuesta)
+                                            </p>
+                                        }
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <p style="margin: 0 0 0.3rem; color: var(--gray); font-size: 0.85rem;">Días calendario</p>
+                                    <strong style="color: var(--coral); font-size: 1.8rem; font-family: var(--font-primary);">
+                                        @solicitud.DuracionCalendario
+                                    </strong>
+                                </div>
+                            </div>
+
+                            <div style="background: var(--cream); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; font-size: 0.9rem;">
+                                    <div>
+                                        <span style="color: var(--gray); display: block; margin-bottom: 0.3rem;">Días disponibles (antes)</span>
+                                        <strong style="color: var(--amber); font-size: 1.2rem;">@solicitud.DiasDisponibles</strong>
+                                    </div>
+                                    @if (solicitud.Estado == "Aprobada")
+                                    {
+                                        <div>
+                                            <span style="color: var(--gray); display: block; margin-bottom: 0.3rem;">Días después</span>
+                                            <strong style="color: var(--teal); font-size: 1.2rem;">@solicitud.DiasTemporales</strong>
+                                        </div>
+                                    }
+                                    else if (solicitud.Estado == "Pendiente")
+                                    {
+                                        <div>
+                                            <span style="color: var(--gray); display: block; margin-bottom: 0.3rem;">Días temporales</span>
+                                            <strong style="color: #f39c12; font-size: 1.2rem;">@solicitud.DiasTemporales</strong>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div style="text-align: center; padding: 3rem; color: var(--gray);">
+                    <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block; color: var(--teal);"></i>
+                    <p style="margin: 0; font-size: 1.1rem; font-weight: 600;">No hay solicitudes registradas</p>
+                    <p style="margin: 0.5rem 0 0; font-size: 0.95rem;">Este empleado aún no ha solicitado vacaciones</p>
+                </div>
+            }
+        </div>
+
+        <!-- Información Adicional -->
+        <div style="margin-top: 2rem; background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm);" data-aos="fade-up">
+            <h5 style="color: var(--dark-teal); margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                <i class="fas fa-info-circle" style="color: var(--teal);"></i> Notas Importantes
+            </h5>
+            <ul style="margin: 0; padding-left: 1.5rem; color: var(--gray); line-height: 1.8;">
+                <li>Los días de vacaciones se acumulan a razón de <strong>1 día por mes trabajado</strong>.</li>
+                <li>Los días se calculan excluyendo los domingos (días laborables: lunes a sábado).</li>
+                <li>El saldo de días disponibles se actualiza automáticamente al aprobar una solicitud.</li>
+                <li>Las solicitudes rechazadas no afectan el saldo de días disponibles.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<style>
+    @@media print {
+        .navbar, .footer, .scroll-to-top, .hero-particles, .scroll-indicator, button, .btn {
+            display: none !important;
+        }
+
+        .hero {
+            min-height: auto !important;
+            padding: 2rem 0 1rem !important;
+        }
+
+        section {
+            padding: 1rem 0 !important;
+        }
+
+        body {
+            background: white !important;
+        }
+    }
+</style>
+
+@section Scripts {
+    <script src="~/js/solicitudvacaciones.js"></script>
+}

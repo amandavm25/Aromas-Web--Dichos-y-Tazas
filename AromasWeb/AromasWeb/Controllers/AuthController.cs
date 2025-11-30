@@ -27,7 +27,7 @@ namespace AromasWeb.Controllers
                 return View(cliente);
             }
 
-            // Login básico - solo verificamos el correo
+            // Login básico - verificamos el correo y contraseña
             if (cliente.Correo.ToLower() == "admin@gmail.com" && cliente.Contrasena == "admin123")
             {
                 // Es administrador
@@ -36,6 +36,16 @@ namespace AromasWeb.Controllers
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
 
                 TempData["Mensaje"] = "¡Bienvenido Administrador!";
+                return RedirectToAction("Index", "Home");
+            }
+            else if (cliente.Correo.ToLower() == "empleado@gmail.com" && cliente.Contrasena == "empleado123")
+            {
+                // Es empleado
+                HttpContext.Session.SetString("UsuarioTipo", "empleado");
+                HttpContext.Session.SetString("UsuarioNombre", "Empleado");
+                HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
+
+                TempData["Mensaje"] = "¡Bienvenido Empleado!";
                 return RedirectToAction("Index", "Home");
             }
             else if (cliente.Correo.ToLower() == "cliente@gmail.com" && cliente.Contrasena == "cliente123")

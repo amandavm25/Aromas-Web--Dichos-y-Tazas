@@ -1,0 +1,233 @@
+﻿@model AromasWeb.Abstracciones.ModeloUI.HistorialTarifa
+
+@{
+    ViewBag.Title = "Registrar Nueva Tarifa";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-plus-circle"></i>
+                Nueva Tarifa
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Registrar
+                <span class="hero-title-accent">Tarifa por Hora</span>
+            </h1>
+            <p class="hero-subtitle">
+                Establece una nueva tarifa para un empleado con fecha de vigencia
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1000px;">
+
+        <!-- Alerta de Salario Mínimo -->
+        <div class="feature-card" style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(41, 128, 185, 0.1) 100%); padding: 2rem; margin-bottom: 3rem; border-left: 5px solid #3498db;" data-aos="fade-up">
+            <div style="display: flex; align-items: start; gap: 1rem;">
+                <div style="width: 50px; height: 50px; background: #3498db; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <i class="fas fa-info-circle" style="font-size: 1.5rem; color: white;"></i>
+                </div>
+                <div>
+                    <h6 style="color: #2980b9; margin: 0 0 0.5rem; font-weight: 700; font-size: 1.1rem;">Información sobre Salario Mínimo Legal</h6>
+                    <p style="margin: 0; color: #2980b9; font-weight: 500; line-height: 1.6;">
+                        La tarifa por hora debe ser <strong>mayor o igual a ₡1,768.98</strong> (salario mínimo legal de Costa Rica 2025: ₡367,640 / 207.84 horas mensuales).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("CrearTarifa", "HistorialTarifa", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.FechaRegistro)
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    @if (TempData["Error"] != null)
+                    {
+                        <div style="background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                            <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>@TempData["Error"]</span>
+                            </p>
+                        </div>
+                    }
+
+                    <!-- Empleado -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-user"></i>
+                            Seleccionar Empleado
+                        </label>
+                        
+                        @{
+                            var empleadosLista = new[]
+                            {
+                                new { IdEmpleado = 1, NombreCompleto = "Kenneth Salas", Identificacion = "1-2345-6789", Cargo = "Chef Principal" },
+                                new { IdEmpleado = 2, NombreCompleto = "María González", Identificacion = "2-3456-7890", Cargo = "Asistente de Cocina" },
+                                new { IdEmpleado = 3, NombreCompleto = "David Rodríguez", Identificacion = "3-4567-8901", Cargo = "Barista" },
+                                new { IdEmpleado = 4, NombreCompleto = "Ana Jiménez", Identificacion = "4-5678-9012", Cargo = "Cajera" }
+                            };
+                        }
+
+                        <select name="IdEmpleado" class="form-control" id="selectEmpleado">
+                            <option value="">-- Selecciona un empleado --</option>
+                            @foreach (var emp in empleadosLista)
+                            {
+                                <option value="@emp.IdEmpleado" 
+                                        data-cargo="@emp.Cargo" 
+                                        data-identificacion="@emp.Identificacion"
+                                        @@(Model.IdEmpleado == emp.IdEmpleado ? "selected" : "")>
+                                    @emp.NombreCompleto - @emp.Cargo
+                                </option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.IdEmpleado, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Tarifa por Hora -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-dollar-sign"></i>
+                            Tarifa por Hora
+                        </label>
+                        @Html.EditorFor(model => model.TarifaHora, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0.01", placeholder = "0.00", id = "inputTarifa" } })
+                        @Html.ValidationMessageFor(model => model.TarifaHora, "", new { @class = "text-danger" })
+
+                        <!-- Cálculo en tiempo real -->
+                        <div id="calculoSalario" class="feature-card" style="margin-top: 1rem; padding: 1.5rem; display: none;">
+                            <h6 style="color: var(--dark-teal); margin-bottom: 1rem; font-weight: 600;">
+                                <i class="fas fa-calculator"></i> Cálculo Estimado
+                            </h6>
+                            <div style="display: grid; gap: 0.7rem;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--gray);">Tarifa por hora:</span>
+                                    <strong id="tarifaHora" style="color: var(--dark-teal);">₡0.00</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--gray);">Horas mensuales (48h/sem × 4.33):</span>
+                                    <strong style="color: var(--dark-teal);">207.84 horas</strong>
+                                </div>
+                                <div style="border-top: 2px solid var(--cream); padding-top: 0.7rem; margin-top: 0.7rem; display: flex; justify-content: space-between;">
+                                    <span style="font-size: 1.1rem; color: var(--dark-teal); font-weight: 600;">Salario Mensual Estimado:</span>
+                                    <strong id="salarioMensual" style="font-size: 1.3rem; color: var(--coral); font-family: var(--font-primary);">₡0.00</strong>
+                                </div>
+                            </div>
+                            <div id="alertaSalarioMinimo" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                                <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span>Esta tarifa es menor al salario mínimo legal (₡1,768.98/hora)</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fechas de Vigencia -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-calendar-check"></i>
+                                Fecha de Inicio de Vigencia
+                            </label>
+                            @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                            @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+                            <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                                <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                                Fecha desde la cual esta tarifa será válida
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-calendar-times"></i>
+                                Fecha de Fin de Vigencia (Opcional)
+                            </label>
+                            @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                            @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
+                            <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
+                                <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                                Dejar vacío si la tarifa no tiene fecha de finalización
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Motivo -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-comment"></i>
+                            Motivo del Cambio de Tarifa
+                        </label>
+                        @Html.TextAreaFor(model => model.Motivo, new { @class = "form-control", rows = "4", placeholder = "Ej: Aumento por desempeño excepcional, Ajuste salarial anual, Cambio de cargo, etc." })
+                        @Html.ValidationMessageFor(model => model.Motivo, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoTarifas", "HistorialTarifa")'" style="flex: 1;">
+                            <span><i class="fas fa-times"></i> Cancelar</span>
+                        </button>
+                        <button type="submit" id="btnGuardar" class="btn btn-primary btn-3d" style="flex: 1;">
+                            <span><i class="fas fa-save"></i> Registrar Tarifa</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/historialTarifa.js"></script>
+    <script>
+        const SALARIO_MINIMO_MENSUAL = 367640;
+        const HORAS_MENSUALES = 207.84;
+        const TARIFA_MINIMA_LEGAL = SALARIO_MINIMO_MENSUAL / HORAS_MENSUALES;
+
+        const inputTarifa = document.getElementById('inputTarifa');
+        const calculoSalario = document.getElementById('calculoSalario');
+        const tarifaHoraSpan = document.getElementById('tarifaHora');
+        const salarioMensualSpan = document.getElementById('salarioMensual');
+        const alertaSalarioMinimo = document.getElementById('alertaSalarioMinimo');
+        const btnGuardar = document.getElementById('btnGuardar');
+
+        inputTarifa.addEventListener('input', function() {
+            const tarifa = parseFloat(this.value) || 0;
+
+            if (tarifa > 0) {
+                calculoSalario.style.display = 'block';
+                tarifaHoraSpan.textContent = '₡' + tarifa.toLocaleString('es-CR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                const salarioMensual = tarifa * HORAS_MENSUALES;
+                salarioMensualSpan.textContent = '₡' + salarioMensual.toLocaleString('es-CR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                if (tarifa < TARIFA_MINIMA_LEGAL) {
+                    alertaSalarioMinimo.style.display = 'block';
+                } else {
+                    alertaSalarioMinimo.style.display = 'none';
+                }
+            } else {
+                calculoSalario.style.display = 'none';
+            }
+        });
+
+        // Disparar cálculo si ya hay un valor
+        if (inputTarifa.value) {
+            inputTarifa.dispatchEvent(new Event('input'));
+        }
+    </script>
+}
