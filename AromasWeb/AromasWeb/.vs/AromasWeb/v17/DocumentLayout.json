@@ -3,50 +3,8 @@
   "WorkspaceRootPath": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\permiso\\editarpermiso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\permiso\\editarpermiso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A7C0A4E-EDE0-413C-A570-99F323CFDA51}|..\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.abstracciones\\modeloui\\permiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\rol\\listadoroles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\rol\\listadoroles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\controllers\\permisocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:controllers\\permisocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\wwwroot\\js\\permiso.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:wwwroot\\js\\permiso.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\permiso\\asignarpermisos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\permiso\\asignarpermisos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\permiso\\_modaleliminarpermiso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\permiso\\_modaleliminarpermiso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\permiso\\_modaldetallespermiso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\permiso\\_modaldetallespermiso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\permiso\\listadopermisos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\permiso\\listadopermisos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\permiso\\crearpermiso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\permiso\\crearpermiso.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A7C0A4E-EDE0-413C-A570-99F323CFDA51}|..\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.abstracciones\\modeloui\\rolpermisos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\xampp\\htdocs\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -68,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -80,163 +38,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PermisoController.cs",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\PermisoController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PermisoController.cs",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\PermisoController.cs",
-              "RelativeToolTip": "Controllers\\PermisoController.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAQwPQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T06:31:43.473Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ListadoRoles.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Rol\\ListadoRoles.cshtml",
-              "RelativeDocumentMoniker": "Views\\Rol\\ListadoRoles.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Rol\\ListadoRoles.cshtml",
-              "RelativeToolTip": "Views\\Rol\\ListadoRoles.cshtml",
-              "ViewState": "AgIAAIAAAAAAAAAAAAAqwJMAAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T06:30:35.19Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "permiso.js",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\permiso.js",
-              "RelativeDocumentMoniker": "wwwroot\\js\\permiso.js",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\permiso.js",
-              "RelativeToolTip": "wwwroot\\js\\permiso.js",
-              "ViewState": "AgIAAD8BAAAAAAAAAAAqwGEBAABiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-30T06:29:46.092Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AsignarPermisos.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\AsignarPermisos.cshtml",
-              "RelativeDocumentMoniker": "Views\\Permiso\\AsignarPermisos.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\AsignarPermisos.cshtml",
-              "RelativeToolTip": "Views\\Permiso\\AsignarPermisos.cshtml",
-              "ViewState": "AgIAAKEAAAAAAAAAAAAuwMMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T06:29:20.132Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "_ModalEliminarPermiso.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\_ModalEliminarPermiso.cshtml",
-              "RelativeDocumentMoniker": "Views\\Permiso\\_ModalEliminarPermiso.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\_ModalEliminarPermiso.cshtml",
-              "RelativeToolTip": "Views\\Permiso\\_ModalEliminarPermiso.cshtml",
-              "ViewState": "AgIAADcAAAAAAAAAAAAuwFkAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T06:28:59.635Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "_ModalDetallesPermiso.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\_ModalDetallesPermiso.cshtml",
-              "RelativeDocumentMoniker": "Views\\Permiso\\_ModalDetallesPermiso.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\_ModalDetallesPermiso.cshtml",
-              "RelativeToolTip": "Views\\Permiso\\_ModalDetallesPermiso.cshtml",
-              "ViewState": "AgIAABMAAAAAAAAAAAAuwDUAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T06:28:33.414Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Permiso.cs",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\ModeloUI\\Permiso.cs",
-              "RelativeDocumentMoniker": "..\\AromasWeb.Abstracciones\\ModeloUI\\Permiso.cs",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\ModeloUI\\Permiso.cs",
-              "RelativeToolTip": "..\\AromasWeb.Abstracciones\\ModeloUI\\Permiso.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T06:27:49.977Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "RolPermisos.cs",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\ModeloUI\\RolPermisos.cs",
-              "RelativeDocumentMoniker": "..\\AromasWeb.Abstracciones\\ModeloUI\\RolPermisos.cs",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\ModeloUI\\RolPermisos.cs",
-              "RelativeToolTip": "..\\AromasWeb.Abstracciones\\ModeloUI\\RolPermisos.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAA+wDAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T06:27:46.795Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EditarPermiso.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\EditarPermiso.cshtml",
-              "RelativeDocumentMoniker": "Views\\Permiso\\EditarPermiso.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\EditarPermiso.cshtml",
-              "RelativeToolTip": "Views\\Permiso\\EditarPermiso.cshtml",
-              "ViewState": "AgIAADsAAAAAAAAAAAAqwEEAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T06:27:14.688Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CrearPermiso.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\CrearPermiso.cshtml",
-              "RelativeDocumentMoniker": "Views\\Permiso\\CrearPermiso.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\CrearPermiso.cshtml",
-              "RelativeToolTip": "Views\\Permiso\\CrearPermiso.cshtml",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAqwFgAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T06:24:34.199Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ListadoPermisos.cshtml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\ListadoPermisos.cshtml",
-              "RelativeDocumentMoniker": "Views\\Permiso\\ListadoPermisos.cshtml",
-              "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Permiso\\ListadoPermisos.cshtml",
-              "RelativeToolTip": "Views\\Permiso\\ListadoPermisos.cshtml",
-              "ViewState": "AgIAAKYAAAAAAAAAAAAuwMgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T06:24:18.606Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAqwGQAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-22T18:28:26.015Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 1,
               "Title": "site.js",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\site.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\site.js",
@@ -248,7 +63,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 3,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
@@ -260,7 +75,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 2,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",

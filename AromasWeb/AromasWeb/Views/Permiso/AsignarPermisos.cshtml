@@ -41,29 +41,50 @@
             @Html.AntiForgeryToken()
             <input type="hidden" name="idRol" value="@rol.IdRol" />
 
-            <!-- Resumen superior -->
-            <div style="background: var(--white); border-radius: 25px; padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow-lg);" data-aos="fade-up">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                    <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, rgba(32, 116, 118, 0.1), rgba(32, 116, 118, 0.05)); border-radius: 15px;">
-                        <i class="fas fa-user-shield" style="font-size: 2.5rem; color: var(--teal); margin-bottom: 0.5rem;"></i>
-                        <h6 style="color: var(--gray); font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px;">Rol</h6>
-                        <p style="color: var(--dark-teal); font-size: 1.3rem; font-weight: 700; margin: 0;">@rol.Nombre</p>
+            <!-- Resumen superior con estilo mejorado -->
+            <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+                <div class="feature-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white;">
+                    <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                        <i class="fas fa-user-shield" style="color: white;"></i>
                     </div>
-                    <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.05)); border-radius: 15px;">
-                        <i class="fas fa-cube" style="font-size: 2.5rem; color: var(--coral); margin-bottom: 0.5rem;"></i>
-                        <h6 style="color: var(--gray); font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px;">Total Módulos</h6>
-                        <p style="color: var(--dark-teal); font-size: 1.3rem; font-weight: 700; margin: 0;">@modulos.Count</p>
+                    <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@rol.Nombre</h3>
+                    <p style="margin: 0; opacity: 0.9;">Rol del Sistema</p>
+                    <small style="opacity: 0.8; display: block; margin-top: 0.5rem;">
+                        <i class="fas fa-info-circle"></i> @rol.Descripcion
+                    </small>
+                </div>
+
+                <div class="feature-card" style="background: linear-gradient(135deg, var(--coral) 0%, #c75a3a 100%); color: white;">
+                    <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                        <i class="fas fa-cube" style="color: white;"></i>
                     </div>
-                    <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.05)); border-radius: 15px;">
-                        <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: #27ae60; margin-bottom: 0.5rem;"></i>
-                        <h6 style="color: var(--gray); font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px;">Permisos Asignados</h6>
-                        <p id="contadorPermisos" style="color: var(--dark-teal); font-size: 1.3rem; font-weight: 700; margin: 0;">@permisosAsignados.Count</p>
+                    <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@modulos.Count</h3>
+                    <p style="margin: 0; opacity: 0.9;">Total Módulos</p>
+                    <small style="opacity: 0.8; display: block; margin-top: 0.5rem;">
+                        <i class="fas fa-layer-group"></i> Módulos activos
+                    </small>
+                </div>
+
+                <div class="feature-card" style="background: linear-gradient(135deg, var(--green) 0%, #4d9160 100%); color: white;">
+                    <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                        <i class="fas fa-shield-alt" style="color: white;"></i>
                     </div>
-                    <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, rgba(241, 196, 15, 0.1), rgba(243, 156, 18, 0.05)); border-radius: 15px;">
-                        <i class="fas fa-list" style="font-size: 2.5rem; color: #f39c12; margin-bottom: 0.5rem;"></i>
-                        <h6 style="color: var(--gray); font-size: 0.85rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px;">Total Permisos</h6>
-                        <p style="color: var(--dark-teal); font-size: 1.3rem; font-weight: 700; margin: 0;">@permisos.Count</p>
+                    <h3 id="contadorPermisos" style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@permisosAsignados.Count</h3>
+                    <p style="margin: 0; opacity: 0.9;">Permisos Asignados</p>
+                    <small style="opacity: 0.8; display: block; margin-top: 0.5rem;">
+                        <i class="fas fa-check-circle"></i> Actualmente activos
+                    </small>
+                </div>
+
+                <div class="feature-card" style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%); color: white;">
+                    <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
+                        <i class="fas fa-list" style="color: white;"></i>
                     </div>
+                    <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@permisos.Count</h3>
+                    <p style="margin: 0; opacity: 0.9;">Total Permisos</p>
+                    <small style="opacity: 0.8; display: block; margin-top: 0.5rem;">
+                        <i class="fas fa-database"></i> Disponibles en sistema
+                    </small>
                 </div>
             </div>
 
