@@ -400,6 +400,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xDcmVhclNvbGljaXR1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/EditarSolicitud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xFZGl0YXJTb2xpY2l0dWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/xampp/htdocs/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/ListadoSolicitudes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xMaXN0YWRvU29saWNpdHVkZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
