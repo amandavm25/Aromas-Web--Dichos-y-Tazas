@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "huCQ5pR/ZQs=",
+  "dgSpecHash": "0I9vIl7VQx8=",
   "success": true,
-  "projectFilePath": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\AromasWeb.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\AromasWeb.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Kendall\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.23\\microsoft.windowsdesktop.app.ref.8.0.23.nupkg.sha512",
+    "C:\\Users\\Kendall\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.23\\microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
+    "C:\\Users\\Kendall\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.23\\microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512",
+    "C:\\Users\\Kendall\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.23\\microsoft.netcore.app.host.win-x64.8.0.23.nupkg.sha512"
+  ],
   "logs": []
 }

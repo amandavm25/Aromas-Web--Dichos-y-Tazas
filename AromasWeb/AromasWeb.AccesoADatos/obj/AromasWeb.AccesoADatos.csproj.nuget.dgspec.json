@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj": {}
+    "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj": {}
   },
   "projects": {
-    "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj": {
+    "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj",
+        "projectUniqueName": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj",
         "projectName": "AromasWeb.Abstracciones",
-        "projectPath": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj",
-        "packagesPath": "C:\\Users\\evely\\.nuget\\packages\\",
-        "outputPath": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\obj\\",
+        "projectPath": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj",
+        "packagesPath": "C:\\Users\\Kendall\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\evely\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Kendall\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -61,29 +61,43 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.23, 8.0.23]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.23, 8.0.23]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.23, 8.0.23]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj": {
+    "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj",
+        "projectUniqueName": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj",
         "projectName": "AromasWeb.AccesoADatos",
-        "projectPath": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj",
-        "packagesPath": "C:\\Users\\evely\\.nuget\\packages\\",
-        "outputPath": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\obj\\",
+        "projectPath": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj",
+        "packagesPath": "C:\\Users\\Kendall\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\evely\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Kendall\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -99,8 +113,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj": {
-                "projectPath": "C:\\xampp\\htdocs\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj"
+              "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj": {
+                "projectPath": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj"
               }
             }
           }
@@ -115,7 +129,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -131,12 +145,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.23, 8.0.23]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.23, 8.0.23]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.23, 8.0.23]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

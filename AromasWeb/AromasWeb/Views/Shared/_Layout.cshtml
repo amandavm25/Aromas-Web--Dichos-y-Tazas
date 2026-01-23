@@ -13,34 +13,32 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Entre Dichos y Tazas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>@ViewData["Title"] - TSURÚ Cocina y Jardín</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
-<body>
-    <!-- Loader -->
-    <div class="loader-wrapper">
-        <div class="coffee-loader">
-            <div class="coffee-cup">
-                <div class="coffee-steam"></div>
-                <div class="coffee-steam"></div>
-                <div class="coffee-steam"></div>
-            </div>
-        </div>
-    </div>
 
+<!-- Loader -->
+<div class="loader-wrapper">
+    <div class="tsuru-loader">
+        <div class="leaf-container">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+        </div>
+        <p>TSURÚ</p>
+    </div>
+</div>
+
+<body>
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="/" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-mug-hot"></i>
-                </div>
-                <div class="logo-text">
-                    <span class="logo-main">Entre Dichos</span>
-                    <span class="logo-sub">y Tazas</span>
+                <div class="logo-circle">
+                    <span class="logo-main">TSURÚ</span>
+                    <span class="logo-sub">cocina y jardín</span>
                 </div>
             </a>
 
@@ -109,12 +107,10 @@
                 {
                     <!-- MENÚ PARA CLIENTES Y NO AUTENTICADOS -->
                     <li><a href="/#inicio" class="nav-link">Inicio</a></li>
-                    <li><a href="/#productos" class="nav-link">Productos</a></li>
-                    <li><a href="/#menu" class="nav-link">Menú</a></li>
+                    <li><a href="https://heyzine.com/flip-book/56d6bb9fd9.html" class="nav-link">Menú</a></li>
                     <li><a href="/#especialidades" class="nav-link">Especialidades</a></li>
                     <li><a href="/#galeria" class="nav-link">Galería</a></li>
                     <li><a href="/#testimonios" class="nav-link">Reseñas</a></li>
-                    <li><a href="/#contacto" class="nav-link">Contacto</a></li>
                 }
 
                 @if (estaAutenticado)
@@ -161,7 +157,7 @@
                     <!-- SI NO ESTÁ AUTENTICADO -->
                     <!-- Botón Reservar Mesa para no autenticados -->
                     <li>
-                        <a href="/Reserva/CrearReserva" class="btn-nav btn-reserva">
+                        <a href="/Reserva/CrearReserva" class="btn btn-primary btn-elegant">
                             <i class="fas fa-calendar-check"></i>
                             <span>Reservar Mesa</span>
                         </a>
@@ -169,7 +165,7 @@
 
                     <!-- Botón Login -->
                     <li>
-                        <a href="/Auth/Login" class="btn-nav" style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%);">
+                        <a href="/Auth/Login" class="btn btn-primary btn-elegant">
                             <i class="fas fa-sign-in-alt"></i>
                             <span>Iniciar Sesión</span>
                         </a>
@@ -241,64 +237,53 @@
             <div class="footer-content">
                 <div class="footer-section footer-about">
                     <div class="footer-logo">
-                        <i class="fas fa-mug-hot"></i>
-                        <h3>Entre Dichos y Tazas</h3>
+                        <div class="footer-logo-circle">
+                            <span>TSURÚ</span>
+                        </div>
+                        <h3>Cocina y Jardín</h3>
                     </div>
-                    <p>Un espacio acogedor donde cada taza cuenta una historia. Ven a disfrutar del mejor café artesanal y conversaciones memorables.</p>
+                    <p>Una experiencia gastronómica única donde la cocina de autor se encuentra con la naturaleza. Cada plato es una obra de arte creada con ingredientes frescos de nuestro propio jardín.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link" data-tooltip="Facebook">
+                        <a href="https://www.facebook.com/share/18AcB8NQdd/?mibextid=wwXIfr" class="social-link" data-tooltip="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="social-link" data-tooltip="Instagram">
+                        <a href="https://www.instagram.com/tsuru_restaurante?igsh=MW1vcTJzYTk3NmU0eQ==" class="social-link" data-tooltip="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-link" data-tooltip="Twitter">
-                            <i class="fab fa-twitter"></i>
+                        <a href="https://api.whatsapp.com/send?phone=50683469243&fbclid=IwRlRTSAPfXmdleHRuA2FlbQIxMABzcnRjBmFwcF9pZAo2NjI4NTY4Mzc5AAEea3iMUnjdrkdPjVhcWQCiHtgRI_80xNe3Nz4jfsrmzq49SDMAPiQrlgMNBdc_aem_DsqpJeyvruJAJ7UTIxLBSw" class="social-link" data-tooltip="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
                         </a>
-                        <a href="#" class="social-link" data-tooltip="TikTok">
-                            <i class="fab fa-tiktok"></i>
+                        <a href="https://waze.com/ul/hd1u1nsbb9" class="social-link" data-tooltip="Waze">
+                            <i class="fab fa-waze"></i>
                         </a>
                     </div>
                 </div>
 
                 <div class="footer-section">
-                    <h4>Enlaces Rápidos</h4>
+                    <h4>Navegación</h4>
                     <ul class="footer-links">
-                        <li><a href="/#menu"><i class="fas fa-chevron-right"></i> Nuestro Menú</a></li>
-                        <li><a href="/#especialidades"><i class="fas fa-chevron-right"></i> Especialidades</a></li>
-                        @if (esCliente)
-                        {
-                            <li><a href="/Cliente/MisReservas"><i class="fas fa-chevron-right"></i> Mis Reservas</a></li>
-                        }
-                        @if (esEmpleado)
-                        {
-                            <li><a href="/HistorialTarifa/MiHistorial"><i class="fas fa-chevron-right"></i> Mi Historial de Tarifas</a></li>
-                            <li><a href="/Planilla/MiPlanilla"><i class="fas fa-chevron-right"></i> Mis Planillas</a></li>
-                            <li><a href="/SolicitudVacaciones/MisSolicitudes"><i class="fas fa-chevron-right"></i> Mis Vacaciones</a></li>
-                        }
-                        <li><a href="/#galeria"><i class="fas fa-chevron-right"></i> Galería</a></li>
-                        @if (!estaAutenticado)
-                        {
-                            <li><a href="/Auth/Login"><i class="fas fa-chevron-right"></i> Iniciar Sesión</a></li>
-                            <li><a href="/Auth/Registro"><i class="fas fa-chevron-right"></i> Crear Cuenta</a></li>
-                        }
+                        <li><a href="#menu"><i class="fas fa-leaf"></i> Nuestros Productos</a></li>
+                        <li><a href="#especialidades"><i class="fas fa-leaf"></i> Especialidades</a></li>
+                        <li><a href="#galeria"><i class="fas fa-leaf"></i> Galería</a></li>
+                        <li><a href="#"><i class="fas fa-leaf"></i> Eventos Privados</a></li>
+                        <li><a href="#"><i class="fas fa-leaf"></i> Catering</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-section">
-                    <h4>Horarios</h4>
+                    <h4>Horario de Atención</h4>
                     <ul class="footer-schedule">
                         <li>
-                            <span class="day">Martes-Sábado</span>
-                            <span class="time">8AM - 7PM</span>
+                            <span class="day">Miércoles - Viernes</span>
+                            <span class="time">12:00 PM - 10:00 PM</span>
                         </li>
                         <li>
-                            <span class="day">Domingos</span>
-                            <span class="time">8 AM - 6 PM</span>
+                            <span class="day">Sábado</span>
+                            <span class="time">07:30 AM - 10:00 PM</span>
                         </li>
                         <li>
-                            <span class="day">Lunes</span>
-                            <span class="time">Cerrado</span>
+                            <span class="day">Domingo</span>
+                            <span class="time">07:30 AM - 08:00 PM</span>
                         </li>
                     </ul>
                 </div>
@@ -308,15 +293,15 @@
                     <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>Alajuela, Costa Rica<br>Grecia</span>
+                            <span>Heredia, Costa Rica<br>San Rafael</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
-                            <span>+506 6138-3502</span>
+                            <span>+506 8346-9243</span>
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span>info@entredichosytazas.com</span>
+                            <span>tsurucocina@gmail.com</span>
                         </li>
                     </ul>
                     <div class="newsletter">
@@ -330,7 +315,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 Entre Dichos y Tazas. Todos los derechos reservados.</p>
+                <p>&copy; 2026 TSURÚ Cocina y Jardín. Todos los derechos reservados.</p>
                 <div class="footer-bottom-links">
                     <a href="#">Política de Privacidad</a>
                     <span>|</span>
@@ -346,34 +331,6 @@
     </button>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <style>
-        @@keyframes slideInRight {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @@keyframes slideOutRight {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-
-            to {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-        }
-    </style>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
