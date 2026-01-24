@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -37,8 +37,8 @@
         <!-- Botón para nueva reserva y filtros -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;" data-aos="fade-up">
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-                <span style="color: var(--dark-teal); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
-                    <i class="fas fa-filter" style="color: var(--coral);"></i> Filtrar:
+                <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                    <i class="fas fa-filter" style="color: var(--gold-bright);"></i> Filtrar:
                 </span>
                 <a href="@Url.Action("MisReservas", "Cliente")"
                    class="btn @(string.IsNullOrWhiteSpace(ViewBag.Filtro as string) ? "btn-primary" : "btn-secondary") "
@@ -129,7 +129,7 @@
                 <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden; transition: all 0.3s; border-left: 6px solid @colorEstado; position: relative;">
                     @if (reserva.EsProxima)
                     {
-                        <div style="position: absolute; top: 20px; right: 20px; background: linear-gradient(135deg, var(--coral), var(--amber)); color: white; padding: 0.5rem 1.2rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; box-shadow: var(--shadow-md); z-index: 1;">
+                        <div style="position: absolute; top: 20px; right: 20px; background: linear-gradient(135deg, var(--gold-bright), var(--gold)); color: white; padding: 0.5rem 1.2rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; box-shadow: var(--shadow-md); z-index: 1;">
                             <i class="fas fa-star"></i> PRÓXIMA
                         </div>
                     }
@@ -148,36 +148,36 @@
 
                         <!-- Información de la Reserva -->
                         <div>
-                            <h4 style="margin: 0 0 1.5rem; color: var(--dark-teal); font-family: var(--font-primary); font-weight: 700; font-size: 1.5rem;">
+                            <h4 style="margin: 0 0 1.5rem; color: var(--dark-green); font-family: var(--font-primary); font-weight: 700; font-size: 1.5rem;">
                                 Reserva #@reserva.IdReserva
                             </h4>
 
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem;">
                                 <div class="feature-card" style="background: var(--cream); padding: 1rem; border-radius: 15px; margin: 0;">
-                                    <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-calendar" style="color: var(--teal);"></i> Fecha
+                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                        <i class="fas fa-calendar" style="color: var(--olive-green);"></i> Fecha
                                     </span>
-                                    <p style="margin: 0; color: var(--dark-teal); font-weight: 700; font-size: 1.2rem;">@reserva.FechaFormat</p>
+                                    <p style="margin: 0; color: var(--dark-green); font-weight: 700; font-size: 1.2rem;">@reserva.FechaFormat</p>
                                 </div>
                                 <div class="feature-card" style="background: var(--cream); padding: 1rem; border-radius: 15px; margin: 0;">
-                                    <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-clock" style="color: var(--teal);"></i> Hora
+                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                        <i class="fas fa-clock" style="color: var(--olive-green);"></i> Hora
                                     </span>
-                                    <p style="margin: 0; color: var(--coral); font-weight: 700; font-size: 1.4rem;">@reserva.Hora</p>
+                                    <p style="margin: 0; color: var(--gold-bright); font-weight: 700; font-size: 1.4rem;">@reserva.Hora</p>
                                 </div>
                                 <div class="feature-card" style="background: var(--cream); padding: 1rem; border-radius: 15px; margin: 0;">
-                                    <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-users" style="color: var(--teal);"></i> Personas
+                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                        <i class="fas fa-users" style="color: var(--olive-green);"></i> Personas
                                     </span>
-                                    <p style="margin: 0; color: var(--dark-teal); font-weight: 700; font-size: 1.2rem;">@reserva.CantidadPersonas</p>
+                                    <p style="margin: 0; color: var(--dark-green); font-weight: 700; font-size: 1.2rem;">@reserva.CantidadPersonas</p>
                                 </div>
                             </div>
 
                             @if (!string.IsNullOrWhiteSpace(reserva.Observaciones))
                             {
-                                <div style="margin-top: 1rem; background: rgba(32, 116, 118, 0.05); padding: 1rem; border-radius: 12px; border-left: 3px solid var(--teal);">
-                                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem; display: flex; align-items: start; gap: 0.5rem;">
-                                        <i class="fas fa-comment" style="color: var(--teal); margin-top: 0.2rem;"></i>
+                                <div style="margin-top: 1rem; background: rgba(143, 142, 106, 0.08); padding: 1rem; border-radius: 12px; border-left: 3px solid var(--olive-green);">
+                                    <p style="margin: 0; color: var(--charcoal); opacity: 0.85; font-size: 0.9rem; display: flex; align-items: start; gap: 0.5rem;">
+                                        <i class="fas fa-comment" style="color: var(--olive-green); margin-top: 0.2rem;"></i>
                                         <span>@reserva.Observaciones</span>
                                     </p>
                                 </div>
@@ -191,7 +191,7 @@
                                 <button type="button"
                                         class="btn"
                                         onclick="window.location.href='@Url.Action("EditarMiReserva", "Cliente", new { id = reserva.IdReserva })'"
-                                        style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); color: var(--white); border: none; cursor: pointer; padding: 0.9rem 1.5rem; border-radius: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: var(--shadow-md); transition: all 0.3s;">
+                                        style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); color: var(--white); border: none; cursor: pointer; padding: 0.9rem 1.5rem; border-radius: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: var(--shadow-md); transition: all 0.3s;">
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
                             }
@@ -215,7 +215,7 @@
                             {
                                 <button type="button"
                                         class="btn"
-                                        style="background: var(--gray-light); color: var(--gray); border: none; cursor: not-allowed; padding: 0.9rem 1.5rem; border-radius: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; opacity: 0.6;"
+                                        style="background: var(--cream); color: var(--charcoal); border: none; cursor: not-allowed; padding: 0.9rem 1.5rem; border-radius: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; opacity: 0.6;"
                                         disabled>
                                     <i class="fas fa-lock"></i> Finalizada
                                 </button>
@@ -230,11 +230,11 @@
         @if ((Model == null || Model.Count == 0) && reservasDemo.Count == 0)
         {
             <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 4rem; text-align: center; margin-top: 2rem;" data-aos="fade-up">
-                <div style="width: 120px; height: 120px; background: linear-gradient(135deg, var(--cream), var(--gray-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: var(--shadow-md);">
-                    <i class="fas fa-calendar-times" style="font-size: 4rem; color: var(--gray); opacity: 0.5;"></i>
+                <div style="width: 120px; height: 120px; background: linear-gradient(135deg, var(--cream), var(--light-olive)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: var(--shadow-md);">
+                    <i class="fas fa-calendar-times" style="font-size: 4rem; color: var(--olive-green); opacity: 0.5;"></i>
                 </div>
-                <h3 style="color: var(--dark-teal); margin-bottom: 1rem; font-family: var(--font-primary);">No tienes reservas registradas</h3>
-                <p style="color: var(--gray); margin-bottom: 2rem; font-size: 1.1rem;">¡Empieza a reservar y disfruta de nuestros servicios!</p>
+                <h3 style="color: var(--dark-green); margin-bottom: 1rem; font-family: var(--font-primary);">No tienes reservas registradas</h3>
+                <p style="color: var(--charcoal); opacity: 0.7; margin-bottom: 2rem; font-size: 1.1rem;">¡Empieza a reservar y disfruta de nuestros servicios!</p>
                 <a href="@Url.Action("CrearReserva", "Reserva")" class="btn btn-primary btn-3d" style="padding: 1rem 2.5rem;">
                     <span><i class="fas fa-plus"></i> Hacer mi primera reserva</span>
                 </a>
@@ -243,7 +243,7 @@
 
         <!-- Información adicional -->
         <div style="margin-top: 3rem;" data-aos="fade-up">
-            <div style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
+            <div style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
                 <h5 style="margin: 0 0 2rem; color: white; font-weight: 600; display: flex; align-items: center; gap: 0.7rem; font-size: 1.3rem;">
                     <i class="fas fa-info-circle"></i> Información sobre tus Reservas
                 </h5>

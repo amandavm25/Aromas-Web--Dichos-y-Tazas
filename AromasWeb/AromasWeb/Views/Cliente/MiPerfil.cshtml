@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -37,24 +37,24 @@
         <!-- Información del Perfil -->
         <div class="feature-card" style="margin-bottom: 3rem; padding: 2rem;" data-aos="fade-up">
             <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;">
-                <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--teal), var(--dark-teal)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
+                <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
                     <i class="fas fa-user" style="font-size: 3rem; color: white;"></i>
                 </div>
 
                 <div>
-                    <h4 style="margin: 0 0 0.5rem; color: var(--dark-teal); font-family: var(--font-primary); font-weight: 700;">@Model.NombreCompleto</h4>
+                    <h4 style="margin: 0 0 0.5rem; color: var(--dark-green); font-family: var(--font-primary); font-weight: 700;">@Model.NombreCompleto</h4>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
                         <div>
-                            <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                <i class="fas fa-envelope" style="color: var(--teal);"></i> Correo
+                            <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                                <i class="fas fa-envelope" style="color: var(--olive-green);"></i> Correo
                             </span>
-                            <p style="margin: 0.3rem 0 0; color: var(--dark-teal); font-weight: 600;">@Model.Correo</p>
+                            <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.Correo</p>
                         </div>
                         <div>
-                            <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                <i class="fas fa-calendar-plus" style="color: var(--teal);"></i> Miembro Desde
+                            <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                                <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Miembro Desde
                             </span>
-                            <p style="margin: 0.3rem 0 0; color: var(--dark-teal); font-weight: 600;">@Model.FechaRegistroFormateada</p>
+                            <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.FechaRegistroFormateada</p>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
 
         <!-- Información Personal -->
         <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: 3rem;" data-aos="fade-up">
-            <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1.5rem 2rem;">
+            <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1.5rem 2rem;">
                 <h5 style="color: white; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 0.7rem;">
                     <i class="fas fa-user-circle"></i> Información Personal
                 </h5>
@@ -78,45 +78,45 @@
             <div style="padding: 2.5rem;">
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
                     <div>
-                        <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-user" style="color: var(--teal);"></i> Nombre Completo
+                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                            <i class="fas fa-user" style="color: var(--olive-green);"></i> Nombre Completo
                         </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.NombreCompleto</p>
+                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.NombreCompleto</p>
                     </div>
 
                     <div>
-                        <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-id-card" style="color: var(--teal);"></i> Identificación
+                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                            <i class="fas fa-id-card" style="color: var(--olive-green);"></i> Identificación
                         </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.Identificacion</p>
+                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.Identificacion</p>
                     </div>
 
                     <div>
-                        <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-envelope" style="color: var(--teal);"></i> Correo Electrónico
+                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                            <i class="fas fa-envelope" style="color: var(--olive-green);"></i> Correo Electrónico
                         </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.Correo</p>
+                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.Correo</p>
                     </div>
 
                     <div>
-                        <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-phone" style="color: var(--teal);"></i> Teléfono
+                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                            <i class="fas fa-phone" style="color: var(--olive-green);"></i> Teléfono
                         </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.Telefono</p>
+                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.Telefono</p>
                     </div>
 
                     <div>
-                        <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-calendar-plus" style="color: var(--teal);"></i> Fecha de Registro
+                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                            <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Registro
                         </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.FechaRegistroFormateada</p>
+                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.FechaRegistroFormateada</p>
                     </div>
 
                     <div>
-                        <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-calendar-check" style="color: var(--teal);"></i> Última Reserva
+                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                            <i class="fas fa-calendar-check" style="color: var(--olive-green);"></i> Última Reserva
                         </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.UltimaReservaFormateada</p>
+                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.UltimaReservaFormateada</p>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -42,7 +42,7 @@
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información Personal -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-user"></i> Información Personal
                         </h5>
@@ -90,7 +90,7 @@
                     </div>
 
                     <!-- Información de Cuenta -->
-                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
+                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-lock"></i> Información de Cuenta
                         </h5>
@@ -104,8 +104,8 @@
                         </label>
                         @Html.EditorFor(model => model.Contrasena, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Mínimo 8 caracteres" } })
                         @Html.ValidationMessageFor(model => model.Contrasena, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             La contraseña debe tener al menos 8 caracteres
                         </small>
                     </div>
@@ -121,7 +121,7 @@
 
                     <!-- Estado del Cliente -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--gray-light); border-radius: 15px; cursor: pointer;">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
                             @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox", @checked = "checked" } })
                             <span style="flex: 1;">
                                 <i class="fas fa-toggle-on"></i>
@@ -129,8 +129,8 @@
                             </span>
                         </label>
                         @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-toggle-on" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-toggle-on" style="color: var(--gold-bright);"></i>
                             Activa o desactiva el acceso del cliente
                         </small>
                     </div>

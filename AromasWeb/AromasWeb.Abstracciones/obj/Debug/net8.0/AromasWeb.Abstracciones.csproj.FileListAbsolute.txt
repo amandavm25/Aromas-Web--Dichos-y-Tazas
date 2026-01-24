@@ -46,3 +46,15 @@ C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb
 C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\refint\AromasWeb.Abstracciones.dll
 C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.pdb
 C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\ref\AromasWeb.Abstracciones.dll
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\bin\Debug\net8.0\AromasWeb.Abstracciones.deps.json
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\bin\Debug\net8.0\AromasWeb.Abstracciones.dll
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\bin\Debug\net8.0\AromasWeb.Abstracciones.pdb
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.AssemblyInfoInputs.cache
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.AssemblyInfo.cs
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.csproj.CoreCompileInputs.cache
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.sourcelink.json
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.dll
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\refint\AromasWeb.Abstracciones.dll
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.pdb
+C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\ref\AromasWeb.Abstracciones.dll

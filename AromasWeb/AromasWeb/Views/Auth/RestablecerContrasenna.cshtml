@@ -5,7 +5,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -51,7 +51,7 @@
                     </div>
 
                     <!-- Header -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-shield-alt"></i> Nueva Contraseña
                         </h5>
@@ -71,7 +71,7 @@
                                    placeholder="Ingresa tu nueva contraseña"
                                    required
                                    style="font-size: 1.1rem; padding: 1.2rem 3.5rem 1.2rem 1.5rem;" />
-                            <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.2rem;">
+                            <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.2rem; opacity: 0.6;">
                                 <i class="fas fa-eye" id="eye-icon"></i>
                             </button>
                         </div>
@@ -79,16 +79,16 @@
                         <!-- Indicador de fortaleza -->
                         <div style="margin-top: 0.7rem;">
                             <div style="display: flex; gap: 0.3rem; height: 4px; margin-bottom: 0.5rem;">
-                                <div id="strength-1" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
-                                <div id="strength-2" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
-                                <div id="strength-3" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
-                                <div id="strength-4" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-1" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-2" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-3" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-4" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
                             </div>
-                            <small id="strength-text" style="color: var(--gray); font-size: 0.85rem;"></small>
+                            <small id="strength-text" style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"></small>
                         </div>
 
-                        <small style="display: block; margin-top: 0.7rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.7rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números
                         </small>
                     </div>
@@ -107,7 +107,7 @@
                                    placeholder="Confirma tu nueva contraseña"
                                    required
                                    style="font-size: 1.1rem; padding: 1.2rem 3.5rem 1.2rem 1.5rem;" />
-                            <button type="button" id="toggle-confirm-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.2rem;">
+                            <button type="button" id="toggle-confirm-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.2rem; opacity: 0.6;">
                                 <i class="fas fa-eye" id="eye-icon-confirm"></i>
                             </button>
                         </div>
@@ -116,25 +116,25 @@
 
                     <!-- Requisitos de contraseña -->
                     <div class="feature-card" style="margin: 2rem 0; padding: 2rem; background: var(--white);">
-                        <h6 style="color: var(--dark-teal); margin: 0 0 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-list-check" style="color: var(--teal);"></i>
+                        <h6 style="color: var(--dark-green); margin: 0 0 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-list-check" style="color: var(--olive-green);"></i>
                             Requisitos de seguridad
                         </h6>
 
                         <div style="display: grid; gap: 0.8rem;">
-                            <div id="req-length" style="display: flex; align-items: center; gap: 0.7rem; color: var(--gray);">
+                            <div id="req-length" style="display: flex; align-items: center; gap: 0.7rem; color: var(--charcoal); opacity: 0.7;">
                                 <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
                                 <span>Mínimo 8 caracteres</span>
                             </div>
-                            <div id="req-uppercase" style="display: flex; align-items: center; gap: 0.7rem; color: var(--gray);">
+                            <div id="req-uppercase" style="display: flex; align-items: center; gap: 0.7rem; color: var(--charcoal); opacity: 0.7;">
                                 <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
                                 <span>Al menos una letra mayúscula (A-Z)</span>
                             </div>
-                            <div id="req-lowercase" style="display: flex; align-items: center; gap: 0.7rem; color: var(--gray);">
+                            <div id="req-lowercase" style="display: flex; align-items: center; gap: 0.7rem; color: var(--charcoal); opacity: 0.7;">
                                 <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
                                 <span>Al menos una letra minúscula (a-z)</span>
                             </div>
-                            <div id="req-number" style="display: flex; align-items: center; gap: 0.7rem; color: var(--gray);">
+                            <div id="req-number" style="display: flex; align-items: center; gap: 0.7rem; color: var(--charcoal); opacity: 0.7;">
                                 <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
                                 <span>Al menos un número (0-9)</span>
                             </div>
@@ -142,12 +142,12 @@
                     </div>
 
                     <!-- Información de seguridad -->
-                    <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.1) 0%, rgba(230, 126, 34, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin: 2rem 0; border-left: 4px solid var(--amber);">
+                    <div style="background: linear-gradient(135deg, rgba(184, 167, 106, 0.1) 0%, rgba(197, 179, 88, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin: 2rem 0; border-left: 4px solid var(--gold-bright);">
                         <div style="display: flex; gap: 1rem; align-items: start;">
-                            <i class="fas fa-shield-alt" style="color: var(--amber); font-size: 1.5rem; margin-top: 0.2rem;"></i>
+                            <i class="fas fa-shield-alt" style="color: var(--gold-bright); font-size: 1.5rem; margin-top: 0.2rem;"></i>
                             <div>
-                                <h6 style="color: var(--dark-teal); margin: 0 0 0.5rem; font-weight: 700;">Consejos de seguridad</h6>
-                                <ul style="margin: 0; padding-left: 1.2rem; color: var(--gray); line-height: 1.8;">
+                                <h6 style="color: var(--dark-green); margin: 0 0 0.5rem; font-weight: 700;">Consejos de seguridad</h6>
+                                <ul style="margin: 0; padding-left: 1.2rem; color: var(--charcoal); opacity: 0.8; line-height: 1.8;">
                                     <li>No uses información personal (nombre, fecha de nacimiento)</li>
                                     <li>Evita contraseñas que hayas usado antes</li>
                                     <li>No compartas tu contraseña con nadie</li>

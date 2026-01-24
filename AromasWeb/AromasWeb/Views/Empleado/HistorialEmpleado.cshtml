@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -37,25 +37,25 @@
         <div style="background: var(--white); padding: 2rem; border-radius: 25px; box-shadow: var(--shadow-lg); margin-bottom: 3rem;" data-aos="fade-up">
             <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; align-items: center;">
                 <div>
-                    <h3 style="color: var(--dark-teal); margin: 0 0 0.5rem; font-family: var(--font-primary); font-weight: 700;">@ViewBag.NombreEmpleado</h3>
-                    <p style="margin: 0; color: var(--gray); display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-id-card" style="color: var(--teal);"></i>
+                    <h3 style="color: var(--dark-green); margin: 0 0 0.5rem; font-family: var(--font-primary); font-weight: 700;">@ViewBag.NombreEmpleado</h3>
+                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-id-card" style="color: var(--olive-green);"></i>
                         @ViewBag.IdentificacionEmpleado
                     </p>
-                    <p style="margin: 0.3rem 0 0; color: var(--coral); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                    <p style="margin: 0.3rem 0 0; color: var(--gold-bright); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fas fa-briefcase"></i>
                         @ViewBag.CargoEmpleado
                     </p>
                 </div>
                 <div style="text-align: center; padding: 1.5rem; background: var(--cream); border-radius: 15px;">
-                    <i class="fas fa-calendar-check" style="color: var(--teal); font-size: 2rem; margin-bottom: 0.5rem;"></i>
-                    <p style="margin: 0; color: var(--gray); font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Total Registros</p>
-                    <h2 style="margin: 0.3rem 0 0; color: var(--dark-teal); font-weight: 700;">@Model.Count</h2>
+                    <i class="fas fa-calendar-check" style="color: var(--olive-green); font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Total Registros</p>
+                    <h2 style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 700;">@Model.Count</h2>
                 </div>
                 <div style="text-align: center; padding: 1.5rem; background: var(--cream); border-radius: 15px;">
-                    <i class="fas fa-clock" style="color: var(--amber); font-size: 2rem; margin-bottom: 0.5rem;"></i>
-                    <p style="margin: 0; color: var(--gray); font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Horas Totales</p>
-                    <h2 style="margin: 0.3rem 0 0; color: var(--amber); font-weight: 700;">@Model.Sum(a => a.HorasTotales).ToString("F2")h</h2>
+                    <i class="fas fa-clock" style="color: var(--gold-bright); font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Horas Totales</p>
+                    <h2 style="margin: 0.3rem 0 0; color: var(--gold-bright); font-weight: 700;">@Model.Sum(a => a.HorasTotales).ToString("F2")h</h2>
                 </div>
             </div>
         </div>
@@ -66,15 +66,15 @@
                 <input type="hidden" name="idEmpleado" value="@ViewBag.IdEmpleado" />
 
                 <div style="flex: 1;">
-                    <label style="display: block; color: var(--dark-teal); font-weight: 600; margin-bottom: 0.5rem;">
-                        <i class="fas fa-calendar-alt" style="color: var(--teal);"></i> Fecha Inicio
+                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem;">
+                        <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Fecha Inicio
                     </label>
                     <input type="date" name="fechaInicio" value="@ViewBag.FechaInicio" class="form-control" />
                 </div>
 
                 <div style="flex: 1;">
-                    <label style="display: block; color: var(--dark-teal); font-weight: 600; margin-bottom: 0.5rem;">
-                        <i class="fas fa-calendar-alt" style="color: var(--teal);"></i> Fecha Fin
+                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem;">
+                        <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Fecha Fin
                     </label>
                     <input type="date" name="fechaFin" value="@ViewBag.FechaFin" class="form-control" />
                 </div>
@@ -93,7 +93,7 @@
         <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
             <div class="table-responsive">
                 <table style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                    <thead style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
+                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Día</th>
@@ -109,33 +109,33 @@
                     <tbody>
                         @foreach (var asistencia in Model)
                         {
-                            <tr style="border-bottom: 1px solid rgba(32, 116, 118, 0.1);">
-                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@asistencia.FechaFormateada</td>
-                                <td style="padding: 1.2rem; color: var(--gray);">@asistencia.DiaSemana</td>
-                                <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">@asistencia.HoraEntradaFormateada</td>
-                                <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">
+                            <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
+                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@asistencia.FechaFormateada</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@asistencia.DiaSemana</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@asistencia.HoraEntradaFormateada</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">
                                     @if (asistencia.HoraSalida.HasValue)
                                     {
                                         <span>@asistencia.HoraSalidaFormateada</span>
                                     }
                                     else
                                     {
-                                        <span style="color: var(--amber); font-style: italic;">Pendiente</span>
+                                        <span style="color: var(--gold); font-style: italic;">Pendiente</span>
                                     }
                                 </td>
-                                <td style="padding: 1.2rem; color: var(--gray); font-size: 0.9rem;">@asistencia.TiempoAlmuerzoFormateado</td>
-                                <td style="padding: 1.2rem; color: var(--teal); font-weight: 700;">@asistencia.HorasTotales.ToString("F2")h</td>
-                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@asistencia.HorasRegulares.ToString("F2")h</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">@asistencia.TiempoAlmuerzoFormateado</td>
+                                <td style="padding: 1.2rem; color: var(--olive-green); font-weight: 700;">@asistencia.HorasTotales.ToString("F2")h</td>
+                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@asistencia.HorasRegulares.ToString("F2")h</td>
                                 <td style="padding: 1.2rem;">
                                     @if (asistencia.TieneHorasExtras)
                                     {
-                                        <span style="color: var(--amber); font-weight: 700; display: flex; align-items: center; gap: 0.3rem;">
+                                        <span style="color: var(--gold); font-weight: 700; display: flex; align-items: center; gap: 0.3rem;">
                                             <i class="fas fa-star"></i> @asistencia.HorasExtras.ToString("F2")h
                                         </span>
                                     }
                                     else
                                     {
-                                        <span style="color: var(--gray);">0.00h</span>
+                                        <span style="color: var(--charcoal); opacity: 0.7;">0.00h</span>
                                     }
                                 </td>
                                 <td style="padding: 1.2rem;">
@@ -145,7 +145,7 @@
                                     }
                                     else
                                     {
-                                        <span style="background: var(--amber); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">En curso</span>
+                                        <span style="background: var(--gold); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">En curso</span>
                                     }
                                 </td>
                             </tr>
@@ -153,10 +153,10 @@
                     </tbody>
                     <tfoot style="background: var(--cream);">
                         <tr>
-                            <td colspan="5" style="padding: 1.2rem; text-align: right; font-weight: 700; color: var(--dark-teal);">TOTALES:</td>
-                            <td style="padding: 1.2rem; font-weight: 700; color: var(--teal);">@Model.Sum(a => a.HorasTotales).ToString("F2")h</td>
-                            <td style="padding: 1.2rem; font-weight: 700; color: var(--dark-teal);">@Model.Sum(a => a.HorasRegulares).ToString("F2")h</td>
-                            <td style="padding: 1.2rem; font-weight: 700; color: var(--amber);">@Model.Sum(a => a.HorasExtras).ToString("F2")h</td>
+                            <td colspan="5" style="padding: 1.2rem; text-align: right; font-weight: 700; color: var(--dark-green);">TOTALES:</td>
+                            <td style="padding: 1.2rem; font-weight: 700; color: var(--olive-green);">@Model.Sum(a => a.HorasTotales).ToString("F2")h</td>
+                            <td style="padding: 1.2rem; font-weight: 700; color: var(--dark-green);">@Model.Sum(a => a.HorasRegulares).ToString("F2")h</td>
+                            <td style="padding: 1.2rem; font-weight: 700; color: var(--gold);">@Model.Sum(a => a.HorasExtras).ToString("F2")h</td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -166,10 +166,10 @@
 
         @if (!Model.Any())
         {
-            <div style="text-align: center; padding: 4rem; background: var(--white); border-radius: 25px; margin-top: 2rem;">
-                <i class="fas fa-inbox" style="font-size: 4rem; color: var(--gray); opacity: 0.5; margin-bottom: 1rem;"></i>
-                <h4 style="color: var(--dark-teal); margin-bottom: 0.5rem;">No hay registros</h4>
-                <p style="color: var(--gray); margin: 0;">No se encontraron registros de asistencia para el período seleccionado</p>
+            <div style="text-align: center; padding: 4rem; background: var(--white); border-radius: 25px; margin-top: 2rem; box-shadow: var(--shadow-lg);">
+                <i class="fas fa-inbox" style="font-size: 4rem; color: var(--charcoal); opacity: 0.5; margin-bottom: 1rem;"></i>
+                <h4 style="color: var(--dark-green); margin-bottom: 0.5rem;">No hay registros</h4>
+                <p style="color: var(--charcoal); opacity: 0.7; margin: 0;">No se encontraron registros de asistencia para el período seleccionado</p>
             </div>
         }
 

@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -53,19 +53,19 @@
                 }
 
                 <!-- Información de Login -->
-                <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                     <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                         <i class="fas fa-user-circle"></i> Iniciar Sesión
                     </h5>
                 </div>
 
                 <!-- Usuarios de prueba -->
-                <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(41, 128, 185, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; border-left: 4px solid #3498db;">
+                <div style="background: linear-gradient(135deg, rgba(143, 142, 106, 0.1) 0%, rgba(143, 142, 106, 0.05) 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; border-left: 4px solid var(--olive-green);">
                     <div style="display: flex; align-items: start; gap: 1rem;">
-                        <i class="fas fa-info-circle" style="color: #3498db; font-size: 1.5rem; margin-top: 0.2rem;"></i>
+                        <i class="fas fa-info-circle" style="color: var(--olive-green); font-size: 1.5rem; margin-top: 0.2rem;"></i>
                         <div style="width: 100%;">
-                            <h6 style="color: #2980b9; margin: 0 0 0.5rem; font-weight: 700;">Usuarios de Prueba</h6>
-                            <p style="margin: 0 0 0.75rem; color: #2c3e50; line-height: 1.6; font-size: 0.9rem;">
+                            <h6 style="color: var(--dark-green); margin: 0 0 0.5rem; font-weight: 700;">Usuarios de Prueba</h6>
+                            <p style="margin: 0 0 0.75rem; color: var(--charcoal); line-height: 1.6; font-size: 0.9rem;">
                                 Puedes usar estas credenciales para probar:
                             </p>
                             <div style="display: grid; gap: 0.75rem;">
@@ -74,7 +74,7 @@
                                     <strong style="color: #27ae60; display: block; margin-bottom: 0.25rem;">
                                         <i class="fas fa-user"></i> Cliente:
                                     </strong>
-                                    <code style="display: block; color: #2c3e50; font-size: 0.85rem;">
+                                    <code style="display: block; color: var(--charcoal); font-size: 0.85rem;">
                                         <strong>Email:</strong> cliente@gmail.com<br>
                                         <strong>Pass:</strong> cliente123
                                     </code>
@@ -82,10 +82,10 @@
 
                                 <!-- Empleado -->
                                 <div style="background: white; padding: 0.75rem; border-radius: 10px;">
-                                    <strong style="color: #f39c12; display: block; margin-bottom: 0.25rem;">
+                                    <strong style="color: var(--gold-bright); display: block; margin-bottom: 0.25rem;">
                                         <i class="fas fa-user-tie"></i> Empleado:
                                     </strong>
-                                    <code style="display: block; color: #2c3e50; font-size: 0.85rem;">
+                                    <code style="display: block; color: var(--charcoal); font-size: 0.85rem;">
                                         <strong>Email:</strong> empleado@gmail.com<br>
                                         <strong>Pass:</strong> empleado123
                                     </code>
@@ -96,7 +96,7 @@
                                     <strong style="color: #e74c3c; display: block; margin-bottom: 0.25rem;">
                                         <i class="fas fa-user-shield"></i> Administrador:
                                     </strong>
-                                    <code style="display: block; color: #2c3e50; font-size: 0.85rem;">
+                                    <code style="display: block; color: var(--charcoal); font-size: 0.85rem;">
                                         <strong>Email:</strong> admin@gmail.com<br>
                                         <strong>Pass:</strong> admin123
                                     </code>
@@ -124,7 +124,7 @@
                     </label>
                     <div style="position: relative;">
                         <input type="password" name="Contrasena" id="password-input" class="form-control" placeholder="Ingresa tu contraseña" required />
-                        <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.2rem;">
+                        <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.2rem; opacity: 0.6;">
                             <i class="fas fa-eye" id="eye-icon"></i>
                         </button>
                     </div>
@@ -135,9 +135,9 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0;">
                     <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
                         <input type="checkbox" name="RecordarMe" style="width: 18px; height: 18px; cursor: pointer;">
-                        <span style="color: var(--dark-teal); font-weight: 500;">Recordarme</span>
+                        <span style="color: var(--dark-green); font-weight: 500;">Recordarme</span>
                     </label>
-                    <a href="/Auth/OlvideContrasenna" style="color: var(--coral); font-weight: 600; text-decoration: none; transition: all 0.3s;">
+                    <a href="/Auth/OlvideContrasenna" style="color: var(--gold-bright); font-weight: 600; text-decoration: none; transition: all 0.3s;">
                         ¿Olvidaste tu contraseña?
                     </a>
                 </div>
@@ -149,14 +149,14 @@
 
                 <!-- Separador -->
                 <div style="display: flex; align-items: center; gap: 1rem; margin: 2rem 0;">
-                    <div style="flex: 1; height: 1px; background: var(--gray-light);"></div>
-                    <span style="color: var(--gray); font-size: 0.9rem;">O</span>
-                    <div style="flex: 1; height: 1px; background: var(--gray-light);"></div>
+                    <div style="flex: 1; height: 1px; background: rgba(143, 142, 106, 0.2);"></div>
+                    <span style="color: var(--charcoal); opacity: 0.6; font-size: 0.9rem;">O</span>
+                    <div style="flex: 1; height: 1px; background: rgba(143, 142, 106, 0.2);"></div>
                 </div>
 
                 <!-- Registro -->
                 <div style="text-align: center;">
-                    <p style="color: var(--gray); margin-bottom: 1rem;">¿No tienes una cuenta?</p>
+                    <p style="color: var(--charcoal); opacity: 0.8; margin-bottom: 1rem;">¿No tienes una cuenta?</p>
                     <a href="/Auth/Registro" class="btn btn-secondary" style="width: 100%;">
                         <span><i class="fas fa-user-plus"></i> Crear Cuenta Nueva</span>
                     </a>
@@ -230,7 +230,7 @@
             inputs.forEach(input => {
                 input.addEventListener('focus', function() {
                     this.style.transform = 'scale(1.02)';
-                    this.style.boxShadow = '0 0 0 4px rgba(32, 116, 118, 0.1)';
+                    this.style.boxShadow = '0 0 0 4px rgba(143, 142, 106, 0.1)';
                 });
 
                 input.addEventListener('blur', function() {

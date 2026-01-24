@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -20,7 +20,7 @@
             </h1>
             <p class="hero-subtitle">
                 Modifica la información del cliente en el sistema
-            </p>>
+            </p>
         </div>
     </div>
     <div class="scroll-indicator">
@@ -43,7 +43,7 @@
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información Personal -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-user"></i> Información Personal
                         </h5>
@@ -91,7 +91,7 @@
                     </div>
 
                     <!-- Cambiar Contraseña -->
-                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
+                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-lock"></i> Cambiar Contraseña (Opcional)
                         </h5>
@@ -104,8 +104,8 @@
                             Contraseña Actual
                         </label>
                         <input type="password" name="ContrasenaActual" class="form-control" placeholder="Ingresa la contraseña actual" />
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Solo completa si deseas cambiar la contraseña
                         </small>
                     </div>
@@ -133,23 +133,23 @@
                     <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-calendar-plus" style="color: var(--teal);"></i> Fecha de Registro
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Registro
                                 </label>
-                                <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600;">@Model.FechaRegistroFormateada</p>
+                                <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.FechaRegistroFormateada</p>
                             </div>
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-calendar-check" style="color: var(--teal);"></i> Última Reserva
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-calendar-check" style="color: var(--olive-green);"></i> Última Reserva
                                 </label>
-                                <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600;">@Model.UltimaReservaFormateada</p>
+                                <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.UltimaReservaFormateada</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Estado del Cliente -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--gray-light); border-radius: 15px; cursor: pointer;">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
                             @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
                             <span style="flex: 1;">
                                 <i class="fas fa-toggle-on"></i>
@@ -157,8 +157,8 @@
                             </span>
                         </label>
                         @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-toggle-on" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-toggle-on" style="color: var(--gold-bright);"></i>
                             Activa o desactiva el acceso del cliente
                         </small>
                     </div>
@@ -168,7 +168,7 @@
                         <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoClientes", "Cliente")'" style="flex: 1;">
                             <span><i class="fas fa-times"></i> Cancelar</span>
                         </button>
-                        <button type="button" class="btn" onclick="window.location.href='@Url.Action("HistorialReservas", "Cliente", new { id = Model.IdCliente })'" style="flex: 1; background: var(--amber); color: white;">
+                        <button type="button" class="btn" onclick="window.location.href='@Url.Action("HistorialReservas", "Cliente", new { id = Model.IdCliente })'" style="flex: 1; background: var(--gold); color: white;">
                             <span><i class="fas fa-history"></i> Ver Historial</span>
                         </button>
                         <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">

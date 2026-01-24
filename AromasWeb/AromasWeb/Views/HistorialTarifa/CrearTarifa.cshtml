@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -68,31 +68,38 @@
                         </div>
                     }
 
+                    <!-- Información del Registro -->
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-dollar-sign"></i> Información de la Tarifa
+                        </h5>
+                    </div>
+
                     <!-- Empleado -->
                     <div class="form-group">
                         <label>
                             <i class="fas fa-user"></i>
                             Seleccionar Empleado
                         </label>
-                        
+
                         @{
                             var empleadosLista = new[]
                             {
-                                new { IdEmpleado = 1, NombreCompleto = "Kenneth Salas", Identificacion = "1-2345-6789", Cargo = "Chef Principal" },
-                                new { IdEmpleado = 2, NombreCompleto = "María González", Identificacion = "2-3456-7890", Cargo = "Asistente de Cocina" },
-                                new { IdEmpleado = 3, NombreCompleto = "David Rodríguez", Identificacion = "3-4567-8901", Cargo = "Barista" },
-                                new { IdEmpleado = 4, NombreCompleto = "Ana Jiménez", Identificacion = "4-5678-9012", Cargo = "Cajera" }
-                            };
+                                        new { IdEmpleado = 1, NombreCompleto = "Kenneth Salas", Identificacion = "1-2345-6789", Cargo = "Chef Principal" },
+                                        new { IdEmpleado = 2, NombreCompleto = "María González", Identificacion = "2-3456-7890", Cargo = "Asistente de Cocina" },
+                                        new { IdEmpleado = 3, NombreCompleto = "David Rodríguez", Identificacion = "3-4567-8901", Cargo = "Barista" },
+                                        new { IdEmpleado = 4, NombreCompleto = "Ana Jiménez", Identificacion = "4-5678-9012", Cargo = "Cajera" }
+                                        };
                         }
 
                         <select name="IdEmpleado" class="form-control" id="selectEmpleado">
                             <option value="">-- Selecciona un empleado --</option>
                             @foreach (var emp in empleadosLista)
                             {
-                                <option value="@emp.IdEmpleado" 
-                                        data-cargo="@emp.Cargo" 
+                                <option value="@emp.IdEmpleado"
+                                        data-cargo="@emp.Cargo"
                                         data-identificacion="@emp.Identificacion"
-                                        @@(Model.IdEmpleado == emp.IdEmpleado ? "selected" : "")>
+                                        @@(Model.IdEmpleado= =emp.IdEmpleado ? "selected" : "" )>
                                     @emp.NombreCompleto - @emp.Cargo
                                 </option>
                             }
@@ -111,21 +118,21 @@
 
                         <!-- Cálculo en tiempo real -->
                         <div id="calculoSalario" class="feature-card" style="margin-top: 1rem; padding: 1.5rem; display: none;">
-                            <h6 style="color: var(--dark-teal); margin-bottom: 1rem; font-weight: 600;">
+                            <h6 style="color: var(--dark-green); margin-bottom: 1rem; font-weight: 600;">
                                 <i class="fas fa-calculator"></i> Cálculo Estimado
                             </h6>
                             <div style="display: grid; gap: 0.7rem;">
                                 <div style="display: flex; justify-content: space-between;">
-                                    <span style="color: var(--gray);">Tarifa por hora:</span>
-                                    <strong id="tarifaHora" style="color: var(--dark-teal);">₡0.00</strong>
+                                    <span style="color: var(--charcoal); opacity: 0.7;">Tarifa por hora:</span>
+                                    <strong id="tarifaHora" style="color: var(--dark-green);">₡0.00</strong>
                                 </div>
                                 <div style="display: flex; justify-content: space-between;">
-                                    <span style="color: var(--gray);">Horas mensuales (48h/sem × 4.33):</span>
-                                    <strong style="color: var(--dark-teal);">207.84 horas</strong>
+                                    <span style="color: var(--charcoal); opacity: 0.7;">Horas mensuales (48h/sem × 4.33):</span>
+                                    <strong style="color: var(--dark-green);">207.84 horas</strong>
                                 </div>
                                 <div style="border-top: 2px solid var(--cream); padding-top: 0.7rem; margin-top: 0.7rem; display: flex; justify-content: space-between;">
-                                    <span style="font-size: 1.1rem; color: var(--dark-teal); font-weight: 600;">Salario Mensual Estimado:</span>
-                                    <strong id="salarioMensual" style="font-size: 1.3rem; color: var(--coral); font-family: var(--font-primary);">₡0.00</strong>
+                                    <span style="font-size: 1.1rem; color: var(--dark-green); font-weight: 600;">Salario Mensual Estimado:</span>
+                                    <strong id="salarioMensual" style="font-size: 1.3rem; color: var(--gold); font-family: var(--font-primary);">₡0.00</strong>
                                 </div>
                             </div>
                             <div id="alertaSalarioMinimo" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
@@ -146,8 +153,8 @@
                             </label>
                             @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                             @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
-                            <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                                <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                                <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                                 Fecha desde la cual esta tarifa será válida
                             </small>
                         </div>
@@ -159,8 +166,8 @@
                             </label>
                             @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                             @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
-                            <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                                <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                                <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                                 Dejar vacío si la tarifa no tiene fecha de finalización
                             </small>
                         </div>

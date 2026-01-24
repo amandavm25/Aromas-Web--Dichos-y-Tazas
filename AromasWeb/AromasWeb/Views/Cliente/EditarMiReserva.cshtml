@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -44,23 +44,23 @@
 
                 <form class="contact-form">
                     <!-- Información Actual de la Reserva -->
-                    <div class="feature-card" style="margin: 0 0 2.5rem; padding: 2rem; background: linear-gradient(135deg, rgba(32, 116, 118, 0.08) 0%, rgba(98, 170, 118, 0.08) 100%); border-left: 4px solid var(--teal); border-radius: 15px;">
-                        <h6 style="color: var(--dark-teal); margin: 0 0 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.1rem;">
-                            <div style="width: 35px; height: 35px; background: var(--teal); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <div class="feature-card" style="margin: 0 0 2.5rem; padding: 2rem; background: linear-gradient(135deg, rgba(143, 142, 106, 0.08) 0%, rgba(62, 74, 58, 0.08) 100%); border-left: 4px solid var(--olive-green); border-radius: 15px;">
+                        <h6 style="color: var(--dark-green); margin: 0 0 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.1rem;">
+                            <div style="width: 35px; height: 35px; background: var(--olive-green); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-info-circle" style="color: white; font-size: 0.9rem;"></i>
                             </div>
                             Reserva Actual
                         </h6>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
                             <div style="background: var(--white); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
-                                <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-hashtag" style="color: var(--teal);"></i> Reserva #
+                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-hashtag" style="color: var(--olive-green);"></i> Reserva #
                                 </span>
-                                <p style="margin: 0; color: var(--dark-teal); font-weight: 700; font-size: 1.3rem;">@Model.IdReserva</p>
+                                <p style="margin: 0; color: var(--dark-green); font-weight: 700; font-size: 1.3rem;">@Model.IdReserva</p>
                             </div>
                             <div style="background: var(--white); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
-                                <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-check-circle" style="color: var(--teal);"></i> Estado
+                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-check-circle" style="color: var(--olive-green);"></i> Estado
                                 </span>
                                 <span style="background: #f39c12; color: var(--white); padding: 0.4rem 1rem; border-radius: 15px; font-size: 0.9rem; font-weight: 600; display: inline-block;">
                                     @Model.Estado
@@ -70,7 +70,7 @@
                     </div>
 
                     <!-- Detalles de la Reserva -->
-                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin: 0 0 2.5rem; box-shadow: var(--shadow-md);">
+                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin: 0 0 2.5rem; box-shadow: var(--shadow-md);">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem; font-size: 1.2rem;">
                             <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-calendar-alt"></i>
@@ -88,8 +88,8 @@
                             </label>
                             @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", type = "date", min = DateTime.Now.ToString("yyyy-MM-dd") } })
                             @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
-                            <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
-                                <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                            <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
+                                <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                                 Puedes cambiar la fecha con al menos 24 horas de anticipación
                             </small>
                         </div>
@@ -129,8 +129,8 @@
                         </label>
                         @Html.EditorFor(model => model.CantidadPersonas, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", max = "20", placeholder = "1" } })
                         @Html.ValidationMessageFor(model => model.CantidadPersonas, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Máximo 20 personas por reserva
                         </small>
                     </div>
@@ -142,35 +142,35 @@
                             Observaciones o Solicitudes Especiales
                         </label>
                         <textarea name="Observaciones" class="form-control" rows="4" placeholder="Añade cualquier solicitud especial (alergias, preferencias de mesa, celebraciones, etc.)" style="resize: vertical;">@Model.Observaciones</textarea>
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
-                            <i class="fas fa-info-circle" style="color: var(--teal);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
+                            <i class="fas fa-info-circle" style="color: var(--olive-green);"></i>
                             Opcional - Máximo 500 caracteres
                         </small>
                     </div>
 
                     <!-- Políticas de Cambio -->
-                    <div class="feature-card" style="margin: 2rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(243, 156, 18, 0.08) 0%, rgba(230, 126, 34, 0.08) 100%); border-left: 4px solid var(--amber); border-radius: 15px;">
-                        <h6 style="color: var(--dark-teal); margin: 0 0 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.1rem;">
-                            <div style="width: 35px; height: 35px; background: var(--amber); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <div class="feature-card" style="margin: 2rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(197, 179, 88, 0.08) 0%, rgba(184, 167, 106, 0.08) 100%); border-left: 4px solid var(--gold); border-radius: 15px;">
+                        <h6 style="color: var(--dark-green); margin: 0 0 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.1rem;">
+                            <div style="width: 35px; height: 35px; background: var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-exclamation-circle" style="color: white; font-size: 0.9rem;"></i>
                             </div>
                             Políticas de Modificación
                         </h6>
-                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--gray); line-height: 2;">
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--charcoal); opacity: 0.85; line-height: 2;">
                             <li style="margin-bottom: 0.5rem;">
-                                <i class="fas fa-clock" style="color: var(--amber); margin-right: 0.5rem;"></i>
+                                <i class="fas fa-clock" style="color: var(--gold); margin-right: 0.5rem;"></i>
                                 Los cambios deben realizarse con al menos 24 horas de anticipación
                             </li>
                             <li style="margin-bottom: 0.5rem;">
-                                <i class="fas fa-redo" style="color: var(--amber); margin-right: 0.5rem;"></i>
+                                <i class="fas fa-redo" style="color: var(--gold); margin-right: 0.5rem;"></i>
                                 Solo puedes modificar una reserva hasta 3 veces
                             </li>
                             <li style="margin-bottom: 0.5rem;">
-                                <i class="fas fa-ban" style="color: var(--amber); margin-right: 0.5rem;"></i>
+                                <i class="fas fa-ban" style="color: var(--gold); margin-right: 0.5rem;"></i>
                                 Si necesitas cancelar, hazlo desde "Mis Reservas"
                             </li>
                             <li>
-                                <i class="fas fa-phone" style="color: var(--amber); margin-right: 0.5rem;"></i>
+                                <i class="fas fa-phone" style="color: var(--gold); margin-right: 0.5rem;"></i>
                                 Para cambios de última hora, contacta al restaurante directamente
                             </li>
                         </ul>
@@ -178,10 +178,10 @@
 
                     <!-- Información de Creación -->
                     <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem; background: var(--white); border-radius: 12px; box-shadow: var(--shadow-sm);">
-                        <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem;">
-                            <i class="fas fa-calendar-plus" style="color: var(--teal);"></i> Reserva Creada
+                        <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem;">
+                            <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Reserva Creada
                         </label>
-                        <p style="margin: 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.FechaCreacionFormateada</p>
+                        <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.FechaCreacionFormateada</p>
                     </div>
 
                     <!-- Botones -->

@@ -1,12 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3VdNLC4xfa8=",
+  "dgSpecHash": "18E6tEtfWZM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.LogicDeNegocio\\AromasWeb.LogicDeNegocio.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Kendall\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.23\\microsoft.windowsdesktop.app.ref.8.0.23.nupkg.sha512",
-    "C:\\Users\\Kendall\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.23\\microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
-    "C:\\Users\\Kendall\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.23\\microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Diseño y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.LogicDeNegocio\\AromasWeb.LogicDeNegocio.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

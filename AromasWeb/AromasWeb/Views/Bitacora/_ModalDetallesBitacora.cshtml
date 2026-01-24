@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: var(--white); border: none; padding: 2rem;">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none; padding: 2rem;">
                 <h5 class="modal-title" id="modalDetallesBitacoraLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-file-alt"></i>
@@ -13,17 +13,15 @@
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+            <div class="modal-body" style="padding: 2.5rem; background: var(--white);">
                 <!-- Información General -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--teal);">
-                    <div style="display: flex; justify-content: space-between; align-items: start;">
-                        <div style="flex: 1;">
-                            <h5 id="detalles-accion-bitacora" style="color: var(--dark-teal); margin: 0 0 0.5rem; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
-                            <p id="detalles-descripcion-bitacora" style="margin: 0; color: var(--gray); font-size: 1rem;"></p>
-                        </div>
-                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--teal), var(--dark-teal)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
-                            <i class="fas fa-history" style="font-size: 2rem; color: white;"></i>
-                        </div>
+                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green); display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <h5 id="detalles-accion-bitacora" style="color: var(--dark-green); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
+                        <p id="detalles-descripcion-bitacora" style="margin: 0.5rem 0 0; color: var(--charcoal); opacity: 0.85; font-size: 1rem;"></p>
+                    </div>
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); border: 3px solid var(--gold);">
+                        <i class="fas fa-history" style="font-size: 2rem; color: white;"></i>
                     </div>
                 </div>
 
@@ -32,26 +30,26 @@
                     <div style="display: grid; gap: 1.5rem;">
                         <!-- ID -->
                         <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-hashtag" style="color: var(--teal); font-size: 1.1rem;"></i> ID del Registro
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-hashtag" style="color: var(--olive-green); font-size: 1.1rem;"></i> ID del Registro
                             </label>
-                            <p id="detalles-id-bitacora" style="color: var(--dark-teal); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
+                            <p id="detalles-id-bitacora" style="color: var(--dark-green); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
                         <!-- Empleado -->
                         <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-user" style="color: var(--teal); font-size: 1.1rem;"></i> Empleado
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-user" style="color: var(--olive-green); font-size: 1.1rem;"></i> Empleado
                             </label>
-                            <p id="detalles-empleado-bitacora" style="color: var(--dark-teal); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
+                            <p id="detalles-empleado-bitacora" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
                         <!-- Módulo -->
                         <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-th-large" style="color: var(--teal); font-size: 1.1rem;"></i> Módulo
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-th-large" style="color: var(--olive-green); font-size: 1.1rem;"></i> Módulo
                             </label>
-                            <span id="detalles-modulo-badge-bitacora" class="badge" style="font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 600; background: var(--teal); color: white;"></span>
+                            <span id="detalles-modulo-badge-bitacora" class="badge" style="font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 600; background: var(--olive-green); color: white;"></span>
                         </div>
                     </div>
 
@@ -59,18 +57,26 @@
                     <div style="display: grid; gap: 1.5rem;">
                         <!-- Fecha y Hora -->
                         <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-clock" style="color: var(--teal); font-size: 1.1rem;"></i> Fecha y Hora
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-clock" style="color: var(--olive-green); font-size: 1.1rem;"></i> Fecha y Hora
                             </label>
-                            <p id="detalles-fecha-bitacora" style="color: var(--dark-teal); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
+                            <p id="detalles-fecha-bitacora" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
                         <!-- Tabla Afectada -->
                         <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-table" style="color: var(--teal); font-size: 1.1rem;"></i> Tabla Afectada
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-table" style="color: var(--olive-green); font-size: 1.1rem;"></i> Tabla Afectada
                             </label>
-                            <p id="detalles-tabla-bitacora" style="color: var(--dark-teal); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
+                            <p id="detalles-tabla-bitacora" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
+                        </div>
+
+                        <!-- Tipo de Acción -->
+                        <div class="feature-card" style="padding: 1.5rem; margin: 0; background: linear-gradient(135deg, rgba(184, 167, 106, 0.1), rgba(197, 179, 88, 0.05)); border-left: 3px solid var(--gold);">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gold); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-bolt" style="font-size: 1.1rem;"></i> Tipo de Acción
+                            </label>
+                            <p id="detalles-tipo-accion-bitacora" style="color: var(--gold); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
                         </div>
                     </div>
                 </div>
@@ -79,20 +85,20 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
                     <!-- Datos Anteriores -->
                     <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                            <i class="fas fa-arrow-left" style="color: var(--coral); font-size: 1.1rem;"></i> Datos Anteriores
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                            <i class="fas fa-arrow-left" style="color: #e74c3c; font-size: 1.1rem;"></i> Datos Anteriores
                         </label>
-                        <div id="detalles-datos-anteriores-bitacora" style="background: var(--cream); padding: 1rem; border-radius: 10px; font-family: monospace; font-size: 0.85rem; color: var(--dark-teal); max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">
+                        <div id="detalles-datos-anteriores-bitacora" style="background: var(--cream); padding: 1rem; border-radius: 10px; font-family: monospace; font-size: 0.85rem; color: var(--dark-green); max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">
                             Sin datos anteriores
                         </div>
                     </div>
 
                     <!-- Datos Nuevos -->
                     <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                            <i class="fas fa-arrow-right" style="color: var(--green); font-size: 1.1rem;"></i> Datos Nuevos
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
+                            <i class="fas fa-arrow-right" style="color: #27ae60; font-size: 1.1rem;"></i> Datos Nuevos
                         </label>
-                        <div id="detalles-datos-nuevos-bitacora" style="background: var(--cream); padding: 1rem; border-radius: 10px; font-family: monospace; font-size: 0.85rem; color: var(--dark-teal); max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">
+                        <div id="detalles-datos-nuevos-bitacora" style="background: var(--cream); padding: 1rem; border-radius: 10px; font-family: monospace; font-size: 0.85rem; color: var(--dark-green); max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">
                             Sin datos nuevos
                         </div>
                     </div>

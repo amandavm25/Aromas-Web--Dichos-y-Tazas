@@ -14,7 +14,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -43,30 +43,30 @@
         <!-- Información del Cliente -->
         <div class="feature-card" style="margin-bottom: 3rem; padding: 2rem;" data-aos="fade-up">
             <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;">
-                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--teal), var(--dark-teal)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
                     <i class="fas fa-user" style="font-size: 2.5rem; color: white;"></i>
                 </div>
 
                 <div>
-                    <h4 style="margin: 0 0 0.5rem; color: var(--dark-teal); font-family: var(--font-primary); font-weight: 700;">@cliente.NombreCompleto</h4>
+                    <h4 style="margin: 0 0 0.5rem; color: var(--dark-green); font-family: var(--font-primary); font-weight: 700;">@cliente.NombreCompleto</h4>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
                         <div>
-                            <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                <i class="fas fa-id-card" style="color: var(--teal);"></i> Identificación
+                            <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                                <i class="fas fa-id-card" style="color: var(--olive-green);"></i> Identificación
                             </span>
-                            <p style="margin: 0.3rem 0 0; color: var(--dark-teal); font-weight: 600;">@cliente.Identificacion</p>
+                            <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@cliente.Identificacion</p>
                         </div>
                         <div>
-                            <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                <i class="fas fa-phone" style="color: var(--teal);"></i> Teléfono
+                            <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                                <i class="fas fa-phone" style="color: var(--olive-green);"></i> Teléfono
                             </span>
-                            <p style="margin: 0.3rem 0 0; color: var(--dark-teal); font-weight: 600;">@cliente.Telefono</p>
+                            <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@cliente.Telefono</p>
                         </div>
                         <div>
-                            <span style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                <i class="fas fa-envelope" style="color: var(--teal);"></i> Correo
+                            <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
+                                <i class="fas fa-envelope" style="color: var(--olive-green);"></i> Correo
                             </span>
-                            <p style="margin: 0.3rem 0 0; color: var(--dark-teal); font-weight: 600;">@cliente.Correo</p>
+                            <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@cliente.Correo</p>
                         </div>
                     </div>
                 </div>
@@ -79,9 +79,9 @@
             </div>
         </div>
 
-        <!-- Estadísticas Rápidas - Estilo HistorialMovimientos -->
+        <!-- Estadísticas Rápidas -->
         <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white; margin: 0;">
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: white; margin: 0;">
                 <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                     <i class="fas fa-calendar-check" style="color: white;"></i>
                 </div>
@@ -128,7 +128,7 @@
 
         <!-- Tabla de Historial -->
         <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
-            <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1.5rem 2rem;">
+            <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1.5rem 2rem;">
                 <h5 style="color: white; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 0.7rem;">
                     <i class="fas fa-list"></i> Historial Completo de Reservas
                 </h5>
@@ -138,13 +138,13 @@
                 <table style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
                     <thead style="background: var(--cream);">
                         <tr>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">#</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Fecha</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Hora</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Personas</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Estado</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Fecha Creación</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">#</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Fecha</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Hora</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Personas</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Estado</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Fecha Creación</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none; text-align: center;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -170,13 +170,13 @@
                                     _ => "fa-question-circle"
                                 };
 
-                                <tr style="border-bottom: 1px solid rgba(32, 116, 118, 0.1); transition: all 0.3s;">
-                                    <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@reserva.IdReserva</td>
-                                    <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">@reserva.FechaFormateada</td>
-                                    <td style="padding: 1.2rem; color: var(--coral); font-weight: 700; font-size: 1.1rem;">@reserva.HoraFormateada</td>
+                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@reserva.IdReserva</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@reserva.FechaFormateada</td>
+                                    <td style="padding: 1.2rem; color: var(--gold-bright); font-weight: 700; font-size: 1.1rem;">@reserva.HoraFormateada</td>
                                     <td style="padding: 1.2rem; text-align: center;">
                                         <span style="background: var(--cream); padding: 0.3rem 0.8rem; border-radius: 10px; font-weight: 600;">
-                                            <i class="fas fa-users" style="color: var(--teal);"></i> @reserva.CantidadPersonas
+                                            <i class="fas fa-users" style="color: var(--olive-green);"></i> @reserva.CantidadPersonas
                                         </span>
                                     </td>
                                     <td style="padding: 1.2rem;">
@@ -184,14 +184,14 @@
                                             <i class="fas @iconoEstado"></i> @reserva.Estado
                                         </span>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--gray); font-size: 0.9rem;">@reserva.FechaCreacionFormateada</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">@reserva.FechaCreacionFormateada</td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
                                         @if (reserva.Estado == "Pendiente" || reserva.Estado == "Confirmada")
                                         {
                                             <button type="button"
                                                     class="btn btn-sm"
                                                     onclick="window.location.href='@Url.Action("EditarReserva", "Reserva", new { id = reserva.IdReserva })'"
-                                                    style="background: var(--teal); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </button>
@@ -236,8 +236,8 @@
                         {
                             <tr>
                                 <td colspan="7" style="padding: 3rem; text-align: center;">
-                                    <i class="fas fa-calendar-times" style="font-size: 3rem; color: var(--gray); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
-                                    <p style="color: var(--gray); font-size: 1.1rem; margin: 0;">Este cliente aún no tiene reservas registradas</p>
+                                    <i class="fas fa-calendar-times" style="font-size: 3rem; color: var(--olive-green); opacity: 0.3; margin-bottom: 1rem; display: block;"></i>
+                                    <p style="color: var(--charcoal); opacity: 0.7; font-size: 1.1rem; margin: 0;">Este cliente aún no tiene reservas registradas</p>
                                 </td>
                             </tr>
                         }
@@ -247,8 +247,8 @@
 
             @if (reservas != null && reservas.Count > 0)
             {
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(32, 116, 118, 0.1);">
-                    <div style="color: var(--dark-teal); font-size: 0.95rem;">
+                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1);">
+                    <div style="color: var(--dark-green); font-size: 0.95rem;">
                         Total de <strong>@totalReservas</strong> reserva(s)
                     </div>
                 </div>
@@ -259,7 +259,7 @@
         @if (totalReservas > 0)
         {
             <div style="margin-top: 3rem;" data-aos="fade-up">
-                <div style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
+                <div style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
                     <h5 style="margin: 0 0 2rem; color: white; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.3rem;">
                         <i class="fas fa-chart-bar"></i> Resumen de Actividad
                     </h5>

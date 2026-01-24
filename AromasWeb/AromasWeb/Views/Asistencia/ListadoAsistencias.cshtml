@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -39,7 +39,7 @@
                 <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
                     <!-- Búsqueda -->
                     <div style="position: relative;">
-                        <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--teal); z-index: 1;"></i>
+                        <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
                         <input type="text"
                                name="buscar"
                                value="@ViewBag.Buscar"
@@ -49,7 +49,7 @@
 
                     <!-- Fecha Inicio -->
                     <div style="position: relative;">
-                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--teal); z-index: 1;"></i>
+                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
                         <input type="date"
                                name="fechaInicio"
                                value="@ViewBag.FechaInicio"
@@ -58,7 +58,7 @@
 
                     <!-- Fecha Fin -->
                     <div style="position: relative;">
-                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--teal); z-index: 1;"></i>
+                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
                         <input type="date"
                                name="fechaFin"
                                value="@ViewBag.FechaFin"
@@ -69,8 +69,8 @@
                 <!-- Filtros y Botones -->
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-                        <span style="color: var(--dark-teal); font-weight: 600; margin-right: 0.5rem;">
-                            <i class="fas fa-filter" style="color: var(--coral);"></i> Filtrar:
+                        <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem;">
+                            <i class="fas fa-filter" style="color: var(--gold-bright);"></i> Filtrar:
                         </span>
                         <button type="submit" name="filtroEstado" value="" class="btn @(string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string) ? "btn-primary" : "btn-secondary")" style="border-radius: 50px; padding: 0.6rem 1.5rem;">
                             <span><i class="fas fa-th"></i> Todos</span>
@@ -102,7 +102,7 @@
             <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
                 <div class="table-responsive">
                     <table id="laTablaDeAsistencias" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
+                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
                             <tr>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
@@ -118,41 +118,41 @@
                         <tbody>
                             @foreach (var asistencia in Model)
                             {
-                                <tr style="border-bottom: 1px solid rgba(32, 116, 118, 0.1);">
-                                    <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@asistencia.IdAsistencia</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-teal);">
+                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@asistencia.IdAsistencia</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green);">
                                         <div>
                                             <strong style="display: block;">@asistencia.NombreEmpleado</strong>
-                                            <small style="color: var(--gray);">@asistencia.CargoEmpleado</small>
+                                            <small style="color: var(--charcoal); opacity: 0.7;">@asistencia.CargoEmpleado</small>
                                         </div>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--black);">
+                                    <td style="padding: 1.2rem; color: var(--charcoal);">
                                         <div>
                                             <strong style="display: block;">@asistencia.FechaFormateada</strong>
-                                            <small style="color: var(--gray);">@asistencia.DiaSemana</small>
+                                            <small style="color: var(--charcoal); opacity: 0.7;">@asistencia.DiaSemana</small>
                                         </div>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">@asistencia.HoraEntradaFormateada</td>
-                                    <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">
+                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@asistencia.HoraEntradaFormateada</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">
                                         @if (asistencia.HoraSalida.HasValue)
                                         {
                                             <span>@asistencia.HoraSalidaFormateada</span>
                                         }
                                         else
                                         {
-                                            <span style="color: var(--amber); font-style: italic;">Pendiente</span>
+                                            <span style="color: var(--gold); font-style: italic;">Pendiente</span>
                                         }
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--gray); font-size: 0.9rem;">@asistencia.TiempoAlmuerzoFormateado</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">@asistencia.TiempoAlmuerzoFormateado</td>
                                     <td style="padding: 1.2rem;">
                                         <div style="display: flex; flex-direction: column;">
-                                            <strong style="color: var(--dark-teal);">@asistencia.HorasTrabajadasTexto</strong>
+                                            <strong style="color: var(--dark-green);">@asistencia.HorasTrabajadasTexto</strong>
                                             @if (asistencia.HoraSalida.HasValue)
                                             {
-                                                <small style="color: var(--gray); font-size: 0.75rem;">@asistencia.DesgloseHoras</small>
+                                                <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.75rem;">@asistencia.DesgloseHoras</small>
                                                 @if (asistencia.TieneHorasExtras)
                                                 {
-                                                    <span style="background: var(--amber); color: white; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.7rem; margin-top: 0.3rem; display: inline-block; width: fit-content;">
+                                                    <span style="background: var(--gold); color: white; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.7rem; margin-top: 0.3rem; display: inline-block; width: fit-content;">
                                                         <i class="fas fa-star"></i> Extras
                                                     </span>
                                                 }
@@ -166,7 +166,7 @@
                                         }
                                         else
                                         {
-                                            <span style="background: var(--amber); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">En curso</span>
+                                            <span style="background: var(--gold); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">En curso</span>
                                         }
                                     </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
@@ -175,7 +175,7 @@
                                             <button type="button"
                                                     class="btn btn-sm"
                                                     onclick="window.location.href='@Url.Action("RegistrarSalida", "Asistencia", new { id = asistencia.IdAsistencia })'"
-                                                    style="background: var(--green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: #27ae60; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     title="Registrar Salida">
                                                 <i class="fas fa-sign-out-alt"></i>
                                             </button>
@@ -183,7 +183,7 @@
                                         <button type="button"
                                                 class="btn btn-sm"
                                                 onclick="window.location.href='@Url.Action("EditarAsistencia", "Asistencia", new { id = asistencia.IdAsistencia })'"
-                                                style="background: var(--teal); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </button>
@@ -229,8 +229,8 @@
                 </div>
 
                 <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(32, 116, 118, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-teal); font-size: 0.95rem;">
+                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                    <div style="color: var(--dark-green); font-size: 0.95rem;">
                         Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">@Model.Count</span></strong> de <strong id="totalRecords">@Model.Count</strong> registros
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
@@ -248,7 +248,7 @@
             <div style="position: sticky; top: 100px;">
                 <!-- Horas Extras -->
                 <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                    <div style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%); color: white; padding: 1.5rem;">
+                    <div style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); color: white; padding: 1.5rem;">
                         <div style="display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-star" style="font-size: 1.5rem;"></i>
                             <div>
@@ -260,19 +260,19 @@
                     <div style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 300px; overflow-y: auto;">
                         @foreach (var asistencia in Model.Where(a => a.TieneHorasExtras && a.Fecha.Date == DateTime.Now.Date))
                         {
-                            <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--amber);">
-                                <strong style="color: var(--dark-teal); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-user" style="color: var(--amber);"></i>
+                            <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
+                                <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-user" style="color: var(--gold);"></i>
                                     @asistencia.NombreEmpleado
                                 </strong>
-                                <small style="color: var(--gray); display: block; margin-top: 0.3rem;">
+                                <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">
                                     @asistencia.HorasExtras.ToString("F2")h extras - @asistencia.CargoEmpleado
                                 </small>
                             </div>
                         }
                         @if (!Model.Any(a => a.TieneHorasExtras && a.Fecha.Date == DateTime.Now.Date))
                         {
-                            <div style="text-align: center; padding: 2rem; color: var(--gray);">
+                            <div style="text-align: center; padding: 2rem; color: var(--charcoal); opacity: 0.7;">
                                 <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.5;"></i>
                                 <p style="margin: 0;">No hay horas extras registradas hoy</p>
                             </div>

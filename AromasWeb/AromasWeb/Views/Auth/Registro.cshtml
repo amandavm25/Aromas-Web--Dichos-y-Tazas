@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -42,7 +42,7 @@
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información Personal -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-user"></i> Información Personal
                         </h5>
@@ -56,8 +56,8 @@
                         </label>
                         @Html.EditorFor(model => model.NombreCompleto, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Juan Pérez Rodríguez", required = "required" } })
                         @Html.ValidationMessageFor(model => model.NombreCompleto, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Ingresa tu nombre completo tal como aparece en tu identificación
                         </small>
                     </div>
@@ -91,14 +91,14 @@
                         </label>
                         @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", type = "email", placeholder = "correo@ejemplo.com", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Usaremos este correo para enviarte confirmaciones de tus reservas
                         </small>
                     </div>
 
                     <!-- Información de Seguridad -->
-                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
+                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-lock"></i> Información de Seguridad
                         </h5>
@@ -112,7 +112,7 @@
                         </label>
                         <div style="position: relative;">
                             @Html.EditorFor(model => model.Contrasena, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Mínimo 8 caracteres", id = "password-input", required = "required" } })
-                            <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.2rem;">
+                            <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.2rem; opacity: 0.6;">
                                 <i class="fas fa-eye" id="eye-icon"></i>
                             </button>
                         </div>
@@ -121,16 +121,16 @@
                         <!-- Indicador de fortaleza -->
                         <div style="margin-top: 0.7rem;">
                             <div style="display: flex; gap: 0.3rem; height: 4px; margin-bottom: 0.5rem;">
-                                <div id="strength-1" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
-                                <div id="strength-2" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
-                                <div id="strength-3" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
-                                <div id="strength-4" style="flex: 1; background: var(--gray-light); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-1" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-2" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-3" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-4" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
                             </div>
-                            <small id="strength-text" style="color: var(--gray); font-size: 0.85rem;"></small>
+                            <small id="strength-text" style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"></small>
                         </div>
 
-                        <small style="display: block; margin-top: 0.7rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.7rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             La contraseña debe tener al menos 8 caracteres
                         </small>
                     </div>
@@ -143,7 +143,7 @@
                         </label>
                         <div style="position: relative;">
                             <input type="password" name="ConfirmarContrasena" id="confirm-password-input" class="form-control" placeholder="Repite la contraseña" required />
-                            <button type="button" id="toggle-confirm-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.2rem;">
+                            <button type="button" id="toggle-confirm-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.2rem; opacity: 0.6;">
                                 <i class="fas fa-eye" id="eye-icon-confirm"></i>
                             </button>
                         </div>
@@ -152,10 +152,10 @@
 
                     <!-- Términos y Condiciones -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: start; gap: 1rem; padding: 1.5rem; background: var(--gray-light); border-radius: 15px; cursor: pointer;">
+                        <label style="display: flex; align-items: start; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer; border: 2px solid rgba(143, 142, 106, 0.2);">
                             <input type="checkbox" name="AceptoTerminos" id="terminos-checkbox" required style="margin-top: 0.2rem; width: 20px; height: 20px; cursor: pointer;">
-                            <span style="flex: 1; line-height: 1.6;">
-                                Acepto los <a href="#" style="color: var(--coral); font-weight: 600; text-decoration: underline;">Términos y Condiciones</a> y la <a href="#" style="color: var(--coral); font-weight: 600; text-decoration: underline;">Política de Privacidad</a>
+                            <span style="flex: 1; line-height: 1.6; color: var(--charcoal);">
+                                Acepto los <a href="#" style="color: var(--gold-bright); font-weight: 600; text-decoration: underline;">Términos y Condiciones</a> y la <a href="#" style="color: var(--gold-bright); font-weight: 600; text-decoration: underline;">Política de Privacidad</a>
                             </span>
                         </label>
                     </div>
