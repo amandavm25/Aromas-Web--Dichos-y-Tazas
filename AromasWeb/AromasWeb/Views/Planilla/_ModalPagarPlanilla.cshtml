@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--green) 0%, #4d9160 100%); color: var(--white); border: none; padding: 2rem;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: var(--white); border: none; padding: 2rem;">
                 <h5 class="modal-title" id="modalPagarPlanillaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-check-circle"></i>
@@ -15,14 +15,14 @@
             <!-- Body -->
             <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
                 <!-- Información -->
-                <div class="feature-card" style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1) 0%, rgba(39, 174, 96, 0.05) 100%); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid var(--green);">
+                <div class="feature-card" style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1) 0%, rgba(39, 174, 96, 0.05) 100%); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid #27ae60;">
                     <div style="display: flex; align-items: start; gap: 1rem;">
-                        <div style="width: 50px; height: 50px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <div style="width: 50px; height: 50px; background: #27ae60; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                             <i class="fas fa-info-circle" style="font-size: 1.5rem; color: white;"></i>
                         </div>
                         <div>
-                            <h6 style="color: var(--dark-teal); margin: 0 0 0.5rem; font-weight: 700; font-size: 1.1rem;">Confirmación de Pago</h6>
-                            <p style="margin: 0; color: var(--dark-teal); font-weight: 500; line-height: 1.6;">
+                            <h6 style="color: var(--dark-green); margin: 0 0 0.5rem; font-weight: 700; font-size: 1.1rem;">Confirmación de Pago</h6>
+                            <p style="margin: 0; color: var(--dark-green); font-weight: 500; line-height: 1.6;">
                                 ¿Está seguro que desea marcar esta planilla como <strong>PAGADA</strong>? Esta acción indica que el pago ha sido procesado correctamente.
                             </p>
                         </div>
@@ -31,41 +31,41 @@
 
                 <!-- Detalles de la planilla -->
                 <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
-                    <h6 style="color: var(--dark-teal); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
-                        <i class="fas fa-file-invoice-dollar" style="color: var(--teal);"></i> Detalles de la Planilla
+                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
+                        <i class="fas fa-file-invoice-dollar" style="color: var(--olive-green);"></i> Detalles de la Planilla
                     </h6>
 
                     <div style="display: grid; gap: 1.5rem;">
                         <!-- Empleado -->
                         <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-user" style="color: var(--teal);"></i> Empleado
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
                             </label>
-                            <p id="pagar-empleado" style="color: var(--dark-teal); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
+                            <p id="pagar-empleado" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
                         <!-- Período -->
                         <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calendar-alt" style="color: var(--teal);"></i> Período
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Período
                             </label>
-                            <p id="pagar-periodo" style="color: var(--dark-teal); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            <p id="pagar-periodo" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
                         </div>
 
                         <!-- Monto Neto -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); border-left: 5px solid var(--green);">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-dollar-sign" style="color: var(--green);"></i> Monto a Pagar
+                        <div class="feature-card" style="padding: 1.5rem; margin: 0; background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); border-left: 5px solid #27ae60;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-dollar-sign" style="color: #27ae60;"></i> Monto a Pagar
                             </label>
-                            <p id="pagar-neto" style="color: var(--green); font-size: 2rem; font-weight: 700; margin: 0; font-family: var(--font-primary);"></p>
+                            <p id="pagar-neto" style="color: #27ae60; font-size: 2rem; font-weight: 700; margin: 0; font-family: var(--font-primary);"></p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Nota informativa -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin-top: 1.5rem; border: 2px dashed var(--green);">
-                    <p style="margin: 0; color: var(--dark-teal); font-size: 0.95rem; display: flex; align-items: start; gap: 0.7rem;">
-                        <i class="fas fa-check-circle" style="font-size: 1.2rem; margin-top: 0.2rem; color: var(--green);"></i>
+                <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin-top: 1.5rem; border: 2px dashed #27ae60;">
+                    <p style="margin: 0; color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: start; gap: 0.7rem;">
+                        <i class="fas fa-check-circle" style="font-size: 1.2rem; margin-top: 0.2rem; color: #27ae60;"></i>
                         <span><strong>Nota:</strong> Al marcar como pagada, se registrará la fecha y hora del pago. Esta acción no se puede deshacer.</span>
                     </p>
                 </div>
@@ -80,7 +80,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
                         <span><i class="fas fa-times"></i> Cancelar</span>
                     </button>
-                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, var(--green), #4d9160); padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, #27ae60, #229954); padding: 0.9rem 2.5rem; border-radius: 50px;">
                         <span><i class="fas fa-check"></i> Confirmar Pago</span>
                     </button>
                 </form>

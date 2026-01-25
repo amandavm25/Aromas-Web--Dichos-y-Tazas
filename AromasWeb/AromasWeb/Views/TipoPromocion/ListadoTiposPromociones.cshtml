@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -37,7 +37,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoTiposPromociones", "TipoPromocion")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
-                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--teal); z-index: 1;"></i>
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
                     <input type="text"
                            name="buscar"
                            value="@ViewBag.Buscar"
@@ -60,9 +60,9 @@
         @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
-                <p style="margin: 0; color: var(--dark-teal); display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-info-circle" style="color: var(--coral);"></i>
-                    Mostrando resultados para <strong style="color: var(--coral);">"@ViewBag.Buscar"</strong>
+                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                    Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong>
                     - <strong>@(Model?.Count ?? 0)</strong> tipo(s) encontrado(s)
                 </p>
             </div>
@@ -72,7 +72,7 @@
         <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
             <div class="table-responsive">
                 <table id="laTablaDeTipos" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                    <thead style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
+                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
@@ -96,13 +96,13 @@
 
                         @foreach (var tipo in tiposDemo)
                         {
-                            <tr style="border-bottom: 1px solid rgba(32, 116, 118, 0.1); transition: all 0.3s;">
-                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@tipo.Id</td>
-                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; font-size: 1.05rem;">
-                                    <i class="fas fa-list-alt" style="color: var(--coral); margin-right: 0.5rem;"></i>
+                            <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
+                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@tipo.Id</td>
+                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
+                                    <i class="fas fa-list-alt" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
                                     @tipo.Nombre
                                 </td>
-                                <td style="padding: 1.2rem; color: var(--black); max-width: 500px;">@tipo.Descripcion</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); max-width: 500px;">@tipo.Descripcion</td>
                                 <td style="padding: 1.2rem;">
                                     @if (tipo.Estado)
                                     {
@@ -117,7 +117,8 @@
                                     <button type="button"
                                             class="btn btn-sm"
                                             onclick="window.location.href='@Url.Action("EditarTipoPromocion", "TipoPromocion", new { id = tipo.Id })'"
-                                            style="background: var(--teal); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;">
+                                            style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                            title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <button type="button"
@@ -128,7 +129,8 @@
                                             data-estado="@(tipo.Estado ? "Activo" : "Inactivo")"
                                             style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#modalDetallesTipo">
+                                            data-bs-target="#modalDetallesTipo"
+                                            title="Ver detalles">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                     <button type="button"
@@ -139,7 +141,8 @@
                                             data-estado="@(tipo.Estado ? "Activo" : "Inactivo")"
                                             style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#modalEliminarTipo">
+                                            data-bs-target="#modalEliminarTipo"
+                                            title="Eliminar">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
@@ -150,8 +153,8 @@
             </div>
 
             <!-- Footer de paginación -->
-            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(32, 116, 118, 0.1); flex-wrap: wrap; gap: 1rem;">
-                <div style="color: var(--dark-teal); font-size: 0.95rem;">
+            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                <div style="color: var(--dark-green); font-size: 0.95rem;">
                     Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">6</span></strong> de <strong id="totalRecords">6</strong> tipos
                 </div>
                 <div style="display: flex; gap: 0.5rem;">

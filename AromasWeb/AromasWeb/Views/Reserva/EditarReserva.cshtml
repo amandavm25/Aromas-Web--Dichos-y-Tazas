@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -44,7 +44,7 @@
 
                 <form class="contact-form">
                     <!-- Información del Cliente -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin-bottom: 2.5rem; box-shadow: var(--shadow-md);">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-olive) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin-bottom: 2.5rem; box-shadow: var(--shadow-md);">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem; font-size: 1.2rem;">
                             <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-user"></i>
@@ -57,22 +57,22 @@
                     <div class="feature-card" style="margin: 0 0 2.5rem; padding: 2rem; background: var(--white); border-radius: 15px; box-shadow: var(--shadow-sm);">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem;">
-                                    <i class="fas fa-user" style="color: var(--teal);"></i> Nombre del Cliente
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem;">
+                                    <i class="fas fa-user" style="color: var(--olive-green);"></i> Nombre del Cliente
                                 </label>
-                                <p style="margin: 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.NombreCliente</p>
+                                <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.NombreCliente</p>
                             </div>
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem;">
-                                    <i class="fas fa-phone" style="color: var(--teal);"></i> Teléfono
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem;">
+                                    <i class="fas fa-phone" style="color: var(--olive-green);"></i> Teléfono
                                 </label>
-                                <p style="margin: 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.TelefonoCliente</p>
+                                <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.TelefonoCliente</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Detalles de la Reserva -->
-                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin: 0 0 2.5rem; box-shadow: var(--shadow-md);">
+                    <div style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin: 0 0 2.5rem; box-shadow: var(--shadow-md);">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem; font-size: 1.2rem;">
                             <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-calendar-alt"></i>
@@ -136,10 +136,10 @@
                             Estado de la Reserva
                         </label>
                         <select name="Estado" class="form-control" required>
-                            <option value="Pendiente" @@(Model.Estado == "Pendiente" ? "selected" : "")>Pendiente</option>
-                            <option value="Confirmada" @@(Model.Estado == "Confirmada" ? "selected" : "")>Confirmada</option>
-                            <option value="Completada" @@(Model.Estado == "Completada" ? "selected" : "")>Completada</option>
-                            <option value="Cancelada" @@(Model.Estado == "Cancelada" ? "selected" : "")>Cancelada</option>
+                            <option value="Pendiente" @@(Model.Estado= ="Pendiente" ? "selected" : "" )>Pendiente</option>
+                            <option value="Confirmada" @@(Model.Estado= ="Confirmada" ? "selected" : "" )>Confirmada</option>
+                            <option value="Completada" @@(Model.Estado= ="Completada" ? "selected" : "" )>Completada</option>
+                            <option value="Cancelada" @@(Model.Estado= ="Cancelada" ? "selected" : "" )>Cancelada</option>
                         </select>
                         @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
                     </div>
@@ -151,18 +151,18 @@
                             Observaciones del Cliente
                         </label>
                         <textarea name="Observaciones" class="form-control" rows="4" placeholder="Notas especiales, alergias, preferencias, etc." style="resize: vertical;">@Model.Observaciones</textarea>
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
-                            <i class="fas fa-info-circle" style="color: var(--teal);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
+                            <i class="fas fa-info-circle" style="color: var(--olive-green);"></i>
                             Máximo 500 caracteres
                         </small>
                     </div>
 
                     <!-- Información de Registro -->
                     <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem; background: var(--white); border-radius: 12px; box-shadow: var(--shadow-sm);">
-                        <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem;">
-                            <i class="fas fa-calendar-plus" style="color: var(--teal);"></i> Fecha de Creación
+                        <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem;">
+                            <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Creación
                         </label>
-                        <p style="margin: 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;">@Model.FechaCreacionFormateada</p>
+                        <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.FechaCreacionFormateada</p>
                     </div>
 
                     <!-- Botones -->
@@ -187,7 +187,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const horaActual = '@Model.HoraFormateada';
             const selectHora = document.querySelector('select[name="Hora"]');
-            
+
             if (selectHora && horaActual) {
                 for (let i = 0; i < selectHora.options.length; i++) {
                     if (selectHora.options[i].value === horaActual) {

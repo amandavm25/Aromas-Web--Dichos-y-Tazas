@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -43,7 +43,7 @@
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información del Permiso -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-shield-alt"></i> Información del Permiso
                         </h5>
@@ -57,8 +57,8 @@
                         </label>
                         @Html.DropDownListFor(model => model.IdModulo, (SelectList)ViewBag.Modulos, "-- Seleccione un módulo --", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.IdModulo, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Selecciona el módulo al que pertenece este permiso
                         </small>
                     </div>
@@ -71,10 +71,23 @@
                         </label>
                         @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Ver Empleados, Crear Empleados" } })
                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Usa nombres descriptivos como "Ver", "Crear", "Editar", "Eliminar"
                         </small>
+                    </div>
+
+                    <!-- Información adicional -->
+                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-info-circle" style="color: var(--olive-green); font-size: 2rem;"></i>
+                            <div>
+                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.3rem;">Actualización de Permiso</strong>
+                                <p style="margin: 0; color: var(--charcoal); opacity: 0.85; font-size: 0.95rem;">
+                                    Los cambios afectarán a todos los roles que tengan asignado este permiso.
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Botones -->

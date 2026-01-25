@@ -8,7 +8,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -36,7 +36,7 @@
     <div class="container" style="max-width: 1000px;">
 
         <!-- Información del Insumo -->
-        <div class="testimonial-card card-3d" style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); color: white; margin-bottom: 3rem; padding: 2.5rem;" data-aos="fade-up">
+        <div class="testimonial-card card-3d" style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); color: white; margin-bottom: 3rem; padding: 2.5rem;" data-aos="fade-up">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
                 <div>
                     <i class="fas fa-box" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
@@ -83,8 +83,8 @@
                                     <div class="feature-icon" style="background: linear-gradient(135deg, #27ae60, #229954); margin: 0 auto 1rem;">
                                         <i class="fas fa-arrow-down" style="color: white;"></i>
                                     </div>
-                                    <strong style="color: var(--dark-teal); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Entrada</strong>
-                                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Agregar insumo al inventario</p>
+                                    <strong style="color: var(--dark-green); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Entrada</strong>
+                                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Agregar insumo al inventario</p>
                                 </div>
                             </label>
 
@@ -94,8 +94,8 @@
                                     <div class="feature-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b); margin: 0 auto 1rem;">
                                         <i class="fas fa-arrow-up" style="color: white;"></i>
                                     </div>
-                                    <strong style="color: var(--dark-teal); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Salida</strong>
-                                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Retirar insumo del inventario</p>
+                                    <strong style="color: var(--dark-green); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Salida</strong>
+                                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Retirar insumo del inventario</p>
                                 </div>
                             </label>
                         </div>
@@ -121,8 +121,8 @@
                         <!-- Vista previa de nueva cantidad -->
                         <div id="previsualizacion" class="feature-card" style="margin-top: 1rem; padding: 1.5rem;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: var(--dark-teal); font-weight: 600;">Nueva cantidad después del movimiento:</span>
-                                <strong id="nuevaCantidad" style="color: var(--coral); font-size: 1.3rem;">50.00 kg</strong>
+                                <span style="color: var(--dark-green); font-weight: 600;">Nueva cantidad después del movimiento:</span>
+                                <strong id="nuevaCantidad" style="color: var(--gold); font-size: 1.3rem;">50.00 kg</strong>
                             </div>
                         </div>
                     </div>
@@ -174,11 +174,11 @@
         <!-- Enlace al Historial -->
         <div class="specialty-card card-3d" style="margin-top: 3rem; text-align: center;" data-aos="zoom-in">
             <div class="specialty-content" style="padding: 3rem;">
-                <div class="feature-icon" style="background: linear-gradient(135deg, var(--amber), var(--coral)); margin: 0 auto 1.5rem;">
+                <div class="feature-icon" style="background: linear-gradient(135deg, var(--gold), var(--gold-bright)); margin: 0 auto 1.5rem;">
                     <i class="fas fa-history" style="color: white;"></i>
                 </div>
                 <h4 style="margin: 0 0 1rem; font-weight: 600;">¿Necesitas ver el historial completo?</h4>
-                <p style="margin: 0 0 2rem; color: var(--gray);">Consulta todos los movimientos de entradas y salidas con filtros avanzados</p>
+                <p style="margin: 0 0 2rem; color: var(--charcoal); opacity: 0.7;">Consulta todos los movimientos de entradas y salidas con filtros avanzados</p>
                 <a href="@Url.Action("HistorialMovimientos", "Insumo")" class="btn btn-primary btn-3d">
                     <span><i class="fas fa-chart-line"></i> Ver Historial Completo</span>
                 </a>

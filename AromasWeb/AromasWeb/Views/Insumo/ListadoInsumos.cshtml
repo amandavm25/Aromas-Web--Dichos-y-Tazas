@@ -6,8 +6,8 @@
 
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
-    <<div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -37,7 +37,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoInsumos", "Insumo")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
-                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--teal); z-index: 1;"></i>
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
                     <input type="text"
                            name="buscar"
                            value="@ViewBag.Buscar"
@@ -63,9 +63,9 @@
         @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
-                <p style="margin: 0; color: var(--dark-teal); display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-info-circle" style="color: var(--coral);"></i>
-                    Mostrando resultados para <strong style="color: var(--coral);">"@ViewBag.Buscar"</strong>
+                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                    Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong>
                     - <strong>@(Model?.Count ?? 0)</strong> insumo(s) encontrado(s)
                 </p>
             </div>
@@ -74,8 +74,8 @@
         <!-- Filtro por categoría -->
         <div style="margin-bottom: 3rem;" data-aos="fade-up">
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-                <span style="color: var(--dark-teal); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
-                    <i class="fas fa-filter" style="color: var(--coral);"></i> Filtrar por categoría:
+                <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                    <i class="fas fa-filter" style="color: var(--gold-bright);"></i> Filtrar por categoría:
                 </span>
                 <a href="@Url.Action("ListadoInsumos", "Insumo")"
                    class="btn @(ViewBag.Categoria == null && string.IsNullOrWhiteSpace(ViewBag.Buscar as string) ? "btn-primary" : "btn-secondary")"
@@ -104,7 +104,7 @@
             <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
                 <div class="table-responsive">
                     <table id="laTablaDeInsumos" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
+                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
                             <tr>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
@@ -137,22 +137,22 @@
                                 var stockBajo = insumo.Cantidad <= insumo.StockMinimo;
                                 var rowStyle = stockBajo ? "background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c;" : "";
 
-                                <tr style="border-bottom: 1px solid rgba(32, 116, 118, 0.1); transition: all 0.3s; @rowStyle">
-                                    <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@insumo.Id</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 500;">
+                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s; @rowStyle">
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@insumo.Id</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 500;">
                                         @insumo.Nombre
                                         @if (stockBajo)
                                         {
                                             <i class="fas fa-exclamation-triangle" style="color: #e74c3c; margin-left: 0.5rem;" title="Stock bajo"></i>
                                         }
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--black);">@insumo.Categoria</td>
-                                    <td style="padding: 1.2rem; color: var(--black);">@insumo.Unidad</td>
-                                    <td style="padding: 1.2rem; color: var(--coral); font-weight: 600;">₡@insumo.Costo.ToString("N2")</td>
-                                    <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">
+                                    <td style="padding: 1.2rem; color: var(--charcoal);">@insumo.Categoria</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal);">@insumo.Unidad</td>
+                                    <td style="padding: 1.2rem; color: var(--gold); font-weight: 600;">₡@insumo.Costo.ToString("N2")</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">
                                         <span style="@(stockBajo ? "color: #e74c3c;" : "")">@insumo.Cantidad.ToString("N2")</span>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--black);">@insumo.StockMinimo.ToString("N2")</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal);">@insumo.StockMinimo.ToString("N2")</td>
                                     <td style="padding: 1.2rem;">
                                         @if (insumo.Estado)
                                         {
@@ -167,7 +167,7 @@
                                         <button type="button"
                                                 class="btn btn-sm"
                                                 onclick="window.location.href='@Url.Action("EditarInsumo", "Insumo", new { id = insumo.Id })'"
-                                                style="background: var(--teal); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;">
+                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button"
@@ -188,7 +188,7 @@
                                         <button type="button"
                                                 class="btn btn-sm"
                                                 onclick="window.location.href='@Url.Action("RegistrarMovimiento", "Insumo", new { id = insumo.Id })'"
-                                                style="background: var(--amber); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 title="Registrar Entrada/Salida">
                                             <i class="fas fa-exchange-alt"></i>
                                         </button>
@@ -213,8 +213,8 @@
                 </div>
 
                 <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(32, 116, 118, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-teal); font-size: 0.95rem;">
+                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                    <div style="color: var(--dark-green); font-size: 0.95rem;">
                         Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">8</span></strong> de <strong id="totalRecords">8</strong> insumos
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
@@ -250,7 +250,7 @@
 
         <!-- Resumen Estadísticas (Abajo) -->
         <div style="margin-top: 3rem;" data-aos="fade-up">
-            <div style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
+            <div style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
                 <h5 style="margin: 0 0 2rem; color: white; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.3rem;">
                     <i class="fas fa-chart-pie"></i> Resumen del Inventario
                 </h5>
@@ -318,9 +318,9 @@
                     alertasHTML += `
                         <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid #e74c3c;">
                             <div style="margin-bottom: 0.5rem;">
-                                <strong style="color: var(--dark-teal); font-size: 0.95rem;">${insumo.nombre}</strong>
+                                <strong style="color: var(--dark-green); font-size: 0.95rem;">${insumo.nombre}</strong>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--gray); margin-bottom: 0.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--charcoal); margin-bottom: 0.5rem;">
                                 <span>${insumo.cantidad} / ${insumo.stockMinimo}</span>
                                 <span style="font-weight: 600; color: #e74c3c;">${porcentaje}%</span>
                             </div>
@@ -336,7 +336,7 @@
             document.getElementById('stockBajoCount').textContent = stockBajoCount;
 
             if (stockBajoCount === 0) {
-                alertasContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--gray);"><i class="fas fa-check-circle" style="font-size: 2rem; color: #27ae60; margin-bottom: 0.5rem; display: block;"></i><p style="margin: 0;">No hay alertas</p></div>';
+                alertasContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--charcoal);"><i class="fas fa-check-circle" style="font-size: 2rem; color: #27ae60; margin-bottom: 0.5rem; display: block;"></i><p style="margin: 0;">No hay alertas</p></div>';
             } else {
                 alertasContainer.innerHTML = alertasHTML;
             }

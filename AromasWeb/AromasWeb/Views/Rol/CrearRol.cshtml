@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -42,7 +42,7 @@
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información del Rol -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-user-shield"></i> Información del Rol
                         </h5>
@@ -70,7 +70,7 @@
 
                     <!-- Estado del Rol -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--gray-light); border-radius: 15px; cursor: pointer;">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer; border: 2px solid rgba(143, 142, 106, 0.2);">
                             @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox", @checked = "checked" } })
                             <span style="flex: 1;">
                                 <i class="fas fa-toggle-on"></i>

@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -38,12 +38,12 @@
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.IdCliente, new { id = "IdCliente" })
 
-            <div class="contact-form-wrapper data-aos="fade-up">
+            <div class="contact-form-wrapper" data-aos="fade-up">
                 @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                 <form class="contact-form">
                     <!-- Buscar Cliente -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin-bottom: 2.5rem; box-shadow: var(--shadow-md);">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-olive) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin-bottom: 2.5rem; box-shadow: var(--shadow-md);">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem; font-size: 1.2rem;">
                             <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-search"></i>
@@ -71,53 +71,53 @@
                                 <span><i class="fas fa-search"></i> Buscar</span>
                             </button>
                         </div>
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
+                            <i class="fas fa-info-circle" style="color: var(--gold);"></i>
                             Ingrese la identificación del cliente y presione Buscar
                         </small>
                     </div>
 
                     <!-- Información del Cliente (Se llena automáticamente) -->
                     <div id="infoCliente" style="display: none;">
-                        <div class="feature-card" style="margin: 2rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(39, 174, 96, 0.08) 0%, rgba(46, 204, 113, 0.08) 100%); border-left: 4px solid var(--green); border-radius: 15px;">
+                        <div class="feature-card" style="margin: 2rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(40, 167, 69, 0.08) 0%, rgba(34, 139, 34, 0.08) 100%); border-left: 4px solid #28a745; border-radius: 15px;">
                             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-                                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--green), #27ae60); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
+                                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #28a745, #218838); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
                                     <i class="fas fa-user-check" style="font-size: 1.8rem; color: white;"></i>
                                 </div>
                                 <div style="flex: 1;">
-                                    <h6 style="color: var(--green); margin: 0 0 0.3rem; font-weight: 700; font-size: 1.1rem;">
+                                    <h6 style="color: #28a745; margin: 0 0 0.3rem; font-weight: 700; font-size: 1.1rem;">
                                         <i class="fas fa-check-circle"></i> Cliente Encontrado
                                     </h6>
-                                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem;">Los datos del cliente se han cargado correctamente</p>
+                                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Los datos del cliente se han cargado correctamente</p>
                                 </div>
                             </div>
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                                 <div style="background: var(--white); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
-                                    <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-user" style="color: var(--teal);"></i> Nombre
+                                    <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                        <i class="fas fa-user" style="color: var(--olive-green);"></i> Nombre
                                     </label>
-                                    <p id="clienteNombre" style="margin: 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;"></p>
+                                    <p id="clienteNombre" style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;"></p>
                                 </div>
                                 <div style="background: var(--white); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
-                                    <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-phone" style="color: var(--teal);"></i> Teléfono
+                                    <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                        <i class="fas fa-phone" style="color: var(--olive-green);"></i> Teléfono
                                     </label>
-                                    <p id="clienteTelefono" style="margin: 0; color: var(--dark-teal); font-weight: 600; font-size: 1.1rem;"></p>
+                                    <p id="clienteTelefono" style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Alerta de cliente no encontrado -->
-                    <div id="clienteNoEncontrado" style="display: none; background: rgba(231, 76, 60, 0.08); border-left: 4px solid #e74c3c; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
-                        <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.7rem;">
+                    <div id="clienteNoEncontrado" style="display: none; background: rgba(220, 53, 69, 0.08); border-left: 4px solid #dc3545; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                        <p style="margin: 0; color: #721c24; font-weight: 600; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
                             <span>Cliente no encontrado. Verifique la identificación ingresada.</span>
                         </p>
                     </div>
 
                     <!-- Detalles de la Reserva -->
-                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin: 2.5rem 0; box-shadow: var(--shadow-md);">
+                    <div style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); padding: 1.5rem 2rem; border-radius: 20px; margin: 2.5rem 0; box-shadow: var(--shadow-md);">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem; font-size: 1.2rem;">
                             <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-calendar-alt"></i>
@@ -172,8 +172,8 @@
                         </label>
                         @Html.EditorFor(model => model.CantidadPersonas, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", max = "20", placeholder = "1" } })
                         @Html.ValidationMessageFor(model => model.CantidadPersonas, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
+                            <i class="fas fa-info-circle" style="color: var(--gold);"></i>
                             Máximo 20 personas por reserva
                         </small>
                     </div>
@@ -199,8 +199,8 @@
                             Observaciones o Notas Especiales
                         </label>
                         <textarea name="Observaciones" class="form-control" rows="4" placeholder="Alergias, preferencias de mesa, celebraciones, etc." style="resize: vertical;"></textarea>
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">
-                            <i class="fas fa-info-circle" style="color: var(--teal);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
+                            <i class="fas fa-info-circle" style="color: var(--olive-green);"></i>
                             Opcional - Máximo 500 caracteres
                         </small>
                     </div>

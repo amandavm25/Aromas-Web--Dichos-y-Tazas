@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -42,7 +42,7 @@
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información del Cálculo -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-calculator"></i> Configuración del Cálculo
                         </h5>
@@ -61,8 +61,8 @@
                                 <option value="@emp.IdEmpleado">@emp.NombreCompleto - @emp.Cargo</option>
                             }
                         </select>
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Empleado para el cual se calculará el pago
                         </small>
                     </div>
@@ -87,61 +87,61 @@
                     </div>
 
                     <!-- Información de Cálculo -->
-                    <div style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
+                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-info-circle"></i> ¿Cómo se calcula el pago?
                         </h5>
                     </div>
 
                     <div class="feature-card" style="background: var(--white); padding: 2rem; margin: 0 0 2rem;">
-                        <h6 style="color: var(--dark-teal); margin-bottom: 1.5rem; font-weight: 700;">
-                            <i class="fas fa-calculator" style="color: var(--teal);"></i> Fórmulas de Cálculo
+                        <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700;">
+                            <i class="fas fa-calculator" style="color: var(--olive-green);"></i> Fórmulas de Cálculo
                         </h6>
 
                         <div style="display: grid; gap: 1.5rem;">
-                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--teal);">
-                                <strong style="color: var(--dark-teal); display: block; margin-bottom: 0.5rem;">
+                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--olive-green);">
+                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">
                                     1. Horas Trabajadas por Día
                                 </strong>
-                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--black);">
+                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
                                     (Hora Salida - Hora Entrada) - Tiempo Almuerzo
                                 </code>
                             </div>
 
-                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--green);">
-                                <strong style="color: var(--dark-teal); display: block; margin-bottom: 0.5rem;">
+                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--dark-green);">
+                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">
                                     2. Clasificación de Horas
                                 </strong>
-                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--black);">
+                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
                                     Si Horas ≤ 8: Regulares = Horas, Extras = 0<br>
                                     Si Horas > 8: Regulares = 8, Extras = Horas - 8
                                 </code>
                             </div>
 
-                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--amber);">
-                                <strong style="color: var(--dark-teal); display: block; margin-bottom: 0.5rem;">
+                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--gold-bright);">
+                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">
                                     3. Pago Bruto
                                 </strong>
-                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--black);">
+                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
                                     (Horas Regulares × Tarifa) + (Horas Extras × Tarifa × 1.5)
                                 </code>
                             </div>
 
-                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--coral);">
-                                <strong style="color: var(--dark-teal); display: block; margin-bottom: 0.5rem;">
+                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--gold);">
+                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">
                                     4. Deducciones
                                 </strong>
-                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--black);">
+                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
                                     CCSS = Pago Bruto × 10.67%<br>
                                     Impuesto Renta = Según escala progresiva CR
                                 </code>
                             </div>
 
-                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--green);">
-                                <strong style="color: var(--dark-teal); display: block; margin-bottom: 0.5rem;">
+                            <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--dark-green);">
+                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">
                                     5. Pago Neto
                                 </strong>
-                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--black);">
+                                <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
                                     Pago Bruto - Total Deducciones
                                 </code>
                             </div>

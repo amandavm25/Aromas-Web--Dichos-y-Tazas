@@ -9,7 +9,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -43,7 +43,7 @@
 
             <!-- Resumen superior con estilo mejorado -->
             <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
-                <div class="feature-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white;">
+                <div class="feature-card" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: white;">
                     <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                         <i class="fas fa-user-shield" style="color: white;"></i>
                     </div>
@@ -54,7 +54,7 @@
                     </small>
                 </div>
 
-                <div class="feature-card" style="background: linear-gradient(135deg, var(--coral) 0%, #c75a3a 100%); color: white;">
+                <div class="feature-card" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); color: white;">
                     <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                         <i class="fas fa-cube" style="color: white;"></i>
                     </div>
@@ -65,7 +65,7 @@
                     </small>
                 </div>
 
-                <div class="feature-card" style="background: linear-gradient(135deg, var(--green) 0%, #4d9160 100%); color: white;">
+                <div class="feature-card" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white;">
                     <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                         <i class="fas fa-shield-alt" style="color: white;"></i>
                     </div>
@@ -76,7 +76,7 @@
                     </small>
                 </div>
 
-                <div class="feature-card" style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%); color: white;">
+                <div class="feature-card" style="background: linear-gradient(135deg, var(--dark-green) 0%, var(--olive-green) 100%); color: white;">
                     <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                         <i class="fas fa-list" style="color: white;"></i>
                     </div>
@@ -107,7 +107,7 @@
                 {
                     <div class="feature-card" style="margin-bottom: 2rem; overflow: hidden;" data-aos="fade-up">
                         <!-- Header del módulo -->
-                        <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1.5rem; margin: -2rem -2rem 1.5rem -2rem;">
+                        <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1.5rem; margin: -2rem -2rem 1.5rem -2rem;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div style="display: flex; align-items: center; gap: 1rem;">
                                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
@@ -142,13 +142,13 @@
                                            class="permiso-checkbox"
                                            @(isChecked ? "checked" : "")
                                            onchange="actualizarContador()"
-                                           style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--teal);">
+                                           style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--olive-green);">
                                     <div style="flex: 1;">
                                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                                            <i class="fas fa-shield-alt" style="color: var(--coral); font-size: 0.9rem;"></i>
-                                            <span style="color: var(--dark-teal); font-weight: 600; font-size: 1rem;">@permiso.Nombre</span>
+                                            <i class="fas fa-shield-alt" style="color: var(--gold-bright); font-size: 0.9rem;"></i>
+                                            <span style="color: var(--dark-green); font-weight: 600; font-size: 1rem;">@permiso.Nombre</span>
                                         </div>
-                                        <span style="color: var(--gray); font-size: 0.85rem;">ID: @permiso.IdPermiso</span>
+                                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">ID: @permiso.IdPermiso</span>
                                     </div>
                                 </label>
                             }
@@ -178,12 +178,12 @@
         style.innerHTML = `
             .permiso-item:hover {
                 background: var(--white) !important;
-                border-color: var(--teal) !important;
+                border-color: var(--olive-green) !important;
                 transform: translateX(5px);
                 box-shadow: var(--shadow-md);
             }
             .permiso-item input:checked + div {
-                color: var(--teal);
+                color: var(--olive-green);
             }
         `;
         document.head.appendChild(style);

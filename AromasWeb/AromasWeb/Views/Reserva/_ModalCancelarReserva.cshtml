@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: var(--white); border: none; padding: 2rem;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: var(--white); border: none; padding: 2rem;">
                 <h5 class="modal-title" id="modalCancelarReservaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.3rem;">
                     <div style="width: 45px; height: 45px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-ban"></i>
@@ -13,43 +13,43 @@
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2rem; background: var(--cream);">
-                <div class="feature-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(192, 57, 43, 0.1) 100%); padding: 1.5rem; margin: 0 0 1.5rem; border-left: 4px solid #e74c3c;">
-                    <p style="margin: 0; color: #c0392b; font-weight: 500; line-height: 1.6;">
+            <div class="modal-body" style="padding: 2rem; background: var(--white);">
+                <div class="feature-card" style="background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(200, 35, 51, 0.1) 100%); padding: 1.5rem; margin: 0 0 1.5rem; border-left: 4px solid #dc3545;">
+                    <p style="margin: 0; color: #721c24; font-weight: 500; line-height: 1.6;">
                         <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
                         ¿Estás seguro que deseas <strong>CANCELAR</strong> esta reserva?
                     </p>
                 </div>
 
                 <div style="background: var(--white); padding: 1.5rem; border-radius: 15px;">
-                    <h6 style="color: var(--dark-teal); margin-bottom: 1rem; font-weight: 700;">Detalles de la reserva:</h6>
+                    <h6 style="color: var(--dark-green); margin-bottom: 1rem; font-weight: 700;">Detalles de la reserva:</h6>
                     <div style="display: grid; gap: 0.7rem;">
                         <div style="display: flex; justify-content: space-between;">
-                            <span style="color: var(--gray); font-weight: 600;">Reserva #:</span>
-                            <span id="cancelar-id-display-reserva" style="color: var(--dark-teal); font-weight: 700;"></span>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Reserva #:</span>
+                            <span id="cancelar-id-display-reserva" style="color: var(--dark-green); font-weight: 700;"></span>
                         </div>
                         <div style="display: flex; justify-content: space-between;">
-                            <span style="color: var(--gray); font-weight: 600;">Cliente:</span>
-                            <span id="cancelar-cliente-reserva" style="color: var(--dark-teal); font-weight: 700;"></span>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Cliente:</span>
+                            <span id="cancelar-cliente-reserva" style="color: var(--dark-green); font-weight: 700;"></span>
                         </div>
                         <div style="display: flex; justify-content: space-between;">
-                            <span style="color: var(--gray); font-weight: 600;">Fecha:</span>
-                            <span id="cancelar-fecha-reserva" style="color: var(--dark-teal); font-weight: 700;"></span>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Fecha:</span>
+                            <span id="cancelar-fecha-reserva" style="color: var(--dark-green); font-weight: 700;"></span>
                         </div>
                         <div style="display: flex; justify-content: space-between;">
-                            <span style="color: var(--gray); font-weight: 600;">Hora:</span>
-                            <span id="cancelar-hora-reserva" style="color: var(--coral); font-weight: 700;"></span>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Hora:</span>
+                            <span id="cancelar-hora-reserva" style="color: var(--gold); font-weight: 700;"></span>
                         </div>
                         <div style="display: flex; justify-content: space-between;">
-                            <span style="color: var(--gray); font-weight: 600;">Personas:</span>
-                            <span id="cancelar-personas-reserva" style="color: var(--dark-teal); font-weight: 700;"></span>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Personas:</span>
+                            <span id="cancelar-personas-reserva" style="color: var(--dark-green); font-weight: 700;"></span>
                         </div>
                     </div>
                 </div>
 
-                <div style="background: var(--white); padding: 1rem; border-radius: 10px; margin-top: 1rem; border: 2px dashed var(--amber);">
-                    <p style="margin: 0; color: var(--gray); font-size: 0.9rem; display: flex; align-items: start; gap: 0.5rem;">
-                        <i class="fas fa-info-circle" style="color: var(--amber); margin-top: 0.2rem;"></i>
+                <div style="background: var(--white); padding: 1rem; border-radius: 10px; margin-top: 1rem; border: 2px dashed var(--gold);">
+                    <p style="margin: 0; color: var(--charcoal); opacity: 0.8; font-size: 0.9rem; display: flex; align-items: start; gap: 0.5rem;">
+                        <i class="fas fa-info-circle" style="color: var(--gold); margin-top: 0.2rem;"></i>
                         <span>Esta acción cambiará el estado de la reserva a "Cancelada". La reserva permanecerá en el sistema para registro histórico.</span>
                     </p>
                 </div>
@@ -64,7 +64,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.8rem 2rem; border-radius: 50px;">
                         <span><i class="fas fa-times"></i> No, mantener</span>
                     </button>
-                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, #e74c3c, #c0392b); padding: 0.8rem 2rem; border-radius: 50px;">
+                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, #dc3545, #c82333); padding: 0.8rem 2rem; border-radius: 50px;">
                         <span><i class="fas fa-ban"></i> Sí, cancelar reserva</span>
                     </button>
                 </form>
@@ -72,3 +72,28 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesEliminar = document.querySelectorAll('.btn-eliminar');
+
+        botonesEliminar.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const cliente = this.getAttribute('data-cliente');
+                const fecha = this.getAttribute('data-fecha');
+                const hora = this.getAttribute('data-hora');
+                const estado = this.getAttribute('data-estado');
+
+                document.getElementById('cancelar-id-display-reserva').textContent = '#' + id;
+                document.getElementById('cancelar-id-reserva').value = id;
+                document.getElementById('cancelar-cliente-reserva').textContent = cliente;
+                document.getElementById('cancelar-fecha-reserva').textContent = fecha;
+                document.getElementById('cancelar-hora-reserva').textContent = hora;
+
+                const form = document.getElementById('formCancelarReserva');
+                form.action = '/Reserva/CancelarReserva/' + id;
+            });
+        });
+    });
+</script>

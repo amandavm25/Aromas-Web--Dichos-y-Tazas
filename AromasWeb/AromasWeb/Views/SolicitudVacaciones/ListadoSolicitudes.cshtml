@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -37,7 +37,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
-                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--teal); z-index: 1;"></i>
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
                     <input type="text"
                            name="buscar"
                            value="@ViewBag.Buscar"
@@ -60,9 +60,9 @@
         @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
-                <p style="margin: 0; color: var(--dark-teal); display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-info-circle" style="color: var(--coral);"></i>
-                    Mostrando resultados para <strong style="color: var(--coral);">"@ViewBag.Buscar"</strong>
+                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                    Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong>
                     - <strong>@(Model?.Count ?? 0)</strong> solicitud(es) encontrada(s)
                 </p>
             </div>
@@ -71,8 +71,8 @@
         <!-- Filtro por estado -->
         <div style="margin-bottom: 3rem;" data-aos="fade-up">
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-                <span style="color: var(--dark-teal); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
-                    <i class="fas fa-filter" style="color: var(--coral);"></i> Filtrar por estado:
+                <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                    <i class="fas fa-filter" style="color: var(--gold-bright);"></i> Filtrar por estado:
                 </span>
                 <a href="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")"
                    class="btn @(string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string) ? "btn-primary" : "btn-secondary")"
@@ -104,7 +104,7 @@
             <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
                 <div class="table-responsive">
                     <table id="laTablaDeSolicitudes" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
+                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
                             <tr>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
@@ -121,28 +121,28 @@
                             {
                                 @foreach (var solicitud in Model)
                                 {
-                                    <tr style="border-bottom: 1px solid rgba(32, 116, 118, 0.1); transition: all 0.3s;">
-                                        <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@solicitud.IdSolicitud</td>
-                                        <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 500;">
+                                    <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
+                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@solicitud.IdSolicitud</td>
+                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 500;">
                                             <div style="display: flex; flex-direction: column;">
                                                 <span style="font-weight: 600;">@solicitud.NombreEmpleado</span>
-                                                <small style="color: var(--gray);">@solicitud.IdentificacionEmpleado</small>
+                                                <small style="color: var(--charcoal); opacity: 0.7;">@solicitud.IdentificacionEmpleado</small>
                                             </div>
                                         </td>
-                                        <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">@solicitud.CargoEmpleado</td>
-                                        <td style="padding: 1.2rem; color: var(--black); font-size: 0.9rem;">
+                                        <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@solicitud.CargoEmpleado</td>
+                                        <td style="padding: 1.2rem; color: var(--charcoal); font-size: 0.9rem;">
                                             <div style="display: flex; flex-direction: column;">
-                                                <span style="font-weight: 600; color: var(--dark-teal);">@solicitud.PeriodoVacaciones</span>
-                                                <small style="color: var(--gray);">Solicitado: @solicitud.FechaSolicitudFormateada</small>
+                                                <span style="font-weight: 600; color: var(--dark-green);">@solicitud.PeriodoVacaciones</span>
+                                                <small style="color: var(--charcoal); opacity: 0.7;">Solicitado: @solicitud.FechaSolicitudFormateada</small>
                                             </div>
                                         </td>
                                         <td style="padding: 1.2rem; text-align: center;">
-                                            <span style="background: var(--teal); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block;">
+                                            <span style="background: var(--olive-green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block;">
                                                 @solicitud.DiasSolicitados días
                                             </span>
                                         </td>
                                         <td style="padding: 1.2rem; text-align: center;">
-                                            <span style="background: var(--amber); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block;">
+                                            <span style="background: var(--gold-bright); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block;">
                                                 @solicitud.DiasDisponibles
                                             </span>
                                         </td>
@@ -157,7 +157,7 @@
                                                 <button type="button"
                                                         class="btn btn-sm"
                                                         onclick="window.location.href='@Url.Action("EditarSolicitud", "SolicitudVacaciones", new { id = solicitud.IdSolicitud })'"
-                                                        style="background: var(--teal); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                        style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                         title="Editar">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
@@ -185,7 +185,7 @@
                                             <button type="button"
                                                     class="btn btn-sm"
                                                     onclick="window.location.href='@Url.Action("VerSolicitudesEmpleado", "SolicitudVacaciones", new { idEmpleado = solicitud.IdEmpleado })'"
-                                                    style="background: var(--amber); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: var(--gold-bright); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     title="Ver todas las solicitudes del empleado">
                                                 <i class="fas fa-history"></i>
                                             </button>
@@ -235,8 +235,8 @@
                             else
                             {
                                 <tr>
-                                    <td colspan="8" style="padding: 3rem; text-align: center; color: var(--gray);">
-                                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block; color: var(--teal);"></i>
+                                    <td colspan="8" style="padding: 3rem; text-align: center; color: var(--charcoal); opacity: 0.7;">
+                                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block; color: var(--olive-green);"></i>
                                         <p style="margin: 0; font-size: 1.1rem;">No hay solicitudes de vacaciones registradas</p>
                                     </td>
                                 </tr>
@@ -246,8 +246,8 @@
                 </div>
 
                 <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(32, 116, 118, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-teal); font-size: 0.95rem;">
+                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                    <div style="color: var(--dark-green); font-size: 0.95rem;">
                         Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">@(Model?.Count ?? 0)</span></strong> de <strong id="totalRecords">@(Model?.Count ?? 0)</strong> solicitudes
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
@@ -265,7 +265,7 @@
             <div style="position: sticky; top: 100px;">
                 <!-- Solicitudes Recientes -->
                 <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); color: white; padding: 1.5rem;">
+                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); color: white; padding: 1.5rem;">
                         <div style="display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-clock" style="font-size: 1.5rem;"></i>
                             <div>
@@ -280,8 +280,8 @@
                             @foreach (var solicitud in Model.OrderByDescending(s => s.FechaSolicitud).Take(3))
                             {
                                 <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid @solicitud.EstadoBadgeColor;">
-                                    <strong style="color: var(--dark-teal); font-size: 0.95rem; display: block;">@solicitud.NombreEmpleado</strong>
-                                    <small style="color: var(--gray); display: block; margin-top: 0.3rem;">
+                                    <strong style="color: var(--dark-green); font-size: 0.95rem; display: block;">@solicitud.NombreEmpleado</strong>
+                                    <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">
                                         @solicitud.DiasSolicitados días - @solicitud.FechaSolicitudFormateada
                                     </small>
                                     <span style="background: @solicitud.EstadoBadgeColor; color: white; padding: 0.2rem 0.6rem; border-radius: 10px; font-size: 0.75rem; display: inline-block; margin-top: 0.5rem;">
@@ -292,7 +292,7 @@
                         }
                         else
                         {
-                            <p style="color: var(--gray); text-align: center; padding: 1rem;">No hay solicitudes recientes</p>
+                            <p style="color: var(--charcoal); opacity: 0.7; text-align: center; padding: 1rem;">No hay solicitudes recientes</p>
                         }
                     </div>
                 </div>

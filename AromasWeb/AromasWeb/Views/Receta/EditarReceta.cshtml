@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -44,7 +44,7 @@
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información Básica -->
-                    <h4 style="color: var(--dark-teal); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
+                    <h4 style="color: var(--dark-green); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
                         <i class="fas fa-info-circle"></i> Información Básica
                     </h4>
 
@@ -114,14 +114,14 @@
                         </label>
                         @Html.EditorFor(model => model.PrecioVenta, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" } })
                         @Html.ValidationMessageFor(model => model.PrecioVenta, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold);"></i>
                             Si dejas este campo vacío, no se calculará la ganancia
                         </small>
                     </div>
 
                     <!-- Ingredientes -->
-                    <h4 style="color: var(--dark-teal); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
+                    <h4 style="color: var(--dark-green); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
                         <i class="fas fa-shopping-basket"></i> Ingredientes
                     </h4>
 
@@ -134,7 +134,7 @@
                     </button>
 
                     <!-- Resumen de Costos -->
-                    <div class="testimonial-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white; padding: 2rem; margin-bottom: 2rem;">
+                    <div class="testimonial-card" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-olive) 100%); color: white; padding: 2rem; margin-bottom: 2rem;">
                         <h5 style="margin: 0 0 1rem; color: white; font-weight: 600;">
                             <i class="fas fa-calculator"></i> Resumen de Costos
                         </h5>
@@ -163,7 +163,7 @@
                     </div>
 
                     <!-- Pasos de Preparación -->
-                    <h4 style="color: var(--dark-teal); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
+                    <h4 style="color: var(--dark-green); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
                         <i class="fas fa-list-ol"></i> Pasos de Preparación
                     </h4>
 
@@ -174,7 +174,7 @@
 
                     <!-- Disponibilidad -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--gray-light); border-radius: 15px; cursor: pointer;">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream-dark); border-radius: 15px; cursor: pointer;">
                             @Html.EditorFor(model => model.Disponibilidad, new { htmlAttributes = new { @class = "form-check-input", id = "disponibilidadCheckbox" } })
                             <span style="flex: 1;">
                                 <i class="fas fa-toggle-on"></i>
@@ -182,8 +182,8 @@
                             </span>
                         </label>
                         @Html.ValidationMessageFor(model => model.Disponibilidad, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold);"></i>
                             Activa o desactiva la disponibilidad de la receta en el menú
                         </small>
                     </div>
@@ -206,7 +206,7 @@
 <!-- Template de Ingrediente -->
 <template id="ingrediente-template">
     <div class="ingrediente-item feature-card" style="margin-bottom: 1rem; padding: 1.5rem; position: relative;">
-        <button type="button" class="btn-eliminar-ingrediente" style="position: absolute; top: 10px; right: 10px; width: 35px; height: 35px; background: #e74c3c; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+        <button type="button" class="btn-eliminar-ingrediente" style="position: absolute; top: 10px; right: 10px; width: 35px; height: 35px; background: #dc3545; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
             <i class="fas fa-times"></i>
         </button>
 
@@ -234,12 +234,12 @@
                     <i class="fas fa-dollar-sign"></i>
                     Costo
                 </label>
-                <input type="text" class="form-control costo-ingrediente" readonly style="background: var(--gray-light);" value="₡0.00">
+                <input type="text" class="form-control costo-ingrediente" readonly style="background: var(--cream-dark);" value="₡0.00">
             </div>
         </div>
 
-        <div class="alerta-stock" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
-            <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+        <div class="alerta-stock" style="display: none; background: rgba(220, 53, 69, 0.1); border-left: 4px solid #dc3545; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+            <p style="margin: 0; color: #721c24; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
                 <i class="fas fa-exclamation-triangle"></i>
                 <span class="mensaje-alerta"></span>
             </p>

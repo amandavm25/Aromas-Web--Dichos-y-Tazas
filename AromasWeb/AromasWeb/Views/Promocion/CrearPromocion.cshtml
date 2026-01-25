@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -42,7 +42,7 @@
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información Básica -->
-                    <h4 style="color: var(--dark-teal); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
+                    <h4 style="color: var(--dark-green); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
                         <i class="fas fa-info-circle"></i> Información Básica
                     </h4>
 
@@ -117,20 +117,20 @@
                     </div>
 
                     <!-- Vista previa de duración -->
-                    <div id="duracionPromocion" class="feature-card" style="margin-bottom: 2rem; padding: 1.5rem; display: none; background: linear-gradient(135deg, rgba(32, 116, 118, 0.1), rgba(98, 170, 118, 0.1));">
+                    <div id="duracionPromocion" class="feature-card" style="margin-bottom: 2rem; padding: 1.5rem; display: none; background: linear-gradient(135deg, rgba(143, 142, 106, 0.1), rgba(62, 74, 58, 0.1));">
                         <div style="display: flex; align-items: center; gap: 1rem;">
-                            <div style="width: 50px; height: 50px; background: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <div style="width: 50px; height: 50px; background: var(--olive-green); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-clock" style="color: white; font-size: 1.5rem;"></i>
                             </div>
                             <div>
-                                <strong style="color: var(--dark-teal); display: block; font-size: 1.1rem;">Duración de la Promoción</strong>
-                                <span id="textoDuracion" style="color: var(--gray);"></span>
+                                <strong style="color: var(--dark-green); display: block; font-size: 1.1rem;">Duración de la Promoción</strong>
+                                <span id="textoDuracion" style="color: var(--charcoal); opacity: 0.7;"></span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Recetas Asociadas -->
-                    <h4 style="color: var(--dark-teal); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
+                    <h4 style="color: var(--dark-green); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
                         <i class="fas fa-utensils"></i> Recetas en Promoción
                     </h4>
 
@@ -143,7 +143,7 @@
                     </button>
 
                     <!-- Resumen -->
-                    <div class="testimonial-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white; padding: 2rem; margin-bottom: 2rem;">
+                    <div class="testimonial-card" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: white; padding: 2rem; margin-bottom: 2rem;">
                         <h5 style="margin: 0 0 1rem; color: white; font-weight: 600;">
                             <i class="fas fa-chart-line"></i> Resumen de la Promoción
                         </h5>
@@ -163,7 +163,7 @@
 
                     <!-- Estado -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--gray-light); border-radius: 15px; cursor: pointer;">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer; border: 2px solid var(--cream-dark);">
                             @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
                             <span style="flex: 1;">
                                 <i class="fas fa-toggle-on"></i>
@@ -171,8 +171,8 @@
                             </span>
                         </label>
                         @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Marca como activa para que la promoción esté disponible inmediatamente
                         </small>
                     </div>
@@ -216,7 +216,7 @@
                     <i class="fas fa-dollar-sign"></i>
                     Precio Original
                 </label>
-                <input type="text" class="form-control precio-original" readonly style="background: var(--gray-light);" value="₡0.00">
+                <input type="text" class="form-control precio-original" readonly style="background: var(--cream);" value="₡0.00">
             </div>
 
             <div class="form-group">
@@ -224,19 +224,19 @@
                     <i class="fas fa-tag"></i>
                     Precio con Descuento
                 </label>
-                <input type="text" class="form-control precio-descuento" readonly style="background: var(--gray-light); color: var(--green); font-weight: 700;" value="₡0.00">
+                <input type="text" class="form-control precio-descuento" readonly style="background: var(--cream); color: #27ae60; font-weight: 700;" value="₡0.00">
             </div>
         </div>
 
         <div class="info-receta" style="display: none; background: var(--cream); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                    <strong style="color: var(--dark-teal); display: block; margin-bottom: 0.3rem;">Categoría:</strong>
-                    <span class="categoria-receta" style="color: var(--gray);"></span>
+                    <strong style="color: var(--dark-green); display: block; margin-bottom: 0.3rem;">Categoría:</strong>
+                    <span class="categoria-receta" style="color: var(--charcoal); opacity: 0.7;"></span>
                 </div>
                 <div style="text-align: right;">
-                    <strong style="color: var(--dark-teal); display: block; margin-bottom: 0.3rem;">Ahorro:</strong>
-                    <span class="ahorro-receta" style="color: var(--green); font-size: 1.2rem; font-weight: 700;">₡0.00</span>
+                    <strong style="color: var(--dark-green); display: block; margin-bottom: 0.3rem;">Ahorro:</strong>
+                    <span class="ahorro-receta" style="color: #27ae60; font-size: 1.2rem; font-weight: 700;">₡0.00</span>
                 </div>
             </div>
         </div>

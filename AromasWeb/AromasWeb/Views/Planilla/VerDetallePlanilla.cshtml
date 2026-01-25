@@ -8,7 +8,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -35,7 +35,7 @@
     <div class="container" style="max-width: 1400px;">
 
         <!-- Información del Empleado y Período -->
-        <div class="testimonial-card card-3d" style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); color: white; margin-bottom: 3rem; padding: 2.5rem;" data-aos="fade-up">
+        <div class="testimonial-card card-3d" style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); color: white; margin-bottom: 3rem; padding: 2.5rem;" data-aos="fade-up">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
                 <div>
                     <i class="fas fa-user" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
@@ -67,7 +67,7 @@
 
         <!-- Resumen de Pagos -->
         <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white;">
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: white;">
                 <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                     <i class="fas fa-clock" style="color: white;"></i>
                 </div>
@@ -75,7 +75,7 @@
                 <p style="margin: 0; opacity: 0.9;">Horas Regulares</p>
             </div>
 
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%); color: white;">
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); color: white;">
                 <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                     <i class="fas fa-star" style="color: white;"></i>
                 </div>
@@ -83,7 +83,7 @@
                 <p style="margin: 0; opacity: 0.9;">Horas Extras</p>
             </div>
 
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--green) 0%, #4d9160 100%); color: white;">
+            <div class="feature-card" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white;">
                 <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                     <i class="fas fa-money-bill-wave" style="color: white;"></i>
                 </div>
@@ -91,7 +91,7 @@
                 <p style="margin: 0; opacity: 0.9;">Pago Bruto</p>
             </div>
 
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--coral) 0%, #c75a3a 100%); color: white;">
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--dark-green) 0%, var(--dark-olive) 100%); color: white;">
                 <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                     <i class="fas fa-hand-holding-usd" style="color: white;"></i>
                 </div>
@@ -105,14 +105,14 @@
             <a href="@Url.Action("ListadoPlanillas", "Planilla")" class="btn btn-secondary">
                 <span><i class="fas fa-arrow-left"></i> Volver al Listado</span>
             </a>
-            <button onclick="window.print()" class="btn" style="background: var(--green); color: white; border: none; margin-left: auto;">
+            <button onclick="window.print()" class="btn" style="background: #27ae60; color: white; border: none; margin-left: auto;">
                 <span><i class="fas fa-print"></i> Imprimir Desglose</span>
             </button>
         </div>
 
         <!-- Desglose Diario -->
         <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: 3rem;" data-aos="fade-up">
-            <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1.5rem 2rem;">
+            <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1.5rem 2rem;">
                 <h4 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-weight: 700;">
                     <i class="fas fa-calendar-day"></i> Desglose Diario de Jornadas
                 </h4>
@@ -122,51 +122,51 @@
                 <table style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
                     <thead style="background: var(--cream);">
                         <tr>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Fecha</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Día</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Entrada</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Salida</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Almuerzo</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">H. Totales</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">H. Regulares</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">H. Extras</th>
-                            <th style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600; border: none;">Subtotal</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Fecha</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Día</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Entrada</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Salida</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Almuerzo</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">H. Totales</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">H. Regulares</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">H. Extras</th>
+                            <th style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; border: none;">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var detalle in Model)
                         {
-                            <tr style="border-bottom: 1px solid rgba(32, 116, 118, 0.1);">
-                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@detalle.FechaFormateada</td>
-                                <td style="padding: 1.2rem; color: var(--gray);">@detalle.DiaSemanaCalculado</td>
-                                <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">@detalle.HoraEntradaFormateada</td>
-                                <td style="padding: 1.2rem; color: var(--black); font-weight: 600;">@detalle.HoraSalidaFormateada</td>
-                                <td style="padding: 1.2rem; color: var(--gray); font-size: 0.9rem;">@detalle.TiempoAlmuerzoFormateado</td>
-                                <td style="padding: 1.2rem; color: var(--teal); font-weight: 700;">@detalle.TotalHorasDia.ToString("F2")h</td>
-                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@detalle.HorasRegulares.ToString("F2")h</td>
+                            <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
+                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@detalle.FechaFormateada</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@detalle.DiaSemanaCalculado</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@detalle.HoraEntradaFormateada</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@detalle.HoraSalidaFormateada</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">@detalle.TiempoAlmuerzoFormateado</td>
+                                <td style="padding: 1.2rem; color: var(--olive-green); font-weight: 700;">@detalle.TotalHorasDia.ToString("F2")h</td>
+                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@detalle.HorasRegulares.ToString("F2")h</td>
                                 <td style="padding: 1.2rem;">
                                     @if (detalle.TieneHorasExtras)
                                     {
-                                        <span style="color: var(--amber); font-weight: 700; display: flex; align-items: center; gap: 0.3rem;">
+                                        <span style="color: var(--gold-bright); font-weight: 700; display: flex; align-items: center; gap: 0.3rem;">
                                             <i class="fas fa-star"></i> @detalle.HorasExtras.ToString("F2")h
                                         </span>
                                     }
                                     else
                                     {
-                                        <span style="color: var(--gray);">0.00h</span>
+                                        <span style="color: var(--charcoal); opacity: 0.7;">0.00h</span>
                                     }
                                 </td>
-                                <td style="padding: 1.2rem; color: var(--coral); font-weight: 700; font-size: 1.1rem;">₡@detalle.Subtotal.ToString("N2")</td>
+                                <td style="padding: 1.2rem; color: var(--gold); font-weight: 700; font-size: 1.1rem;">₡@detalle.Subtotal.ToString("N2")</td>
                             </tr>
                         }
                     </tbody>
                     <tfoot style="background: var(--cream);">
                         <tr>
-                            <td colspan="5" style="padding: 1.2rem; text-align: right; font-weight: 700; color: var(--dark-teal);">TOTALES:</td>
-                            <td style="padding: 1.2rem; font-weight: 700; color: var(--teal);">@Model.Sum(d => d.TotalHorasDia).ToString("F2")h</td>
-                            <td style="padding: 1.2rem; font-weight: 700; color: var(--dark-teal);">@Model.Sum(d => d.HorasRegulares).ToString("F2")h</td>
-                            <td style="padding: 1.2rem; font-weight: 700; color: var(--amber);">@Model.Sum(d => d.HorasExtras).ToString("F2")h</td>
-                            <td style="padding: 1.2rem; font-weight: 700; color: var(--coral); font-size: 1.2rem;">₡@Model.Sum(d => d.Subtotal).ToString("N2")</td>
+                            <td colspan="5" style="padding: 1.2rem; text-align: right; font-weight: 700; color: var(--dark-green);">TOTALES:</td>
+                            <td style="padding: 1.2rem; font-weight: 700; color: var(--olive-green);">@Model.Sum(d => d.TotalHorasDia).ToString("F2")h</td>
+                            <td style="padding: 1.2rem; font-weight: 700; color: var(--dark-green);">@Model.Sum(d => d.HorasRegulares).ToString("F2")h</td>
+                            <td style="padding: 1.2rem; font-weight: 700; color: var(--gold-bright);">@Model.Sum(d => d.HorasExtras).ToString("F2")h</td>
+                            <td style="padding: 1.2rem; font-weight: 700; color: var(--gold); font-size: 1.2rem;">₡@Model.Sum(d => d.Subtotal).ToString("N2")</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -175,62 +175,62 @@
 
         <!-- Sección de Deducciones -->
         <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 2.5rem;" data-aos="fade-up">
-            <h4 style="color: var(--dark-teal); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+            <h4 style="color: var(--dark-green); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
                 <i class="fas fa-calculator"></i> Resumen de Pagos y Deducciones
             </h4>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                 <!-- Columna Izquierda: Pagos -->
                 <div>
-                    <h6 style="color: var(--green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                    <h6 style="color: #27ae60; margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fas fa-money-bill-wave"></i> Pagos
                     </h6>
 
                     <div style="display: grid; gap: 1rem;">
                         <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--gray); font-weight: 600;">Pago Horas Regulares:</span>
-                            <strong style="color: var(--dark-teal); font-size: 1.2rem;">₡@planilla.PagoHorasRegulares.ToString("N2")</strong>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Pago Horas Regulares:</span>
+                            <strong style="color: var(--dark-green); font-size: 1.2rem;">₡@planilla.PagoHorasRegulares.ToString("N2")</strong>
                         </div>
                         <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--gray); font-weight: 600;">Pago Horas Extras (150%):</span>
-                            <strong style="color: var(--amber); font-size: 1.2rem;">₡@planilla.PagoHorasExtras.ToString("N2")</strong>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Pago Horas Extras (150%):</span>
+                            <strong style="color: var(--gold-bright); font-size: 1.2rem;">₡@planilla.PagoHorasExtras.ToString("N2")</strong>
                         </div>
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); border-left: 5px solid var(--green);">
-                            <span style="color: var(--dark-teal); font-weight: 700; font-size: 1.1rem;">Pago Bruto Total:</span>
-                            <strong style="color: var(--green); font-size: 1.5rem;">₡@planilla.PagoBruto.ToString("N2")</strong>
+                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); border-left: 5px solid #27ae60;">
+                            <span style="color: var(--dark-green); font-weight: 700; font-size: 1.1rem;">Pago Bruto Total:</span>
+                            <strong style="color: #27ae60; font-size: 1.5rem;">₡@planilla.PagoBruto.ToString("N2")</strong>
                         </div>
                     </div>
                 </div>
 
                 <!-- Columna Derecha: Deducciones -->
                 <div>
-                    <h6 style="color: var(--coral); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                    <h6 style="color: var(--gold); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
                         <i class="fas fa-minus-circle"></i> Deducciones
                     </h6>
 
                     <div style="display: grid; gap: 1rem;">
                         <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--gray); font-weight: 600;">CCSS (10.67%):</span>
-                            <strong style="color: var(--coral); font-size: 1.2rem;">₡@planilla.DeduccionCCSS.ToString("N2")</strong>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">CCSS (10.67%):</span>
+                            <strong style="color: var(--gold); font-size: 1.2rem;">₡@planilla.DeduccionCCSS.ToString("N2")</strong>
                         </div>
                         <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--gray); font-weight: 600;">Impuesto sobre la Renta:</span>
-                            <strong style="color: var(--coral); font-size: 1.2rem;">₡@planilla.ImpuestoRenta.ToString("N2")</strong>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Impuesto sobre la Renta:</span>
+                            <strong style="color: var(--gold); font-size: 1.2rem;">₡@planilla.ImpuestoRenta.ToString("N2")</strong>
                         </div>
                         <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--gray); font-weight: 600;">Otras Deducciones:</span>
-                            <strong style="color: var(--coral); font-size: 1.2rem;">₡@planilla.OtrasDeducciones.ToString("N2")</strong>
+                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Otras Deducciones:</span>
+                            <strong style="color: var(--gold); font-size: 1.2rem;">₡@planilla.OtrasDeducciones.ToString("N2")</strong>
                         </div>
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05)); border-left: 5px solid var(--coral);">
-                            <span style="color: var(--dark-teal); font-weight: 700; font-size: 1.1rem;">Total Deducciones:</span>
-                            <strong style="color: var(--coral); font-size: 1.5rem;">₡@planilla.TotalDeducciones.ToString("N2")</strong>
+                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(184, 167, 106, 0.1), rgba(184, 167, 106, 0.05)); border-left: 5px solid var(--gold);">
+                            <span style="color: var(--dark-green); font-weight: 700; font-size: 1.1rem;">Total Deducciones:</span>
+                            <strong style="color: var(--gold); font-size: 1.5rem;">₡@planilla.TotalDeducciones.ToString("N2")</strong>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Pago Neto Final -->
-            <div style="margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, var(--green), #4d9160); border-radius: 20px; box-shadow: var(--shadow-lg);">
+            <div style="margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, #27ae60, #229954); border-radius: 20px; box-shadow: var(--shadow-lg);">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div style="color: white;">
                         <p style="margin: 0; opacity: 0.9; font-size: 0.95rem;">Pago Neto a Recibir</p>

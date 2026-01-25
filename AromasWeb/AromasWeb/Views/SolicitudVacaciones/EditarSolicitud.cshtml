@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -45,7 +45,7 @@
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información del Empleado -->
-                    <div style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-user-tie"></i> Información del Empleado
                         </h5>
@@ -55,35 +55,35 @@
                     <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; box-shadow: var(--shadow-sm);">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-user" style="color: var(--teal);"></i> Empleado
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
                                 </label>
-                                <p style="color: var(--dark-teal); font-weight: 600; margin: 0;">@Model.NombreEmpleado</p>
+                                <p style="color: var(--dark-green); font-weight: 600; margin: 0;">@Model.NombreEmpleado</p>
                             </div>
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-briefcase" style="color: var(--teal);"></i> Cargo
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-briefcase" style="color: var(--olive-green);"></i> Cargo
                                 </label>
-                                <p style="color: var(--dark-teal); font-weight: 600; margin: 0;">@ViewBag.CargoEmpleado</p>
+                                <p style="color: var(--dark-green); font-weight: 600; margin: 0;">@ViewBag.CargoEmpleado</p>
                             </div>
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-calendar-plus" style="color: var(--teal);"></i> Fecha de Contratación
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Contratación
                                 </label>
-                                <p style="color: var(--dark-teal); font-weight: 600; margin: 0;">@Model.FechaContratacionEmpleado.ToString("dd/MM/yyyy")</p>
+                                <p style="color: var(--dark-green); font-weight: 600; margin: 0;">@Model.FechaContratacionEmpleado.ToString("dd/MM/yyyy")</p>
                             </div>
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-calendar-check" style="color: var(--amber);"></i> Días Disponibles
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-calendar-check" style="color: var(--gold-bright);"></i> Días Disponibles
                                 </label>
-                                <p style="color: var(--amber); font-weight: 700; font-size: 1.3rem; margin: 0;">@Model.DiasDisponibles días</p>
+                                <p style="color: var(--gold-bright); font-weight: 700; font-size: 1.3rem; margin: 0;">@Model.DiasDisponibles días</p>
                                 @Html.HiddenFor(model => model.DiasDisponibles)
                             </div>
                         </div>
                     </div>
 
                     <!-- Información de la Solicitud -->
-                    <div style="background: linear-gradient(135deg, var(--coral) 0%, var(--amber) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
+                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
                         <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-calendar-alt"></i> Información de la Solicitud
                         </h5>
@@ -97,8 +97,8 @@
                         </label>
                         @Html.EditorFor(model => model.FechaSolicitud, new { htmlAttributes = new { @class = "form-control", type = "date", @readonly = "readonly" } })
                         @Html.ValidationMessageFor(model => model.FechaSolicitud, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Fecha original en que se registró la solicitud
                         </small>
                     </div>
@@ -127,17 +127,17 @@
                     <!-- Días Calculados -->
                     <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin: 0;">
-                                <i class="fas fa-calculator" style="color: var(--teal);"></i> Días Laborables Calculados
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin: 0;">
+                                <i class="fas fa-calculator" style="color: var(--olive-green);"></i> Días Laborables Calculados
                             </label>
-                            <div style="background: var(--teal); color: white; padding: 0.5rem 1.5rem; border-radius: 50px;">
+                            <div style="background: var(--olive-green); color: white; padding: 0.5rem 1.5rem; border-radius: 50px;">
                                 <span id="diasCalculados" style="font-size: 1.5rem; font-weight: 700;">@Model.DiasSolicitados</span>
                                 <span style="font-size: 0.9rem; margin-left: 0.3rem;">días</span>
                             </div>
                         </div>
                         @Html.HiddenFor(model => model.DiasSolicitados)
-                        <small style="display: block; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Se excluyen los domingos del cálculo. Los días laborables son de lunes a sábado.
                         </small>
                     </div>
@@ -154,14 +154,14 @@
                     <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-hashtag" style="color: var(--teal);"></i> ID de Solicitud
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-hashtag" style="color: var(--olive-green);"></i> ID de Solicitud
                                 </label>
-                                <p style="margin: 0.5rem 0 0; color: var(--dark-teal); font-weight: 600;">@Model.IdSolicitud</p>
+                                <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.IdSolicitud</p>
                             </div>
                             <div>
-                                <label style="color: var(--gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-info-circle" style="color: var(--teal);"></i> Estado
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-info-circle" style="color: var(--olive-green);"></i> Estado
                                 </label>
                                 <p style="margin: 0.5rem 0 0;">
                                     <span style="background: @Model.EstadoBadgeColor; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">

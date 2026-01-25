@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%); color: var(--white); border: none; padding: 2rem;">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); color: var(--white); border: none; padding: 2rem;">
                 <h5 class="modal-title" id="modalRechazarSolicitudLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-times-circle"></i>
@@ -16,33 +16,33 @@
             <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
                 <!-- Información -->
                 <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm); margin-bottom: 1.5rem;">
-                    <h6 style="color: var(--dark-teal); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
-                        <i class="fas fa-user-tie" style="color: var(--teal);"></i> Información de la Solicitud
+                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
+                        <i class="fas fa-user-tie" style="color: var(--olive-green);"></i> Información de la Solicitud
                     </h6>
 
                     <div style="display: grid; gap: 1rem;">
                         <!-- Empleado -->
                         <div class="feature-card" style="padding: 1rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                <i class="fas fa-user" style="color: var(--teal);"></i> Empleado
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
                             </label>
-                            <p id="rechazar-nombre-empleado" style="color: var(--dark-teal); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            <p id="rechazar-nombre-empleado" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
                         </div>
 
                         <!-- Período -->
                         <div class="feature-card" style="padding: 1rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                <i class="fas fa-calendar-alt" style="color: var(--teal);"></i> Período de Vacaciones
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Período de Vacaciones
                             </label>
-                            <p id="rechazar-periodo" style="color: var(--dark-teal); font-size: 1rem; font-weight: 600; margin: 0;"></p>
+                            <p id="rechazar-periodo" style="color: var(--dark-green); font-size: 1rem; font-weight: 600; margin: 0;"></p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Mensaje de advertencia -->
-                <div style="background: linear-gradient(135deg, rgba(231, 164, 51, 0.1) 0%, rgba(224, 110, 73, 0.1) 100%); padding: 1.5rem; border-radius: 15px; border-left: 5px solid var(--amber);">
-                    <p style="margin: 0; color: var(--dark-teal); font-size: 0.95rem; display: flex; align-items: start; gap: 0.7rem;">
-                        <i class="fas fa-exclamation-circle" style="font-size: 1.2rem; margin-top: 0.2rem; color: var(--amber);"></i>
+                <div style="background: linear-gradient(135deg, rgba(184, 167, 106, 0.1) 0%, rgba(197, 179, 88, 0.1) 100%); padding: 1.5rem; border-radius: 15px; border-left: 5px solid var(--gold-bright);">
+                    <p style="margin: 0; color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: start; gap: 0.7rem;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 1.2rem; margin-top: 0.2rem; color: var(--gold-bright);"></i>
                         <span>Al rechazar esta solicitud, el empleado será <strong>notificado</strong> de la decisión. Los días no serán descontados de su saldo disponible.</span>
                     </p>
                 </div>
@@ -56,7 +56,7 @@
                 <form id="formRechazarSolicitud" method="post" action="" style="display: inline;">
                     @Html.AntiForgeryToken()
                     <input type="hidden" id="rechazar-id-solicitud" name="id" />
-                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, var(--amber), var(--coral)); padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, var(--gold-bright), var(--gold)); padding: 0.9rem 2.5rem; border-radius: 50px;">
                         <span><i class="fas fa-ban"></i> Rechazar Solicitud</span>
                     </button>
                 </form>

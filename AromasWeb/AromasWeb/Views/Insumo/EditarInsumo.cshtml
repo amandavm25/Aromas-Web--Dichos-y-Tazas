@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -41,6 +41,13 @@
             <div class="contact-form-wrapper" data-aos="fade-up">
                 <form class="contact-form">
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Información del Insumo -->
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-box"></i> Información del Insumo
+                        </h5>
+                    </div>
 
                     <!-- Nombre del Insumo -->
                     <div class="form-group">
@@ -116,9 +123,9 @@
                             <i class="fas fa-boxes"></i>
                             Cantidad Disponible (Solo Lectura)
                         </label>
-                        @Html.EditorFor(model => model.CantidadDisponible, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", disabled = "disabled", style = "background: var(--gray-light); cursor: not-allowed;" } })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        @Html.EditorFor(model => model.CantidadDisponible, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", disabled = "disabled", style = "background: #F5EDD8; cursor: not-allowed;" } })
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Para modificar la cantidad, registra una entrada o salida
                         </small>
                     </div>
@@ -131,15 +138,15 @@
                         </label>
                         @Html.EditorFor(model => model.StockMinimo, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0" } })
                         @Html.ValidationMessageFor(model => model.StockMinimo, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-info-circle" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                             Se mostrará una alerta cuando la cantidad sea igual o menor a este valor
                         </small>
                     </div>
 
                     <!-- Estado del Insumo -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--gray-light); border-radius: 15px; cursor: pointer;">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: #F5EDD8; border-radius: 15px; cursor: pointer;">
                             @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
                             <span style="flex: 1;">
                                 <i class="fas fa-toggle-on"></i>
@@ -147,10 +154,23 @@
                             </span>
                         </label>
                         @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--gray);">
-                            <i class="fas fa-toggle-on" style="color: var(--coral);"></i>
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-toggle-on" style="color: var(--gold-bright);"></i>
                             Activa o desactiva la disponibilidad del insumo
                         </small>
+                    </div>
+
+                    <!-- Información adicional -->
+                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-info-circle" style="color: var(--olive-green); font-size: 2rem;"></i>
+                            <div>
+                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.3rem;">Actualización de Insumo</strong>
+                                <p style="margin: 0; color: var(--charcoal); opacity: 0.85; font-size: 0.95rem;">
+                                    Los cambios se guardarán inmediatamente en el sistema de inventario.
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Botones -->

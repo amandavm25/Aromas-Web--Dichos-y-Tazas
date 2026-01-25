@@ -7,7 +7,7 @@
 <!-- Hero Section -->
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-leaves"></div>
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
@@ -35,7 +35,7 @@
 
         <!-- Estadísticas Rápidas -->
         <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%); color: white;">
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: white;">
                 <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                     <i class="fas fa-exchange-alt" style="color: white;"></i>
                 </div>
@@ -46,7 +46,7 @@
                 </small>
             </div>
 
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--green) 0%, #4d9160 100%); color: white;">
+            <div class="feature-card" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white;">
                 <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                     <i class="fas fa-arrow-down" style="color: white;"></i>
                 </div>
@@ -57,7 +57,7 @@
                 </small>
             </div>
 
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--coral) 0%, #c75a3a 100%); color: white;">
+            <div class="feature-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white;">
                 <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                     <i class="fas fa-arrow-up" style="color: white;"></i>
                 </div>
@@ -68,7 +68,7 @@
                 </small>
             </div>
 
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%); color: white;">
+            <div class="feature-card" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); color: white;">
                 <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
                     <i class="fas fa-chart-line" style="color: white;"></i>
                 </div>
@@ -126,7 +126,7 @@
                 <button onclick="limpiarFiltros()" class="btn btn-secondary">
                     <span><i class="fas fa-times"></i> Limpiar</span>
                 </button>
-                <button onclick="exportarExcel()" class="btn" style="background: var(--green); color: white; border: none;">
+                <button onclick="exportarExcel()" class="btn" style="background: #27ae60; color: white; border: none;">
                     <span><i class="fas fa-file-excel"></i> Exportar a Excel</span>
                 </button>
             </div>
@@ -136,7 +136,7 @@
         <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
             <div class="table-responsive">
                 <table id="tablaHistorial" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                    <thead style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
+                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha y Hora</th>
@@ -164,28 +164,28 @@
                         @foreach (var mov in movimientosDemo)
                         {
                             var esEntrada = mov.Tipo == "Entrada";
-                            var colorTipo = esEntrada ? "var(--green)" : "var(--coral)";
+                            var colorTipo = esEntrada ? "#27ae60" : "#e74c3c";
                             var iconoTipo = esEntrada ? "fa-arrow-down" : "fa-arrow-up";
                             var signo = esEntrada ? "+" : "-";
 
                             <tr class="fila-movimiento" data-tipo="@mov.Tipo" data-insumo="@mov.Insumo.ToLower()" data-fecha="@mov.Fecha"
-                                style="border-bottom: 1px solid rgba(32, 116, 118, 0.1); transition: all 0.3s;">
-                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 600;">@mov.Id</td>
-                                <td style="padding: 1.2rem; color: var(--black);">
+                                style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
+                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@mov.Id</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal);">
                                     <div style="display: flex; flex-direction: column;">
-                                        <span style="font-weight: 600; color: var(--dark-teal);">@mov.Fecha.Split(' ')[0]</span>
-                                        <span style="font-size: 0.85rem; color: var(--gray);">@mov.Fecha.Split(' ')[1]</span>
+                                        <span style="font-weight: 600; color: var(--dark-green);">@mov.Fecha.Split(' ')[0]</span>
+                                        <span style="font-size: 0.85rem; color: var(--charcoal); opacity: 0.7;">@mov.Fecha.Split(' ')[1]</span>
                                     </div>
                                 </td>
-                                <td style="padding: 1.2rem; color: var(--dark-teal); font-weight: 500;">@mov.Insumo</td>
+                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 500;">@mov.Insumo</td>
                                 <td style="padding: 1.2rem;">
                                     <span style="background: @colorTipo; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
                                         <i class="fas @iconoTipo"></i> @mov.Tipo
                                     </span>
                                 </td>
                                 <td style="padding: 1.2rem; color: @colorTipo; font-weight: 700; font-size: 1.1rem;">@signo@mov.Cantidad.ToString("N2")</td>
-                                <td style="padding: 1.2rem; color: var(--black);">@mov.Unidad</td>
-                                <td style="padding: 1.2rem; color: var(--coral); font-weight: 600;">
+                                <td style="padding: 1.2rem; color: var(--charcoal);">@mov.Unidad</td>
+                                <td style="padding: 1.2rem; color: var(--gold); font-weight: 600;">
                                     @if (esEntrada)
                                     {
                                         <span>₡@mov.Costo.ToString("N2")</span>
@@ -195,11 +195,11 @@
                                         <span style="opacity: 0.5;">-</span>
                                     }
                                 </td>
-                                <td style="padding: 1.2rem; color: var(--black); max-width: 300px;">@mov.Motivo</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); max-width: 300px;">@mov.Motivo</td>
                                 <td style="padding: 1.2rem; text-align: center;">
                                     <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--cream); padding: 0.5rem 1rem; border-radius: 20px;">
-                                        <i class="fas fa-user-circle" style="color: var(--teal);"></i>
-                                        <span style="color: var(--dark-teal); font-size: 0.9rem; font-weight: 500;">@mov.Usuario</span>
+                                        <i class="fas fa-user-circle" style="color: var(--olive-green);"></i>
+                                        <span style="color: var(--dark-green); font-size: 0.9rem; font-weight: 500;">@mov.Usuario</span>
                                     </div>
                                 </td>
                             </tr>
@@ -209,8 +209,8 @@
             </div>
 
             <!-- Footer de paginación -->
-            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(32, 116, 118, 0.1); flex-wrap: wrap; gap: 1rem;">
-                <div style="color: var(--dark-teal); font-size: 0.95rem;">
+            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                <div style="color: var(--dark-green); font-size: 0.95rem;">
                     Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">5</span></strong> de <strong id="totalRecords">5</strong> movimientos
                 </div>
                 <div style="display: flex; gap: 0.5rem;">
