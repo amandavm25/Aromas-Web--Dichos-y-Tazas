@@ -8,7 +8,7 @@ namespace AromasWeb.Controllers
 {
     public class AsistenciaController : Controller
     {
-        // GET: Asistencia/ListadoAsistencias
+        // GET: Asistencia/ListadoAsistencias (ADMIN)
         public IActionResult ListadoAsistencias(string buscar, DateTime? fechaInicio, DateTime? fechaFin, string filtroEstado)
         {
             ViewBag.Buscar = buscar;
@@ -102,7 +102,7 @@ namespace AromasWeb.Controllers
             return View(asistencias);
         }
 
-        // GET: Asistencia/RegistrarEntrada
+        // GET: Asistencia/RegistrarEntrada (ADMIN)
         public IActionResult RegistrarEntrada()
         {
             CargarEmpleados();
@@ -116,7 +116,7 @@ namespace AromasWeb.Controllers
             return View(model);
         }
 
-        // POST: Asistencia/RegistrarEntrada
+        // POST: Asistencia/RegistrarEntrada (ADMIN)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult RegistrarEntrada(Asistencia asistencia)
@@ -131,7 +131,7 @@ namespace AromasWeb.Controllers
             return View(asistencia);
         }
 
-        // GET: Asistencia/RegistrarSalida/5
+        // GET: Asistencia/RegistrarSalida/5 (ADMIN)
         public IActionResult RegistrarSalida(int id)
         {
             // Asistencia de ejemplo
@@ -151,7 +151,7 @@ namespace AromasWeb.Controllers
             return View(asistencia);
         }
 
-        // POST: Asistencia/RegistrarSalida
+        // POST: Asistencia/RegistrarSalida (ADMIN)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult RegistrarSalida(Asistencia asistencia)
@@ -166,7 +166,7 @@ namespace AromasWeb.Controllers
             return View(asistencia);
         }
 
-        // GET: Asistencia/EditarAsistencia/5
+        // GET: Asistencia/EditarAsistencia/5 (ADMIN)
         public IActionResult EditarAsistencia(int id)
         {
             // Asistencia de ejemplo
@@ -186,7 +186,7 @@ namespace AromasWeb.Controllers
             return View(asistencia);
         }
 
-        // POST: Asistencia/EditarAsistencia
+        // POST: Asistencia/EditarAsistencia (ADMIN)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditarAsistencia(Asistencia asistencia)
@@ -202,7 +202,7 @@ namespace AromasWeb.Controllers
             return View(asistencia);
         }
 
-        // POST: Asistencia/EliminarAsistencia/5
+        // POST: Asistencia/EliminarAsistencia/5 (ADMIN)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EliminarAsistencia(int id)
@@ -211,7 +211,7 @@ namespace AromasWeb.Controllers
             return RedirectToAction(nameof(ListadoAsistencias));
         }
 
-        // GET: Asistencia/HistorialEmpleado/5
+        // GET: Asistencia/HistorialEmpleado/5 (ADMIN)
         public IActionResult HistorialEmpleado(int idEmpleado, DateTime? fechaInicio, DateTime? fechaFin)
         {
             ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd") ?? DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
@@ -256,6 +256,188 @@ namespace AromasWeb.Controllers
             return View(historial);
         }
 
+        // ============================================
+        // NUEVAS FUNCIONES PARA EMPLEADOS
+        // ============================================
+
+        // GET: Asistencia/MiEntrada (EMPLEADO)
+        public IActionResult MiEntrada()
+        {
+            // TODO: Obtener el ID del empleado de la sesión actual
+            int idEmpleadoActual = 2; // Este valor vendría de la sesión
+
+            // Verificar si ya tiene una entrada registrada hoy sin salida
+            var asistenciaHoy = ObtenerAsistenciaHoy(idEmpleadoActual);
+
+            if (asistenciaHoy != null && asistenciaHoy.HoraSalida == null)
+            {
+                TempData["Error"] = "Ya tienes una entrada registrada para hoy. Debes registrar tu salida primero.";
+                return RedirectToAction(nameof(MiHistorialAsistencias));
+            }
+
+            // Información del empleado
+            var empleado = ObtenerEmpleadoActual(idEmpleadoActual);
+            ViewBag.EmpleadoActual = empleado;
+
+            var model = new Asistencia
+            {
+                IdEmpleado = idEmpleadoActual,
+                Fecha = DateTime.Now.Date,
+                HoraEntrada = DateTime.Now.TimeOfDay
+            };
+
+            return View(model);
+        }
+
+        // POST: Asistencia/MiEntrada (EMPLEADO)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MiEntrada(Asistencia asistencia)
+        {
+            // TODO: Obtener el ID del empleado de la sesión actual
+            int idEmpleadoActual = 2;
+            asistencia.IdEmpleado = idEmpleadoActual;
+
+            if (ModelState.IsValid)
+            {
+                // Aquí se guardaría en la base de datos
+                TempData["Mensaje"] = "¡Entrada registrada exitosamente! ¡Que tengas un excelente día de trabajo!";
+                return RedirectToAction(nameof(MiHistorialAsistencias));
+            }
+
+            var empleado = ObtenerEmpleadoActual(idEmpleadoActual);
+            ViewBag.EmpleadoActual = empleado;
+            return View(asistencia);
+        }
+
+        // GET: Asistencia/MiSalida (EMPLEADO)
+        public IActionResult MiSalida()
+        {
+            // TODO: Obtener el ID del empleado de la sesión actual
+            int idEmpleadoActual = 2;
+
+            // Buscar la asistencia de hoy sin salida registrada
+            var asistenciaHoy = ObtenerAsistenciaHoy(idEmpleadoActual);
+
+            if (asistenciaHoy == null || asistenciaHoy.HoraSalida != null)
+            {
+                TempData["Error"] = "No tienes una entrada registrada pendiente de salida para hoy.";
+                return RedirectToAction(nameof(MiHistorialAsistencias));
+            }
+
+            // Información del empleado
+            var empleado = ObtenerEmpleadoActual(idEmpleadoActual);
+            ViewBag.EmpleadoActual = empleado;
+
+            // Llenar datos de la asistencia
+            asistenciaHoy.HoraSalida = DateTime.Now.TimeOfDay;
+            asistenciaHoy.TiempoAlmuerzo = 60; // Valor por defecto
+
+            return View(asistenciaHoy);
+        }
+
+        // POST: Asistencia/MiSalida (EMPLEADO)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MiSalida(Asistencia asistencia)
+        {
+            // TODO: Obtener el ID del empleado de la sesión actual
+            int idEmpleadoActual = 2;
+
+            if (ModelState.IsValid)
+            {
+                asistencia.CalcularHoras();
+                // Aquí se actualizaría en la base de datos
+                TempData["Mensaje"] = "¡Salida registrada exitosamente! ¡Hasta mañana!";
+                return RedirectToAction(nameof(MiHistorialAsistencias));
+            }
+
+            var empleado = ObtenerEmpleadoActual(idEmpleadoActual);
+            ViewBag.EmpleadoActual = empleado;
+            return View(asistencia);
+        }
+
+        // GET: Asistencia/MiHistorialAsistencias (EMPLEADO)
+        public IActionResult MiHistorialAsistencias(DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            // TODO: Obtener el ID del empleado de la sesión actual
+            int idEmpleadoActual = 2;
+
+            // Información del empleado
+            var empleado = ObtenerEmpleadoActual(idEmpleadoActual);
+            ViewBag.EmpleadoActual = empleado;
+
+            // Fechas por defecto (último mes)
+            ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd") ?? DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
+            ViewBag.FechaFin = fechaFin?.ToString("yyyy-MM-dd") ?? DateTime.Now.ToString("yyyy-MM-dd");
+
+            // Historial de ejemplo del empleado actual
+            var historial = new List<Asistencia>
+            {
+                new Asistencia
+                {
+                    IdAsistencia = 1,
+                    IdEmpleado = idEmpleadoActual,
+                    NombreEmpleado = empleado.NombreCompleto,
+                    Fecha = DateTime.Now.Date,
+                    HoraEntrada = new TimeSpan(7, 30, 0),
+                    HoraSalida = new TimeSpan(16, 0, 0),
+                    TiempoAlmuerzo = 45
+                },
+                new Asistencia
+                {
+                    IdAsistencia = 2,
+                    IdEmpleado = idEmpleadoActual,
+                    NombreEmpleado = empleado.NombreCompleto,
+                    Fecha = DateTime.Now.AddDays(-1).Date,
+                    HoraEntrada = new TimeSpan(7, 0, 0),
+                    HoraSalida = new TimeSpan(16, 30, 0),
+                    TiempoAlmuerzo = 60
+                },
+                new Asistencia
+                {
+                    IdAsistencia = 3,
+                    IdEmpleado = idEmpleadoActual,
+                    NombreEmpleado = empleado.NombreCompleto,
+                    Fecha = DateTime.Now.AddDays(-2).Date,
+                    HoraEntrada = new TimeSpan(7, 15, 0),
+                    HoraSalida = new TimeSpan(16, 15, 0),
+                    TiempoAlmuerzo = 45
+                },
+                new Asistencia
+                {
+                    IdAsistencia = 4,
+                    IdEmpleado = idEmpleadoActual,
+                    NombreEmpleado = empleado.NombreCompleto,
+                    Fecha = DateTime.Now.AddDays(-3).Date,
+                    HoraEntrada = new TimeSpan(7, 45, 0),
+                    HoraSalida = new TimeSpan(17, 0, 0),
+                    TiempoAlmuerzo = 60
+                },
+                new Asistencia
+                {
+                    IdAsistencia = 5,
+                    IdEmpleado = idEmpleadoActual,
+                    NombreEmpleado = empleado.NombreCompleto,
+                    Fecha = DateTime.Now.AddDays(-4).Date,
+                    HoraEntrada = new TimeSpan(7, 30, 0),
+                    HoraSalida = new TimeSpan(16, 45, 0),
+                    TiempoAlmuerzo = 45
+                }
+            };
+
+            foreach (var asistencia in historial)
+            {
+                asistencia.CalcularHoras();
+            }
+
+            return View(historial);
+        }
+
+        // ============================================
+        // MÉTODOS AUXILIARES
+        // ============================================
+
         // Método auxiliar para cargar empleados
         private void CargarEmpleados()
         {
@@ -270,6 +452,42 @@ namespace AromasWeb.Controllers
             };
 
             ViewBag.Empleados = empleados;
+        }
+
+        // Método auxiliar para obtener información del empleado actual
+        private Empleado ObtenerEmpleadoActual(int idEmpleado)
+        {
+            // En producción, esto vendría de la base de datos
+            // Por ahora retornamos datos de ejemplo
+            return new Empleado
+            {
+                IdEmpleado = idEmpleado,
+                NombreCompleto = "Carlos Jiménez Mora",
+                Identificacion = "2-2345-6789",
+                Cargo = "Barista",
+                FechaContratacion = DateTime.Now.AddMonths(-8),
+                Estado = true
+            };
+        }
+
+        // Método auxiliar para obtener la asistencia de hoy del empleado
+        private Asistencia ObtenerAsistenciaHoy(int idEmpleado)
+        {
+            // En producción, esto consultaría la base de datos
+            // Por ahora retornamos un ejemplo o null según el caso
+
+            // Simulamos que el empleado ya tiene entrada registrada hoy
+            return new Asistencia
+            {
+                IdAsistencia = 10,
+                IdEmpleado = idEmpleado,
+                NombreEmpleado = "Carlos Jiménez Mora",
+                CargoEmpleado = "Barista",
+                Fecha = DateTime.Now.Date,
+                HoraEntrada = new TimeSpan(7, 30, 0),
+                HoraSalida = null, // Sin salida aún
+                TiempoAlmuerzo = 0
+            };
         }
     }
 }

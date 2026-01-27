@@ -33,24 +33,63 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
 
-        <!-- Barra de acciones y filtros -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("CalcularPlanilla", "Planilla")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                    <span><i class="fas fa-calculator"></i> Calcular Nueva Planilla</span>
-                </a>
+        <!-- Resumen de Planillas -->
+        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">4</h3>
+                <p style="margin: 0.5rem 0;">Planillas Totales</p>
             </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">2</h3>
+                <p style="margin: 0.5rem 0;">Planillas Pagadas</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">2</h3>
+                <p style="margin: 0.5rem 0;">Planillas Pendientes</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡1,144,800</h3>
+                <p style="margin: 0.5rem 0;">Total a Pagar</p>
+                <small style="opacity: 0.7; display: block; margin-top: 0.5rem;">
+                    Planillas pendientes
+                </small>
+            </div>
+        </div>
+
+        <!-- Barra de acciones -->
+        <div style="display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;" data-aos="fade-up">
+            <a href="@Url.Action("CalcularPlanilla", "Planilla")" class="btn btn-primary">
+                <span><i class="fas fa-calculator"></i> Calcular Nueva Planilla</span>
+            </a>
         </div>
 
         <!-- Filtros -->
         <div style="background: var(--white); padding: 2rem; border-radius: 25px; box-shadow: var(--shadow-lg); margin-bottom: 3rem;" data-aos="fade-up">
+            <h5 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; font-family: var(--font-primary); display: flex; align-items: center; gap: 0.7rem;">
+                <i class="fas fa-filter" style="color: var(--olive-green);"></i> Filtrar Planillas
+            </h5>
             <form method="get" action="@Url.Action("ListadoPlanillas", "Planilla")" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; align-items: end;">
 
                 <div>
-                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem;">
+                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem; font-family: var(--font-secondary);">
                         <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
                     </label>
-                    <select name="empleado" class="form-control">
+                    <select name="empleado" class="form-control" style="font-family: var(--font-secondary);">
                         <option value="">Todos los empleados</option>
                         <option value="1">Kenneth Salas</option>
                         <option value="2">María González</option>
@@ -60,10 +99,10 @@
                 </div>
 
                 <div>
-                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem;">
+                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem; font-family: var(--font-secondary);">
                         <i class="fas fa-toggle-on" style="color: var(--olive-green);"></i> Estado
                     </label>
-                    <select name="estado" class="form-control">
+                    <select name="estado" class="form-control" style="font-family: var(--font-secondary);">
                         <option value="">Todos los estados</option>
                         <option value="Calculado">Calculado</option>
                         <option value="Pagado">Pagado</option>
@@ -72,181 +111,138 @@
                 </div>
 
                 <div>
-                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem;">
+                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem; font-family: var(--font-secondary);">
                         <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Fecha Inicio
                     </label>
-                    <input type="date" name="fechaInicio" value="@ViewBag.FechaInicio" class="form-control" />
+                    <input type="date" name="fechaInicio" value="@ViewBag.FechaInicio" class="form-control" style="font-family: var(--font-secondary);" />
                 </div>
 
                 <div>
-                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem;">
+                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem; font-family: var(--font-secondary);">
                         <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Fecha Fin
                     </label>
-                    <input type="date" name="fechaFin" value="@ViewBag.FechaFin" class="form-control" />
+                    <input type="date" name="fechaFin" value="@ViewBag.FechaFin" class="form-control" style="font-family: var(--font-secondary);" />
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="border-radius: 15px; padding: 0.9rem 2rem;">
+                <button type="submit" class="btn btn-primary" style="padding: 0.9rem 2rem;">
                     <span><i class="fas fa-search"></i> Filtrar</span>
                 </button>
             </form>
         </div>
 
         <!-- Tabla de Planillas -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
-            <div class="table-responsive">
-                <table style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
-                        <tr>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Período</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Tarifa/Hora</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">H. Regulares</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">H. Extras</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Pago Bruto</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Deducciones</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Pago Neto</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            var planillasDemo = new List<dynamic>
-                                                {
-                                                new { Id = 1, Empleado = "Kenneth Salas", Cargo = "Chef Principal", Inicio = "01/11/2024", Fin = "15/11/2024", Tarifa = 2800.00m, HorasReg = 120.00m, HorasExt = 8.00m, Bruto = 369600.00m, Deducciones = 39436.32m, Neto = 330163.68m, Estado = "Pagado" },
-                                                new { Id = 2, Empleado = "María González", Cargo = "Asistente de Cocina", Inicio = "01/11/2024", Fin = "15/11/2024", Tarifa = 1900.00m, HorasReg = 120.00m, HorasExt = 4.00m, Bruto = 239400.00m, Deducciones = 25539.48m, Neto = 213860.52m, Estado = "Calculado" },
-                                                new { Id = 3, Empleado = "David Rodríguez", Cargo = "Barista", Inicio = "01/11/2024", Fin = "15/11/2024", Tarifa = 2400.00m, HorasReg = 116.00m, HorasExt = 6.00m, Bruto = 300000.00m, Deducciones = 32010.00m, Neto = 267990.00m, Estado = "Calculado" },
-                                                new { Id = 4, Empleado = "Ana Jiménez", Cargo = "Cajera", Inicio = "16/10/2024", Fin = "31/10/2024", Tarifa = 1800.00m, HorasReg = 128.00m, HorasExt = 2.00m, Bruto = 235800.00m, Deducciones = 25160.86m, Neto = 210639.14m, Estado = "Pagado" }
-                                                };
-                        }
+        <div style="background: var(--cream); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
+            <h4 style="color: var(--dark-green); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                <i class="fas fa-list"></i> Listado de Planillas
+            </h4>
 
-                        @foreach (var planilla in planillasDemo)
-                        {
-                            <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@planilla.Id</td>
-                                <td style="padding: 1.2rem;">
-                                    <div>
-                                        <strong style="color: var(--dark-green);">@planilla.Empleado</strong>
-                                        <br>
-                                        <small style="color: var(--charcoal); opacity: 0.7;">@planilla.Cargo</small>
-                                    </div>
-                                </td>
-                                <td style="padding: 1.2rem; color: var(--charcoal);">
-                                    <div>
-                                        <strong>@planilla.Inicio</strong>
-                                        <br>
-                                        <small style="color: var(--charcoal); opacity: 0.7;">hasta @planilla.Fin</small>
-                                    </div>
-                                </td>
-                                <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">₡@planilla.Tarifa.ToString("N2")</td>
-                                <td style="padding: 1.2rem; color: var(--olive-green); font-weight: 600;">@planilla.HorasReg.ToString("N2")h</td>
-                                <td style="padding: 1.2rem; color: var(--gold-bright); font-weight: 600;">@planilla.HorasExt.ToString("N2")h</td>
-                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 700;">₡@planilla.Bruto.ToString("N0")</td>
-                                <td style="padding: 1.2rem; color: var(--gold); font-weight: 600;">₡@planilla.Deducciones.ToString("N0")</td>
-                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 700; font-size: 1.1rem;">₡@planilla.Neto.ToString("N0")</td>
-                                <td style="padding: 1.2rem;">
-                                    @if (planilla.Estado == "Pagado")
-                                    {
-                                        <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Pagado</span>
-                                    }
-                                    else if (planilla.Estado == "Calculado")
-                                    {
-                                        <span style="background: var(--gold-bright); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Calculado</span>
-                                    }
-                                    else
-                                    {
-                                        <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Anulado</span>
-                                    }
-                                </td>
-                                <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                    <button type="button"
-                                            class="btn btn-sm"
-                                            onclick="window.location.href='@Url.Action("VerDetallePlanilla", "Planilla", new { id = planilla.Id })'"
-                                            style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                            title="Ver detalle">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button type="button"
-                                            class="btn btn-sm"
-                                            onclick="window.location.href='@Url.Action("PlanillasEmpleado", "Planilla", new { id = planilla.Id })'"
-                                            style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                            title="Ver todas las planillas del empleado">
-                                        <i class="fas fa-history"></i>
-                                    </button>
-                                    @if (planilla.Estado == "Calculado")
-                                    {
-                                        <button type="button"
-                                                class="btn btn-sm btn-pagar"
-                                                data-id="@planilla.Id"
-                                                data-empleado="@planilla.Empleado"
-                                                data-periodo="@planilla.Inicio - @planilla.Fin"
-                                                data-neto="₡@planilla.Neto.ToString("N2")"
-                                                style="background: #27ae60; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalPagarPlanilla"
-                                                title="Marcar como pagado">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                    }
-                                </td>
+            <div style="background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-sm);">
+                <div style="overflow-x: auto; max-width: 100%;">
+                    <table style="margin-bottom: 0; width: 100%; min-width: 1400px; border-collapse: collapse;">
+                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+                            <tr>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">#</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Empleado</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Período</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Tarifa/Hora</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">H. Regulares</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">H. Extras</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Pago Bruto</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Deducciones</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Pago Neto</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Estado</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center; font-family: var(--font-secondary);">Acciones</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @{
+                                var planillasDemo = new List<dynamic>
+                                                        {
+                                                        new { Id = 1, Empleado = "Kenneth Salas", Cargo = "Chef Principal", Inicio = "01/11/2024", Fin = "15/11/2024", Tarifa = 2800.00m, HorasReg = 120.00m, HorasExt = 8.00m, Bruto = 369600.00m, Deducciones = 39436.32m, Neto = 330163.68m, Estado = "Pagado" },
+                                                        new { Id = 2, Empleado = "María González", Cargo = "Asistente de Cocina", Inicio = "01/11/2024", Fin = "15/11/2024", Tarifa = 1900.00m, HorasReg = 120.00m, HorasExt = 4.00m, Bruto = 239400.00m, Deducciones = 25539.48m, Neto = 213860.52m, Estado = "Calculado" },
+                                                        new { Id = 3, Empleado = "David Rodríguez", Cargo = "Barista", Inicio = "01/11/2024", Fin = "15/11/2024", Tarifa = 2400.00m, HorasReg = 116.00m, HorasExt = 6.00m, Bruto = 300000.00m, Deducciones = 32010.00m, Neto = 267990.00m, Estado = "Calculado" },
+                                                        new { Id = 4, Empleado = "Ana Jiménez", Cargo = "Cajera", Inicio = "16/10/2024", Fin = "31/10/2024", Tarifa = 1800.00m, HorasReg = 128.00m, HorasExt = 2.00m, Bruto = 235800.00m, Deducciones = 25160.86m, Neto = 210639.14m, Estado = "Pagado" }
+                                                        };
+                            }
 
-            <!-- Footer de paginación -->
-            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                <div style="color: var(--dark-green); font-size: 0.95rem;">
-                    Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">4</span></strong> de <strong id="totalRecords">4</strong> planillas
+                            @foreach (var planilla in planillasDemo)
+                            {
+                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-family: var(--font-secondary);">@planilla.Id</td>
+                                    <td style="padding: 1.2rem; font-family: var(--font-secondary);">
+                                        <div>
+                                            <strong style="color: var(--dark-green);">@planilla.Empleado</strong>
+                                            <br>
+                                            <small style="color: var(--charcoal); opacity: 0.7;">@planilla.Cargo</small>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); font-family: var(--font-secondary);">
+                                        <div>
+                                            <strong>@planilla.Inicio</strong>
+                                            <br>
+                                            <small style="color: var(--charcoal); opacity: 0.7;">hasta @planilla.Fin</small>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600; font-family: var(--font-secondary);">₡@planilla.Tarifa.ToString("N2")</td>
+                                    <td style="padding: 1.2rem; color: var(--olive-green); font-weight: 600; font-family: var(--font-secondary);">@planilla.HorasReg.ToString("N2")h</td>
+                                    <td style="padding: 1.2rem; color: var(--gold-bright); font-weight: 600; font-family: var(--font-secondary);">@planilla.HorasExt.ToString("N2")h</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 700; font-family: var(--font-secondary);">₡@planilla.Bruto.ToString("N0")</td>
+                                    <td style="padding: 1.2rem; color: var(--gold); font-weight: 600; font-family: var(--font-secondary);">₡@planilla.Deducciones.ToString("N0")</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 700; font-size: 1.1rem; font-family: var(--font-secondary);">₡@planilla.Neto.ToString("N0")</td>
+                                    <td style="padding: 1.2rem; font-family: var(--font-secondary);">
+                                        @if (planilla.Estado == "Pagado")
+                                        {
+                                            <span style="background: var(--olive-green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Pagado</span>
+                                        }
+                                        else if (planilla.Estado == "Calculado")
+                                        {
+                                            <span style="background: var(--gold-bright); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Calculado</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Anulado</span>
+                                        }
+                                    </td>
+                                    <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        <button type="button"
+                                                class="btn btn-sm"
+                                                onclick="window.location.href='@Url.Action("VerDetallePlanilla", "Planilla", new { id = planilla.Id })'"
+                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Ver detalle">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm"
+                                                onclick="window.location.href='@Url.Action("EditarPlanilla", "Planilla", new { id = planilla.Id })'"
+                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm"
+                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
-                <div style="display: flex; gap: 0.5rem;">
-                    <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                        &lt; Anterior
-                    </button>
-                    <button id="btnSiguiente" class="btn btn-primary" onclick="paginaSiguiente()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                        Siguiente &gt;
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Resumen Estadísticas (ABAJO) -->
-        <div style="margin-top: 3rem;" data-aos="fade-up">
-            <div style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
-                <h5 style="margin: 0 0 2rem; color: white; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.3rem;">
-                    <i class="fas fa-chart-pie"></i> Resumen de Planillas
-                </h5>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-file-invoice" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Planillas Totales</span>
-                        </div>
-                        <h4 style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">4</h4>
+                <!-- Footer de paginación -->
+                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                    <div style="color: var(--dark-green); font-size: 0.95rem; font-family: var(--font-secondary);">
+                        Mostrando <strong>1-4</strong> de <strong>4</strong> planillas
                     </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-check-circle" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Planillas Pagadas</span>
-                        </div>
-                        <h4 style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">2</h4>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-clock" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Planillas Pendientes</span>
-                        </div>
-                        <h4 style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">2</h4>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-dollar-sign" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Total a Pagar</span>
-                        </div>
-                        <h4 style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">₡1,144,800.00</h4>
-                        <small style="opacity: 0.8; display: block; margin-top: 0.5rem;">Planillas pendientes</small>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-secondary" style="border-radius: 50px; padding: 0.8rem 2rem;">
+                            &lt; Anterior
+                        </button>
+                        <button class="btn btn-primary" style="border-radius: 50px; padding: 0.8rem 2rem;">
+                            Siguiente &gt;
+                        </button>
                     </div>
                 </div>
             </div>

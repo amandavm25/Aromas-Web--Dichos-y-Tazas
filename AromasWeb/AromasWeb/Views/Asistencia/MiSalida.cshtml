@@ -1,0 +1,175 @@
+﻿@model AromasWeb.Abstracciones.ModeloUI.Asistencia
+
+@{
+    ViewBag.Title = "Mi Salida";
+    var empleado = (AromasWeb.Abstracciones.ModeloUI.Empleado)ViewBag.EmpleadoActual;
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-leaves"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-sign-out-alt"></i>
+                Finalizar Jornada
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Registrar Mi
+                <span class="hero-title-accent">Salida</span>
+            </h1>
+            <p class="hero-subtitle">
+                @empleado.NombreCompleto - @empleado.Cargo
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 900px;">
+        @using (Html.BeginForm("MiSalida", "Asistencia", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.IdAsistencia)
+            @Html.HiddenFor(model => model.IdEmpleado)
+            @Html.HiddenFor(model => model.Fecha)
+            @Html.HiddenFor(model => model.HoraEntrada)
+
+            <div class="contact-form-wrapper" data-aos="fade-up">
+                <form class="contact-form">
+                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                    <!-- Información del Empleado -->
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-user"></i> Tu Información
+                        </h5>
+                    </div>
+
+                    <!-- Datos del Empleado -->
+                    <div class="feature-card" style="margin-bottom: 2rem; padding: 2rem;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                            <div>
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-user" style="color: var(--olive-green);"></i> Nombre Completo
+                                </label>
+                                <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@empleado.NombreCompleto</p>
+                            </div>
+                            <div>
+                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-briefcase" style="color: var(--olive-green);"></i> Cargo
+                                </label>
+                                <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@empleado.Cargo</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información de Entrada -->
+                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
+                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-clock"></i> Información de Tu Jornada
+                        </h5>
+                    </div>
+
+                    <!-- Fecha y Hora de Entrada (solo lectura) -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-calendar-day"></i>
+                                Fecha
+                            </label>
+                            <input type="text" value="@Model.Fecha.ToString("dd/MM/yyyy")" class="form-control" readonly style="background: #F5EDD8;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-sign-in-alt"></i>
+                                Hora de Entrada
+                            </label>
+                            <input type="text" value="@Model.HoraEntrada.ToString(@"hh\:mm")" class="form-control" readonly style="background: #F5EDD8;" />
+                        </div>
+                    </div>
+
+                    <!-- Resumen de Tiempo Trabajado (preliminar) -->
+                    <div class="feature-card" style="margin: 2rem 0; padding: 2rem; text-align: center; background: linear-gradient(135deg, var(--cream) 0%, white 100%);">
+                        <div style="display: inline-block; padding: 2rem 3rem; border-radius: 20px; background: white; box-shadow: var(--shadow-md);">
+                            <i class="fas fa-hourglass-half" style="color: var(--gold); font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                            @{
+                                var tiempoTranscurrido = DateTime.Now.TimeOfDay - Model.HoraEntrada;
+                                var horasTranscurridas = Math.Floor(tiempoTranscurrido.TotalHours);
+                                var minutosTranscurridos = tiempoTranscurrido.Minutes;
+                            }
+                            <div style="font-size: 3rem; font-weight: 700; color: var(--dark-green); font-family: var(--font-primary); margin-bottom: 0.5rem;">
+                                @horasTranscurridas h @minutosTranscurridos min
+                            </div>
+                            <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 1rem;">Tiempo Transcurrido</p>
+                        </div>
+                    </div>
+
+                    <!-- Hora de Salida y Tiempo de Almuerzo -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-sign-out-alt"></i>
+                                Hora de Salida
+                            </label>
+                            <input type="time" name="HoraSalida" value="@Model.HoraSalida?.ToString(@"hh\:mm")" class="form-control" required />
+                            @Html.ValidationMessageFor(model => model.HoraSalida, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-utensils"></i>
+                                Tiempo de Almuerzo (minutos)
+                            </label>
+                            @Html.EditorFor(model => model.TiempoAlmuerzo, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", max = "120", placeholder = "Ej: 60" } })
+                            @Html.ValidationMessageFor(model => model.TiempoAlmuerzo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Información adicional -->
+                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem; border-left: 4px solid var(--gold);">
+                        <div style="display: flex; align-items: start; gap: 1rem;">
+                            <i class="fas fa-info-circle" style="color: var(--gold); font-size: 2rem;"></i>
+                            <div>
+                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.3rem;">Cálculo Automático de Horas</strong>
+                                <p style="margin: 0; color: var(--charcoal); opacity: 0.85; font-size: 0.95rem; line-height: 1.6;">
+                                    El sistema calculará automáticamente tus horas trabajadas, diferenciando entre:
+                                </p>
+                                <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--charcoal); opacity: 0.85; font-size: 0.95rem; line-height: 1.6;">
+                                    <li><strong>Horas Regulares:</strong> Hasta 8 horas de trabajo efectivo</li>
+                                    <li><strong>Horas Extras:</strong> Tiempo adicional después de las 8 horas</li>
+                                </ul>
+                                <p style="margin: 0.5rem 0 0; color: var(--charcoal); opacity: 0.85; font-size: 0.9rem;">
+                                    <i class="fas fa-lightbulb" style="color: var(--gold);"></i>
+                                    El tiempo de almuerzo se descontará automáticamente de tus horas trabajadas.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("MiHistorialAsistencias", "Asistencia")'" style="flex: 1;">
+                            <span><i class="fas fa-times"></i> Cancelar</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
+                            <span><i class="fas fa-check"></i> Registrar Mi Salida</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/asistencia.js"></script>
+}

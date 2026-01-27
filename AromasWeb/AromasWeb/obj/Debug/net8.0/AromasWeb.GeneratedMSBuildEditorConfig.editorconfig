@@ -30,6 +30,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxMaXN0YWRvQXNpc3RlbmNpYXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/MiEntrada.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxNaUVudHJhZGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/MiHistorialAsistencias.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxNaUhpc3RvcmlhbEFzaXN0ZW5jaWFzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/MiSalida.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxNaVNhbGlkYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/RegistrarEntrada.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxSZWdpc3RyYXJFbnRyYWRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -412,10 +424,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/MisSolicitudes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xNaXNTb2xpY2l0dWRlcy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/ReporteVacaciones.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xSZXBvcnRlVmFjYWNpb25lcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/VerSolicitudesEmpleado.cshtml]

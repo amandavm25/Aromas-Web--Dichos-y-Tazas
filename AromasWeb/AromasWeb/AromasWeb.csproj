@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Asistencia\" />
     <Folder Include="Views\Bitacora\" />
     <Folder Include="Views\Empleado\" />
     <Folder Include="Views\Rol\" />

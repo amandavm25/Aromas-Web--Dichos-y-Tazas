@@ -6,25 +6,24 @@
 }
 
 <!-- Hero Section -->
-<section class="hero" style="min-height: 50vh; padding: 8rem 0 4rem; background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); position: relative; overflow: hidden;">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);"></div>
-
-    <div class="container" style="position: relative; z-index: 2;">
-        <div style="text-align: center; color: white;" data-aos="fade-up">
-            <span style="display: inline-block; padding: 0.7rem 1.5rem; background: rgba(255, 255, 255, 0.2); border-radius: 50px; font-weight: 600; font-size: 0.9rem; margin-bottom: 2rem; backdrop-filter: blur(10px);">
-                <i class="fas fa-file-invoice-dollar"></i> Mis Planillas de Pago
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-leaves"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-file-invoice-dollar"></i>
+                Mis Planillas de Pago
             </span>
-
-            <h1 style="font-size: 3.5rem; margin-bottom: 1rem; font-family: var(--font-primary); font-weight: 700;">
-                Hola, <span style="color: var(--gold-bright);">@empleado.NombreCompleto</span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Hola, <span class="hero-title-accent">@empleado.NombreCompleto</span>
             </h1>
-
-            <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto 2rem;">
+            <p class="hero-subtitle">
                 Consulta tus planillas de pago y deducciones
             </p>
 
             <!-- Info rápida del empleado -->
-            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem;">
+            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem; margin-bottom: 3rem; color: black;">
                 <div>
                     <i class="fas fa-briefcase" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
                     <strong style="display: block; font-size: 1.1rem;">@empleado.Cargo</strong>
@@ -43,6 +42,11 @@
             </div>
         </div>
     </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
 </section>
 
 <!-- Content Section -->
@@ -54,47 +58,44 @@
         {
             var planillaReciente = Model.First();
 
-            <div style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); border-radius: 30px; padding: 3rem; box-shadow: var(--shadow-xl); margin-bottom: 3rem; color: white; position: relative; overflow: hidden;" data-aos="zoom-in">
-                <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; z-index: 0;"></div>
-                <div style="position: absolute; bottom: -30px; left: -30px; width: 150px; height: 150px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; z-index: 0;"></div>
-
+            <div class="feature-card" style="background: white; padding: 3rem; margin-bottom: 3rem; position: relative; overflow: hidden; border-left: 5px solid var(--gold);" data-aos="zoom-in">
                 <div style="position: relative; z-index: 1;">
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
-                        <div style="width: 70px; height: 70px; background: rgba(255, 255, 255, 0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
-                            <i class="fas fa-star" style="font-size: 2rem;"></i>
+                        <div style="width: 70px; height: 70px; background: var(--gold); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
+                            <i class="fas fa-star" style="font-size: 2rem; color: white;"></i>
                         </div>
                         <div>
-                            <p style="margin: 0; opacity: 0.9; font-size: 0.95rem;">Tu Planilla Más Reciente</p>
-                            <h2 style="margin: 0; font-size: 3rem; font-weight: 700; font-family: var(--font-primary);">
+                            <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.95rem;">Tu Planilla Más Reciente</p>
+                            <h2 style="margin: 0; font-size: 3rem; font-weight: 700; font-family: var(--font-primary); color: var(--dark-green);">
                                 ₡@planillaReciente.PagoNeto.ToString("N0")
                             </h2>
                         </div>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; background: rgba(255, 255, 255, 0.15); padding: 2rem; border-radius: 20px; backdrop-filter: blur(10px);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; background: var(--cream); padding: 2rem; border-radius: 20px;">
                         <div>
-                            <p style="margin: 0 0 0.5rem; opacity: 0.9; font-size: 0.9rem;">
-                                <i class="fas fa-calendar-check"></i> Período
+                            <p style="margin: 0 0 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">
+                                <i class="fas fa-calendar-check" style="color: var(--olive-green);"></i> Período
                             </p>
-                            <strong style="font-size: 1.1rem;">@planillaReciente.PeriodoFormateado</strong>
+                            <strong style="font-size: 1.1rem; color: var(--dark-green);">@planillaReciente.PeriodoFormateado</strong>
                         </div>
                         <div>
-                            <p style="margin: 0 0 0.5rem; opacity: 0.9; font-size: 0.9rem;">
-                                <i class="fas fa-clock"></i> Horas Trabajadas
+                            <p style="margin: 0 0 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">
+                                <i class="fas fa-clock" style="color: var(--olive-green);"></i> Horas Trabajadas
                             </p>
-                            <strong style="font-size: 1.1rem;">@planillaReciente.TotalHorasTrabajadas.ToString("N2")h</strong>
+                            <strong style="font-size: 1.1rem; color: var(--dark-green);">@planillaReciente.TotalHorasTrabajadas.ToString("N2")h</strong>
                         </div>
                         <div>
-                            <p style="margin: 0 0 0.5rem; opacity: 0.9; font-size: 0.9rem;">
-                                <i class="fas fa-money-bill-wave"></i> Pago Bruto
+                            <p style="margin: 0 0 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">
+                                <i class="fas fa-money-bill-wave" style="color: var(--olive-green);"></i> Pago Bruto
                             </p>
-                            <strong style="font-size: 1.1rem;">₡@planillaReciente.PagoBruto.ToString("N0")</strong>
+                            <strong style="font-size: 1.1rem; color: var(--dark-green);">₡@planillaReciente.PagoBruto.ToString("N0")</strong>
                         </div>
                         <div>
-                            <p style="margin: 0 0 0.5rem; opacity: 0.9; font-size: 0.9rem;">
-                                <i class="fas fa-minus-circle"></i> Deducciones
+                            <p style="margin: 0 0 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">
+                                <i class="fas fa-minus-circle" style="color: var(--olive-green);"></i> Deducciones
                             </p>
-                            <strong style="font-size: 1.1rem;">₡@planillaReciente.TotalDeducciones.ToString("N0")</strong>
+                            <strong style="font-size: 1.1rem; color: var(--dark-green);">₡@planillaReciente.TotalDeducciones.ToString("N0")</strong>
                         </div>
                     </div>
                 </div>
@@ -103,33 +104,31 @@
 
         <!-- Estadísticas -->
         <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: white;">
-                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
-                    <i class="fas fa-file-invoice" style="color: white;"></i>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-file-invoice"></i>
                 </div>
-                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@Model.Count</h3>
-                <p style="margin: 0; opacity: 0.9;">Planillas Totales</p>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@Model.Count</h3>
+                <p style="margin: 0.5rem 0;">Planillas Totales</p>
             </div>
-
-            <div class="feature-card" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white;">
-                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
-                    <i class="fas fa-dollar-sign" style="color: white;"></i>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
                 </div>
-                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@Model.Sum(p => p.PagoNeto).ToString("N0")</h3>
-                <p style="margin: 0; opacity: 0.9;">Total Recibido</p>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@Model.Sum(p => p.PagoNeto).ToString("N0")</h3>
+                <p style="margin: 0.5rem 0;">Total Recibido</p>
             </div>
-
-            <div class="feature-card" style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); color: white;">
-                <div class="feature-icon" style="background: rgba(255,255,255,0.2); margin: 0 auto 1.5rem;">
-                    <i class="fas fa-chart-line" style="color: white;"></i>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
                 </div>
-                <h3 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@(Model.Any() ? Model.Average(p => p.PagoNeto).ToString("N0") : "0")</h3>
-                <p style="margin: 0; opacity: 0.9;">Promedio por Planilla</p>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@(Model.Any() ? Model.Average(p => p.PagoNeto).ToString("N0") : "0")</h3>
+                <p style="margin: 0.5rem 0;">Promedio por Planilla</p>
             </div>
         </div>
 
         <!-- Historial de Planillas -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
+        <div style="background: var(--cream); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
             <h4 style="color: var(--dark-green); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
                 <i class="fas fa-history"></i> Historial de Mis Planillas
             </h4>
@@ -140,9 +139,9 @@
                     @foreach (var planilla in Model)
                     {
                         var esReciente = planilla == Model.First();
-                        var colorEstado = planilla.Estado == "Pagado" ? "#27ae60" : "var(--gold-bright)";
+                        var colorEstado = planilla.Estado == "Pagado" ? "var(--olive-green)" : "var(--gold-bright)";
 
-                        <div class="feature-card" style="position: relative; padding: 2rem; border-left: 5px solid @colorEstado; @(esReciente ? "background: linear-gradient(135deg, rgba(143, 142, 106, 0.05) 0%, rgba(143, 142, 106, 0.02) 100%);" : "")">
+                        <div class="feature-card" style="position: relative; padding: 2rem; border-left: 5px solid @colorEstado; background: white;">
                             @if (esReciente)
                             {
                                 <div style="position: absolute; top: 1rem; right: 1rem;">
@@ -175,7 +174,7 @@
 
                                 <div style="text-align: center;">
                                     <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Pago Neto</p>
-                                    <strong style="color: #27ae60; font-size: 1.5rem; font-family: var(--font-primary);">₡@planilla.PagoNeto.ToString("N0")</strong>
+                                    <strong style="color: var(--olive-green); font-size: 1.5rem; font-family: var(--font-primary);">₡@planilla.PagoNeto.ToString("N0")</strong>
                                 </div>
 
                                 <div>

@@ -33,6 +33,33 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
 
+        <!-- Resumen del Inventario -->
+        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3 id="valorTotal" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡0.00</h3>
+                <p style="margin: 0.5rem 0;">Valor Total del Inventario</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">8</h3>
+                <p style="margin: 0.5rem 0;">Total de Insumos</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 id="stockBajoCount" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">0</h3>
+                <p style="margin: 0.5rem 0;">Alertas de Stock Bajo</p>
+            </div>
+        </div>
+
         <!-- Barra de búsqueda y botones -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoInsumos", "Insumo")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
@@ -243,38 +270,6 @@
                     </div>
                     <div id="alertasStockBajo" style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 600px; overflow-y: auto;">
                         <!-- Se llenará dinámicamente -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Resumen Estadísticas (Abajo) -->
-        <div style="margin-top: 3rem;" data-aos="fade-up">
-            <div style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
-                <h5 style="margin: 0 0 2rem; color: white; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.3rem;">
-                    <i class="fas fa-chart-pie"></i> Resumen del Inventario
-                </h5>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-dollar-sign" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Valor Total del Inventario</span>
-                        </div>
-                        <h4 id="valorTotal" style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">₡0.00</h4>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-boxes" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Total de Insumos</span>
-                        </div>
-                        <h4 style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">8</h4>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Alertas de Stock Bajo</span>
-                        </div>
-                        <h4 id="stockBajoCount" style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">0</h4>
                     </div>
                 </div>
             </div>

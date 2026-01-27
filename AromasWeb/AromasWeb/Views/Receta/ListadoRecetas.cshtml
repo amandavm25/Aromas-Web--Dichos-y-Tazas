@@ -33,6 +33,41 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
 
+        <!-- Resumen de Recetas -->
+        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">8</h3>
+                <p style="margin: 0.5rem 0;">Total de Recetas</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 id="totalDisponibles" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">7</h3>
+                <p style="margin: 0.5rem 0;">Disponibles</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3 id="margenPromedio" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">54.27%</h3>
+                <p style="margin: 0.5rem 0;">Margen Promedio</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h3 id="gananciaTotalPotencial" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡55,200</h3>
+                <p style="margin: 0.5rem 0;">Ganancia Total Potencial</p>
+            </div>
+        </div>
+
         <!-- Barra de búsqueda y botones -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoRecetas", "Receta")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
@@ -102,8 +137,8 @@
 
             <!-- Tabla Principal -->
             <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                <div class="table-responsive">
-                    <table id="laTablaDeRecetas" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
+                <div style="overflow-x: auto; max-width: 100%;">
+                    <table id="laTablaDeRecetas" style="margin-bottom: 0; width: 100%; min-width: 1200px; border-collapse: collapse;">
                         <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-olive) 100%);">
                             <tr>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
@@ -260,45 +295,6 @@
                     </div>
                     <div id="alertasMargenBajo" style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 400px; overflow-y: auto;">
                         <!-- Se llenará dinámicamente -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Resumen Estadísticas (Abajo) -->
-        <div style="margin-top: 3rem;" data-aos="fade-up">
-            <div style="background: linear-gradient(135deg, var(--olive-green), var(--dark-olive)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
-                <h5 style="margin: 0 0 2rem; color: white; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.3rem;">
-                    <i class="fas fa-chart-line"></i> Resumen de Recetas
-                </h5>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-book-open" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Total de Recetas</span>
-                        </div>
-                        <h4 style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">8</h4>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-check-circle" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Disponibles</span>
-                        </div>
-                        <h4 id="totalDisponibles" style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">7</h4>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-dollar-sign" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Margen Promedio</span>
-                        </div>
-                        <h4 id="margenPromedio" style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">54.27%</h4>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;">
-                            <i class="fas fa-coins" style="font-size: 1.5rem; color: white;"></i>
-                            <span style="font-size: 1rem; color: white; opacity: 0.9; font-weight: 500;">Ganancia Total Potencial</span>
-                        </div>
-                        <h4 id="gananciaTotalPotencial" style="margin: 0; font-size: 2rem; font-weight: 700; color: white;">₡55,200</h4>
                     </div>
                 </div>
             </div>

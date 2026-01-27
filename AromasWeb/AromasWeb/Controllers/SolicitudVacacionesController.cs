@@ -306,55 +306,6 @@ namespace AromasWeb.Controllers
             return RedirectToAction(nameof(ListadoSolicitudes));
         }
 
-        // GET: SolicitudVacaciones/ReporteVacaciones/5
-        public IActionResult ReporteVacaciones(int idEmpleado)
-        {
-            // Datos del empleado - En producción vendría de la base de datos
-            ViewBag.IdEmpleado = idEmpleado;
-            ViewBag.NombreEmpleado = "María González Rodríguez";
-            ViewBag.IdentificacionEmpleado = "1-1234-5678";
-            ViewBag.CargoEmpleado = "Gerente General";
-            ViewBag.FechaContratacion = DateTime.Now.AddYears(-2).AddMonths(-10);
-
-            var fechaContratacion = DateTime.Now.AddYears(-2).AddMonths(-10);
-            var mesesTrabajados = (int)((DateTime.Now - fechaContratacion).TotalDays / 30);
-
-            ViewBag.MesesTrabajados = mesesTrabajados;
-            ViewBag.DiasAcumulados = mesesTrabajados; // 1 día por mes trabajado
-            ViewBag.DiasTomados = 6;
-            ViewBag.DiasDisponibles = mesesTrabajados - 6;
-
-            // Historial de solicitudes del empleado
-            var historial = new List<SolicitudVacaciones>
-            {
-                new SolicitudVacaciones
-                {
-                    IdSolicitud = 1,
-                    IdEmpleado = idEmpleado,
-                    NombreEmpleado = "María González Rodríguez",
-                    FechaSolicitud = DateTime.Now.AddDays(-5),
-                    FechaInicio = DateTime.Now.AddDays(10),
-                    FechaFin = DateTime.Now.AddDays(17),
-                    DiasSolicitados = 6,
-                    Estado = "Pendiente"
-                },
-                new SolicitudVacaciones
-                {
-                    IdSolicitud = 2,
-                    IdEmpleado = idEmpleado,
-                    NombreEmpleado = "María González Rodríguez",
-                    FechaSolicitud = DateTime.Now.AddMonths(-3),
-                    FechaInicio = DateTime.Now.AddMonths(-2),
-                    FechaFin = DateTime.Now.AddMonths(-2).AddDays(4),
-                    DiasSolicitados = 4,
-                    Estado = "Aprobada",
-                    FechaRespuesta = DateTime.Now.AddMonths(-3).AddDays(1)
-                }
-            };
-
-            return View(historial);
-        }
-
         // GET: SolicitudVacaciones/VerSolicitudesEmpleado/5
         public IActionResult VerSolicitudesEmpleado(int idEmpleado)
         {
