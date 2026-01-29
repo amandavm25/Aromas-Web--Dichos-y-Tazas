@@ -33,25 +33,34 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
 
-        <!-- Barra de búsqueda y filtros -->
-        <div style="background: var(--white); padding: 2rem; border-radius: 25px; box-shadow: var(--shadow-lg); margin-bottom: 3rem;" data-aos="fade-up">
-            <form method="get" action="@Url.Action("ListadoBitacoras", "Bitacora")">
-                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                    <!-- Búsqueda -->
-                    <div style="position: relative;">
-                        <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
-                        <input type="text"
-                               name="buscar"
-                               value="@ViewBag.Buscar"
-                               placeholder="Buscar por empleado, módulo o acción..."
-                               style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 15px; font-size: 1rem; background: var(--cream);">
-                    </div>
+        <!-- Barra de búsqueda y botones -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
+            <form method="get" action="@Url.Action("ListadoBitacoras", "Bitacora")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
+                <div style="position: relative; flex: 1;">
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
+                    <input type="text"
+                           name="buscar"
+                           value="@ViewBag.Buscar"
+                           placeholder="Buscar por empleado, módulo o acción..."
+                           style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
+                </div>
+                <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
+                    <span><i class="fas fa-search"></i> Buscar</span>
+                </button>
+            </form>
+        </div>
 
-                    <!-- Módulo -->
+        <!-- Filtros -->
+        <div style="margin-bottom: 3rem;" data-aos="fade-up">
+            <form method="get" action="@Url.Action("ListadoBitacoras", "Bitacora")" style="display: contents;">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+                    <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                        <i class="fas fa-filter" style="color: var(--gold);"></i> Filtrar:
+                    </span>
+
                     <div style="position: relative;">
-                        <i class="fas fa-th-large" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
-                        <select name="filtroModulo"
-                                style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 15px; font-size: 1rem; background: var(--cream);">
+                        <i class="fas fa-th-large" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
+                        <select name="filtroModulo" style="border-radius: 50px; padding: 0.6rem 1.5rem 0.6rem 50px; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white); min-width: 180px; color: var(--dark-green); font-weight: 600;">
                             <option value="">Todos los módulos</option>
                             <option value="Empleados">Empleados</option>
                             <option value="Roles">Roles</option>
@@ -61,29 +70,26 @@
                         </select>
                     </div>
 
-                    <!-- Fecha Inicio -->
                     <div style="position: relative;">
-                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
+                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
                         <input type="date"
                                name="fechaInicio"
                                value="@ViewBag.FechaInicio"
-                               style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 15px; font-size: 1rem; background: var(--cream);">
+                               placeholder="Fecha inicio"
+                               style="padding: 0.6rem 1.5rem 0.6rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 0.9rem; background: var(--white); color: var(--dark-green); font-weight: 600;">
                     </div>
 
-                    <!-- Fecha Fin -->
                     <div style="position: relative;">
-                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
+                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
                         <input type="date"
                                name="fechaFin"
                                value="@ViewBag.FechaFin"
-                               style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 15px; font-size: 1rem; background: var(--cream);">
+                               placeholder="Fecha fin"
+                               style="padding: 0.6rem 1.5rem 0.6rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 0.9rem; background: var(--white); color: var(--dark-green); font-weight: 600;">
                     </div>
-                </div>
 
-                <!-- Botón de búsqueda -->
-                <div style="display: flex; justify-content: flex-end;">
-                    <button type="submit" class="btn btn-primary btn-3d" style="border-radius: 50px; padding: 0.8rem 2.5rem;">
-                        <span><i class="fas fa-search"></i> Buscar</span>
+                    <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                        <span><i class="fas fa-filter"></i> Aplicar</span>
                     </button>
                 </div>
             </form>

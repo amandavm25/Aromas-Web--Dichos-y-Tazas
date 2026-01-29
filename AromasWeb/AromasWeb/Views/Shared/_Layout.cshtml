@@ -17,21 +17,306 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        /* FIX CRÍTICO PARA DROPDOWN */
+        .nav-dropdown {
+            position: relative;
+        }
+
+            .nav-dropdown > .nav-link {
+                display: flex !important;
+                align-items: center;
+                gap: 0.3rem;
+                cursor: pointer;
+            }
+
+            .nav-dropdown .dropdown-menu {
+                position: absolute !important;
+                top: 100% !important;
+                left: 0 !important;
+                background: #FFFFFF !important;
+                min-width: 250px !important;
+                border-radius: 15px !important;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+                padding: 0.5rem 0 !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transform: translateY(-10px) !important;
+                transition: all 0.3s ease !important;
+                z-index: 1000 !important;
+                margin-top: 0.5rem !important;
+                list-style: none !important;
+                display: block !important;
+            }
+
+            .nav-dropdown:hover .dropdown-menu {
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateY(0) !important;
+            }
+
+            .nav-dropdown .dropdown-menu li {
+                list-style: none !important;
+                display: block !important;
+                margin: 0 !important;
+            }
+
+            .nav-dropdown .dropdown-menu a {
+                display: flex !important;
+                align-items: center !important;
+                gap: 0.7rem !important;
+                padding: 0.8rem 1.5rem !important;
+                color: #22515A !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+                transition: all 0.3s ease !important;
+                white-space: nowrap !important;
+            }
+
+                .nav-dropdown .dropdown-menu a:hover {
+                    background: #FEFAF5 !important;
+                    color: #207476 !important;
+                    padding-left: 2rem !important;
+                }
+
+                .nav-dropdown .dropdown-menu a i {
+                    color: #E06E49 !important;
+                    font-size: 0.9rem !important;
+                }
+
+            .nav-dropdown > .nav-link i.fa-chevron-down {
+                transition: transform 0.3s ease;
+                font-size: 0.75rem;
+                margin-left: 0.3rem;
+            }
+
+            .nav-dropdown:hover > .nav-link i.fa-chevron-down {
+                transform: rotate(180deg);
+            }
+
+            /* Dropdown de perfil alineado a la derecha */
+            .nav-dropdown .dropdown-menu[style*="right"] {
+                right: 0 !important;
+                left: auto !important;
+            }
+
+        /* ============================================
+                   CORRECCIONES NAVBAR - POSICIONAMIENTO
+                   ============================================ */
+
+        /* Ajustar el contenedor del navbar */
+        .navbar .container {
+            display: flex !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            padding: 1rem 20px !important;
+            gap: 2rem !important;
+            max-width: 100% !important;
+        }
+
+        /* Logo a la izquierda */
+        .logo {
+            margin-right: auto !important;
+        }
+
+        /* Menú optimizado */
+        .nav-menu {
+            display: flex !important;
+            list-style: none !important;
+            gap: 1.2rem !important;
+            align-items: center !important;
+            flex-wrap: nowrap !important;
+            margin-left: auto !important;
+        }
+
+        /* Evitar que el texto se rompa */
+        .nav-dropdown > .nav-link,
+        .nav-link {
+            white-space: nowrap !important;
+        }
+
+        /* Ajustar tamaño de elementos en pantallas grandes */
+        @@media (min-width: 969px) and (max-width: 1400px) {
+            .nav-menu
+
+        {
+            gap: 0.9rem !important;
+        }
+
+        .nav-link {
+            font-size: 0.82rem !important;
+        }
+
+        .btn-nav {
+            padding: 0.65rem 1.3rem !important;
+            font-size: 0.82rem !important;
+        }
+
+        }
+
+        /* Ajuste para pantallas medianas */
+        @@media (min-width: 969px) and (max-width: 1200px) {
+            .navbar .container
+
+        {
+            gap: 1.5rem !important;
+        }
+
+        .nav-menu {
+            gap: 0.7rem !important;
+        }
+
+        .nav-link {
+            font-size: 0.78rem !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        .btn-nav {
+            padding: 0.6rem 1.1rem !important;
+            font-size: 0.78rem !important;
+        }
+
+        .logo-circle {
+            width: 85px !important;
+            height: 85px !important;
+        }
+
+        .logo-main {
+            font-size: 1.6rem !important;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem !important;
+        }
+
+        }
+
+        /* Mobile */
+        @@media (max-width: 968px) {
+            /* Resetear para móvil */
+            .navbar .container
+
+        {
+            justify-content: space-between !important;
+            gap: 1rem !important;
+        }
+
+        .logo {
+            margin-right: 0 !important;
+        }
+
+        .nav-menu {
+            position: fixed !important;
+            top: 100px !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: calc(100vh - 100px) !important;
+            background: var(--white) !important;
+            flex-direction: column !important;
+            padding: 3rem 2rem !important;
+            box-shadow: var(--shadow-lg) !important;
+            transition: var(--transition-base) !important;
+            overflow-y: auto !important;
+            gap: 1.5rem !important;
+            margin-left: 0 !important;
+        }
+
+            .nav-menu.active {
+                left: 0 !important;
+            }
+
+        .nav-link {
+            font-size: 0.9rem !important;
+        }
+
+        .btn-nav {
+            width: 100% !important;
+            justify-content: center !important;
+            padding: 0.8rem 1.8rem !important;
+            font-size: 0.9rem !important;
+        }
+
+        .logo-circle {
+            width: 80px !important;
+            height: 80px !important;
+        }
+
+        .logo-main {
+            font-size: 1.4rem !important;
+        }
+
+        .logo-sub {
+            font-size: 0.6rem !important;
+        }
+
+        /* Dropdowns en móvil */
+        .nav-dropdown .dropdown-menu {
+            position: static !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+            box-shadow: none !important;
+            background: #FEFAF5 !important;
+            margin: 0.5rem 0 0 1rem !important;
+            display: none !important;
+            border-radius: 10px !important;
+        }
+
+        .nav-dropdown.active .dropdown-menu {
+            display: block !important;
+        }
+
+        .nav-dropdown > .nav-link {
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .nav-dropdown.active > .nav-link i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        }
+
+        /* Móviles pequeños */
+        @@media (max-width: 600px) {
+            .navbar .container
+
+        {
+            padding: 0.8rem 15px !important;
+        }
+
+        .logo-circle {
+            width: 70px !important;
+            height: 70px !important;
+        }
+
+        .logo-main {
+            font-size: 1.2rem !important;
+            letter-spacing: 2px !important;
+        }
+
+        .logo-sub {
+            font-size: 0.55rem !important;
+        }
+
+        }
+    </style>
 </head>
 
-<!-- Loader -->
-<div class="loader-wrapper">
-    <div class="tsuru-loader">
-        <div class="leaf-container">
-            <div class="leaf"></div>
-            <div class="leaf"></div>
-            <div class="leaf"></div>
-        </div>
-        <p>TSURÚ</p>
-    </div>
-</div>
-
 <body>
+    <!-- Loader -->
+    <div class="loader-wrapper">
+        <div class="tsuru-loader">
+            <div class="leaf-container">
+                <div class="leaf"></div>
+                <div class="leaf"></div>
+                <div class="leaf"></div>
+            </div>
+            <p>TSURÚ</p>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
@@ -50,7 +335,9 @@
 
                     <!-- Dropdown de Insumos -->
                     <li class="nav-dropdown">
-                        <a href="#" class="nav-link">Insumos</a>
+                        <a href="#" class="nav-link">
+                            Insumos <i class="fas fa-chevron-down"></i>
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a href="/Insumo/ListadoInsumos">Insumos</a></li>
                             <li><a href="/CategoriaInsumo/ListadoCategoriasInsumos">Categorías de Insumos</a></li>
@@ -59,7 +346,9 @@
 
                     <!-- Dropdown de Recetas -->
                     <li class="nav-dropdown">
-                        <a href="#" class="nav-link">Recetas</a>
+                        <a href="#" class="nav-link">
+                            Recetas <i class="fas fa-chevron-down"></i>
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a href="/Receta/ListadoRecetas">Recetas</a></li>
                             <li><a href="/CategoriaReceta/ListadoCategoriasRecetas">Categorías de Recetas</a></li>
@@ -68,7 +357,9 @@
 
                     <!-- Dropdown de Promociones -->
                     <li class="nav-dropdown">
-                        <a href="#" class="nav-link">Promociones</a>
+                        <a href="#" class="nav-link">
+                            Promociones <i class="fas fa-chevron-down"></i>
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a href="/Promocion/ListadoPromociones">Promociones</a></li>
                             <li><a href="/TipoPromocion/ListadoTiposPromociones">Tipos de Promoción</a></li>
@@ -77,7 +368,9 @@
 
                     <!-- Dropdown de Empleados -->
                     <li class="nav-dropdown">
-                        <a href="#" class="nav-link">Empleados</a>
+                        <a href="#" class="nav-link">
+                            Empleados <i class="fas fa-chevron-down"></i>
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a href="/Empleado/ListadoEmpleados">Empleados</a></li>
                             <li><a href="/HistorialTarifa/ListadoTarifas">Historial de Tarifas</a></li>
@@ -99,9 +392,22 @@
                 {
                     <!-- MENÚ PARA EMPLEADO -->
                     <li><a href="/" class="nav-link">Inicio</a></li>
-                    <li><a href="/HistorialTarifa/MiHistorial">Mi Historial de Tarifas</a></li>
-                    <li><a href="/Planilla/MiPlanilla">Mis Planillas</a></li>
-                    <li><a href="/SolicitudVacaciones/MisSolicitudes">Mis Vacaciones</a></li>
+
+                    <!-- Dropdown de Asistencias -->
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link">
+                            Asistencias <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Asistencia/MiEntrada">Registrar Entrada</a></li>
+                            <li><a href="/Asistencia/MiSalida">Registrar Salida</a></li>
+                            <li><a href="/Asistencia/MiHistorialAsistencias">Mi Historial</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="/HistorialTarifa/MiHistorial" class="nav-link">Mi Historial de Tarifas</a></li>
+                    <li><a href="/Planilla/MiPlanilla" class="nav-link">Mis Planillas</a></li>
+                    <li><a href="/SolicitudVacaciones/MisSolicitudes" class="nav-link">Mis Vacaciones</a></li>
                 }
                 else
                 {
@@ -120,7 +426,7 @@
                     {
                         <!-- Botón Mis Reservas solo para clientes -->
                         <li>
-                            <a href="/Cliente/MisReservas" class="btn-nav" style="background: linear-gradient(135deg, var(--amber) 0%, var(--coral) 100%);">
+                            <a href="/Cliente/MisReservas" class="btn btn-primary btn-elegant">
                                 <span>Mis Reservas</span>
                             </a>
                         </li>
@@ -128,8 +434,9 @@
 
                     <!-- Dropdown de perfil -->
                     <li class="nav-dropdown">
-                        <a href="#" class="btn-nav" style="background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);">
+                        <a href="#" class="btn btn-primary btn-elegant">
                             <span>@usuarioNombre</span>
+                            <i class="fas fa-chevron-down"></i>
                         </a>
                         <ul class="dropdown-menu" style="right: 0; left: auto;">
                             <li style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--gray-light); background: var(--cream);">
@@ -138,7 +445,7 @@
                             </li>
                             @if (esCliente)
                             {
-                                <li><a href="/Cliente/MiPerfil">Mi Perfil</a></li>
+                                <li><a href="/Cliente/MiPerfil"><i class="fas fa-user"></i> Mi Perfil</a></li>
                                 <li><a href="/Auth/CerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                             }
                             @if (esEmpleado)
@@ -264,9 +571,21 @@
                     <ul class="footer-links">
                         <li><a href="#menu"><i class="fas fa-leaf"></i> Nuestros Productos</a></li>
                         <li><a href="#especialidades"><i class="fas fa-leaf"></i> Especialidades</a></li>
+                        @if (esCliente)
+                        {
+                            <li><a href="/Cliente/MisReservas"><i class="fas fa-leaf"></i> Mis Reservas</a></li>
+                        }
+                        @if (esEmpleado)
+                        {
+                            <li><a href="/Asistencia/MiEntrada"><i class="fas fa-leaf"></i> Registrar Entrada</a></li>
+                            <li><a href="/Asistencia/MiSalida"><i class="fas fa-leaf"></i> Registrar Salida</a></li>
+                            <li><a href="/Asistencia/MiHistorialAsistencias"><i class="fas fa-leaf"></i> Mi Historial de Asistencias</a></li>
+                        }
                         <li><a href="#galeria"><i class="fas fa-leaf"></i> Galería</a></li>
-                        <li><a href="#"><i class="fas fa-leaf"></i> Eventos Privados</a></li>
-                        <li><a href="#"><i class="fas fa-leaf"></i> Catering</a></li>
+                        @if (!estaAutenticado)
+                        {
+                            <li><a href="/Auth/Login"><i class="fas fa-leaf"></i> Iniciar Sesión</a></li>
+                        }
                     </ul>
                 </div>
 

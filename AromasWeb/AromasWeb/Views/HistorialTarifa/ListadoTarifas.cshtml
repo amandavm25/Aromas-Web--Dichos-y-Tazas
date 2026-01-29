@@ -67,56 +67,68 @@
             </div>
         </div>
 
-        <!-- Filtros y Búsqueda -->
-        <div class="contact-form-wrapper" style="margin-bottom: 3rem;" data-aos="fade-up">
-            <form method="get" action="@Url.Action("ListadoTarifas", "HistorialTarifa")">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-user"></i> Filtrar por Empleado
-                        </label>
-                        @{
-                            var empleadosData = new List<dynamic>
-                                                {
-                                                new { IdEmpleado = 1, NombreCompleto = "Kenneth Salas", Cargo = "Chef Principal" },
-                                                new { IdEmpleado = 2, NombreCompleto = "María González", Cargo = "Asistente de Cocina" },
-                                                new { IdEmpleado = 3, NombreCompleto = "David Rodríguez", Cargo = "Barista" },
-                                                new { IdEmpleado = 4, NombreCompleto = "Ana Jiménez", Cargo = "Cajera" }
-                                                };
-                        }
-                        <select name="empleado" class="form-control">
-                            <option value="">Todos los empleados</option>
-                            @foreach (var emp in empleadosData)
-                            {
-                                <option value="@emp.IdEmpleado">
-                                    @emp.NombreCompleto - @emp.Cargo
-                                </option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-filter"></i> Estado de Vigencia
-                        </label>
-                        <select name="estado" class="form-control">
-                            <option value="">Todos los estados</option>
-                            <option value="Vigente">Vigentes</option>
-                            <option value="Vencida">Vencidas</option>
-                            <option value="Futura">Futuras</option>
-                        </select>
-                    </div>
+        <!-- Barra de búsqueda y botones -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
+            <form method="get" action="@Url.Action("ListadoTarifas", "HistorialTarifa")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
+                <div style="position: relative; flex: 1;">
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
+                    <input type="text"
+                           name="buscar"
+                           value="@ViewBag.Buscar"
+                           placeholder="Buscar por empleado o cargo..."
+                           style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
                 </div>
+                <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
+                    <span><i class="fas fa-search"></i> Buscar</span>
+                </button>
+            </form>
 
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <button type="submit" class="btn btn-primary btn-3d">
-                        <span><i class="fas fa-search"></i> Aplicar Filtros</span>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="@Url.Action("CrearTarifa", "HistorialTarifa")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                    <span><i class="fas fa-plus"></i> Registrar Nueva Tarifa</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div style="margin-bottom: 3rem;" data-aos="fade-up">
+            <form method="get" action="@Url.Action("ListadoTarifas", "HistorialTarifa")" style="display: contents;">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+                    <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                        <i class="fas fa-filter" style="color: var(--gold);"></i> Filtrar:
+                    </span>
+
+                    @{
+                        var empleadosData = new List<dynamic>
+                                        {
+                                        new { IdEmpleado = 1, NombreCompleto = "Kenneth Salas", Cargo = "Chef Principal" },
+                                        new { IdEmpleado = 2, NombreCompleto = "María González", Cargo = "Asistente de Cocina" },
+                                        new { IdEmpleado = 3, NombreCompleto = "David Rodríguez", Cargo = "Barista" },
+                                        new { IdEmpleado = 4, NombreCompleto = "Ana Jiménez", Cargo = "Cajera" }
+                                        };
+                    }
+
+                    <select name="empleado" class="btn btn-secondary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white);">
+                        <option value="">Todos los empleados</option>
+                        @foreach (var emp in empleadosData)
+                        {
+                            <option value="@emp.IdEmpleado">@emp.NombreCompleto - @emp.Cargo</option>
+                        }
+                    </select>
+
+                    <select name="estado" class="btn btn-secondary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white);">
+                        <option value="">Todos los estados</option>
+                        <option value="Vigente">Vigentes</option>
+                        <option value="Vencida">Vencidas</option>
+                        <option value="Futura">Futuras</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                        <span><i class="fas fa-filter"></i> Aplicar</span>
                     </button>
-                    <a href="@Url.Action("ListadoTarifas", "HistorialTarifa")" class="btn btn-secondary">
+
+                    <a href="@Url.Action("ListadoTarifas", "HistorialTarifa")" class="btn btn-secondary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
                         <span><i class="fas fa-times"></i> Limpiar</span>
-                    </a>
-                    <a href="@Url.Action("CrearTarifa", "HistorialTarifa")" class="btn btn-primary btn-3d" style="margin-left: auto;">
-                        <span><i class="fas fa-plus"></i> Registrar Nueva Tarifa</span>
                     </a>
                 </div>
             </form>

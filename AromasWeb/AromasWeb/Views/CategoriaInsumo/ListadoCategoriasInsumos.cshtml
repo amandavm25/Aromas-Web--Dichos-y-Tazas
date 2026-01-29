@@ -34,30 +34,26 @@
     <div class="container" style="max-width: 1400px;">
 
         <!-- Barra de búsqueda y botones -->
-        <div style="background: var(--white); padding: 2rem; border-radius: 25px; box-shadow: var(--shadow-lg); margin-bottom: 3rem;" data-aos="fade-up">
-            <form method="get" action="@Url.Action("ListadoCategoriasInsumos", "CategoriaInsumo")">
-                <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;">
-                    <!-- Búsqueda -->
-                    <div style="position: relative;">
-                        <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
-                        <input type="text"
-                               name="buscar"
-                               value="@ViewBag.Buscar"
-                               placeholder="Buscar por nombre o descripción..."
-                               style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 15px; font-size: 1rem; background: var(--cream);">
-                    </div>
-
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem;">
-                        <button type="submit" class="btn btn-secondary" style="border-radius: 50px;">
-                            <span><i class="fas fa-search"></i> Buscar</span>
-                        </button>
-                        <a href="@Url.Action("CrearCategoriaInsumo", "CategoriaInsumo")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                            <span><i class="fas fa-plus"></i> Agregar Categoría</span>
-                        </a>
-                    </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
+            <form method="get" action="@Url.Action("ListadoCategoriasInsumos", "CategoriaInsumo")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
+                <div style="position: relative; flex: 1;">
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
+                    <input type="text"
+                           name="buscar"
+                           value="@ViewBag.Buscar"
+                           placeholder="Buscar por nombre o descripción..."
+                           style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
                 </div>
+                <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
+                    <span><i class="fas fa-search"></i> Buscar</span>
+                </button>
             </form>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="@Url.Action("CrearCategoriaInsumo", "CategoriaInsumo")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                    <span><i class="fas fa-plus"></i> Agregar Categoría</span>
+                </a>
+            </div>
         </div>
 
         <!-- Información de búsqueda -->
