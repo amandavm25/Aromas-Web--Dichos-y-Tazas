@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AromasWeb.AccesoADatos.Modelos
 {
-    [Table("MovimientoInsumo")]
+    [Table("movimientoinsumo")]
     public class MovimientoInsumoAD
     {
         [Key]
@@ -30,9 +30,13 @@ namespace AromasWeb.AccesoADatos.Modelos
         public decimal CostoUnitario { get; set; }
 
         [Required]
-        public int IdUsuario { get; set; }
+        public int IdEmpleado { get; set; }
 
         [Required]
         public DateTime FechaMovimiento { get; set; }
+
+        // Propiedades de navegación
+        public virtual InsumoAD Insumo { get; set; }
+        public virtual EmpleadoAD Empleado { get; set; }
     }
 }

@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // ============================================
     const botonesDetalles = document.querySelectorAll('.btn-detalles-categoria');
 
-    botonesDetalles.forEach(btn => {
-        btn.addEventListener('click', function () {
+    botonesDetalles.forEach(boton => {
+        boton.addEventListener('click', function () {
+            // Obtener datos del botón
             const id = this.getAttribute('data-id');
             const nombre = this.getAttribute('data-nombre');
             const descripcion = this.getAttribute('data-descripcion');
@@ -18,18 +19,18 @@ document.addEventListener('DOMContentLoaded', function () {
             // Llenar el modal con los datos
             document.getElementById('detalles-id-categoria').textContent = id;
             document.getElementById('detalles-nombre-categoria').textContent = nombre;
-            document.getElementById('detalles-descripcion-categoria').textContent = descripcion || 'Sin descripción';
-            document.getElementById('detalles-fecha-categoria').textContent = fecha;
+            document.getElementById('detalles-descripcion-categoria').textContent = descripcion;
 
-            const badgeEstado = document.getElementById('detalles-estado-badge-categoria');
+            // Configurar el badge de estado
+            const estadoBadge = document.getElementById('detalles-estado-badge-categoria');
             if (estado === 'Activa') {
-                badgeEstado.textContent = 'Activa';
-                badgeEstado.style.background = '#27ae60';
-                badgeEstado.style.color = 'white';
+                estadoBadge.textContent = 'Activa';
+                estadoBadge.style.background = '#27ae60';
+                estadoBadge.style.color = 'white';
             } else {
-                badgeEstado.textContent = 'Inactiva';
-                badgeEstado.style.background = '#e74c3c';
-                badgeEstado.style.color = 'white';
+                estadoBadge.textContent = 'Inactiva';
+                estadoBadge.style.background = '#e74c3c';
+                estadoBadge.style.color = 'white';
             }
         });
     });
@@ -39,8 +40,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // ============================================
     const botonesEliminar = document.querySelectorAll('.btn-eliminar-categoria');
 
-    botonesEliminar.forEach(btn => {
-        btn.addEventListener('click', function () {
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener('click', function () {
+            // Obtener datos del botón
             const id = this.getAttribute('data-id');
             const nombre = this.getAttribute('data-nombre');
             const descripcion = this.getAttribute('data-descripcion');
@@ -49,27 +51,32 @@ document.addEventListener('DOMContentLoaded', function () {
             // Llenar el modal con los datos
             document.getElementById('eliminar-id-display-categoria').textContent = id;
             document.getElementById('eliminar-nombre-categoria').textContent = nombre;
-            document.getElementById('eliminar-descripcion-categoria').textContent = descripcion || 'Sin descripción';
+            document.getElementById('eliminar-descripcion-categoria').textContent = descripcion;
+            document.getElementById('eliminar-estado-categoria').textContent = estado;
 
-            const badgeEstado = document.getElementById('eliminar-estado-badge-categoria');
-            if (estado === 'Activa') {
-                badgeEstado.textContent = 'Activa';
-                badgeEstado.style.background = '#27ae60';
-                badgeEstado.style.color = 'white';
-            } else {
-                badgeEstado.textContent = 'Inactiva';
-                badgeEstado.style.background = '#e74c3c';
-                badgeEstado.style.color = 'white';
-            }
-
-            // Configurar el formulario de eliminación
-            const formEliminar = document.getElementById('formEliminarCategoria');
-            const actionUrl = '/CategoriaInsumo/EliminarCategoria/' + id;
-            formEliminar.setAttribute('action', actionUrl);
-
+            // Establecer el ID en el campo oculto del formulario
             document.getElementById('eliminar-id-categoria').value = id;
+
+            // Configurar la acción del formulario
+            const form = document.getElementById('formEliminarCategoria');
+            form.action = '/CategoriaInsumo/EliminarCategoriaInsumo/' + id;
         });
     });
+
+    // ==========================================
+    // VALIDACIÓN Y MENSAJES
+    // ==========================================
+    // Prevenir envío doble del formulario
+    const formEliminar = document.getElementById('formEliminarCategoria');
+    if (formEliminar) {
+        formEliminar.addEventListener('submit', function (e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Eliminando...';
+            }
+        });
+    }
 
     // ============================================
     // VALIDACIÓN DE FORMULARIOS

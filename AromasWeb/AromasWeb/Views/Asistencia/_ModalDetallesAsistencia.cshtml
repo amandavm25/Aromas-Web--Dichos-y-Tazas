@@ -13,102 +13,98 @@
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--white);">
+            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
                 <!-- Información del Empleado -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green); display: flex; align-items: center; justify-content: space-between;">
-                    <div>
-                        <h5 id="detalles-nombre-empleado" style="color: var(--dark-green); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
-                        <p style="margin: 0.5rem 0 0; color: var(--charcoal); opacity: 0.7; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-id-card"></i>
-                            <span id="detalles-identificacion-empleado"></span>
-                        </p>
-                        <p style="margin: 0.5rem 0 0; color: var(--gold-bright); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-briefcase"></i>
-                            <span id="detalles-cargo-empleado"></span>
-                        </p>
-                    </div>
-                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); border: 3px solid var(--gold);">
-                        <i class="fas fa-user-clock" style="font-size: 2rem; color: white;"></i>
+                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green);">
+                    <h5 id="detalleNombre" style="color: var(--dark-green); margin: 0 0 0.5rem; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
+                    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7;">Identificación:</small>
+                            <p id="detalleIdentificacion" style="margin: 0; color: var(--dark-green); font-weight: 600;"></p>
+                        </div>
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7;">Cargo:</small>
+                            <p id="detalleCargo" style="margin: 0; color: var(--dark-green); font-weight: 600;"></p>
+                        </div>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                    <!-- Columna Izquierda -->
-                    <div style="display: grid; gap: 1.5rem;">
-                        <!-- ID -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-hashtag" style="color: var(--olive-green); font-size: 1.1rem;"></i> ID de Registro
-                            </label>
-                            <p id="detalles-id-asistencia" style="color: var(--dark-green); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
-                        <!-- Fecha -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calendar-day" style="color: var(--olive-green); font-size: 1.1rem;"></i> Fecha
-                            </label>
-                            <p id="detalles-fecha-asistencia" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
-                            <small id="detalles-dia-asistencia" style="color: var(--charcoal); opacity: 0.7; margin-top: 0.3rem; display: block;"></small>
-                        </div>
-
-                        <!-- Hora de Entrada -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-sign-in-alt" style="color: var(--olive-green); font-size: 1.1rem;"></i> Hora de Entrada
-                            </label>
-                            <p id="detalles-entrada-asistencia" style="color: var(--dark-green); font-size: 1.5rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
-                        <!-- Hora de Salida -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-sign-out-alt" style="color: var(--olive-green); font-size: 1.1rem;"></i> Hora de Salida
-                            </label>
-                            <p id="detalles-salida-asistencia" style="color: var(--dark-green); font-size: 1.5rem; font-weight: 700; margin: 0;"></p>
-                        </div>
+                <!-- Información de Fecha -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-calendar-day" style="color: var(--olive-green);"></i> Fecha
+                        </label>
+                        <p id="detalleFecha" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
                     </div>
 
-                    <!-- Columna Derecha -->
-                    <div style="display: grid; gap: 1.5rem;">
-                        <!-- Tiempo de Almuerzo -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-utensils" style="color: var(--olive-green); font-size: 1.1rem;"></i> Tiempo de Almuerzo
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-calendar-week" style="color: var(--olive-green);"></i> Día
+                        </label>
+                        <p id="detalleDia" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                    </div>
+
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-toggle-on" style="color: var(--olive-green);"></i> Estado
+                        </label>
+                        <div id="detalleEstado"></div>
+                    </div>
+                </div>
+
+                <!-- Horario -->
+                <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                    <i class="fas fa-clock" style="color: var(--gold);"></i> Horario
+                </h6>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-sign-in-alt" style="color: var(--olive-green);"></i> Entrada
+                        </label>
+                        <p id="detalleEntrada" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                    </div>
+
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-sign-out-alt" style="color: var(--olive-green);"></i> Salida
+                        </label>
+                        <p id="detalleSalida" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                    </div>
+
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-utensils" style="color: var(--olive-green);"></i> Almuerzo
+                        </label>
+                        <p id="detalleAlmuerzo" style="color: var(--dark-green); font-weight: 600; margin: 0;"></p>
+                    </div>
+                </div>
+
+                <!-- Resumen de Horas -->
+                <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                    <i class="fas fa-hourglass-half" style="color: var(--gold);"></i> Horas Trabajadas
+                </h6>
+                <div style="background: linear-gradient(135deg, var(--cream) 0%, rgba(240, 234, 214, 0.5) 100%); padding: 1.5rem; border-radius: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                <i class="fas fa-clock" style="color: var(--olive-green);"></i> Horas Totales
                             </label>
-                            <p id="detalles-almuerzo-asistencia" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                            <p id="detalleHorasTotales" style="color: var(--gold-bright); font-size: 1.5rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
-                        <!-- Horas Totales -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; background: linear-gradient(135deg, rgba(143, 142, 106, 0.1), rgba(143, 142, 106, 0.05));">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-hourglass-half" style="color: var(--olive-green); font-size: 1.1rem;"></i> Horas Totales Trabajadas
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                <i class="fas fa-business-time" style="color: var(--olive-green);"></i> Regulares
                             </label>
-                            <p id="detalles-horastotales-asistencia" style="color: var(--olive-green); font-size: 1.8rem; font-weight: 700; margin: 0;"></p>
+                            <p id="detalleHorasRegulares" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
                         </div>
 
-                        <!-- Horas Regulares -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-clock" style="color: var(--olive-green); font-size: 1.1rem;"></i> Horas Regulares
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                <i class="fas fa-star" style="color: var(--gold);"></i> Extras
                             </label>
-                            <p id="detalles-horasregulares-asistencia" style="color: var(--dark-green); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
-                        <!-- Horas Extras -->
-                        <div id="detalles-horasextras-section" class="feature-card" style="padding: 1.5rem; margin: 0; background: linear-gradient(135deg, rgba(184, 167, 106, 0.1), rgba(197, 179, 88, 0.05)); border-left: 3px solid var(--gold);">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--gold); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-star" style="font-size: 1.1rem;"></i> Horas Extras
-                            </label>
-                            <p id="detalles-horasextras-asistencia" style="color: var(--gold); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
-                        <!-- Estado -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-info-circle" style="color: var(--olive-green); font-size: 1.1rem;"></i> Estado
-                            </label>
-                            <span id="detalles-estado-badge-asistencia" class="badge" style="font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
+                            <p id="detalleHorasExtras" style="font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
                         </div>
                     </div>
                 </div>
@@ -123,3 +119,50 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesDetalles = document.querySelectorAll('.btn-detalles-asistencia');
+
+        botonesDetalles.forEach(boton => {
+            boton.addEventListener('click', function () {
+                // Obtener datos del botón
+                const nombre = this.getAttribute('data-nombre');
+                const identificacion = this.getAttribute('data-identificacion');
+                const cargo = this.getAttribute('data-cargo');
+                const fecha = this.getAttribute('data-fecha');
+                const dia = this.getAttribute('data-dia');
+                const entrada = this.getAttribute('data-entrada');
+                const salida = this.getAttribute('data-salida');
+                const almuerzo = this.getAttribute('data-almuerzo');
+                const horasTotales = this.getAttribute('data-horastotales');
+                const horasRegulares = this.getAttribute('data-horasregulares');
+                const horasExtras = this.getAttribute('data-horasextras');
+                const estado = this.getAttribute('data-estado');
+
+                // Llenar el modal con los datos
+                document.getElementById('detalleNombre').textContent = nombre;
+                document.getElementById('detalleIdentificacion').textContent = identificacion;
+                document.getElementById('detalleCargo').textContent = cargo;
+                document.getElementById('detalleFecha').textContent = fecha;
+                document.getElementById('detalleDia').textContent = dia.charAt(0).toUpperCase() + dia.slice(1);
+                document.getElementById('detalleEntrada').textContent = entrada;
+                document.getElementById('detalleSalida').textContent = salida;
+                document.getElementById('detalleAlmuerzo').textContent = almuerzo;
+                document.getElementById('detalleHorasTotales').textContent = horasTotales;
+                document.getElementById('detalleHorasRegulares').textContent = horasRegulares + ' h';
+
+                // Configurar horas extras con color
+                const horasExtrasNum = parseFloat(horasExtras);
+                const colorExtras = horasExtrasNum > 0 ? 'var(--gold-bright)' : 'var(--charcoal)';
+                document.getElementById('detalleHorasExtras').textContent = horasExtras + ' h';
+                document.getElementById('detalleHorasExtras').style.color = colorExtras;
+
+                // Configurar badge de estado
+                const estadoColor = estado === 'Completo' ? '#27ae60' : 'var(--gold-bright)';
+                const estadoHtml = `<span style="background: ${estadoColor}; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">${estado}</span>`;
+                document.getElementById('detalleEstado').innerHTML = estadoHtml;
+            });
+        });
+    });
+</script>

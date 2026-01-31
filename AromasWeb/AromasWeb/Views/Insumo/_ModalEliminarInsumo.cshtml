@@ -112,3 +112,47 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesEliminar = document.querySelectorAll('.btn-eliminar');
+
+        botonesEliminar.forEach(boton => {
+            boton.addEventListener('click', function () {
+                // Obtener datos del botón
+                const id = this.getAttribute('data-id');
+                const nombre = this.getAttribute('data-nombre');
+                const categoria = this.getAttribute('data-categoria');
+                const unidad = this.getAttribute('data-unidad');
+                const cantidad = this.getAttribute('data-cantidad');
+                const estado = this.getAttribute('data-estado');
+
+                // Llenar el modal con los datos
+                document.getElementById('eliminar-id-display-insumo').textContent = id;
+                document.getElementById('eliminar-nombre-insumo').textContent = nombre;
+                document.getElementById('eliminar-categoria-insumo').textContent = categoria;
+                document.getElementById('eliminar-unidad-insumo').textContent = unidad;
+                document.getElementById('eliminar-cantidad-insumo').textContent = cantidad;
+
+                // Configurar badge de estado
+                const estadoBadge = document.getElementById('eliminar-estado-badge-insumo');
+                if (estado === 'Activo') {
+                    estadoBadge.textContent = 'Activo';
+                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.color = 'white';
+                } else {
+                    estadoBadge.textContent = 'Inactivo';
+                    estadoBadge.style.background = '#95a5a6';
+                    estadoBadge.style.color = 'white';
+                }
+
+                // Establecer el ID en el campo oculto del formulario
+                document.getElementById('eliminar-id-insumo').value = id;
+
+                // Configurar la acción del formulario
+                const form = document.getElementById('formEliminarInsumo');
+                form.action = '/Insumo/EliminarInsumo/' + id;
+            });
+        });
+    });
+</script>

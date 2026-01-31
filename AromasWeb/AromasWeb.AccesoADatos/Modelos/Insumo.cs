@@ -41,5 +41,8 @@ namespace AromasWeb.AccesoADatos.Modelos
 
         [Required]
         public DateTime FechaActualizacion { get; set; }
+
+        // Propiedades de navegación
+        public virtual CategoriaInsumoAD CategoriaInsumo { get; set; }
     }
 }

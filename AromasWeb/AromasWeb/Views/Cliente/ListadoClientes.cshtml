@@ -41,7 +41,7 @@
                     <input type="text"
                            name="buscar"
                            value="@ViewBag.Buscar"
-                           placeholder="Buscar por nombre, identificación, correo o teléfono..."
+                           placeholder="Buscar por nombre, identificación o teléfono..."
                            style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
                 </div>
                 <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
@@ -92,58 +92,44 @@
             </div>
         </div>
 
-        <!-- Layout Principal: Tabla + Estadísticas -->
-        <div style="display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start;" data-aos="fade-up">
-
-            <!-- Tabla Principal -->
-            <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                <div class="table-responsive">
-                    <table id="laTablaDeClientes" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
-                            <tr>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Identificación</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Correo</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Teléfono</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Última Reserva</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                var clientesDemo = new List<dynamic>
-                                                        {
-                                                        new { Id = 1, Nombre = "María González Rodríguez", Identificacion = "1-1234-5678", Correo = "maria.gonzalez@email.com", Telefono = "8888-1234", UltimaReserva = "22/11/2025", Estado = true, EsFrecuente = true },
-                                                        new { Id = 2, Nombre = "Carlos Jiménez Mora", Identificacion = "2-2345-6789", Correo = "carlos.jimenez@email.com", Telefono = "8888-2345", UltimaReserva = "25/11/2025", Estado = true, EsFrecuente = true },
-                                                        new { Id = 3, Nombre = "Ana Patricia Vargas Solís", Identificacion = "1-3456-7890", Correo = "ana.vargas@email.com", Telefono = "8888-3456", UltimaReserva = "17/11/2025", Estado = true, EsFrecuente = false },
-                                                        new { Id = 4, Nombre = "Roberto Fernández Castro", Identificacion = "1-4567-8901", Correo = "roberto.fernandez@email.com", Telefono = "8888-4567", UltimaReserva = "26/11/2025", Estado = true, EsFrecuente = true },
-                                                        new { Id = 5, Nombre = "Laura Martínez Pérez", Identificacion = "2-5678-9012", Correo = "laura.martinez@email.com", Telefono = "8888-5678", UltimaReserva = "15/09/2025", Estado = false, EsFrecuente = false },
-                                                        new { Id = 6, Nombre = "José Luis Ramírez Quesada", Identificacion = "1-6789-0123", Correo = "jose.ramirez@email.com", Telefono = "8888-6789", UltimaReserva = "20/11/2025", Estado = true, EsFrecuente = false },
-                                                        new { Id = 7, Nombre = "Sofía Hernández Blanco", Identificacion = "1-7890-1234", Correo = "sofia.hernandez@email.com", Telefono = "8888-7890", UltimaReserva = "24/11/2025", Estado = true, EsFrecuente = true },
-                                                        new { Id = 8, Nombre = "Diego Alvarado Sánchez", Identificacion = "2-8901-2345", Correo = "diego.alvarado@email.com", Telefono = "8888-8901", UltimaReserva = "12/11/2025", Estado = true, EsFrecuente = false }
-                                                        };
-                            }
-
-                            @foreach (var cliente in clientesDemo)
+        <!-- Tabla Principal -->
+        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
+            <div class="table-responsive">
+                <table id="laTablaDeClientes" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
+                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+                        <tr>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Identificación</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Correo</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Teléfono</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Registro</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var cliente in Model)
                             {
-                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@cliente.Id</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 500;">
+                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@cliente.IdCliente</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
+                                        <i class="fas fa-user" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
                                         @cliente.Nombre
-                                        @if (cliente.EsFrecuente)
+                                        @if (cliente.EsClienteFrecuente)
                                         {
                                             <i class="fas fa-star" style="color: var(--gold); margin-left: 0.5rem;" title="Cliente frecuente"></i>
                                         }
                                     </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal);">@cliente.Apellidos</td>
                                     <td style="padding: 1.2rem; color: var(--charcoal);">@cliente.Identificacion</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); font-size: 0.9rem;">@cliente.Correo</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal);">@(cliente.Correo ?? "Sin correo")</td>
                                     <td style="padding: 1.2rem; color: var(--charcoal);">@cliente.Telefono</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">
-                                        <div style="display: flex; flex-direction: column;">
-                                            <span style="font-weight: 600; color: var(--dark-green);">@cliente.UltimaReserva</span>
-                                        </div>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">
+                                        <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--olive-green);"></i>
+                                        @cliente.FechaRegistroFormateada
                                     </td>
                                     <td style="padding: 1.2rem;">
                                         @if (cliente.Estado)
@@ -158,139 +144,73 @@
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
                                         <button type="button"
                                                 class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarCliente", "Cliente", new { id = cliente.Id })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;">
+                                                onclick="window.location.href='@Url.Action("EditarCliente", "Cliente", new { id = cliente.IdCliente })'"
+                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button"
-                                                class="btn btn-sm btn-detalles"
-                                                data-id="@cliente.Id"
-                                                data-nombre="@cliente.Nombre"
-                                                data-identificacion="@cliente.Identificacion"
-                                                data-correo="@cliente.Correo"
-                                                data-telefono="@cliente.Telefono"
-                                                data-ultimareserva="@cliente.UltimaReserva"
-                                                data-estado="@(cliente.Estado ? "Activo" : "Inactivo")"
-                                                data-esfrecuente="@cliente.EsFrecuente"
-                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalDetallesCliente">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button type="button"
                                                 class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("HistorialReservas", "Cliente", new { id = cliente.Id })'"
-                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Ver Historial de Reservas">
+                                                onclick="window.location.href='@Url.Action("HistorialReservas", "Cliente", new { id = cliente.IdCliente })'"
+                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Ver historial">
                                             <i class="fas fa-history"></i>
                                         </button>
                                         <button type="button"
-                                                class="btn btn-sm btn-eliminar"
-                                                data-id="@cliente.Id"
+                                                class="btn btn-sm btn-detalles-cliente"
+                                                data-id="@cliente.IdCliente"
                                                 data-nombre="@cliente.Nombre"
+                                                data-apellidos="@cliente.Apellidos"
                                                 data-identificacion="@cliente.Identificacion"
-                                                data-correo="@cliente.Correo"
+                                                data-correo="@(cliente.Correo ?? "Sin correo")"
+                                                data-telefono="@cliente.Telefono"
                                                 data-estado="@(cliente.Estado ? "Activo" : "Inactivo")"
-                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-fecha="@cliente.FechaRegistroFormateada"
+                                                style="background: #9b59b6; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#modalEliminarCliente">
+                                                data-bs-target="#modalDetallesCliente"
+                                                title="Ver detalles">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-eliminar-cliente"
+                                                data-id="@cliente.IdCliente"
+                                                data-nombre="@cliente.Nombre"
+                                                data-apellidos="@cliente.Apellidos"
+                                                data-identificacion="@cliente.Identificacion"
+                                                data-correo="@(cliente.Correo ?? "Sin correo")"
+                                                data-estado="@(cliente.Estado ? "Activo" : "Inactivo")"
+                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEliminarCliente"
+                                                title="Eliminar">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
                             }
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-green); font-size: 0.95rem;">
-                        Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">8</span></strong> de <strong id="totalRecords">8</strong> clientes
-                    </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            &lt; Anterior
-                        </button>
-                        <button id="btnSiguiente" class="btn btn-primary" onclick="paginaSiguiente()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            Siguiente &gt;
-                        </button>
-                    </div>
-                </div>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8" style="padding: 3rem; text-align: center; color: var(--charcoal);">
+                                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
+                                    <p style="margin: 0; font-size: 1.1rem;">No se encontraron clientes</p>
+                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+                                    {
+                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Panel de Estadísticas (Derecha) -->
-            <div style="position: sticky; top: 100px;">
-                <!-- Estadísticas de Clientes -->
-                <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: 2rem;">
-                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: white; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">
-                            <i class="fas fa-chart-pie" style="font-size: 1.5rem;"></i>
-                            <div>
-                                <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Estadísticas</h5>
-                                <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">Resumen general</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="padding: 1.5rem; display: grid; gap: 1rem;">
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Total Clientes</span>
-                                <i class="fas fa-users" style="color: var(--olive-green);"></i>
-                            </div>
-                            <h3 id="totalClientes" style="margin: 0; color: var(--dark-green); font-size: 2rem; font-weight: 700;">8</h3>
-                        </div>
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Clientes Activos</span>
-                                <i class="fas fa-check-circle" style="color: #27ae60;"></i>
-                            </div>
-                            <h3 id="clientesActivos" style="margin: 0; color: #27ae60; font-size: 2rem; font-weight: 700;">7</h3>
-                        </div>
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Clientes Frecuentes</span>
-                                <i class="fas fa-star" style="color: var(--gold);"></i>
-                            </div>
-                            <h3 id="clientesFrecuentes" style="margin: 0; color: var(--gold); font-size: 2rem; font-weight: 700;">4</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Clientes Frecuentes -->
-                <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                    <div style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); color: white; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-star" style="font-size: 1.5rem;"></i>
-                            <div>
-                                <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Top Clientes</h5>
-                                <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">Más frecuentes</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="clientesFrecuentesLista" style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 400px; overflow-y: auto;">
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-crown" style="color: var(--gold);"></i>
-                                María González
-                            </strong>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">Última reserva: hace 5 días</small>
-                        </div>
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-star" style="color: var(--gold);"></i>
-                                Carlos Jiménez
-                            </strong>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">Última reserva: hace 2 días</small>
-                        </div>
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-star" style="color: var(--gold);"></i>
-                                Roberto Fernández
-                            </strong>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">Última reserva: hace 1 día</small>
-                        </div>
-                    </div>
+            <!-- Footer de paginación -->
+            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                <div style="color: var(--dark-green); font-size: 0.95rem;">
+                    Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> clientes
                 </div>
             </div>
         </div>

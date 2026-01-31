@@ -5,114 +5,104 @@ document.addEventListener('DOMContentLoaded', function () {
     // =============================
     // MODAL DETALLES RESERVA
     // =============================
-    const botonesDetalles = document.querySelectorAll('.btn-detalles');
-    botonesDetalles.forEach(boton => {
-        boton.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            const cliente = this.getAttribute('data-cliente');
-            const telefono = this.getAttribute('data-telefono');
-            const fecha = this.getAttribute('data-fecha');
-            const hora = this.getAttribute('data-hora');
-            const personas = this.getAttribute('data-personas');
-            const estado = this.getAttribute('data-estado');
-            const observaciones = this.getAttribute('data-observaciones');
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalDetalles = document.getElementById('modalDetallesReserva');
 
-            // Llenar información básica
-            document.getElementById('detalles-id-reserva').textContent = id;
-            document.getElementById('detalles-cliente-reserva').textContent = cliente;
-            document.querySelector('#detalles-telefono-reserva span').textContent = telefono;
-            document.getElementById('detalles-fecha-reserva').textContent = fecha;
-            document.getElementById('detalles-hora-reserva').textContent = hora;
-            document.getElementById('detalles-personas-reserva').textContent = personas;
+        if (modalDetalles) {
+            modalDetalles.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
 
-            // Configurar estado con color e icono
-            const estadoBadge = document.getElementById('detalles-estado-badge-reserva');
-            const estadoIcono = document.getElementById('detalles-estado-icono-reserva');
-            const estadoTexto = document.getElementById('detalles-estado-texto-reserva');
+                // Obtener datos del botón
+                const id = button.getAttribute('data-id');
+                const cliente = button.getAttribute('data-cliente');
+                const telefono = button.getAttribute('data-telefono');
+                const personas = button.getAttribute('data-personas');
+                const fecha = button.getAttribute('data-fecha');
+                const hora = button.getAttribute('data-hora');
+                const estado = button.getAttribute('data-estado');
+                const observaciones = button.getAttribute('data-observaciones');
 
-            let colorEstado = '#95a5a6';
-            let iconoEstado = 'fa-question-circle';
+                // Actualizar el contenido del modal
+                document.getElementById('detalles-id-reserva').textContent = '#' + id;
+                document.getElementById('detalles-cliente-reserva').textContent = cliente;
+                document.querySelector('#detalles-telefono-reserva span').textContent = telefono;
+                document.getElementById('detalles-fecha-reserva').textContent = fecha;
+                document.getElementById('detalles-hora-reserva').textContent = hora;
+                document.getElementById('detalles-personas-reserva').textContent = personas + ' personas';
+                document.getElementById('detalles-estado-texto-reserva').textContent = estado;
 
-            switch (estado) {
-                case 'Pendiente':
-                    colorEstado = '#f39c12';
-                    iconoEstado = 'fa-clock';
-                    break;
-                case 'Confirmada':
-                    colorEstado = '#27ae60';
-                    iconoEstado = 'fa-check-circle';
-                    break;
-                case 'Completada':
-                    colorEstado = '#3498db';
-                    iconoEstado = 'fa-check-double';
-                    break;
-                case 'Cancelada':
-                    colorEstado = '#e74c3c';
-                    iconoEstado = 'fa-times-circle';
-                    break;
-            }
+                // Configurar el badge de estado con color e icono
+                const badgeEstado = document.getElementById('detalles-estado-badge-reserva');
+                const iconoEstado = document.getElementById('detalles-estado-icono-reserva');
 
-            estadoBadge.style.background = colorEstado;
-            estadoIcono.className = `fas ${iconoEstado}`;
-            estadoTexto.textContent = estado;
+                // Resetear clases
+                badgeEstado.className = 'badge';
+                iconoEstado.className = 'fas';
 
-            // Mostrar observaciones si existen
-            const observacionesContainer = document.getElementById('detalles-observaciones-container');
-            const observacionesTexto = document.getElementById('detalles-observaciones-reserva');
+                switch (estado.toLowerCase()) {
+                    case 'pendiente':
+                        badgeEstado.style.background = '#f39c12';
+                        iconoEstado.classList.add('fa-clock');
+                        break;
+                    case 'confirmada':
+                        badgeEstado.style.background = '#27ae60';
+                        iconoEstado.classList.add('fa-check-circle');
+                        break;
+                    case 'completada':
+                        badgeEstado.style.background = '#3498db';
+                        iconoEstado.classList.add('fa-check-double');
+                        break;
+                    case 'cancelada':
+                        badgeEstado.style.background = '#e74c3c';
+                        iconoEstado.classList.add('fa-times-circle');
+                        break;
+                    default:
+                        badgeEstado.style.background = '#95a5a6';
+                        iconoEstado.classList.add('fa-question-circle');
+                }
 
-            if (observaciones && observaciones.trim() !== '') {
-                observacionesTexto.textContent = observaciones;
-                observacionesContainer.style.display = 'block';
-            } else {
-                observacionesContainer.style.display = 'none';
-            }
-        });
+                // Mostrar u ocultar observaciones
+                const obsContainer = document.getElementById('detalles-observaciones-container');
+                const obsTexto = document.getElementById('detalles-observaciones-reserva');
+
+                if (observaciones && observaciones.trim() !== '') {
+                    obsContainer.style.display = 'block';
+                    obsTexto.textContent = observaciones;
+                } else {
+                    obsContainer.style.display = 'none';
+                }
+            });
+        }
     });
 
     // =============================
     // MODAL CANCELAR RESERVA
     // =============================
-    const botonesCancelar = document.querySelectorAll('.btn-cancelar-reserva, .btn-cancelar');
-    botonesCancelar.forEach(boton => {
-        boton.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            const cliente = this.getAttribute('data-cliente');
-            const fecha = this.getAttribute('data-fecha');
-            const hora = this.getAttribute('data-hora');
-            const personas = this.getAttribute('data-personas');
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalCancelar = document.getElementById('modalCancelarReserva');
 
-            // Llenar el modal
-            document.getElementById('cancelar-id-reserva').value = id;
-            document.getElementById('cancelar-id-display-reserva').textContent = id;
-            document.getElementById('cancelar-cliente-reserva').textContent = cliente || 'N/A';
-            document.getElementById('cancelar-fecha-reserva').textContent = fecha;
-            document.getElementById('cancelar-hora-reserva').textContent = hora;
-            document.getElementById('cancelar-personas-reserva').textContent = personas;
+        if (modalCancelar) {
+            modalCancelar.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
 
-            // Configurar la acción del formulario
-            const form = document.getElementById('formCancelarReserva');
-            if (form) {
-                // Ajusta esta URL según tu controlador
-                form.action = '/Cliente/CancelarReserva'; // o '/Reserva/CancelarReserva'
-            }
-        });
-    });
+                // Obtener datos del botón
+                const id = button.getAttribute('data-id');
+                const fecha = button.getAttribute('data-fecha');
+                const hora = button.getAttribute('data-hora');
+                const personas = button.getAttribute('data-personas');
 
-    // =============================
-    // MODAL ELIMINAR RESERVA
-    // =============================
-    const botonesEliminar = document.querySelectorAll('.btn-eliminar');
-    botonesEliminar.forEach(boton => {
-        boton.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            const cliente = this.getAttribute('data-cliente');
-            const fecha = this.getAttribute('data-fecha');
-            const hora = this.getAttribute('data-hora');
-            const estado = this.getAttribute('data-estado');
+                // Actualizar el contenido del modal
+                document.getElementById('cancelar-id-reserva').value = id;
+                document.getElementById('cancelar-id-display').textContent = '#' + id;
+                document.getElementById('cancelar-fecha').textContent = fecha;
+                document.getElementById('cancelar-hora').textContent = hora;
+                document.getElementById('cancelar-personas').textContent = personas + ' personas';
 
-            // Si tienes un modal de eliminar, llenar sus datos aquí
-            // Similar al modal de cancelar
-        });
+                // Actualizar la acción del formulario
+                const form = document.getElementById('formCancelarReserva');
+                form.action = '/Reserva/CancelarReserva/' + id;
+            });
+        }
     });
 
     // =============================

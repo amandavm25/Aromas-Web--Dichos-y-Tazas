@@ -314,15 +314,15 @@ document.head.appendChild(stylePaginacion);
 // ============================================
 // MODAL DETALLES INSUMO
 // ============================================
-document.addEventListener('DOMContentLoaded', function () {
     const botonesDetalles = document.querySelectorAll('.btn-detalles');
 
     botonesDetalles.forEach(boton => {
         boton.addEventListener('click', function () {
+            // Obtener datos del botón
             const id = this.getAttribute('data-id');
             const nombre = this.getAttribute('data-nombre');
-            const categoria = this.getAttribute('data-categoria');
             const unidad = this.getAttribute('data-unidad');
+            const categoria = this.getAttribute('data-categoria');
             const costo = this.getAttribute('data-costo');
             const cantidad = this.getAttribute('data-cantidad');
             const stockMinimo = this.getAttribute('data-stockminimo');
@@ -331,19 +331,19 @@ document.addEventListener('DOMContentLoaded', function () {
             // Llenar el modal con los datos
             document.getElementById('detalles-id-insumo').textContent = id;
             document.getElementById('detalles-nombre-insumo').textContent = nombre;
-            document.getElementById('detalles-categoria-insumo').textContent = categoria;
             document.getElementById('detalles-unidad-insumo').textContent = unidad;
-            document.getElementById('detalles-costo-insumo').textContent = '₡' + costo;
-            document.getElementById('detalles-cantidad-insumo').textContent = cantidad + ' ' + unidad.toLowerCase();
-            document.getElementById('detalles-stockminimo-insumo').textContent = stockMinimo + ' ' + unidad.toLowerCase();
+            document.getElementById('detalles-categoria-insumo').textContent = categoria;
+            document.getElementById('detalles-costo-insumo').textContent = costo;
+            document.getElementById('detalles-cantidad-insumo').textContent = cantidad;
+            document.getElementById('detalles-stockminimo-insumo').textContent = stockMinimo;
 
             // Calcular valor total
-            const costoNumerico = parseFloat(costo.replace(/,/g, ''));
+            const costoNumerico = parseFloat(costo.replace(/[^0-9.-]+/g, ''));
             const cantidadNumerica = parseFloat(cantidad.replace(/,/g, ''));
             const valorTotal = costoNumerico * cantidadNumerica;
-            document.getElementById('detalles-valor-total-insumo').textContent = '₡' + valorTotal.toLocaleString('es-CR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('detalles-valor-total-insumo').textContent = '₡' + valorTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
-            // Estado badge
+            // Configurar el badge de estado
             const estadoBadge = document.getElementById('detalles-estado-badge-insumo');
             if (estado === 'Activo') {
                 estadoBadge.textContent = 'Activo';
@@ -351,8 +351,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 estadoBadge.style.color = 'white';
             } else {
                 estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#e74c3c';
+                estadoBadge.style.background = '#95a5a6';
                 estadoBadge.style.color = 'white';
+            }
+
+            // Nota: La categoría se puede obtener del DOM o pasar como data-attribute
+            // Por ahora dejamos un placeholder
+            const categoriaElement = document.getElementById('detalles-categoria-insumo');
+            if (categoriaElement) {
+                // Buscar el nombre de la categoría en la fila correspondiente de la tabla
+                const fila = this.closest('tr');
+                if (fila) {
+                    const celdaCategoria = fila.querySelector('td:nth-child(4)'); // Ajustar según la posición
+                    if (celdaCategoria) {
+                        categoriaElement.textContent = celdaCategoria.textContent.trim();
+                    }
+                }
             }
         });
     });
@@ -364,36 +378,73 @@ document.addEventListener('DOMContentLoaded', function () {
 
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', function () {
+            // Obtener datos del botón
             const id = this.getAttribute('data-id');
             const nombre = this.getAttribute('data-nombre');
-            const categoria = this.getAttribute('data-categoria');
             const unidad = this.getAttribute('data-unidad');
             const cantidad = this.getAttribute('data-cantidad');
             const estado = this.getAttribute('data-estado');
 
             // Llenar el modal con los datos
             document.getElementById('eliminar-id-display-insumo').textContent = id;
-            document.getElementById('eliminar-id-insumo').value = id;
             document.getElementById('eliminar-nombre-insumo').textContent = nombre;
-            document.getElementById('eliminar-categoria-insumo').textContent = categoria;
             document.getElementById('eliminar-unidad-insumo').textContent = unidad;
             document.getElementById('eliminar-cantidad-insumo').textContent = cantidad;
 
-            // Estado badge
+            // Establecer el ID en el campo oculto del formulario
+            document.getElementById('eliminar-id-insumo').value = id;
+
+            // Configurar el badge de estado
             const estadoBadge = document.getElementById('eliminar-estado-badge-insumo');
             if (estado === 'Activo') {
                 estadoBadge.textContent = 'Activo';
                 estadoBadge.style.background = '#27ae60';
+                estadoBadge.style.color = 'white';
             } else {
                 estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#e74c3c';
+                estadoBadge.style.background = '#95a5a6';
+                estadoBadge.style.color = 'white';
             }
 
-            // Actualizar acción del formulario
+            // Obtener la categoría de la fila
+            const fila = this.closest('tr');
+            if (fila) {
+                const celdaCategoria = fila.querySelector('td:nth-child(4)'); // Ajustar según la posición
+                const categoriaElement = document.getElementById('eliminar-categoria-insumo');
+                if (celdaCategoria && categoriaElement) {
+                    categoriaElement.textContent = celdaCategoria.textContent.trim();
+                }
+            }
+
+            // Configurar la acción del formulario
             const form = document.getElementById('formEliminarInsumo');
             form.action = '/Insumo/EliminarInsumo/' + id;
         });
     });
+
+    // ==========================================
+    // VALIDACIÓN Y MENSAJES
+    // ==========================================
+    // Prevenir envío doble del formulario
+    const formEliminar = document.getElementById('formEliminarInsumo');
+    if (formEliminar) {
+        formEliminar.addEventListener('submit', function (e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Eliminando...';
+            }
+        });
+    }
+
+    // ==========================================
+    // ACTUALIZACIÓN AUTOMÁTICA DE ESTADÍSTICAS
+    // ==========================================
+    function actualizarEstadisticas() {
+        // Esta función se puede expandir para actualizar las estadísticas en tiempo real
+        // si se implementa con AJAX
+        console.log('Estadísticas actualizadas');
+    }
 
     // Inicializar paginación
     mostrarPagina();

@@ -55,10 +55,6 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [DisplayName("Disponibilidad")]
         public bool Disponibilidad { get; set; }
 
-        [DisplayName("Imagen")]
-        [StringLength(500)]
-        public string Imagen { get; set; }
-
         // Lista de ingredientes
         public List<RecetaInsumo> Ingredientes { get; set; } = new List<RecetaInsumo>();
 

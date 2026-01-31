@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
+using AromasWeb.Abstracciones.Logica.Reserva;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,13 @@ namespace AromasWeb.Controllers
 {
     public class ReservaController : Controller
     {
+        private IListarReservas _listarReservas;
+
+        public ReservaController()
+        {
+            _listarReservas = new LogicaDeNegocio.Reservas.ListarReservas();
+        }
+
         // GET: Reserva/ListadoReservas
         public IActionResult ListadoReservas(string buscar, string filtroEstado, string filtroFecha)
         {
@@ -15,141 +23,94 @@ namespace AromasWeb.Controllers
             ViewBag.FiltroEstado = filtroEstado;
             ViewBag.FiltroFecha = filtroFecha;
 
-            // Reservas de ejemplo
-            var reservas = new List<Reserva>
-            {
-                new Reserva
-                {
-                    IdReserva = 1,
-                    IdCliente = 1,
-                    NombreCliente = "María González Rodríguez",
-                    TelefonoCliente = "8888-1234",
-                    CantidadPersonas = 4,
-                    Fecha = DateTime.Now.AddDays(2),
-                    Hora = new TimeSpan(19, 30, 0),
-                    Estado = "Confirmada",
-                    FechaCreacion = DateTime.Now.AddDays(-3)
-                },
-                new Reserva
-                {
-                    IdReserva = 2,
-                    IdCliente = 2,
-                    NombreCliente = "Carlos Jiménez Mora",
-                    TelefonoCliente = "8888-2345",
-                    CantidadPersonas = 2,
-                    Fecha = DateTime.Now,
-                    Hora = new TimeSpan(14, 0, 0),
-                    Estado = "Confirmada",
-                    FechaCreacion = DateTime.Now.AddDays(-1)
-                },
-                new Reserva
-                {
-                    IdReserva = 3,
-                    IdCliente = 3,
-                    NombreCliente = "Ana Patricia Vargas Solís",
-                    TelefonoCliente = "8888-3456",
-                    CantidadPersonas = 6,
-                    Fecha = DateTime.Now.AddDays(5),
-                    Hora = new TimeSpan(20, 0, 0),
-                    Estado = "Pendiente",
-                    FechaCreacion = DateTime.Now.AddHours(-2)
-                },
-                new Reserva
-                {
-                    IdReserva = 4,
-                    IdCliente = 4,
-                    NombreCliente = "Roberto Fernández Castro",
-                    TelefonoCliente = "8888-4567",
-                    CantidadPersonas = 3,
-                    Fecha = DateTime.Now.AddDays(1),
-                    Hora = new TimeSpan(12, 30, 0),
-                    Estado = "Confirmada",
-                    FechaCreacion = DateTime.Now.AddDays(-5)
-                },
-                new Reserva
-                {
-                    IdReserva = 5,
-                    IdCliente = 5,
-                    NombreCliente = "Laura Martínez Pérez",
-                    TelefonoCliente = "8888-5678",
-                    CantidadPersonas = 2,
-                    Fecha = DateTime.Now.AddDays(-2),
-                    Hora = new TimeSpan(18, 0, 0),
-                    Estado = "Completada",
-                    FechaCreacion = DateTime.Now.AddDays(-8)
-                },
-                new Reserva
-                {
-                    IdReserva = 6,
-                    IdCliente = 1,
-                    NombreCliente = "María González Rodríguez",
-                    TelefonoCliente = "8888-1234",
-                    CantidadPersonas = 5,
-                    Fecha = DateTime.Now.AddDays(-5),
-                    Hora = new TimeSpan(19, 0, 0),
-                    Estado = "Cancelada",
-                    FechaCreacion = DateTime.Now.AddDays(-10)
-                },
-                new Reserva
-                {
-                    IdReserva = 7,
-                    IdCliente = 6,
-                    NombreCliente = "José Luis Ramírez Quesada",
-                    TelefonoCliente = "8888-6789",
-                    CantidadPersonas = 4,
-                    Fecha = DateTime.Now.AddDays(3),
-                    Hora = new TimeSpan(13, 0, 0),
-                    Estado = "Confirmada",
-                    FechaCreacion = DateTime.Now.AddDays(-2)
-                },
-                new Reserva
-                {
-                    IdReserva = 8,
-                    IdCliente = 7,
-                    NombreCliente = "Sofía Hernández Blanco",
-                    TelefonoCliente = "8888-7890",
-                    CantidadPersonas = 8,
-                    Fecha = DateTime.Now.AddDays(7),
-                    Hora = new TimeSpan(20, 30, 0),
-                    Estado = "Pendiente",
-                    FechaCreacion = DateTime.Now.AddHours(-5)
-                }
-            };
+            // Obtener reservas según los filtros
+            List<Reserva> reservas;
 
-            // Aplicar filtros
-            if (!string.IsNullOrEmpty(buscar))
+            // Aplicar filtros de manera combinada
+            if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(filtroEstado) && !string.IsNullOrEmpty(filtroFecha))
             {
-                reservas = reservas.Where(r =>
-                    r.NombreCliente.Contains(buscar, StringComparison.OrdinalIgnoreCase) ||
-                    r.TelefonoCliente.Contains(buscar, StringComparison.OrdinalIgnoreCase) ||
-                    r.FechaFormateada.Contains(buscar, StringComparison.OrdinalIgnoreCase)
-                ).ToList();
+                // Buscar con todos los filtros
+                reservas = AplicarFiltros(buscar, filtroEstado, filtroFecha);
             }
+            else if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(filtroEstado))
+            {
+                // Buscar por nombre/teléfono y filtrar por estado
+                reservas = BuscarPorNombreOTelefono(buscar)
+                    .FindAll(r => r.Estado.Equals(filtroEstado, StringComparison.OrdinalIgnoreCase));
+            }
+            else if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(filtroFecha))
+            {
+                // Buscar por nombre/teléfono y filtrar por fecha
+                reservas = FiltrarPorFecha(BuscarPorNombreOTelefono(buscar), filtroFecha);
+            }
+            else if (!string.IsNullOrEmpty(filtroEstado) && !string.IsNullOrEmpty(filtroFecha))
+            {
+                // Filtrar por estado y fecha
+                reservas = FiltrarPorFecha(_listarReservas.BuscarPorEstado(filtroEstado), filtroFecha);
+            }
+            else if (!string.IsNullOrEmpty(buscar))
+            {
+                // Solo buscar por nombre o teléfono
+                reservas = BuscarPorNombreOTelefono(buscar);
+            }
+            else if (!string.IsNullOrEmpty(filtroEstado))
+            {
+                // Solo filtrar por estado
+                reservas = _listarReservas.BuscarPorEstado(filtroEstado);
+            }
+            else if (!string.IsNullOrEmpty(filtroFecha))
+            {
+                // Solo filtrar por fecha
+                reservas = FiltrarPorFecha(_listarReservas.Obtener(), filtroFecha);
+            }
+            else
+            {
+                // Obtener todas
+                reservas = _listarReservas.Obtener();
+            }
+
+            // Ordenar por fecha y hora (más próximas primero)
+            reservas = reservas.OrderBy(r => r.Fecha).ThenBy(r => r.Hora).ToList();
+
+            return View(reservas);
+        }
+
+        // Métodos auxiliares privados
+        private List<Reserva> BuscarPorNombreOTelefono(string buscar)
+        {
+            var porNombre = _listarReservas.BuscarPorNombre(buscar);
+            var porTelefono = _listarReservas.BuscarPorTelefono(buscar);
+
+            // Combinar y eliminar duplicados
+            return porNombre.Union(porTelefono).Distinct().ToList();
+        }
+
+        private List<Reserva> FiltrarPorFecha(List<Reserva> reservas, string filtroFecha)
+        {
+            return filtroFecha?.ToLower() switch
+            {
+                "hoy" => reservas.Where(r => r.EsHoy).ToList(),
+                "proximas" => reservas.Where(r => r.EsFutura || r.EsHoy).ToList(),
+                "pasadas" => reservas.Where(r => r.EsPasada).ToList(),
+                _ => reservas
+            };
+        }
+
+        private List<Reserva> AplicarFiltros(string buscar, string filtroEstado, string filtroFecha)
+        {
+            var reservas = BuscarPorNombreOTelefono(buscar);
 
             if (!string.IsNullOrEmpty(filtroEstado))
             {
-                reservas = reservas.Where(r =>
-                    r.Estado.Equals(filtroEstado, StringComparison.OrdinalIgnoreCase)
-                ).ToList();
+                reservas = reservas.FindAll(r => r.Estado.Equals(filtroEstado, StringComparison.OrdinalIgnoreCase));
             }
 
             if (!string.IsNullOrEmpty(filtroFecha))
             {
-                switch (filtroFecha.ToLower())
-                {
-                    case "hoy":
-                        reservas = reservas.Where(r => r.Fecha.Date == DateTime.Now.Date).ToList();
-                        break;
-                    case "proximas":
-                        reservas = reservas.Where(r => r.Fecha.Date >= DateTime.Now.Date).ToList();
-                        break;
-                    case "pasadas":
-                        reservas = reservas.Where(r => r.Fecha.Date < DateTime.Now.Date).ToList();
-                        break;
-                }
+                reservas = FiltrarPorFecha(reservas, filtroFecha);
             }
 
-            return View(reservas);
+            return reservas;
         }
 
         // GET: Reserva/CrearReserva (Para clientes)
@@ -165,6 +126,7 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para guardar en la base de datos
                 TempData["Mensaje"] = "Reserva registrada correctamente. Recibirá una confirmación pronto.";
                 return RedirectToAction("Index", "Home");
             }
@@ -185,6 +147,7 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para guardar en la base de datos
                 TempData["Mensaje"] = "Reserva registrada correctamente";
                 return RedirectToAction(nameof(ListadoReservas));
             }
@@ -196,62 +159,71 @@ namespace AromasWeb.Controllers
         [HttpGet]
         public JsonResult BuscarClientePorIdentificacion(string identificacion)
         {
-            // Simulación de búsqueda de cliente
-            var clientes = new List<dynamic>
+            using (var contexto = new AromasWeb.AccesoADatos.Contexto())
             {
-                new { Id = 1, Identificacion = "1-1234-5678", Nombre = "María González Rodríguez", Telefono = "8888-1234" },
-                new { Id = 2, Identificacion = "2-2345-6789", Nombre = "Carlos Jiménez Mora", Telefono = "8888-2345" },
-                new { Id = 3, Identificacion = "1-3456-7890", Nombre = "Ana Patricia Vargas Solís", Telefono = "8888-3456" },
-                new { Id = 4, Identificacion = "1-4567-8901", Nombre = "Roberto Fernández Castro", Telefono = "8888-4567" },
-                new { Id = 5, Identificacion = "2-5678-9012", Nombre = "Laura Martínez Pérez", Telefono = "8888-5678" }
-            };
-
-            var cliente = clientes.FirstOrDefault(c => c.Identificacion == identificacion);
-
-            if (cliente != null)
-            {
-                return Json(new
+                try
                 {
-                    success = true,
-                    data = cliente
-                });
-            }
+                    var cliente = contexto.Cliente
+                        .Where(c => c.Identificacion == identificacion && c.Estado == true)
+                        .Select(c => new
+                        {
+                            Id = c.IdCliente,
+                            Identificacion = c.Identificacion,
+                            Nombre = c.Nombre + " " + c.Apellidos,
+                            Telefono = c.Telefono
+                        })
+                        .FirstOrDefault();
 
-            return Json(new
-            {
-                success = false,
-                message = "Cliente no encontrado"
-            });
+                    if (cliente != null)
+                    {
+                        return Json(new { success = true, data = cliente });
+                    }
+
+                    return Json(new { success = false, message = "Cliente no encontrado" });
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al buscar cliente: {ex.Message}");
+                    return Json(new { success = false, message = "Error al buscar cliente" });
+                }
+            }
         }
 
         // GET: Reserva/EditarReserva/5
         public IActionResult EditarReserva(int id)
         {
-            // Clientes de ejemplo para el dropdown
-            var clientes = new List<dynamic>
+            // Cargar clientes desde la base de datos
+            using (var contexto = new AromasWeb.AccesoADatos.Contexto())
             {
-                new { Id = 1, Nombre = "María González Rodríguez", Telefono = "8888-1234" },
-                new { Id = 2, Nombre = "Carlos Jiménez Mora", Telefono = "8888-2345" },
-                new { Id = 3, Nombre = "Ana Patricia Vargas Solís", Telefono = "8888-3456" },
-                new { Id = 4, Nombre = "Roberto Fernández Castro", Telefono = "8888-4567" },
-                new { Id = 5, Nombre = "Laura Martínez Pérez", Telefono = "8888-5678" }
-            };
+                try
+                {
+                    var clientes = contexto.Cliente
+                        .Where(c => c.Estado == true)
+                        .OrderBy(c => c.Nombre)
+                        .Select(c => new
+                        {
+                            Id = c.IdCliente,
+                            Nombre = c.Nombre + " " + c.Apellidos,
+                            Telefono = c.Telefono
+                        })
+                        .ToList();
 
-            ViewBag.Clientes = clientes;
+                    ViewBag.Clientes = clientes;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar clientes: {ex.Message}");
+                    ViewBag.Clientes = new List<dynamic>();
+                }
+            }
 
-            // Reserva de ejemplo
-            var reserva = new Reserva
+            var reserva = _listarReservas.ObtenerPorId(id);
+
+            if (reserva == null)
             {
-                IdReserva = id,
-                IdCliente = 1,
-                NombreCliente = "María González Rodríguez",
-                TelefonoCliente = "8888-1234",
-                CantidadPersonas = 4,
-                Fecha = DateTime.Now.AddDays(2),
-                Hora = new TimeSpan(19, 30, 0),
-                Estado = "Confirmada",
-                FechaCreacion = DateTime.Now.AddDays(-3)
-            };
+                TempData["Error"] = "Reserva no encontrada";
+                return RedirectToAction(nameof(ListadoReservas));
+            }
 
             return View(reserva);
         }
@@ -263,21 +235,35 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para actualizar en la base de datos
                 TempData["Mensaje"] = "Reserva actualizada correctamente";
                 return RedirectToAction(nameof(ListadoReservas));
             }
 
             // Recargar clientes si hay error
-            var clientes = new List<dynamic>
+            using (var contexto = new AromasWeb.AccesoADatos.Contexto())
             {
-                new { Id = 1, Nombre = "María González Rodríguez", Telefono = "8888-1234" },
-                new { Id = 2, Nombre = "Carlos Jiménez Mora", Telefono = "8888-2345" },
-                new { Id = 3, Nombre = "Ana Patricia Vargas Solís", Telefono = "8888-3456" },
-                new { Id = 4, Nombre = "Roberto Fernández Castro", Telefono = "8888-4567" },
-                new { Id = 5, Nombre = "Laura Martínez Pérez", Telefono = "8888-5678" }
-            };
+                try
+                {
+                    var clientes = contexto.Cliente
+                        .Where(c => c.Estado == true)
+                        .OrderBy(c => c.Nombre)
+                        .Select(c => new
+                        {
+                            Id = c.IdCliente,
+                            Nombre = c.Nombre + " " + c.Apellidos,
+                            Telefono = c.Telefono
+                        })
+                        .ToList();
 
-            ViewBag.Clientes = clientes;
+                    ViewBag.Clientes = clientes;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar clientes: {ex.Message}");
+                    ViewBag.Clientes = new List<dynamic>();
+                }
+            }
 
             return View(reserva);
         }
@@ -285,70 +271,44 @@ namespace AromasWeb.Controllers
         // GET: Reserva/HistorialReservas/5 (Para empleados - ver historial de un cliente)
         public IActionResult HistorialReservas(int id)
         {
-            // Información del cliente
-            ViewBag.Cliente = new
+            // Obtener información del cliente desde la base de datos
+            using (var contexto = new AromasWeb.AccesoADatos.Contexto())
             {
-                IdCliente = id,
-                NombreCompleto = "María González Rodríguez",
-                Identificacion = "1-1234-5678",
-                Correo = "maria.gonzalez@email.com",
-                Telefono = "8888-1234"
-            };
+                try
+                {
+                    var cliente = contexto.Cliente
+                        .Where(c => c.IdCliente == id)
+                        .Select(c => new
+                        {
+                            IdCliente = c.IdCliente,
+                            NombreCompleto = c.Nombre + " " + c.Apellidos,
+                            Identificacion = c.Identificacion,
+                            Correo = c.Correo,
+                            Telefono = c.Telefono
+                        })
+                        .FirstOrDefault();
+
+                    if (cliente == null)
+                    {
+                        TempData["Error"] = "Cliente no encontrado";
+                        return RedirectToAction("ListadoClientes", "Cliente");
+                    }
+
+                    ViewBag.Cliente = cliente;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al obtener cliente: {ex.Message}");
+                    TempData["Error"] = "Error al cargar información del cliente";
+                    return RedirectToAction("ListadoClientes", "Cliente");
+                }
+            }
 
             // Reservas del cliente
-            var reservas = new List<Reserva>
-            {
-                new Reserva
-                {
-                    IdReserva = 15,
-                    IdCliente = id,
-                    Fecha = DateTime.Now.AddDays(1),
-                    Hora = new TimeSpan(14, 0, 0),
-                    CantidadPersonas = 4,
-                    Estado = "Confirmada",
-                    FechaCreacion = DateTime.Now.AddDays(-5)
-                },
-                new Reserva
-                {
-                    IdReserva = 12,
-                    IdCliente = id,
-                    Fecha = DateTime.Now.AddDays(-7),
-                    Hora = new TimeSpan(19, 30, 0),
-                    CantidadPersonas = 2,
-                    Estado = "Completada",
-                    FechaCreacion = DateTime.Now.AddDays(-12)
-                },
-                new Reserva
-                {
-                    IdReserva = 8,
-                    IdCliente = id,
-                    Fecha = DateTime.Now.AddDays(-17),
-                    Hora = new TimeSpan(12, 0, 0),
-                    CantidadPersonas = 6,
-                    Estado = "Completada",
-                    FechaCreacion = DateTime.Now.AddDays(-20)
-                },
-                new Reserva
-                {
-                    IdReserva = 5,
-                    IdCliente = id,
-                    Fecha = DateTime.Now.AddDays(-33),
-                    Hora = new TimeSpan(18, 0, 0),
-                    CantidadPersonas = 3,
-                    Estado = "Completada",
-                    FechaCreacion = DateTime.Now.AddDays(-36)
-                },
-                new Reserva
-                {
-                    IdReserva = 2,
-                    IdCliente = id,
-                    Fecha = DateTime.Now.AddDays(-73),
-                    Hora = new TimeSpan(20, 0, 0),
-                    CantidadPersonas = 2,
-                    Estado = "Cancelada",
-                    FechaCreacion = DateTime.Now.AddDays(-76)
-                }
-            };
+            var reservas = _listarReservas.ObtenerPorCliente(id);
+
+            // Ordenar por fecha descendente (más recientes primero)
+            reservas = reservas.OrderByDescending(r => r.Fecha).ThenByDescending(r => r.Hora).ToList();
 
             ViewBag.Reservas = reservas;
 
@@ -360,6 +320,7 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CambiarEstado(int id, string nuevoEstado)
         {
+            // Aquí iría la lógica para cambiar el estado en la base de datos
             TempData["Mensaje"] = $"Estado de la reserva cambiado a {nuevoEstado}";
             return RedirectToAction(nameof(ListadoReservas));
         }
@@ -369,10 +330,7 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CancelarReserva(int id)
         {
-            // En producción, aquí cambiarías el estado de la reserva a "Cancelada"
-            // en lugar de eliminarla de la base de datos
-            // Ejemplo: reserva.Estado = "Cancelada";
-
+            // Aquí iría la lógica para cambiar el estado a "Cancelada" en la base de datos
             TempData["Mensaje"] = "Reserva cancelada correctamente";
             return RedirectToAction(nameof(ListadoReservas));
         }

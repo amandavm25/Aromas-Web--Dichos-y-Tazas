@@ -15,11 +15,10 @@
                 Gestión Salarial
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
-                Historial de
-                <span class="hero-title-accent">Tarifas</span>
+                Historial de Tarifas
             </h1>
             <p class="hero-subtitle">
-                Consulta y administra el historial de tarifas por hora de todos los empleados
+                Consulta y administra el historial de tarifas por hora del personal
             </p>
         </div>
     </div>
@@ -34,39 +33,6 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
 
-        <!-- Resumen Estadísticas -->
-        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
-                <div class="feature-icon">
-                    <i class="fas fa-coins"></i>
-                </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡1,848,576</h3>
-                <p style="margin: 0.5rem 0;">Costo Nómina Mensual</p>
-            </div>
-
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-icon">
-                    <i class="fas fa-arrow-trend-up"></i>
-                </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡2,800</h3>
-                <p style="margin: 0.5rem 0;">Tarifa Más Alta</p>
-                <small style="opacity: 0.7; display: block; margin-top: 0.5rem;">
-                    Kenneth Salas - Chef Principal
-                </small>
-            </div>
-
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon">
-                    <i class="fas fa-arrow-trend-down"></i>
-                </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡1,800</h3>
-                <p style="margin: 0.5rem 0;">Tarifa Más Baja</p>
-                <small style="opacity: 0.7; display: block; margin-top: 0.5rem;">
-                    Ana Jiménez - Cajera
-                </small>
-            </div>
-        </div>
-
         <!-- Barra de búsqueda y botones -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoTarifas", "HistorialTarifa")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
@@ -75,9 +41,16 @@
                     <input type="text"
                            name="buscar"
                            value="@ViewBag.Buscar"
-                           placeholder="Buscar por empleado o cargo..."
+                           placeholder="Buscar por empleado..."
                            style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
                 </div>
+                <select name="estado"
+                        style="padding: 1rem 2rem; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); box-shadow: var(--shadow-sm);">
+                    <option value="">Todos los estados</option>
+                    <option value="Vigente" @@(ViewBag.EstadoFiltro == "Vigente" ? "selected" : "")>Vigente</option>
+                    <option value="Vencida" @@(ViewBag.EstadoFiltro == "Vencida" ? "selected" : "")>Vencida</option>
+                    <option value="Futura" @@(ViewBag.EstadoFiltro == "Futura" ? "selected" : "")>Futura</option>
+                </select>
                 <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
                     <span><i class="fas fa-search"></i> Buscar</span>
                 </button>
@@ -90,199 +63,318 @@
             </div>
         </div>
 
-        <!-- Filtros -->
-        <div style="margin-bottom: 3rem;" data-aos="fade-up">
-            <form method="get" action="@Url.Action("ListadoTarifas", "HistorialTarifa")" style="display: contents;">
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-                    <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
-                        <i class="fas fa-filter" style="color: var(--gold);"></i> Filtrar:
-                    </span>
-
-                    @{
-                        var empleadosData = new List<dynamic>
-                                        {
-                                        new { IdEmpleado = 1, NombreCompleto = "Kenneth Salas", Cargo = "Chef Principal" },
-                                        new { IdEmpleado = 2, NombreCompleto = "María González", Cargo = "Asistente de Cocina" },
-                                        new { IdEmpleado = 3, NombreCompleto = "David Rodríguez", Cargo = "Barista" },
-                                        new { IdEmpleado = 4, NombreCompleto = "Ana Jiménez", Cargo = "Cajera" }
-                                        };
+        <!-- Información de búsqueda -->
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || !string.IsNullOrWhiteSpace(ViewBag.EstadoFiltro as string))
+        {
+            <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
+                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+                    {
+                        <span>Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong></span>
                     }
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.EstadoFiltro as string))
+                    {
+                        <span>- Estado: <strong style="color: var(--gold-bright);">@ViewBag.EstadoFiltro</strong></span>
+                    }
+                    - <strong>@(Model?.Count ?? 0)</strong> tarifa(s) encontrada(s)
+                </p>
+            </div>
+        }
 
-                    <select name="empleado" class="btn btn-secondary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white);">
-                        <option value="">Todos los empleados</option>
-                        @foreach (var emp in empleadosData)
+        <!-- Tabla Principal -->
+        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
+            <div class="table-responsive">
+                <table id="laTablaDeTarifas" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
+                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+                        <tr>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Tarifa/Hora</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Salario Mensual</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Motivo</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Vigencia</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
                         {
-                            <option value="@emp.IdEmpleado">@emp.NombreCompleto - @emp.Cargo</option>
-                        }
-                    </select>
-
-                    <select name="estado" class="btn btn-secondary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white);">
-                        <option value="">Todos los estados</option>
-                        <option value="Vigente">Vigentes</option>
-                        <option value="Vencida">Vencidas</option>
-                        <option value="Futura">Futuras</option>
-                    </select>
-
-                    <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                        <span><i class="fas fa-filter"></i> Aplicar</span>
-                    </button>
-
-                    <a href="@Url.Action("ListadoTarifas", "HistorialTarifa")" class="btn btn-secondary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                        <span><i class="fas fa-times"></i> Limpiar</span>
-                    </a>
-                </div>
-            </form>
-        </div>
-
-        <!-- Layout Principal: Tabla + Panel Lateral -->
-        <div style="display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start;" data-aos="fade-up">
-
-            <!-- Tabla Principal -->
-            <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                <div class="table-responsive">
-                    <table id="tablaTarifas" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
-                            <tr>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Tarifa/Hora</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Salario Mensual</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Inicio</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Fin</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Motivo</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                var tarifasDemo = new List<dynamic>
-                                                        {
-                                                        new { Id = 1, IdEmpleado = 1, Nombre = "Kenneth Salas", Cargo = "Chef Principal", Tarifa = 2500.00m, Salario = 519600.00m, FechaInicio = "15/01/2023", FechaFin = "30/06/2024", Estado = "Vencida", Motivo = "Tarifa inicial al contratar", Dias = 532, FechaRegistro = "15/01/2023 08:00" },
-                                                        new { Id = 2, IdEmpleado = 1, Nombre = "Kenneth Salas", Cargo = "Chef Principal", Tarifa = 2800.00m, Salario = 581952.00m, FechaInicio = "01/07/2024", FechaFin = "Sin definir", Estado = "Vigente", Motivo = "Aumento por desempeño excepcional", Dias = 151, FechaRegistro = "25/06/2024 10:30" },
-                                                        new { Id = 3, IdEmpleado = 2, Nombre = "María González", Cargo = "Asistente de Cocina", Tarifa = 1900.00m, Salario = 394896.00m, FechaInicio = "20/03/2023", FechaFin = "Sin definir", Estado = "Vigente", Motivo = "Tarifa inicial", Dias = 984, FechaRegistro = "20/03/2023 09:00" },
-                                                        new { Id = 4, IdEmpleado = 3, Nombre = "David Rodríguez", Cargo = "Barista", Tarifa = 2200.00m, Salario = 457248.00m, FechaInicio = "10/02/2023", FechaFin = "31/08/2024", Estado = "Vencida", Motivo = "Tarifa inicial", Dias = 568, FechaRegistro = "10/02/2023 08:00" },
-                                                        new { Id = 5, IdEmpleado = 3, Nombre = "David Rodríguez", Cargo = "Barista", Tarifa = 2400.00m, Salario = 498816.00m, FechaInicio = "01/09/2024", FechaFin = "Sin definir", Estado = "Vigente", Motivo = "Aumento semestral", Dias = 89, FechaRegistro = "28/08/2024 14:20" },
-                                                        new { Id = 6, IdEmpleado = 4, Nombre = "Ana Jiménez", Cargo = "Cajera", Tarifa = 1800.00m, Salario = 374112.00m, FechaInicio = "05/04/2023", FechaFin = "Sin definir", Estado = "Vigente", Motivo = "Tarifa inicial", Dias = 968, FechaRegistro = "05/04/2023 08:00" }
-                                                        };
-                            }
-
-                            @foreach (var tarifa in tarifasDemo)
+                            @foreach (var tarifa in Model)
                             {
                                 <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@tarifa.Id</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@tarifa.IdHistorialTarifa</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
+                                        <i class="fas fa-user-tie" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
+                                        Empleado #@tarifa.IdEmpleado
+                                    </td>
                                     <td style="padding: 1.2rem;">
-                                        <div>
-                                            <strong style="color: var(--dark-green); font-weight: 600;">@tarifa.Nombre</strong>
-                                            <span style="font-size: 0.85rem; color: var(--charcoal); opacity: 0.7; display: block;">@tarifa.Cargo</span>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1.2rem; color: var(--gold); font-weight: 700; font-size: 1.2rem;">
-                                        ₡@tarifa.Tarifa.ToString("N2")
-                                    </td>
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">
-                                        ₡@tarifa.Salario.ToString("N2")
-                                    </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">@tarifa.FechaInicio</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">@tarifa.FechaFin</td>
-                                    <td style="padding: 1.2rem;">
-                                        @{
-                                            var estadoColor = tarifa.Estado == "Vigente" ? "#27ae60" : "#e74c3c";
-                                            var estadoIcon = tarifa.Estado == "Vigente" ? "fa-check-circle" : "fa-times-circle";
-                                        }
-                                        <span style="background: @estadoColor; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
-                                            <i class="fas @estadoIcon"></i> @tarifa.Estado
+                                        <span style="color: var(--gold-bright); font-weight: 700; font-size: 1.3rem;">
+                                            ₡@tarifa.TarifaHora.ToString("N2")
                                         </span>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); max-width: 300px;">@tarifa.Motivo</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal);">
+                                        <span style="font-weight: 600;">₡@tarifa.SalarioMensualEstimado.ToString("N2")</span>
+                                        <br />
+                                        <small style="opacity: 0.7; font-size: 0.85rem;">(estimado)</small>
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); max-width: 300px;">
+                                        @(tarifa.Motivo.Length > 50 ? tarifa.Motivo.Substring(0, 50) + "..." : tarifa.Motivo)
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); white-space: nowrap;">
+                                        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                            <span>
+                                                <i class="fas fa-play" style="color: #27ae60; margin-right: 0.3rem;"></i>
+                                                @tarifa.FechaInicioFormateada
+                                            </span>
+                                            <span>
+                                                <i class="fas fa-stop" style="color: #e74c3c; margin-right: 0.3rem;"></i>
+                                                @tarifa.FechaFinFormateada
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 1.2rem;">
+                                        @{
+                                            var estadoColor = tarifa.EstadoVigencia switch
+                                            {
+                                                "Vigente" => "#27ae60",
+                                                "Vencida" => "#e74c3c",
+                                                "Futura" => "#3498db",
+                                                _ => "#95a5a6"
+                                            };
+                                        }
+                                        <span style="background: @estadoColor; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
+                                            @tarifa.EstadoVigencia
+                                        </span>
+                                    </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        @if (tarifa.EstadoVigencia == "Vigente")
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-sm btn-finalizar-tarifa"
+                                                    data-id="@tarifa.IdHistorialTarifa"
+                                                    data-empleado="Empleado #@tarifa.IdEmpleado"
+                                                    data-tarifa="₡@tarifa.TarifaHora.ToString("N2")"
+                                                    style="background: #f39c12; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalFinalizarTarifa"
+                                                    title="Finalizar tarifa">
+                                                <i class="fas fa-stop-circle"></i>
+                                            </button>
+                                        }
                                         <button type="button"
-                                                class="btn btn-sm btn-detalles"
-                                                data-id="@tarifa.Id"
-                                                data-empleado="@tarifa.Nombre"
-                                                data-cargo="@tarifa.Cargo"
-                                                data-tarifa="@tarifa.Tarifa.ToString("N2")"
-                                                data-salario="@tarifa.Salario.ToString("N2")"
-                                                data-inicio="@tarifa.FechaInicio"
-                                                data-fin="@tarifa.FechaFin"
-                                                data-estado="@tarifa.Estado"
+                                                class="btn btn-sm btn-detalles-tarifa"
+                                                data-id="@tarifa.IdHistorialTarifa"
+                                                data-empleado="Empleado #@tarifa.IdEmpleado"
+                                                data-tarifa="₡@tarifa.TarifaHora.ToString("N2")"
+                                                data-salario="₡@tarifa.SalarioMensualEstimado.ToString("N2")"
                                                 data-motivo="@tarifa.Motivo"
-                                                data-dias="@tarifa.Dias"
-                                                data-registro="@tarifa.FechaRegistro"
+                                                data-fecha-inicio="@tarifa.FechaInicioFormateada"
+                                                data-fecha-fin="@tarifa.FechaFinFormateada"
+                                                data-fecha-registro="@tarifa.FechaRegistroFormateada"
+                                                data-estado="@tarifa.EstadoVigencia"
+                                                data-cumple-minimo="@(tarifa.CumpleSalarioMinimo ? "Sí" : "No")"
+                                                data-dias-vigencia="@tarifa.DiasVigencia"
                                                 style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesTarifa"
                                                 title="Ver detalles">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button"
-                                                onclick="window.location.href='@Url.Action("VerHistorialEmpleado", "HistorialTarifa", new { id = tarifa.IdEmpleado })'"
-                                                class="btn btn-sm"
-                                                style="background: var(--gold-bright); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Ver historial completo">
+                                        <a href="@Url.Action("VerHistorialEmpleado", "HistorialTarifa", new { id = tarifa.IdEmpleado })"
+                                           class="btn btn-sm"
+                                           style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px; text-decoration: none; display: inline-block;"
+                                           title="Ver historial completo">
                                             <i class="fas fa-history"></i>
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             }
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-green); font-size: 0.95rem;">
-                        Mostrando <strong>1-6</strong> de <strong>6</strong> registros
-                    </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="btn btn-secondary" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            &lt; Anterior
-                        </button>
-                        <button class="btn btn-primary" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            Siguiente &gt;
-                        </button>
-                    </div>
-                </div>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8" style="padding: 3rem; text-align: center; color: var(--charcoal);">
+                                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
+                                    <p style="margin: 0; font-size: 1.1rem;">No se encontraron tarifas</p>
+                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+                                    {
+                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Panel Lateral -->
-            <div style="position: sticky; top: 100px;">
-                <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); color: white; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-chart-line" style="font-size: 1.5rem;"></i>
-                            <div>
-                                <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Cambios Recientes</h5>
-                                <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">Últimos ajustes</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 400px; overflow-y: auto;">
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid #27ae60;">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-arrow-up" style="color: #27ae60;"></i>
-                                Kenneth Salas
-                            </strong>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">₡2,500 → ₡2,800/hora</small>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.2rem;">Hace 5 meses</small>
-                        </div>
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid #27ae60;">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-arrow-up" style="color: #27ae60;"></i>
-                                David Rodríguez
-                            </strong>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">₡2,200 → ₡2,400/hora</small>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.2rem;">Hace 3 meses</small>
-                        </div>
-                    </div>
+            <!-- Footer de paginación -->
+            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                <div style="color: var(--dark-green); font-size: 0.95rem;">
+                    Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> tarifas
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<partial name="_ModalDetallesTarifa" />
+<!-- Modal Detalles -->
+<div class="modal fade" id="modalDetallesTarifa" tabindex="-1" aria-labelledby="modalDetallesTarifaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius: 20px; border: none; overflow: hidden;">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none;">
+                <h5 class="modal-title" id="modalDetallesTarifaLabel">
+                    <i class="fas fa-info-circle"></i> Detalles de la Tarifa
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div>
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Empleado:</label>
+                        <p id="detalleEmpleado" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                    </div>
+                    <div>
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Estado:</label>
+                        <span id="detalleEstado"></span>
+                    </div>
+                </div>
+                <hr style="margin: 1.5rem 0; border-color: rgba(143, 142, 106, 0.2);">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div>
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Tarifa por Hora:</label>
+                        <p id="detalleTarifa" style="color: var(--gold-bright); font-size: 1.8rem; font-weight: 700; margin: 0;"></p>
+                    </div>
+                    <div>
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Salario Mensual Estimado:</label>
+                        <p id="detalleSalario" style="color: var(--charcoal); font-size: 1.3rem; font-weight: 600; margin: 0;"></p>
+                        <small style="opacity: 0.7; font-size: 0.85rem;">(basado en 207.84 horas/mes)</small>
+                    </div>
+                </div>
+                <hr style="margin: 1.5rem 0; border-color: rgba(143, 142, 106, 0.2);">
+                <div>
+                    <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Motivo del Cambio:</label>
+                    <p id="detalleMotivo" style="color: var(--charcoal); margin: 0;"></p>
+                </div>
+                <hr style="margin: 1.5rem 0; border-color: rgba(143, 142, 106, 0.2);">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+                    <div>
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Fecha Inicio:</label>
+                        <p id="detalleFechaInicio" style="color: var(--charcoal); margin: 0;"></p>
+                    </div>
+                    <div>
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Fecha Fin:</label>
+                        <p id="detalleFechaFin" style="color: var(--charcoal); margin: 0;"></p>
+                    </div>
+                    <div>
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Días de Vigencia:</label>
+                        <p id="detalleDiasVigencia" style="color: var(--charcoal); font-weight: 600; margin: 0;"></p>
+                    </div>
+                </div>
+                <hr style="margin: 1.5rem 0; border-color: rgba(143, 142, 106, 0.2);">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div>
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Fecha de Registro:</label>
+                        <p id="detalleFechaRegistro" style="color: var(--charcoal); margin: 0;"></p>
+                    </div>
+                    <div>
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Cumple Salario Mínimo:</label>
+                        <span id="detalleCumpleMinimo"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border: none; padding: 1rem 2rem;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 50px; padding: 0.75rem 2rem;">
+                    <i class="fas fa-times"></i> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Finalizar Tarifa -->
+<div class="modal fade" id="modalFinalizarTarifa" tabindex="-1" aria-labelledby="modalFinalizarTarifaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 20px; border: none; overflow: hidden;">
+            <div class="modal-header" style="background: #f39c12; color: var(--white); border: none;">
+                <h5 class="modal-title" id="modalFinalizarTarifaLabel">
+                    <i class="fas fa-stop-circle"></i> Finalizar Tarifa
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formFinalizarTarifa" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body" style="padding: 2rem;">
+                    <p style="font-size: 1.1rem; color: var(--charcoal); margin-bottom: 1.5rem;">
+                        ¿Está seguro que desea finalizar la siguiente tarifa?
+                    </p>
+                    <div style="background: var(--cream); padding: 1.5rem; border-radius: 15px; border-left: 4px solid #f39c12;">
+                        <p style="margin: 0 0 0.5rem 0; color: var(--dark-green);"><strong>Empleado:</strong> <span id="finalizarEmpleado"></span></p>
+                        <p style="margin: 0; color: var(--dark-green);"><strong>Tarifa Actual:</strong> <span id="finalizarTarifa"></span></p>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Fecha de Finalización:</label>
+                        <input type="date" 
+                               name="fechaFin" 
+                               required
+                               style="width: 100%; padding: 1rem; border: 2px solid var(--cream); border-radius: 10px; font-size: 1rem;">
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none; padding: 1rem 2rem;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 50px; padding: 0.75rem 2rem;">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn" style="border-radius: 50px; padding: 0.75rem 2rem; background: #f39c12; border: none; color: var(--white);">
+                        <i class="fas fa-stop-circle"></i> Finalizar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
-    <script src="~/js/historial-tarifa.js"></script>
+    <script>
+        // Modal de detalles
+        document.querySelectorAll('.btn-detalles-tarifa').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.getElementById('detalleEmpleado').textContent = this.dataset.empleado;
+                document.getElementById('detalleTarifa').textContent = this.dataset.tarifa;
+                document.getElementById('detalleSalario').textContent = this.dataset.salario;
+                document.getElementById('detalleMotivo').textContent = this.dataset.motivo;
+                document.getElementById('detalleFechaInicio').textContent = this.dataset.fechaInicio;
+                document.getElementById('detalleFechaFin').textContent = this.dataset.fechaFin;
+                document.getElementById('detalleFechaRegistro').textContent = this.dataset.fechaRegistro;
+                document.getElementById('detalleDiasVigencia').textContent = this.dataset.diasVigencia + ' días';
+                
+                const estado = this.dataset.estado;
+                let estadoColor = '#95a5a6';
+                if (estado === 'Vigente') estadoColor = '#27ae60';
+                else if (estado === 'Vencida') estadoColor = '#e74c3c';
+                else if (estado === 'Futura') estadoColor = '#3498db';
+                
+                const estadoHtml = `<span style="background: ${estadoColor}; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">${estado}</span>`;
+                document.getElementById('detalleEstado').innerHTML = estadoHtml;
+                
+                const cumpleMinimo = this.dataset.cumpleMinimo;
+                const minimoColor = cumpleMinimo === 'Sí' ? '#27ae60' : '#e74c3c';
+                const minimoHtml = `<span style="background: ${minimoColor}; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">${cumpleMinimo}</span>`;
+                document.getElementById('detalleCumpleMinimo').innerHTML = minimoHtml;
+            });
+        });
+
+        // Modal de finalizar
+        document.querySelectorAll('.btn-finalizar-tarifa').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const empleado = this.dataset.empleado;
+                const tarifa = this.dataset.tarifa;
+                
+                document.getElementById('finalizarEmpleado').textContent = empleado;
+                document.getElementById('finalizarTarifa').textContent = tarifa;
+                document.getElementById('formFinalizarTarifa').action = '@Url.Action("FinalizarTarifa", "HistorialTarifa")'.replace('0', id) + '?id=' + id;
+            });
+        });
+    </script>
 }

@@ -154,5 +154,48 @@ namespace AromasWeb.Abstracciones.ModeloUI
                 return !string.IsNullOrWhiteSpace(Observaciones);
             }
         }
+
+        [DisplayName("Días hasta la reserva")]
+        public int? DiasHastaReserva
+        {
+            get
+            {
+                if (EsFutura)
+                {
+                    return (Fecha.Date - DateTime.Now.Date).Days;
+                }
+                return null;
+            }
+        }
+
+        [DisplayName("Puede cancelar")]
+        public bool PuedeCancelar
+        {
+            get
+            {
+                // Puede cancelar si:
+                // 1. La reserva es futura o es hoy
+                // 2. El estado NO es "Cancelada" ni "Completada"
+                return (EsFutura || EsHoy) &&
+                       Estado != "Cancelada" &&
+                       Estado != "Completada";
+            }
+        }
+
+        [DisplayName("Puede modificar")]
+        public bool PuedeModificar
+        {
+            get
+            {
+                // Puede cancelar si:
+                // 1. La reserva es futura o es hoy
+                // 2. El estado NO es "Cancelada" ni "Completada"
+                return (EsFutura || EsHoy) &&
+                       Estado != "Cancelada" &&
+                       Estado != "Completada";
+            }
+        }
+
+        public bool EsPasada { get; set; }
     }
 }

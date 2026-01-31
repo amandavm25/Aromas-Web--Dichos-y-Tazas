@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AromasWeb.AccesoADatos.Modelos
 {
-    public class CategoriaReceta
+    public class CategoriaRecetaAD
     {
-
+        public int IdCategoriaReceta { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public bool Estado { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using AromasWeb.Abstracciones.ModeloUI;
+using AromasWeb.Abstracciones.Logica.Permiso;
+using AromasWeb.Abstracciones.Logica.Modulo;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,68 +10,47 @@ namespace AromasWeb.Controllers
 {
     public class PermisoController : Controller
     {
+        private IListarPermisos _listarPermisos;
+        private IListarModulos _listarModulos;
+
+        public PermisoController()
+        {
+            _listarPermisos = new LogicaDeNegocio.Permisos.ListarPermisos();
+            _listarModulos = new LogicaDeNegocio.Modulos.ListarModulos();
+        }
+
         // GET: Permiso/ListadoPermisos
-        public IActionResult ListadoPermisos(string buscar, string filtroModulo)
+        public IActionResult ListadoPermisos(string buscar, int? filtroModulo)
         {
             ViewBag.Buscar = buscar;
             ViewBag.FiltroModulo = filtroModulo;
 
-            // Permisos de ejemplo
-            var permisos = new List<Permiso>
-            {
-                new Permiso
-                {
-                    IdPermiso = 1,
-                    IdModulo = 1,
-                    Nombre = "Ver Empleados",
-                    Modulo = new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados" }
-                },
-                new Permiso
-                {
-                    IdPermiso = 2,
-                    IdModulo = 1,
-                    Nombre = "Crear Empleados",
-                    Modulo = new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados" }
-                },
-                new Permiso
-                {
-                    IdPermiso = 3,
-                    IdModulo = 1,
-                    Nombre = "Editar Empleados",
-                    Modulo = new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados" }
-                },
-                new Permiso
-                {
-                    IdPermiso = 4,
-                    IdModulo = 1,
-                    Nombre = "Eliminar Empleados",
-                    Modulo = new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados" }
-                },
-                new Permiso
-                {
-                    IdPermiso = 5,
-                    IdModulo = 2,
-                    Nombre = "Registrar Asistencia",
-                    Modulo = new Modulo { IdModulo = 2, Nombre = "Control de Asistencia" }
-                },
-                new Permiso
-                {
-                    IdPermiso = 6,
-                    IdModulo = 3,
-                    Nombre = "Calcular Planilla",
-                    Modulo = new Modulo { IdModulo = 3, Nombre = "Gestión de Planilla" }
-                }
-            };
+            // Cargar módulos para filtro
+            CargarModulos();
 
-            // Lista de módulos para el filtro
-            var modulos = new List<Modulo>
-            {
-                new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados" },
-                new Modulo { IdModulo = 2, Nombre = "Control de Asistencia" },
-                new Modulo { IdModulo = 3, Nombre = "Gestión de Planilla" }
-            };
+            // Obtener permisos
+            List<Permiso> permisos;
 
-            ViewBag.Modulos = modulos;
+            if (!string.IsNullOrEmpty(buscar) && filtroModulo.HasValue)
+            {
+                permisos = _listarPermisos.ObtenerPorModulo(filtroModulo.Value)
+                    .Where(p => p.Nombre.ToLower().Contains(buscar.ToLower()))
+                    .ToList();
+            }
+            else if (!string.IsNullOrEmpty(buscar))
+            {
+                permisos = _listarPermisos.Obtener()
+                    .Where(p => p.Nombre.ToLower().Contains(buscar.ToLower()))
+                    .ToList();
+            }
+            else if (filtroModulo.HasValue)
+            {
+                permisos = _listarPermisos.ObtenerPorModulo(filtroModulo.Value);
+            }
+            else
+            {
+                permisos = _listarPermisos.Obtener();
+            }
 
             return View(permisos);
         }
@@ -77,19 +58,7 @@ namespace AromasWeb.Controllers
         // GET: Permiso/CrearPermiso
         public IActionResult CrearPermiso()
         {
-            // Lista de módulos para el dropdown
-            var modulos = new List<Modulo>
-            {
-                new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados" },
-                new Modulo { IdModulo = 2, Nombre = "Control de Asistencia" },
-                new Modulo { IdModulo = 3, Nombre = "Gestión de Planilla" },
-                new Modulo { IdModulo = 4, Nombre = "Solicitud de Vacaciones" },
-                new Modulo { IdModulo = 5, Nombre = "Bitácora del Sistema" },
-                new Modulo { IdModulo = 6, Nombre = "Reportes" }
-            };
-
-            ViewBag.Modulos = new SelectList(modulos, "IdModulo", "Nombre");
-
+            CargarModulosParaSelect();
             return View();
         }
 
@@ -100,50 +69,27 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para guardar en la base de datos
                 TempData["Mensaje"] = "Permiso registrado correctamente";
                 return RedirectToAction(nameof(ListadoPermisos));
             }
 
-            // Recargar módulos si hay error
-            var modulos = new List<Modulo>
-            {
-                new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados" },
-                new Modulo { IdModulo = 2, Nombre = "Control de Asistencia" },
-                new Modulo { IdModulo = 3, Nombre = "Gestión de Planilla" },
-                new Modulo { IdModulo = 4, Nombre = "Solicitud de Vacaciones" },
-                new Modulo { IdModulo = 5, Nombre = "Bitácora del Sistema" },
-                new Modulo { IdModulo = 6, Nombre = "Reportes" }
-            };
-
-            ViewBag.Modulos = new SelectList(modulos, "IdModulo", "Nombre");
-
+            CargarModulosParaSelect();
             return View(permiso);
         }
 
         // GET: Permiso/EditarPermiso/5
         public IActionResult EditarPermiso(int id)
         {
-            // Permiso de ejemplo
-            var permiso = new Permiso
+            var permiso = _listarPermisos.ObtenerPorId(id);
+
+            if (permiso == null)
             {
-                IdPermiso = id,
-                IdModulo = 1,
-                Nombre = "Ver Empleados"
-            };
+                TempData["Mensaje"] = "Permiso no encontrado";
+                return RedirectToAction(nameof(ListadoPermisos));
+            }
 
-            // Lista de módulos para el dropdown
-            var modulos = new List<Modulo>
-            {
-                new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados" },
-                new Modulo { IdModulo = 2, Nombre = "Control de Asistencia" },
-                new Modulo { IdModulo = 3, Nombre = "Gestión de Planilla" },
-                new Modulo { IdModulo = 4, Nombre = "Solicitud de Vacaciones" },
-                new Modulo { IdModulo = 5, Nombre = "Bitácora del Sistema" },
-                new Modulo { IdModulo = 6, Nombre = "Reportes" }
-            };
-
-            ViewBag.Modulos = new SelectList(modulos, "IdModulo", "Nombre", permiso.IdModulo);
-
+            CargarModulosParaSelect(permiso.IdModulo);
             return View(permiso);
         }
 
@@ -154,23 +100,12 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para actualizar en la base de datos
                 TempData["Mensaje"] = "Permiso actualizado correctamente";
                 return RedirectToAction(nameof(ListadoPermisos));
             }
 
-            // Recargar módulos si hay error
-            var modulos = new List<Modulo>
-            {
-                new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados" },
-                new Modulo { IdModulo = 2, Nombre = "Control de Asistencia" },
-                new Modulo { IdModulo = 3, Nombre = "Gestión de Planilla" },
-                new Modulo { IdModulo = 4, Nombre = "Solicitud de Vacaciones" },
-                new Modulo { IdModulo = 5, Nombre = "Bitácora del Sistema" },
-                new Modulo { IdModulo = 6, Nombre = "Reportes" }
-            };
-
-            ViewBag.Modulos = new SelectList(modulos, "IdModulo", "Nombre", permiso.IdModulo);
-
+            CargarModulosParaSelect(permiso.IdModulo);
             return View(permiso);
         }
 
@@ -179,6 +114,7 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EliminarPermiso(int id)
         {
+            // Aquí iría la lógica para eliminar de la base de datos
             TempData["Mensaje"] = "Permiso eliminado correctamente";
             return RedirectToAction(nameof(ListadoPermisos));
         }
@@ -186,7 +122,7 @@ namespace AromasWeb.Controllers
         // GET: Permiso/AsignarPermisos/5
         public IActionResult AsignarPermisos(int id)
         {
-            // Rol de ejemplo
+            // Aquí obtendrías el rol desde la BD (por ahora ejemplo)
             var rol = new Rol
             {
                 IdRol = id,
@@ -194,36 +130,10 @@ namespace AromasWeb.Controllers
                 Descripcion = "Acceso completo al sistema"
             };
 
-            // Módulos con sus permisos
-            var modulos = new List<Modulo>
-            {
-                new Modulo { IdModulo = 1, Nombre = "Gestión de Empleados", Estado = true },
-                new Modulo { IdModulo = 2, Nombre = "Control de Asistencia", Estado = true },
-                new Modulo { IdModulo = 3, Nombre = "Gestión de Planilla", Estado = true },
-                new Modulo { IdModulo = 4, Nombre = "Solicitud de Vacaciones", Estado = true },
-                new Modulo { IdModulo = 5, Nombre = "Bitácora del Sistema", Estado = true },
-                new Modulo { IdModulo = 6, Nombre = "Reportes", Estado = false }
-            };
-
-            // Permisos agrupados por módulo
-            var permisos = new List<Permiso>
-            {
-                new Permiso { IdPermiso = 1, IdModulo = 1, Nombre = "Ver Empleados" },
-                new Permiso { IdPermiso = 2, IdModulo = 1, Nombre = "Crear Empleados" },
-                new Permiso { IdPermiso = 3, IdModulo = 1, Nombre = "Editar Empleados" },
-                new Permiso { IdPermiso = 4, IdModulo = 1, Nombre = "Eliminar Empleados" },
-                new Permiso { IdPermiso = 5, IdModulo = 2, Nombre = "Registrar Asistencia" },
-                new Permiso { IdPermiso = 6, IdModulo = 2, Nombre = "Ver Asistencias" },
-                new Permiso { IdPermiso = 7, IdModulo = 3, Nombre = "Calcular Planilla" },
-                new Permiso { IdPermiso = 8, IdModulo = 3, Nombre = "Ver Planilla" },
-                new Permiso { IdPermiso = 9, IdModulo = 4, Nombre = "Solicitar Vacaciones" },
-                new Permiso { IdPermiso = 10, IdModulo = 4, Nombre = "Aprobar Vacaciones" },
-                new Permiso { IdPermiso = 11, IdModulo = 5, Nombre = "Ver Bitácora" },
-                new Permiso { IdPermiso = 12, IdModulo = 6, Nombre = "Generar Reportes" }
-            };
-
-            // Permisos asignados (ejemplo - IDs 1, 2, 3, 5, 7)
-            var permisosAsignados = new List<int> { 1, 2, 3, 5, 7 };
+            // Obtener módulos y permisos desde la BD
+            var modulos = _listarModulos.Obtener();
+            var permisos = _listarPermisos.Obtener();
+            var permisosAsignados = _listarPermisos.ObtenerPermisosDeRol(id);
 
             ViewBag.Rol = rol;
             ViewBag.Modulos = modulos;
@@ -238,8 +148,37 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult GuardarPermisos(int idRol, List<int> permisosSeleccionados)
         {
-            TempData["Mensaje"] = "Permisos asignados correctamente";
+            if (permisosSeleccionados == null)
+            {
+                permisosSeleccionados = new List<int>();
+            }
+
+            bool exito = _listarPermisos.AsignarPermisosARol(idRol, permisosSeleccionados);
+
+            if (exito)
+            {
+                TempData["Mensaje"] = "Permisos asignados correctamente";
+            }
+            else
+            {
+                TempData["Mensaje"] = "Error al asignar permisos";
+                TempData["TipoMensaje"] = "error";
+            }
+
             return RedirectToAction("ListadoRoles", "Rol");
+        }
+
+        // Métodos auxiliares
+        private void CargarModulos()
+        {
+            var modulos = _listarModulos.Obtener();
+            ViewBag.Modulos = modulos;
+        }
+
+        private void CargarModulosParaSelect(int? idModuloSeleccionado = null)
+        {
+            var modulos = _listarModulos.BuscarPorEstado(true); // Solo activos
+            ViewBag.Modulos = new SelectList(modulos, "IdModulo", "Nombre", idModuloSeleccionado);
         }
     }
 }

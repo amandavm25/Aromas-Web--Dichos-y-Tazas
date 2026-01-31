@@ -1,13 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AromasWeb.AccesoADatos.Modelos
 {
-    public class PromocionReceta
+    [Table("PromocionReceta")]
+    public class PromocionRecetaAD
     {
+        [Key]
+        public int IdPromocionReceta { get; set; }
 
+        [Required]
+        public int IdPromocion { get; set; }
+
+        [Required]
+        public int IdReceta { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal PrecioPromocional { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(5,2)")]
+        public decimal PorcentajeDescuento { get; set; }
+
+        [Required]
+        public bool Estado { get; set; }
+
+        // Propiedades de navegación
+        public virtual PromocionAD Promocion { get; set; }
+        public virtual RecetaAD Receta { get; set; }
     }
 }

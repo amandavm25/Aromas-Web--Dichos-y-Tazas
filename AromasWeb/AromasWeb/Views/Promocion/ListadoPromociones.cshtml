@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Gestión de Promociones";
+    var totalPromociones = Model?.Count ?? 0;
+    var promoVigentes = Model?.Where(p => p.EstaVigente).Count() ?? 0;
+    var descuentoPromedio = Model != null && Model.Any() ? Model.Average(p => p.PorcentajeDescuento) : 0;
+    var totalRecetas = Model?.Sum(p => p.CantidadRecetas) ?? 0;
 }
 
 <!-- Hero Section -->
@@ -39,7 +43,7 @@
                 <div class="feature-icon">
                     <i class="fas fa-tags"></i>
                 </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">6</h3>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalPromociones</h3>
                 <p style="margin: 0.5rem 0;">Total Promociones</p>
             </div>
 
@@ -47,7 +51,7 @@
                 <div class="feature-icon">
                     <i class="fas fa-percent"></i>
                 </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">25.8%</h3>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@descuentoPromedio.ToString("F1")%</h3>
                 <p style="margin: 0.5rem 0;">Descuento Promedio</p>
             </div>
 
@@ -55,7 +59,7 @@
                 <div class="feature-icon">
                     <i class="fas fa-utensils"></i>
                 </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">11</h3>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalRecetas</h3>
                 <p style="margin: 0.5rem 0;">Recetas en Promoción</p>
             </div>
         </div>
@@ -125,150 +129,151 @@
                 </div>
 
                 <!-- Filtro por vigencia -->
-                <div style="min-width: 300px;">
+                <div style="flex: 1; min-width: 300px;">
                     <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary); display: block; margin-bottom: 0.7rem;">
                         <i class="fas fa-calendar-check" style="color: var(--gold-bright);"></i> Filtrar por vigencia:
                     </span>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <a href="@Url.Action("ListadoPromociones", "Promocion")"
-                           class="btn @(string.IsNullOrEmpty(ViewBag.Vigencia as string) ? "btn-primary" : "btn-secondary")"
+                           class="btn @(string.IsNullOrEmpty(ViewBag.Vigencia) ? "btn-primary" : "btn-secondary")"
                            style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                            <span>Todas</span>
+                            <span><i class="fas fa-th"></i> Todas</span>
                         </a>
-                        <a href="@Url.Action("ListadoPromociones", "Promocion", new { vigencia = "vigente" })"
-                           class="btn @(ViewBag.Vigencia == "vigente" ? "btn-primary" : "btn-secondary")"
+                        <a href="@Url.Action("ListadoPromociones", "Promocion", new { vigencia = "Vigente" })"
+                           class="btn @(ViewBag.Vigencia == "Vigente" ? "btn-primary" : "btn-secondary")"
                            style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                            <span>Vigentes</span>
+                            <span><i class="fas fa-check-circle"></i> Vigentes</span>
                         </a>
-                        <a href="@Url.Action("ListadoPromociones", "Promocion", new { vigencia = "proxima" })"
-                           class="btn @(ViewBag.Vigencia == "proxima" ? "btn-primary" : "btn-secondary")"
+                        <a href="@Url.Action("ListadoPromociones", "Promocion", new { vigencia = "Próximamente" })"
+                           class="btn @(ViewBag.Vigencia == "Próximamente" ? "btn-primary" : "btn-secondary")"
                            style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                            <span>Próximas</span>
+                            <span><i class="fas fa-clock"></i> Próximas</span>
                         </a>
-                        <a href="@Url.Action("ListadoPromociones", "Promocion", new { vigencia = "expirada" })"
-                           class="btn @(ViewBag.Vigencia == "expirada" ? "btn-primary" : "btn-secondary")"
+                        <a href="@Url.Action("ListadoPromociones", "Promocion", new { vigencia = "Expirada" })"
+                           class="btn @(ViewBag.Vigencia == "Expirada" ? "btn-primary" : "btn-secondary")"
                            style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                            <span>Expiradas</span>
+                            <span><i class="fas fa-times-circle"></i> Expiradas</span>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Layout Principal: Tabla + Panel de Estadísticas -->
-        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;" data-aos="fade-up">
-
+        <!-- Grid principal con tabla y panel lateral -->
+        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem;" data-aos="fade-up">
             <!-- Tabla Principal -->
             <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                <div style="overflow-x: auto; max-width: 100%;">
-                    <table id="laTablaDePromociones" style="margin-bottom: 0; width: 100%; min-width: 1300px; border-collapse: collapse;">
+                <div class="table-responsive">
+                    <table style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
                         <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
                             <tr>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Tipo</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Descuento</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Descuento</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Inicio</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Fin</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Vigencia</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Recetas</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Recetas</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @{
-                                var promocionesDemo = new List<dynamic>
-                                                        {
-                                                        new { Id = 1, Nombre = "Descuento Navideño", Tipo = "Descuento Directo", Descuento = 20m, FechaInicio = "01/12/2024", FechaFin = "31/12/2024", Vigencia = "Vigente", DiasRestantes = 34, Recetas = 2, Estado = true },
-                                                        new { Id = 2, Nombre = "Happy Hour Café", Tipo = "Happy Hour", Descuento = 15m, FechaInicio = "01/11/2024", FechaFin = "31/01/2025", Vigencia = "Vigente", DiasRestantes = 65, Recetas = 1, Estado = true },
-                                                        new { Id = 3, Nombre = "2x1 Galletas", Tipo = "2x1", Descuento = 50m, FechaInicio = "15/11/2024", FechaFin = "30/11/2024", Vigencia = "Vigente", DiasRestantes = 3, Recetas = 1, Estado = true },
-                                                        new { Id = 4, Nombre = "Combo Desayuno", Tipo = "Combo", Descuento = 25m, FechaInicio = "01/11/2024", FechaFin = "31/12/2024", Vigencia = "Vigente", DiasRestantes = 34, Recetas = 2, Estado = true },
-                                                        new { Id = 5, Nombre = "Black Friday", Tipo = "Descuento Directo", Descuento = 30m, FechaInicio = "29/11/2024", FechaFin = "29/11/2024", Vigencia = "Expirada", DiasRestantes = 0, Recetas = 3, Estado = false },
-                                                        new { Id = 6, Nombre = "Día de San Valentín", Tipo = "Día Especial", Descuento = 15m, FechaInicio = "14/02/2025", FechaFin = "14/02/2025", Vigencia = "Próximamente", DiasRestantes = 0, Recetas = 2, Estado = true }
-                                                        };
-                            }
-
-                            @foreach (var promo in promocionesDemo)
+                            @if (Model != null && Model.Any())
                             {
-                                var colorVigencia = promo.Vigencia == "Vigente" ? "#27ae60" : promo.Vigencia == "Próximamente" ? "#3498db" : "#e74c3c";
-                                var urgente = promo.Vigencia == "Vigente" && promo.DiasRestantes <= 7 && promo.DiasRestantes > 0;
-                                var rowStyle = urgente ? "background: rgba(231, 76, 60, 0.05); border-left: 4px solid #e74c3c;" : "";
+                                @foreach (var promo in Model)
+                                {
+                                    var colorVigencia = promo.VigenciaTexto == "Vigente" ? "#27ae60" :
+                                    promo.VigenciaTexto == "Próximamente" ? "#f39c12" : "#95a5a6";
 
-                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s; @rowStyle">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@promo.Id</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 500;">
-                                        @promo.Nombre
-                                        @if (urgente)
-                                        {
-                                            <i class="fas fa-exclamation-triangle" style="color: #e74c3c; margin-left: 0.5rem;" title="Por vencer"></i>
-                                        }
-                                    </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">@promo.Tipo</td>
-                                    <td style="padding: 1.2rem; color: var(--gold); font-weight: 700; font-size: 1.1rem;">@promo.Descuento%</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@promo.FechaInicio</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@promo.FechaFin</td>
-                                    <td style="padding: 1.2rem;">
-                                        <span style="background: @colorVigencia; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
-                                            @promo.Vigencia
-                                            @if (promo.DiasRestantes > 0 && promo.Vigencia == "Vigente")
+                                    <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
+                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@promo.IdPromocion</td>
+                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
+                                            <i class="fas fa-tag" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
+                                            @promo.Nombre
+                                        </td>
+                                        <td style="padding: 1.2rem; color: var(--charcoal);">
+                                            <span style="background: var(--cream); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; display: inline-block;">
+                                                @promo.NombreTipoPromocion
+                                            </span>
+                                        </td>
+                                        <td style="padding: 1.2rem; text-align: center;">
+                                            <span style="background: var(--gold-bright); color: var(--white); padding: 0.5rem 1rem; border-radius: 50%; font-weight: 700; font-size: 1.1rem;">@promo.PorcentajeDescuento%</span>
+                                        </td>
+                                        <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@promo.FechaInicio.ToString("dd/MM/yyyy")</td>
+                                        <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@promo.FechaFin.ToString("dd/MM/yyyy")</td>
+                                        <td style="padding: 1.2rem;">
+                                            <span style="background: @colorVigencia; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
+                                                @promo.VigenciaTexto
+                                                @if (promo.DiasRestantes > 0 && promo.VigenciaTexto == "Vigente")
+                                                {
+                                                    <span>(@promo.DiasRestantes días)</span>
+                                                }
+                                            </span>
+                                        </td>
+                                        <td style="padding: 1.2rem; text-align: center;">
+                                            <span style="background: var(--olive-green); color: var(--white); padding: 0.4rem 0.8rem; border-radius: 50%; font-weight: 700;">@promo.CantidadRecetas</span>
+                                        </td>
+                                        <td style="padding: 1.2rem;">
+                                            @if (promo.Estado)
                                             {
-                                                <span>(@promo.DiasRestantes días)</span>
+                                                <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activa</span>
                                             }
-                                        </span>
-                                    </td>
-                                    <td style="padding: 1.2rem; text-align: center;">
-                                        <span style="background: var(--olive-green); color: var(--white); padding: 0.4rem 0.8rem; border-radius: 50%; font-weight: 700;">@promo.Recetas</span>
-                                    </td>
-                                    <td style="padding: 1.2rem;">
-                                        @if (promo.Estado)
-                                        {
-                                            <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activa</span>
-                                        }
-                                        else
-                                        {
-                                            <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactiva</span>
-                                        }
-                                    </td>
-                                    <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                        <button type="button"
-                                                class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarPromocion", "Promocion", new { id = promo.Id })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-detalles-promocion"
-                                                data-id="@promo.Id"
-                                                data-nombre="@promo.Nombre"
-                                                data-tipo="@promo.Tipo"
-                                                data-descuento="@promo.Descuento"
-                                                data-inicio="@promo.FechaInicio"
-                                                data-fin="@promo.FechaFin"
-                                                data-vigencia="@promo.Vigencia"
-                                                data-recetas="@promo.Recetas"
-                                                data-estado="@(promo.Estado ? "Activa" : "Inactiva")"
-                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalDetallesPromocion"
-                                                title="Ver detalles">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-eliminar-promocion"
-                                                data-id="@promo.Id"
-                                                data-nombre="@promo.Nombre"
-                                                data-tipo="@promo.Tipo"
-                                                data-descuento="@promo.Descuento%"
-                                                data-vigencia="@promo.Vigencia"
-                                                data-estado="@(promo.Estado ? "Activa" : "Inactiva")"
-                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalEliminarPromocion"
-                                                title="Eliminar">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                            else
+                                            {
+                                                <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactiva</span>
+                                            }
+                                        </td>
+                                        <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                            <button type="button"
+                                                    class="btn btn-sm"
+                                                    onclick="window.location.href='@Url.Action("EditarPromocion", "Promocion", new { id = promo.IdPromocion })'"
+                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-detalles-promocion"
+                                                    data-id="@promo.IdPromocion"
+                                                    data-nombre="@promo.Nombre"
+                                                    data-tipo="@promo.NombreTipoPromocion"
+                                                    data-descuento="@promo.PorcentajeDescuento"
+                                                    data-inicio="@promo.FechaInicio.ToString("dd/MM/yyyy")"
+                                                    data-fin="@promo.FechaFin.ToString("dd/MM/yyyy")"
+                                                    data-vigencia="@promo.VigenciaTexto"
+                                                    data-recetas="@promo.CantidadRecetas"
+                                                    data-estado="@promo.EstadoTexto"
+                                                    style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalDetallesPromocion"
+                                                    title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-eliminar-promocion"
+                                                    data-id="@promo.IdPromocion"
+                                                    data-nombre="@promo.Nombre"
+                                                    data-tipo="@promo.NombreTipoPromocion"
+                                                    data-descuento="@promo.PorcentajeDescuento%"
+                                                    data-vigencia="@promo.VigenciaTexto"
+                                                    data-estado="@promo.EstadoTexto"
+                                                    style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalEliminarPromocion"
+                                                    title="Eliminar">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="10" style="padding: 3rem; text-align: center; color: var(--charcoal); opacity: 0.7;">
+                                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.3;"></i>
+                                        <p style="margin: 0; font-size: 1.1rem;">No se encontraron promociones</p>
                                     </td>
                                 </tr>
                             }
@@ -279,7 +284,7 @@
                 <!-- Footer de paginación -->
                 <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
                     <div style="color: var(--dark-green); font-size: 0.95rem;">
-                        Mostrando <strong>1-6</strong> de <strong>6</strong> promociones
+                        Mostrando <strong>1-@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> promociones
                     </div>
                 </div>
             </div>
@@ -298,11 +303,15 @@
                         </div>
                     </div>
                     <div style="padding: 1.5rem; text-align: center;">
-                        <h2 style="font-size: 3rem; color: var(--olive-green); margin: 0; font-family: var(--font-primary);">4</h2>
+                        <h2 style="font-size: 3rem; color: var(--olive-green); margin: 0; font-family: var(--font-primary);">@promoVigentes</h2>
                         <p style="color: var(--charcoal); opacity: 0.7; margin: 0.5rem 0 0;">promociones activas</p>
                     </div>
                 </div>
+
                 <!-- Por Vencer -->
+                @{
+                    var promoPorVencer = Model?.Where(p => p.EstaVigente && p.DiasRestantes <= 7 && p.DiasRestantes > 0).ToList();
+                }
                 <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
                     <div style="background: var(--gold); color: white; padding: 1.5rem;">
                         <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">
@@ -314,12 +323,25 @@
                         </div>
                     </div>
                     <div id="alertasPorVencer" style="padding: 1rem; display: grid; gap: 0.7rem;">
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: block; margin-bottom: 0.3rem;">2x1 Galletas</strong>
-                            <div style="font-size: 0.85rem; color: var(--charcoal); opacity: 0.7;">
-                                <i class="fas fa-calendar"></i> Vence en <strong style="color: var(--gold);">3 días</strong>
+                        @if (promoPorVencer != null && promoPorVencer.Any())
+                        {
+                            @foreach (var promo in promoPorVencer)
+                            {
+                                <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
+                                    <strong style="color: var(--dark-green); font-size: 0.95rem; display: block; margin-bottom: 0.3rem;">@promo.Nombre</strong>
+                                    <div style="font-size: 0.85rem; color: var(--charcoal); opacity: 0.7;">
+                                        <i class="fas fa-calendar"></i> Vence en <strong style="color: var(--gold);">@promo.DiasRestantes días</strong>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div style="padding: 1rem; text-align: center; color: var(--charcoal); opacity: 0.5;">
+                                <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
+                                <p style="margin: 0; font-size: 0.9rem;">No hay promociones por vencer</p>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>

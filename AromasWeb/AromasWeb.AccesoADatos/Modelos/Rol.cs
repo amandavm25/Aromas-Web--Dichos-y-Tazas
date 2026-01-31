@@ -1,13 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AromasWeb.AccesoADatos.Modelos
 {
-    public class Rol
+    [Table("Rol")]
+    public class RolAD
     {
+        [Key]
+        public int IdRol { get; set; }
 
+        [Required]
+        [StringLength(100)]
+        public string Nombre { get; set; }
+
+        [StringLength(500)]
+        public string Descripcion { get; set; }
+
+        [Required]
+        public bool Estado { get; set; }
     }
 }

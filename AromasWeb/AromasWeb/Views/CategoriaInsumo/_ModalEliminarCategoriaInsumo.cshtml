@@ -1,5 +1,5 @@
 ﻿<div class="modal fade" id="modalEliminarCategoria" tabindex="-1" aria-labelledby="modalEliminarCategoriaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
             <div class="modal-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: var(--white); border: none; padding: 2rem;">
@@ -35,7 +35,7 @@
                         <i class="fas fa-tag" style="color: var(--olive-green);"></i> Datos de la Categoría a Eliminar
                     </h6>
 
-                    <div style="display: grid; gap: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
                         <!-- ID -->
                         <div class="feature-card" style="padding: 1.2rem; margin: 0;">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
@@ -52,8 +52,8 @@
                             <p id="eliminar-nombre-categoria" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
                         </div>
 
-                        <!-- Descripción -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <!-- Descripción (ocupa ambas columnas) -->
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; grid-column: 1 / -1;">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
                                 <i class="fas fa-align-left" style="color: var(--olive-green);"></i> Descripción
                             </label>
@@ -65,7 +65,7 @@
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
                                 <i class="fas fa-toggle-on" style="color: var(--olive-green);"></i> Estado
                             </label>
-                            <p id="eliminar-estado-categoria" style="color: var(--dark-green); font-size: 1rem; font-weight: 600; margin: 0;"></p>
+                            <span id="eliminar-estado-badge-categoria" class="badge" style="font-size: 0.9rem; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600;"></span>
                         </div>
                     </div>
                 </div>
@@ -96,3 +96,43 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesEliminar = document.querySelectorAll('.btn-eliminar-categoria');
+
+        botonesEliminar.forEach(boton => {
+            boton.addEventListener('click', function () {
+                // Obtener datos del botón
+                const id = this.getAttribute('data-id');
+                const nombre = this.getAttribute('data-nombre');
+                const descripcion = this.getAttribute('data-descripcion');
+                const estado = this.getAttribute('data-estado');
+
+                // Llenar el modal con los datos
+                document.getElementById('eliminar-id-display-categoria').textContent = id;
+                document.getElementById('eliminar-nombre-categoria').textContent = nombre;
+                document.getElementById('eliminar-descripcion-categoria').textContent = descripcion;
+
+                // Configurar el badge de estado
+                const estadoBadge = document.getElementById('eliminar-estado-badge-categoria');
+                if (estado === 'Activa') {
+                    estadoBadge.textContent = 'Activa';
+                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.color = 'white';
+                } else {
+                    estadoBadge.textContent = 'Inactiva';
+                    estadoBadge.style.background = '#e74c3c';
+                    estadoBadge.style.color = 'white';
+                }
+
+                // Establecer el ID en el campo oculto del formulario
+                document.getElementById('eliminar-id-categoria').value = id;
+
+                // Configurar la acción del formulario
+                const form = document.getElementById('formEliminarCategoria');
+                form.action = '/CategoriaInsumo/EliminarCategoriaInsumo/' + id;
+            });
+        });
+    });
+</script>

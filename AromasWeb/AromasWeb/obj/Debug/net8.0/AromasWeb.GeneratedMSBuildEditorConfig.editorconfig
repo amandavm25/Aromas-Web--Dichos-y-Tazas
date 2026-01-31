@@ -230,16 +230,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXEVkaXRhckluc3Vtby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/HistorialMovimientos.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXEhpc3RvcmlhbE1vdmltaWVudG9zLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/ListadoInsumos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXExpc3RhZG9JbnN1bW9zLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/RegistrarMovimiento.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXFJlZ2lzdHJhck1vdmltaWVudG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/_ModalDetallesInsumo.cshtml]
@@ -268,6 +260,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/_ModalEliminarModulo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXF9Nb2RhbEVsaW1pbmFyTW9kdWxvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/MovimientoInsumo/HistorialMovimientos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aW1pZW50b0luc3Vtb1xIaXN0b3JpYWxNb3ZpbWllbnRvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/MovimientoInsumo/RegistrarMovimiento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aW1pZW50b0luc3Vtb1xSZWdpc3RyYXJNb3ZpbWllbnRvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/AsignarPermisos.cshtml]

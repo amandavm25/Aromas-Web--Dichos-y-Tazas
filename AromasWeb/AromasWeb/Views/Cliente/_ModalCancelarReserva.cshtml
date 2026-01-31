@@ -68,34 +68,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        // Script para el modal de cancelar
-        document.addEventListener('DOMContentLoaded', function() {
-            const btnsCancelar = document.querySelectorAll('.btn-cancelar-reserva');
-
-            btnsCancelar.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const id = this.getAttribute('data-id');
-                    const fecha = this.getAttribute('data-fecha');
-                    const hora = this.getAttribute('data-hora');
-                    const personas = this.getAttribute('data-personas');
-
-                    document.getElementById('cancelar-id-reserva').value = id;
-                    document.getElementById('cancelar-id-display').textContent = '#' + id;
-                    document.getElementById('cancelar-fecha').textContent = fecha;
-                    document.getElementById('cancelar-hora').textContent = hora;
-
-                    if (personas) {
-                        document.getElementById('cancelar-personas').textContent = personas + ' personas';
-                    }
-
-                    // Actualizar la acción del formulario
-                    const form = document.getElementById('formCancelarReserva');
-                    form.action = '@Url.Action("CancelarMiReserva", "Cliente")';
-                });
-            });
-        });
-    </script>
-}

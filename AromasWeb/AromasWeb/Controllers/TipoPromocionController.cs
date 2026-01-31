@@ -1,78 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
-using System;
+using AromasWeb.Abstracciones.Logica.TipoPromocion;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AromasWeb.Controllers
 {
     public class TipoPromocionController : Controller
     {
+        private IListarTiposPromociones _listarTiposPromociones;
+
+        public TipoPromocionController()
+        {
+            _listarTiposPromociones = new LogicaDeNegocio.TiposPromociones.ListarTiposPromociones();
+        }
+
         // GET: TipoPromocion/ListadoTiposPromociones
         public IActionResult ListadoTiposPromociones(string buscar)
         {
             ViewBag.Buscar = buscar;
 
-            // Tipos de promoción de ejemplo con estadísticas
-            var tiposPromociones = new List<TipoPromocion>
-            {
-                new TipoPromocion
-                {
-                    IdTipoPromocion = 1,
-                    Nombre = "Descuento Directo",
-                    Descripcion = "Descuento porcentual directo aplicado al precio del producto",
-                    Estado = true,
-                    CantidadPromociones = 3
-                },
-                new TipoPromocion
-                {
-                    IdTipoPromocion = 2,
-                    Nombre = "2x1",
-                    Descripcion = "Dos productos por el precio de uno",
-                    Estado = true,
-                    CantidadPromociones = 1
-                },
-                new TipoPromocion
-                {
-                    IdTipoPromocion = 3,
-                    Nombre = "Combo",
-                    Descripcion = "Combo de productos con descuento especial",
-                    Estado = true,
-                    CantidadPromociones = 1
-                },
-                new TipoPromocion
-                {
-                    IdTipoPromocion = 4,
-                    Nombre = "Happy Hour",
-                    Descripcion = "Descuento aplicado en horarios específicos del día",
-                    Estado = true,
-                    CantidadPromociones = 1
-                },
-                new TipoPromocion
-                {
-                    IdTipoPromocion = 5,
-                    Nombre = "Día Especial",
-                    Descripcion = "Promoción especial para fechas conmemorativas",
-                    Estado = true,
-                    CantidadPromociones = 1
-                },
-                new TipoPromocion
-                {
-                    IdTipoPromocion = 6,
-                    Nombre = "Descuento por Volumen",
-                    Descripcion = "Descuento basado en cantidad de productos adquiridos",
-                    Estado = false,
-                    CantidadPromociones = 0
-                }
-            };
+            List<TipoPromocion> tiposPromociones;
 
-            // Filtrar por búsqueda si existe
-            if (!string.IsNullOrWhiteSpace(buscar))
+            if (!string.IsNullOrEmpty(buscar))
             {
-                tiposPromociones = tiposPromociones
-                    .Where(t => t.Nombre.Contains(buscar, StringComparison.OrdinalIgnoreCase) ||
-                               (t.Descripcion != null && t.Descripcion.Contains(buscar, StringComparison.OrdinalIgnoreCase)))
-                    .ToList();
+                tiposPromociones = _listarTiposPromociones.BuscarPorNombre(buscar);
+            }
+            else
+            {
+                tiposPromociones = _listarTiposPromociones.Obtener();
             }
 
             return View(tiposPromociones);
@@ -91,6 +46,7 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para guardar en la base de datos
                 TempData["Mensaje"] = "Tipo de promoción registrado correctamente";
                 TempData["TipoMensaje"] = "success";
                 return RedirectToAction(nameof(ListadoTiposPromociones));
@@ -102,14 +58,13 @@ namespace AromasWeb.Controllers
         // GET: TipoPromocion/EditarTipoPromocion/5
         public IActionResult EditarTipoPromocion(int id)
         {
-            // Datos de ejemplo - en producción vendría de la base de datos
-            var tipoPromocion = new TipoPromocion
+            var tipoPromocion = _listarTiposPromociones.ObtenerPorId(id);
+
+            if (tipoPromocion == null)
             {
-                IdTipoPromocion = id,
-                Nombre = "Descuento Directo",
-                Descripcion = "Descuento porcentual directo aplicado al precio del producto",
-                Estado = true
-            };
+                TempData["Error"] = "Tipo de promoción no encontrado";
+                return RedirectToAction(nameof(ListadoTiposPromociones));
+            }
 
             return View(tipoPromocion);
         }
@@ -121,6 +76,7 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para actualizar en la base de datos
                 TempData["Mensaje"] = "Tipo de promoción actualizado correctamente";
                 TempData["TipoMensaje"] = "success";
                 return RedirectToAction(nameof(ListadoTiposPromociones));
@@ -136,7 +92,7 @@ namespace AromasWeb.Controllers
         {
             // Aquí iría la lógica para verificar si tiene promociones asociadas
             // Si tiene promociones asociadas, no se puede eliminar
-
+            // Aquí iría la lógica para eliminar el tipo de promoción
             TempData["Mensaje"] = "Tipo de promoción eliminado correctamente";
             TempData["TipoMensaje"] = "success";
             return RedirectToAction(nameof(ListadoTiposPromociones));
@@ -145,14 +101,13 @@ namespace AromasWeb.Controllers
         // GET: TipoPromocion/DetallesTipoPromocion/5
         public IActionResult DetallesTipoPromocion(int id)
         {
-            var tipoPromocion = new TipoPromocion
+            var tipoPromocion = _listarTiposPromociones.ObtenerPorId(id);
+
+            if (tipoPromocion == null)
             {
-                IdTipoPromocion = id,
-                Nombre = "Descuento Directo",
-                Descripcion = "Descuento porcentual directo aplicado al precio del producto",
-                Estado = true,
-                CantidadPromociones = 3
-            };
+                TempData["Error"] = "Tipo de promoción no encontrado";
+                return RedirectToAction(nameof(ListadoTiposPromociones));
+            }
 
             return View(tipoPromocion);
         }

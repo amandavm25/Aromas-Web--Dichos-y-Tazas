@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Planillas del Empleado";
-    var empleado = (AromasWeb.Controllers.EmpleadoInfo)ViewBag.Empleado;
+    var empleado = (AromasWeb.Abstracciones.ModeloUI.Empleado)ViewBag.Empleado;
 }
 
 <!-- Hero Section -->
@@ -19,7 +19,7 @@
                 Planillas de Pago
             </h1>
             <p class="hero-subtitle">
-                @empleado.NombreCompleto • @empleado.Cargo
+                @empleado.Nombre @empleado.Apellidos • @empleado.Cargo
             </p>
         </div>
     </div>
@@ -42,7 +42,7 @@
                         <i class="fas fa-user" style="font-size: 1.5rem; color: white;"></i>
                     </div>
                     <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Nombre Completo</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleado.NombreCompleto</h4>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleado.Nombre @empleado.Apellidos</h4>
                 </div>
                 <div>
                     <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
@@ -63,14 +63,14 @@
                         <i class="fas fa-calendar" style="font-size: 1.5rem; color: white;"></i>
                     </div>
                     <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Fecha de Contratación</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleado.FechaContratacion.ToString("dd/MM/yyyy")</h4>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleado.FechaContratacionFormateada</h4>
                 </div>
                 <div>
                     <div style="width: 60px; height: 60px; background: var(--gold); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
                         <i class="fas fa-hourglass-half" style="font-size: 1.5rem; color: white;"></i>
                     </div>
                     <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Antigüedad</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleado.TiempoServicio</h4>
+                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleado.AnosTrabajados</h4>
                 </div>
             </div>
         </div>

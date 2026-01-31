@@ -1,100 +1,52 @@
 ﻿using AromasWeb.Abstracciones.ModeloUI;
+using AromasWeb.Abstracciones.Logica.Modulo;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace AromasWeb.Controllers
 {
     public class ModuloController : Controller
     {
+        private IListarModulos _listarModulos;
+
+        public ModuloController()
+        {
+            _listarModulos = new LogicaDeNegocio.Modulos.ListarModulos();
+        }
+
         // GET: Modulo/ListadoModulos
         public IActionResult ListadoModulos(string buscar, string filtroEstado)
         {
             ViewBag.Buscar = buscar;
             ViewBag.FiltroEstado = filtroEstado;
 
-            // Módulos de ejemplo
-            var modulos = new List<Modulo>
-            {
-                new Modulo
-                {
-                    IdModulo = 1,
-                    Nombre = "Gestión de Empleados",
-                    Descripcion = "Módulo para administrar empleados del sistema",
-                    Estado = true
-                },
-                new Modulo
-                {
-                    IdModulo = 2,
-                    Nombre = "Control de Asistencia",
-                    Descripcion = "Registro y seguimiento de asistencias",
-                    Estado = true
-                },
-                new Modulo
-                {
-                    IdModulo = 3,
-                    Nombre = "Gestión de Planilla",
-                    Descripcion = "Cálculo y procesamiento de planillas",
-                    Estado = true
-                },
-                new Modulo
-                {
-                    IdModulo = 4,
-                    Nombre = "Solicitud de Vacaciones",
-                    Descripcion = "Sistema de solicitud y aprobación de vacaciones",
-                    Estado = true
-                },
-                new Modulo
-                {
-                    IdModulo = 5,
-                    Nombre = "Bitácora del Sistema",
-                    Descripcion = "Registro de acciones y eventos del sistema",
-                    Estado = true
-                },
-                new Modulo
-                {
-                    IdModulo = 6,
-                    Nombre = "Reportes",
-                    Descripcion = "Generación de reportes y estadísticas",
-                    Estado = false
-                },
-                new Modulo
-                {
-                    IdModulo = 7,
-                    Nombre = "Gestión de Roles",
-                    Descripcion = "Administración de roles y permisos",
-                    Estado = true
-                },
-                new Modulo
-                {
-                    IdModulo = 8,
-                    Nombre = "Historial de Tarifas",
-                    Descripcion = "Registro histórico de tarifas por hora",
-                    Estado = true
-                }
-            };
+            // Obtener módulos según los filtros
+            List<Modulo> modulos;
 
-            // Filtrar por búsqueda
-            if (!string.IsNullOrWhiteSpace(buscar))
+            if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(filtroEstado))
             {
-                modulos = modulos.Where(m =>
-                    m.Nombre.ToLower().Contains(buscar.ToLower()) ||
-                    (m.Descripcion != null && m.Descripcion.ToLower().Contains(buscar.ToLower()))
-                ).ToList();
+                // Buscar por nombre y filtrar por estado
+                bool estado = filtroEstado == "activo";
+                modulos = _listarModulos.BuscarPorNombre(buscar)
+                    .Where(m => m.Estado == estado)
+                    .ToList();
             }
-
-            // Filtrar por estado
-            if (!string.IsNullOrWhiteSpace(filtroEstado))
+            else if (!string.IsNullOrEmpty(buscar))
             {
-                if (filtroEstado.ToLower() == "activo")
-                {
-                    modulos = modulos.Where(m => m.Estado).ToList();
-                }
-                else if (filtroEstado.ToLower() == "inactivo")
-                {
-                    modulos = modulos.Where(m => !m.Estado).ToList();
-                }
+                // Solo buscar por nombre
+                modulos = _listarModulos.BuscarPorNombre(buscar);
+            }
+            else if (!string.IsNullOrEmpty(filtroEstado))
+            {
+                // Solo filtrar por estado
+                bool estado = filtroEstado == "activo";
+                modulos = _listarModulos.BuscarPorEstado(estado);
+            }
+            else
+            {
+                // Obtener todos
+                modulos = _listarModulos.Obtener();
             }
 
             return View(modulos);
@@ -125,14 +77,7 @@ namespace AromasWeb.Controllers
         // GET: Modulo/EditarModulo/5
         public IActionResult EditarModulo(int id)
         {
-            // Módulo de ejemplo
-            var modulo = new Modulo
-            {
-                IdModulo = id,
-                Nombre = "Gestión de Empleados",
-                Descripcion = "Módulo para administrar empleados del sistema",
-                Estado = true
-            };
+            var modulo = _listarModulos.ObtenerPorId(id);
 
             if (modulo == null)
             {

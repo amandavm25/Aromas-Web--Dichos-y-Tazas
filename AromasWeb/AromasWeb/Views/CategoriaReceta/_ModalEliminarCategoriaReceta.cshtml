@@ -3,96 +3,128 @@
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
             <div class="modal-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalEliminarCategoriaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
+                <h5 class="modal-title" id="modalEliminarCategoriaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.3rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-exclamation-triangle"></i>
+                        <i class="fas fa-trash-alt"></i>
                     </div>
-                    Confirmar Eliminación
+                    Eliminar Categoría
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--white);">
-                <!-- Alerta de advertencia -->
-                <div class="feature-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(192, 57, 43, 0.1) 100%); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid #e74c3c;">
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <div style="width: 50px; height: 50px; background: #e74c3c; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; color: white;"></i>
-                        </div>
+            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+                <!-- Mensaje de advertencia -->
+                <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ffc107;"></i>
                         <div>
-                            <h6 style="color: #c0392b; margin: 0 0 0.5rem; font-weight: 700; font-size: 1.1rem;">¡ATENCIÓN!</h6>
-                            <p style="margin: 0; color: #c0392b; font-weight: 500; line-height: 1.6;">
-                                ¿Está seguro que desea <strong>ELIMINAR</strong> esta categoría de receta? Esta acción no se puede deshacer.
-                            </p>
+                            <strong style="color: #856404; font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">¡Advertencia!</strong>
+                            <p style="color: #856404; margin: 0; font-size: 0.95rem;">Esta acción no se puede deshacer. La categoría será eliminada permanentemente del sistema.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Información de la categoría -->
                 <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
-                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
-                        <i class="fas fa-book-open" style="color: var(--olive-green);"></i> Datos de la Categoría a Eliminar
+                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-info-circle" style="color: var(--gold);"></i> Información de la Categoría
                     </h6>
 
-                    <div style="display: grid; gap: 1.5rem;">
-                        <!-- ID -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-hashtag" style="color: var(--olive-green);"></i> ID
-                            </label>
-                            <p id="eliminar-id-display-categoria" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
+                    <div style="display: grid; gap: 1.2rem;">
                         <!-- Nombre -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--cream);">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-book" style="color: var(--olive-green);"></i> Nombre
+                                <i class="fas fa-book-open" style="color: #e74c3c;"></i> Nombre de la Categoría
                             </label>
-                            <p id="eliminar-nombre-categoria" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            <p id="eliminar-nombre-categoria" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
                         <!-- Descripción -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--cream);">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-align-left" style="color: var(--olive-green);"></i> Descripción
+                                <i class="fas fa-align-left" style="color: #e74c3c;"></i> Descripción
                             </label>
-                            <p id="eliminar-descripcion-categoria" style="color: var(--dark-green); font-size: 0.95rem; margin: 0; line-height: 1.5;"></p>
+                            <p id="eliminar-descripcion-categoria" style="color: var(--dark-green); font-size: 1rem; margin: 0; line-height: 1.6;"></p>
                         </div>
 
                         <!-- Estado -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--cream);">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-toggle-on" style="color: var(--olive-green);"></i> Estado
+                                <i class="fas fa-toggle-on" style="color: #e74c3c;"></i> Estado
                             </label>
-                            <span id="eliminar-estado-badge-categoria" class="badge" style="font-size: 0.9rem; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600;"></span>
+                            <span id="eliminar-estado-badge-categoria" class="badge" style="font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Advertencia adicional -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin-top: 1.5rem; border: 2px dashed #e74c3c;">
-                    <p style="margin: 0; color: #c0392b; font-size: 0.95rem; display: flex; align-items: start; gap: 0.7rem;">
-                        <i class="fas fa-info-circle" style="font-size: 1.2rem; margin-top: 0.2rem;"></i>
-                        <span><strong>Nota importante:</strong> Se eliminará permanentemente esta categoría. Las recetas asociadas no se eliminarán pero quedarán sin categoría asignada.</span>
+                <!-- Nota adicional -->
+                <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1.2rem; border-radius: 10px; margin-top: 1.5rem;">
+                    <p style="margin: 0; color: #2e7d32; font-size: 0.9rem; display: flex; align-items: start; gap: 0.5rem;">
+                        <i class="fas fa-info-circle" style="margin-top: 0.2rem;"></i>
+                        <span><strong>Nota:</strong> Las recetas asociadas a esta categoría no se eliminarán, pero quedarán sin categoría asignada.</span>
                     </p>
                 </div>
+
+                <!-- Formulario de eliminación -->
+                <form id="formEliminarCategoria" method="post" action="">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="eliminar-id-categoria" name="id" value="" />
+                </form>
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; gap: 1rem;">
-                <form id="formEliminarCategoria" method="post" action="" style="display: flex; gap: 1rem; width: 100%; justify-content: flex-end;">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" id="eliminar-id-categoria" name="IdCategoriaReceta" />
-
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
-                        <span><i class="fas fa-times"></i> Cancelar</span>
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, #e74c3c, #c0392b); padding: 0.9rem 2.5rem; border-radius: 50px;">
-                        <span><i class="fas fa-trash"></i> Eliminar Categoría</span>
-                    </button>
-                </form>
+            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem; gap: 1rem;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2rem; border-radius: 50px;">
+                    <span><i class="fas fa-times"></i> Cancelar</span>
+                </button>
+                <button type="button" class="btn" onclick="confirmarEliminacionCategoria()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; padding: 0.9rem 2rem; border-radius: 50px; box-shadow: var(--shadow-md);">
+                    <span><i class="fas fa-trash-alt"></i> Eliminar Categoría</span>
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesEliminar = document.querySelectorAll('.btn-eliminar-categoria');
+
+        botonesEliminar.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const nombre = this.getAttribute('data-nombre');
+                const descripcion = this.getAttribute('data-descripcion');
+                const estado = this.getAttribute('data-estado');
+
+                // Llenar el modal con los datos
+                document.getElementById('eliminar-id-categoria').value = id;
+                document.getElementById('eliminar-nombre-categoria').textContent = nombre;
+                document.getElementById('eliminar-descripcion-categoria').textContent = descripcion;
+
+                // Configurar el badge de estado
+                const estadoBadge = document.getElementById('eliminar-estado-badge-categoria');
+                if (estado === 'Activa') {
+                    estadoBadge.textContent = 'Activa';
+                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.color = 'white';
+                } else {
+                    estadoBadge.textContent = 'Inactiva';
+                    estadoBadge.style.background = '#e74c3c';
+                    estadoBadge.style.color = 'white';
+                }
+
+                // Actualizar la acción del formulario
+                const form = document.getElementById('formEliminarCategoria');
+                form.action = '/CategoriaReceta/EliminarCategoriaReceta';
+            });
+        });
+    });
+
+    function confirmarEliminacionCategoria() {
+        const form = document.getElementById('formEliminarCategoria');
+        if (form) {
+            form.submit();
+        }
+    }
+</script>

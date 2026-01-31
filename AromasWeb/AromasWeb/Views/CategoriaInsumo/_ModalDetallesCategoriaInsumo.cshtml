@@ -61,3 +61,37 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesDetalles = document.querySelectorAll('.btn-detalles-categoria');
+
+        botonesDetalles.forEach(boton => {
+            boton.addEventListener('click', function () {
+                // Obtener datos del botón
+                const id = this.getAttribute('data-id');
+                const nombre = this.getAttribute('data-nombre');
+                const descripcion = this.getAttribute('data-descripcion');
+                const fecha = this.getAttribute('data-fecha');
+                const estado = this.getAttribute('data-estado');
+
+                // Llenar el modal con los datos
+                document.getElementById('detalles-id-categoria').textContent = id;
+                document.getElementById('detalles-nombre-categoria').textContent = nombre;
+                document.getElementById('detalles-descripcion-categoria').textContent = descripcion;
+
+                // Configurar el badge de estado
+                const estadoBadge = document.getElementById('detalles-estado-badge-categoria');
+                if (estado === 'Activa') {
+                    estadoBadge.textContent = 'Activa';
+                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.color = 'white';
+                } else {
+                    estadoBadge.textContent = 'Inactiva';
+                    estadoBadge.style.background = '#e74c3c';
+                    estadoBadge.style.color = 'white';
+                }
+            });
+        });
+    });
+</script>

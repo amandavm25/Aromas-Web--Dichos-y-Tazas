@@ -18,7 +18,7 @@
                 Permisos del Sistema
             </h1>
             <p class="hero-subtitle">
-                Administra los permisos y accesos del sistema
+                Administra los permisos y accesos de la aplicación
             </p>
         </div>
     </div>
@@ -31,9 +31,9 @@
 
 <!-- Content Section -->
 <section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 1600px;">
+    <div class="container" style="max-width: 1400px;">
 
-        <!-- Barra de búsqueda y botones -->
+        <!-- Barra de búsqueda y filtros -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoPermisos", "Permiso")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
@@ -44,6 +44,20 @@
                            placeholder="Buscar por nombre de permiso..."
                            style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
                 </div>
+                <select name="filtroModulo"
+                        style="border-radius: 50px; padding: 1rem 1.5rem; font-size: 1rem; border: 2px solid var(--cream); background: var(--white);">
+                    <option value="">Todos los módulos</option>
+                    @if (ViewBag.Modulos != null)
+                    {
+                        @* foreach (var mod in ViewBag.Modulos)
+                        {
+                            <option value="@mod.IdModulo" 
+                                    @(ViewBag.FiltroModulo != null && ViewBag.FiltroModulo == mod.IdModulo ? "selected" : "")>
+                                @mod.Nombre
+                            </option>
+                        } *@
+                    }
+                </select>
                 <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
                     <span><i class="fas fa-search"></i> Buscar</span>
                 </button>
@@ -57,41 +71,15 @@
         </div>
 
         <!-- Información de búsqueda -->
-        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || ViewBag.FiltroModulo != null)
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
                 <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
                     <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                    Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong>
-                    - <strong>@(Model?.Count ?? 0)</strong> permiso(s) encontrado(s)
+                    Filtros activos - <strong>@(Model?.Count ?? 0)</strong> permiso(s) encontrado(s)
                 </p>
             </div>
         }
-
-        <!-- Filtro por módulo -->
-        <div style="margin-bottom: 3rem;" data-aos="fade-up">
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-                <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
-                    <i class="fas fa-filter" style="color: var(--gold-bright);"></i> Filtrar por módulo:
-                </span>
-                <a href="@Url.Action("ListadoPermisos", "Permiso")"
-                   class="btn @(string.IsNullOrWhiteSpace(ViewBag.FiltroModulo as string) ? "btn-primary" : "btn-secondary")"
-                   style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                    <span><i class="fas fa-th"></i> Todos</span>
-                </a>
-                @if (ViewBag.Modulos != null)
-                {
-                    @foreach (var modulo in ViewBag.Modulos as List<AromasWeb.Abstracciones.ModeloUI.Modulo>)
-                    {
-                        <a href="@Url.Action("ListadoPermisos", "Permiso", new { filtroModulo = modulo.IdModulo })"
-                           class="btn @(ViewBag.FiltroModulo == modulo.IdModulo.ToString() ? "btn-primary" : "btn-secondary")"
-                           style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                            <span><i class="fas fa-cube"></i> @modulo.Nombre</span>
-                        </a>
-                    }
-                }
-            </div>
-        </div>
 
         <!-- Tabla Principal -->
         <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
@@ -101,73 +89,71 @@
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Módulo</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre del Permiso</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Permiso</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @{
-                            var permisosDemo = new List<dynamic>
-                                                {
-                                                new { IdPermiso = 1, Modulo = "Gestión de Empleados", Nombre = "Ver Empleados" },
-                                                new { IdPermiso = 2, Modulo = "Gestión de Empleados", Nombre = "Crear Empleados" },
-                                                new { IdPermiso = 3, Modulo = "Gestión de Empleados", Nombre = "Editar Empleados" },
-                                                new { IdPermiso = 4, Modulo = "Gestión de Empleados", Nombre = "Eliminar Empleados" },
-                                                new { IdPermiso = 5, Modulo = "Control de Asistencia", Nombre = "Registrar Asistencia" },
-                                                new { IdPermiso = 6, Modulo = "Control de Asistencia", Nombre = "Ver Asistencias" },
-                                                new { IdPermiso = 7, Modulo = "Gestión de Planilla", Nombre = "Calcular Planilla" },
-                                                new { IdPermiso = 8, Modulo = "Gestión de Planilla", Nombre = "Ver Planilla" },
-                                                new { IdPermiso = 9, Modulo = "Solicitud de Vacaciones", Nombre = "Solicitar Vacaciones" },
-                                                new { IdPermiso = 10, Modulo = "Solicitud de Vacaciones", Nombre = "Aprobar Vacaciones" },
-                                                new { IdPermiso = 11, Modulo = "Bitácora del Sistema", Nombre = "Ver Bitácora" },
-                                                new { IdPermiso = 12, Modulo = "Reportes", Nombre = "Generar Reportes" }
-                                                };
-                        }
-
-                        @foreach (var permiso in permisosDemo)
+                        @if (Model != null && Model.Any())
                         {
-                            <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
-                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@permiso.IdPermiso</td>
-                                <td style="padding: 1.2rem;">
-                                    <span style="background: linear-gradient(135deg, rgba(143, 142, 106, 0.1), rgba(143, 142, 106, 0.05)); color: var(--dark-green); padding: 0.5rem 1.2rem; border-radius: 15px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
-                                        <i class="fas fa-cube" style="font-size: 0.9rem;"></i>
-                                        @permiso.Modulo
-                                    </span>
-                                </td>
-                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 500; font-size: 1.05rem;">
-                                    <i class="fas fa-shield-alt" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
-                                    @permiso.Nombre
-                                </td>
-                                <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                    <button type="button"
-                                            class="btn btn-sm"
-                                            onclick="window.location.href='@Url.Action("EditarPermiso", "Permiso", new { id = permiso.IdPermiso })'"
-                                            style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                            title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button type="button"
-                                            class="btn btn-sm btn-detalles"
-                                            data-id="@permiso.IdPermiso"
-                                            data-modulo="@permiso.Modulo"
-                                            data-nombre="@permiso.Nombre"
-                                            style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalDetallesPermiso"
-                                            title="Ver detalles">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button type="button"
-                                            class="btn btn-sm btn-eliminar"
-                                            data-id="@permiso.IdPermiso"
-                                            data-modulo="@permiso.Modulo"
-                                            data-nombre="@permiso.Nombre"
-                                            style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalEliminarPermiso"
-                                            title="Eliminar">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                            @foreach (var permiso in Model)
+                            {
+                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@permiso.IdPermiso</td>
+                                    <td style="padding: 1.2rem;">
+                                        <span style="background: var(--gold); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
+                                            <i class="fas fa-puzzle-piece" style="margin-right: 0.3rem;"></i>
+                                            @permiso.NombreModulo
+                                        </span>
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
+                                        <i class="fas fa-shield-alt" style="color: var(--olive-green); margin-right: 0.5rem;"></i>
+                                        @permiso.Nombre
+                                    </td>
+                                    <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        <button type="button"
+                                                class="btn btn-sm"
+                                                onclick="window.location.href='@Url.Action("EditarPermiso", "Permiso", new { id = permiso.IdPermiso })'"
+                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-detalles-permiso"
+                                                data-id="@permiso.IdPermiso"
+                                                data-nombre="@permiso.Nombre"
+                                                data-modulo="@permiso.NombreModulo"
+                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalDetallesPermiso"
+                                                title="Ver detalles">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-eliminar-permiso"
+                                                data-id="@permiso.IdPermiso"
+                                                data-nombre="@permiso.Nombre"
+                                                data-modulo="@permiso.NombreModulo"
+                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEliminarPermiso"
+                                                title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" style="padding: 3rem; text-align: center; color: var(--charcoal);">
+                                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
+                                    <p style="margin: 0; font-size: 1.1rem;">No se encontraron permisos</p>
+                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+                                    {
+                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -178,15 +164,7 @@
             <!-- Footer de paginación -->
             <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
                 <div style="color: var(--dark-green); font-size: 0.95rem;">
-                    Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">12</span></strong> de <strong id="totalRecords">12</strong> permisos
-                </div>
-                <div style="display: flex; gap: 0.5rem;">
-                    <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                        &lt; Anterior
-                    </button>
-                    <button id="btnSiguiente" class="btn btn-primary" onclick="paginaSiguiente()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                        Siguiente &gt;
-                    </button>
+                    Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> permisos
                 </div>
             </div>
         </div>

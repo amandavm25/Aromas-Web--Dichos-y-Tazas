@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace AromasWeb.Abstracciones.ModeloUI
@@ -19,7 +20,7 @@ namespace AromasWeb.Abstracciones.ModeloUI
         // Propiedades de navegación
         public virtual Modulo Modulo { get; set; }
 
-        // Propiedad calculada para mostrar el nombre del módulo
+        // Propiedades calculadas
         [DisplayName("Módulo")]
         public string NombreModulo
         {

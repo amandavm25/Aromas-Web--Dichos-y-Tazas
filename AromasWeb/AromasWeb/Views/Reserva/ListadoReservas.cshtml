@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Gestión de Reservas";
+    var totalReservas = Model?.Count ?? 0;
+    var reservasHoy = Model?.Where(r => r.EsHoy).ToList() ?? new List<AromasWeb.Abstracciones.ModeloUI.Reserva>();
+    var reservasProximas = Model?.Where(r => r.EsFutura && r.DiasHastaReserva <= 7).Count() ?? 0;
 }
 
 <!-- Hero Section -->
@@ -64,7 +67,7 @@
                 <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
                     <i class="fas fa-info-circle" style="color: var(--gold);"></i>
                     Mostrando resultados para <strong style="color: var(--gold);">"@ViewBag.Buscar"</strong>
-                    - <strong>@(Model?.Count ?? 0)</strong> reserva(s) encontrada(s)
+                    - <strong>@totalReservas</strong> reserva(s) encontrada(s)
                 </p>
             </div>
         }
@@ -117,108 +120,97 @@
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Teléfono</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Hora</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Personas</th>
+                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Personas</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
                                 <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @{
-                                var reservasDemo = new List<dynamic>
-                                                        {
-                                                        new { Id = 1, Cliente = "María González Rodríguez", Telefono = "8888-1234", Fecha = "29/11/2025", Hora = "19:30", Personas = 4, Estado = "Confirmada", Observaciones = "Mesa cerca de la ventana", EsHoy = false },
-                                                        new { Id = 2, Cliente = "Carlos Jiménez Mora", Telefono = "8888-2345", Fecha = "28/11/2025", Hora = "14:00", Personas = 2, Estado = "Confirmada", Observaciones = "", EsHoy = true },
-                                                        new { Id = 3, Cliente = "Ana Patricia Vargas", Telefono = "8888-3456", Fecha = "02/12/2025", Hora = "20:00", Personas = 6, Estado = "Pendiente", Observaciones = "Cumpleaños", EsHoy = false },
-                                                        new { Id = 4, Cliente = "Roberto Fernández", Telefono = "8888-4567", Fecha = "27/11/2025", Hora = "12:30", Personas = 3, Estado = "Confirmada", Observaciones = "", EsHoy = false },
-                                                        new { Id = 5, Cliente = "Laura Martínez", Telefono = "8888-5678", Fecha = "25/11/2025", Hora = "18:00", Personas = 2, Estado = "Completada", Observaciones = "Alergia al gluten", EsHoy = false },
-                                                        new { Id = 6, Cliente = "José Luis Ramírez", Telefono = "8888-6789", Fecha = "30/11/2025", Hora = "13:00", Personas = 4, Estado = "Confirmada", Observaciones = "", EsHoy = false },
-                                                        new { Id = 7, Cliente = "Sofía Hernández", Telefono = "8888-7890", Fecha = "04/12/2025", Hora = "20:30", Personas = 8, Estado = "Pendiente", Observaciones = "Evento especial", EsHoy = false },
-                                                        new { Id = 8, Cliente = "Diego Alvarado", Telefono = "8888-8901", Fecha = "22/11/2025", Hora = "19:00", Personas = 5, Estado = "Cancelada", Observaciones = "", EsHoy = false }
-                                                        };
-                            }
-
-                            @foreach (var reserva in reservasDemo)
+                            @if (Model != null && Model.Any())
                             {
-                                var colorEstado = reserva.Estado switch
+                                @foreach (var reserva in Model)
                                 {
-                                    "Pendiente" => "#ffc107",
-                                    "Confirmada" => "#28a745",
-                                    "Completada" => "#17a2b8",
-                                    "Cancelada" => "#dc3545",
-                                    _ => "#6c757d"
-                                };
-
-                                var iconoEstado = reserva.Estado switch
-                                {
-                                    "Pendiente" => "fa-clock",
-                                    "Confirmada" => "fa-check-circle",
-                                    "Completada" => "fa-check-double",
-                                    "Cancelada" => "fa-times-circle",
-                                    _ => "fa-question-circle"
-                                };
-
-                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@reserva.Id</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 500;">
-                                        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                                            @reserva.Cliente
-                                            @if (reserva.EsHoy)
+                                    <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
+                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@reserva.IdReserva</td>
+                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 500;">
+                                            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                                                @reserva.NombreCliente
+                                                @if (reserva.EsHoy)
+                                                {
+                                                    <span style="background: var(--gold); color: white; padding: 0.2rem 0.6rem; border-radius: 10px; font-size: 0.75rem; font-weight: 600;">HOY</span>
+                                                }
+                                                @if (!string.IsNullOrWhiteSpace(reserva.Observaciones))
+                                                {
+                                                    <i class="fas fa-comment" style="color: var(--gold-bright);" title="Tiene observaciones"></i>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1.2rem; color: var(--charcoal);">@reserva.TelefonoCliente</td>
+                                        <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@reserva.FechaFormateada</td>
+                                        <td style="padding: 1.2rem; color: var(--gold); font-weight: 700;">@reserva.HoraFormateada</td>
+                                        <td style="padding: 1.2rem; color: var(--charcoal); text-align: center;">
+                                            <span style="background: var(--cream); padding: 0.3rem 0.8rem; border-radius: 10px; font-weight: 600;">
+                                                <i class="fas fa-users" style="color: var(--olive-green);"></i> @reserva.CantidadPersonas
+                                            </span>
+                                        </td>
+                                        <td style="padding: 1.2rem;">
+                                            <span style="background: @reserva.ColorEstado; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;">
+                                                <i class="fas @reserva.IconoEstado"></i> @reserva.Estado
+                                            </span>
+                                        </td>
+                                        <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                            @if (reserva.PuedeModificar)
                                             {
-                                                <span style="background: var(--gold); color: white; padding: 0.2rem 0.6rem; border-radius: 10px; font-size: 0.75rem; font-weight: 600;">HOY</span>
+                                                <button type="button"
+                                                        class="btn btn-sm"
+                                                        onclick="window.location.href='@Url.Action("EditarReserva", "Reserva", new { id = reserva.IdReserva })'"
+                                                        style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                        title="Editar">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
                                             }
-                                            @if (!string.IsNullOrWhiteSpace(reserva.Observaciones))
+                                            <button type="button"
+                                                    class="btn btn-sm btn-detalles"
+                                                    data-id="@reserva.IdReserva"
+                                                    data-cliente="@reserva.NombreCliente"
+                                                    data-telefono="@reserva.TelefonoCliente"
+                                                    data-fecha="@reserva.FechaFormateada"
+                                                    data-hora="@reserva.HoraFormateada"
+                                                    data-personas="@reserva.CantidadPersonas"
+                                                    data-estado="@reserva.Estado"
+                                                    data-observaciones="@(reserva.Observaciones ?? "")"
+                                                    style="background: #17a2b8; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalDetallesReserva"
+                                                    title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            @if (reserva.PuedeCancelar)
                                             {
-                                                <i class="fas fa-comment" style="color: var(--gold-bright);" title="Tiene observaciones"></i>
+                                                <button type="button"
+                                                        class="btn btn-sm btn-eliminar"
+                                                        data-id="@reserva.IdReserva"
+                                                        data-cliente="@reserva.NombreCliente"
+                                                        data-fecha="@reserva.FechaFormateada"
+                                                        data-hora="@reserva.HoraFormateada"
+                                                        data-estado="@reserva.Estado"
+                                                        style="background: #dc3545; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalCancelarReserva"
+                                                        title="Cancelar">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
                                             }
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">@reserva.Telefono</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@reserva.Fecha</td>
-                                    <td style="padding: 1.2rem; color: var(--gold); font-weight: 700;">@reserva.Hora</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); text-align: center;">
-                                        <span style="background: var(--cream); padding: 0.3rem 0.8rem; border-radius: 10px; font-weight: 600;">
-                                            <i class="fas fa-users" style="color: var(--olive-green);"></i> @reserva.Personas
-                                        </span>
-                                    </td>
-                                    <td style="padding: 1.2rem;">
-                                        <span style="background: @colorEstado; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;">
-                                            <i class="fas @iconoEstado"></i> @reserva.Estado
-                                        </span>
-                                    </td>
-                                    <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                        <button type="button"
-                                                class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarReserva", "Reserva", new { id = reserva.Id })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-detalles"
-                                                data-id="@reserva.Id"
-                                                data-cliente="@reserva.Cliente"
-                                                data-telefono="@reserva.Telefono"
-                                                data-fecha="@reserva.Fecha"
-                                                data-hora="@reserva.Hora"
-                                                data-personas="@reserva.Personas"
-                                                data-estado="@reserva.Estado"
-                                                data-observaciones="@reserva.Observaciones"
-                                                style="background: #17a2b8; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalDetallesReserva">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-eliminar"
-                                                data-id="@reserva.Id"
-                                                data-cliente="@reserva.Cliente"
-                                                data-fecha="@reserva.Fecha"
-                                                data-hora="@reserva.Hora"
-                                                data-estado="@reserva.Estado"
-                                                style="background: #dc3545; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalEliminarReserva">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="8" style="padding: 3rem; text-align: center; color: var(--charcoal); opacity: 0.7;">
+                                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.3;"></i>
+                                        <p style="margin: 0; font-size: 1.1rem;">No se encontraron reservas</p>
                                     </td>
                                 </tr>
                             }
@@ -229,7 +221,7 @@
                 <!-- Footer de paginación -->
                 <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
                     <div style="color: var(--dark-green); font-size: 0.95rem;">
-                        Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">8</span></strong> de <strong id="totalRecords">8</strong> reservas
+                        Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">@totalReservas</span></strong> de <strong id="totalRecords">@totalReservas</strong> reservas
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
                         <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
@@ -257,13 +249,43 @@
                         </div>
                     </div>
                     <div style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 400px; overflow-y: auto;">
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem;">Carlos Jiménez</strong>
-                            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
-                                <small style="color: var(--charcoal); opacity: 0.7;">14:00</small>
-                                <small style="color: var(--olive-green); font-weight: 600;">2 personas</small>
+                        @if (reservasHoy.Any())
+                        {
+                            @foreach (var reserva in reservasHoy.OrderBy(r => r.Hora))
+                            {
+                                <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
+                                    <strong style="color: var(--dark-green); font-size: 0.95rem;">@reserva.NombreCliente</strong>
+                                    <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                                        <small style="color: var(--charcoal); opacity: 0.7;">@reserva.HoraFormateada</small>
+                                        <small style="color: var(--olive-green); font-weight: 600;">@reserva.CantidadPersonas personas</small>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div style="padding: 2rem; text-align: center; color: var(--charcoal); opacity: 0.5;">
+                                <i class="fas fa-calendar-times" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
+                                <p style="margin: 0; font-size: 0.9rem;">No hay reservas para hoy</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Próximas Reservas -->
+                <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
+                    <div style="background: var(--olive-green); color: white; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.7rem;">
+                            <i class="fas fa-clock" style="font-size: 1.5rem;"></i>
+                            <div>
+                                <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Próximas</h5>
+                                <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">Próximos 7 días</p>
                             </div>
                         </div>
+                    </div>
+                    <div style="padding: 1.5rem; text-align: center;">
+                        <h2 style="font-size: 3rem; color: var(--olive-green); margin: 0; font-family: var(--font-primary);">@reservasProximas</h2>
+                        <p style="color: var(--charcoal); opacity: 0.7; margin: 0.5rem 0 0;">reservas próximas</p>
                     </div>
                 </div>
             </div>

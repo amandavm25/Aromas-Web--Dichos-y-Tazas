@@ -1,84 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
-using System;
+using AromasWeb.Abstracciones.Logica.CategoriaInsumo;
 using System.Collections.Generic;
 
 namespace AromasWeb.Controllers
 {
     public class CategoriaInsumoController : Controller
     {
+        private IListarCategoriasInsumo _listarCategoriasInsumo;
+
+        public CategoriaInsumoController()
+        {
+            _listarCategoriasInsumo = new LogicaDeNegocio.CategoriasInsumo.ListarCategoriasInsumo();
+        }
+
         // GET: CategoriaInsumo/ListadoCategoriasInsumos
         public IActionResult ListadoCategoriasInsumos(string buscar)
         {
             ViewBag.Buscar = buscar;
 
-            // Categorías de ejemplo
-            var categorias = new List<CategoriaInsumo>
+            List<CategoriaInsumo> categorias;
+
+            if (!string.IsNullOrEmpty(buscar))
             {
-                new CategoriaInsumo
-                {
-                    IdCategoria = 1,
-                    NombreCategoria = "Harinas",
-                    Descripcion = "Harinas y derivados para panificación",
-                    Estado = true,
-                    FechaCreacion = DateTime.Now.AddMonths(-6),
-                    FechaActualizacion = DateTime.Now
-                },
-                new CategoriaInsumo
-                {
-                    IdCategoria = 2,
-                    NombreCategoria = "Endulzantes",
-                    Descripcion = "Azúcares, mieles y edulcorantes",
-                    Estado = true,
-                    FechaCreacion = DateTime.Now.AddMonths(-6),
-                    FechaActualizacion = DateTime.Now
-                },
-                new CategoriaInsumo
-                {
-                    IdCategoria = 3,
-                    NombreCategoria = "Lácteos",
-                    Descripcion = "Leche, mantequilla, crema y derivados",
-                    Estado = true,
-                    FechaCreacion = DateTime.Now.AddMonths(-6),
-                    FechaActualizacion = DateTime.Now
-                },
-                new CategoriaInsumo
-                {
-                    IdCategoria = 4,
-                    NombreCategoria = "Ingredientes Frescos",
-                    Descripcion = "Frutas, huevos y productos frescos",
-                    Estado = true,
-                    FechaCreacion = DateTime.Now.AddMonths(-6),
-                    FechaActualizacion = DateTime.Now
-                },
-                new CategoriaInsumo
-                {
-                    IdCategoria = 5,
-                    NombreCategoria = "Chocolates",
-                    Descripcion = "Chocolate en polvo, barra y coberturas",
-                    Estado = true,
-                    FechaCreacion = DateTime.Now.AddMonths(-6),
-                    FechaActualizacion = DateTime.Now
-                },
-                new CategoriaInsumo
-                {
-                    IdCategoria = 6,
-                    NombreCategoria = "Esencias",
-                    Descripcion = "Vainilla, extractos y aromatizantes",
-                    Estado = true,
-                    FechaCreacion = DateTime.Now.AddMonths(-6),
-                    FechaActualizacion = DateTime.Now
-                },
-                new CategoriaInsumo
-                {
-                    IdCategoria = 7,
-                    NombreCategoria = "Leudantes",
-                    Descripcion = "Levadura, polvo de hornear y bicarbonato",
-                    Estado = true,
-                    FechaCreacion = DateTime.Now.AddMonths(-6),
-                    FechaActualizacion = DateTime.Now
-                }
-            };
+                categorias = _listarCategoriasInsumo.BuscarPorNombre(buscar);
+            }
+            else
+            {
+                categorias = _listarCategoriasInsumo.Obtener();
+            }
 
             return View(categorias);
         }
@@ -107,16 +57,13 @@ namespace AromasWeb.Controllers
         // GET: CategoriaInsumo/EditarCategoriaInsumo/5
         public IActionResult EditarCategoriaInsumo(int id)
         {
-            // Categoría de ejemplo
-            var categoria = new CategoriaInsumo
+            var categoria = _listarCategoriasInsumo.ObtenerPorId(id);
+
+            if (categoria == null)
             {
-                IdCategoria = id,
-                NombreCategoria = "Harinas",
-                Descripcion = "Harinas y derivados para panificación",
-                Estado = true,
-                FechaCreacion = DateTime.Now.AddMonths(-6),
-                FechaActualizacion = DateTime.Now
-            };
+                TempData["Error"] = "Categoría no encontrada";
+                return RedirectToAction(nameof(ListadoCategoriasInsumos));
+            }
 
             return View(categoria);
         }

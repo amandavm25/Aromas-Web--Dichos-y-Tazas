@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Mi Historial de Tarifas";
-    var empleado = (AromasWeb.Controllers.EmpleadoInfo)ViewBag.EmpleadoActual;
+    var empleado = (AromasWeb.Abstracciones.ModeloUI.Empleado)ViewBag.EmpleadoActual;
     var tarifaActual = Model.FirstOrDefault(t => t.EstadoVigencia == "Vigente");
 }
 
@@ -17,7 +17,7 @@
                 Mi Información Salarial
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
-                Hola, <span class="hero-title-accent">@empleado.NombreCompleto</span>
+                Hola, <span class="hero-title-accent">@empleado.Nombre @empleado.Apellidos</span>
             </h1>
             <p class="hero-subtitle">
                 Consulta tu historial de tarifas y crecimiento salarial
@@ -32,7 +32,7 @@
                 </div>
                 <div>
                     <i class="fas fa-calendar-alt" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
-                    <strong style="display: block; font-size: 1.1rem;">@empleado.TiempoServicio</strong>
+                    <strong style="display: block; font-size: 1.1rem;">@empleado.AnosTrabajados</strong>
                     <span style="font-size: 0.9rem; opacity: 0.8;">Tiempo en la Empresa</span>
                 </div>
                 <div>

@@ -1,13 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
-using System;
+using AromasWeb.Abstracciones.Logica.Promocion;
+using AromasWeb.Abstracciones.Logica.TipoPromocion;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AromasWeb.Controllers
 {
     public class PromocionController : Controller
     {
+        private IListarPromociones _listarPromociones;
+        private IListarTiposPromociones _listarTiposPromociones;
+
+        public PromocionController()
+        {
+            _listarPromociones = new LogicaDeNegocio.Promociones.ListarPromociones();
+            _listarTiposPromociones = new LogicaDeNegocio.TiposPromociones.ListarTiposPromociones();
+        }
+
         // GET: Promocion/ListadoPromociones
         public IActionResult ListadoPromociones(string buscar, int? tipo, string vigencia)
         {
@@ -15,123 +24,57 @@ namespace AromasWeb.Controllers
             ViewBag.Tipo = tipo;
             ViewBag.Vigencia = vigencia;
 
-            // Tipos de promoción de ejemplo
-            var tiposPromocion = new List<TipoPromocion>
-            {
-                new TipoPromocion { IdTipoPromocion = 1, Nombre = "Descuento Directo", Descripcion = "Descuento porcentual directo", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 2, Nombre = "2x1", Descripcion = "Dos productos por el precio de uno", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 3, Nombre = "Combo", Descripcion = "Combo de productos con descuento", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 4, Nombre = "Happy Hour", Descripcion = "Descuento en horarios específicos", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 5, Nombre = "Día Especial", Descripcion = "Promoción para días especiales", Estado = true }
-            };
-
+            // Obtener todos los tipos de promoción para el filtro
+            var tiposPromocion = _listarTiposPromociones.Obtener();
             ViewBag.TodosTipos = tiposPromocion;
 
-            // Promociones de ejemplo
-            var promociones = new List<Promocion>
+            // Obtener promociones según los filtros
+            List<Promocion> promociones;
+
+            if (!string.IsNullOrEmpty(buscar) && tipo.HasValue && !string.IsNullOrEmpty(vigencia))
             {
-                new Promocion
-                {
-                    IdPromocion = 1,
-                    IdTipoPromocion = 1,
-                    Nombre = "Descuento Navideño",
-                    Descripcion = "20% de descuento en pasteles durante diciembre",
-                    PorcentajeDescuento = 20m,
-                    FechaInicio = new DateTime(2024, 12, 1),
-                    FechaFin = new DateTime(2024, 12, 31),
-                    Estado = true,
-                    NombreTipoPromocion = "Descuento Directo",
-                    Recetas = new List<PromocionReceta>
-                    {
-                        new PromocionReceta { IdReceta = 1 },
-                        new PromocionReceta { IdReceta = 8 }
-                    }
-                },
-                new Promocion
-                {
-                    IdPromocion = 2,
-                    IdTipoPromocion = 4,
-                    Nombre = "Happy Hour Café",
-                    Descripcion = "15% de descuento en bebidas calientes de 3pm a 5pm",
-                    PorcentajeDescuento = 15m,
-                    FechaInicio = new DateTime(2024, 11, 1),
-                    FechaFin = new DateTime(2025, 1, 31),
-                    Estado = true,
-                    NombreTipoPromocion = "Happy Hour",
-                    Recetas = new List<PromocionReceta>
-                    {
-                        new PromocionReceta { IdReceta = 2 }
-                    }
-                },
-                new Promocion
-                {
-                    IdPromocion = 3,
-                    IdTipoPromocion = 2,
-                    Nombre = "2x1 Galletas",
-                    Descripcion = "Compra dos paquetes de galletas y paga uno",
-                    PorcentajeDescuento = 50m,
-                    FechaInicio = new DateTime(2024, 11, 15),
-                    FechaFin = new DateTime(2024, 11, 30),
-                    Estado = true,
-                    NombreTipoPromocion = "2x1",
-                    Recetas = new List<PromocionReceta>
-                    {
-                        new PromocionReceta { IdReceta = 4 }
-                    }
-                },
-                new Promocion
-                {
-                    IdPromocion = 4,
-                    IdTipoPromocion = 3,
-                    Nombre = "Combo Desayuno",
-                    Descripcion = "Croissant + Café a precio especial",
-                    PorcentajeDescuento = 25m,
-                    FechaInicio = new DateTime(2024, 11, 1),
-                    FechaFin = new DateTime(2024, 12, 31),
-                    Estado = true,
-                    NombreTipoPromocion = "Combo",
-                    Recetas = new List<PromocionReceta>
-                    {
-                        new PromocionReceta { IdReceta = 2 },
-                        new PromocionReceta { IdReceta = 3 }
-                    }
-                },
-                new Promocion
-                {
-                    IdPromocion = 5,
-                    IdTipoPromocion = 1,
-                    Nombre = "Black Friday",
-                    Descripcion = "30% en toda la repostería",
-                    PorcentajeDescuento = 30m,
-                    FechaInicio = new DateTime(2024, 11, 29),
-                    FechaFin = new DateTime(2024, 11, 29),
-                    Estado = false,
-                    NombreTipoPromocion = "Descuento Directo",
-                    Recetas = new List<PromocionReceta>
-                    {
-                        new PromocionReceta { IdReceta = 1 },
-                        new PromocionReceta { IdReceta = 6 },
-                        new PromocionReceta { IdReceta = 8 }
-                    }
-                },
-                new Promocion
-                {
-                    IdPromocion = 6,
-                    IdTipoPromocion = 5,
-                    Nombre = "Día de San Valentín",
-                    Descripcion = "15% en postres especiales",
-                    PorcentajeDescuento = 15m,
-                    FechaInicio = new DateTime(2025, 2, 14),
-                    FechaFin = new DateTime(2025, 2, 14),
-                    Estado = true,
-                    NombreTipoPromocion = "Día Especial",
-                    Recetas = new List<PromocionReceta>
-                    {
-                        new PromocionReceta { IdReceta = 1 },
-                        new PromocionReceta { IdReceta = 8 }
-                    }
-                }
-            };
+                // Buscar por nombre, tipo y vigencia
+                promociones = _listarPromociones.BuscarPorNombre(buscar)
+                    .FindAll(p => p.IdTipoPromocion == tipo.Value && p.VigenciaTexto == vigencia);
+            }
+            else if (!string.IsNullOrEmpty(buscar) && tipo.HasValue)
+            {
+                // Buscar por nombre y tipo
+                promociones = _listarPromociones.BuscarPorNombre(buscar)
+                    .FindAll(p => p.IdTipoPromocion == tipo.Value);
+            }
+            else if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(vigencia))
+            {
+                // Buscar por nombre y vigencia
+                promociones = _listarPromociones.BuscarPorNombre(buscar)
+                    .FindAll(p => p.VigenciaTexto == vigencia);
+            }
+            else if (tipo.HasValue && !string.IsNullOrEmpty(vigencia))
+            {
+                // Filtrar por tipo y vigencia
+                promociones = _listarPromociones.BuscarPorTipo(tipo.Value)
+                    .FindAll(p => p.VigenciaTexto == vigencia);
+            }
+            else if (!string.IsNullOrEmpty(buscar))
+            {
+                // Solo buscar por nombre
+                promociones = _listarPromociones.BuscarPorNombre(buscar);
+            }
+            else if (tipo.HasValue)
+            {
+                // Solo filtrar por tipo
+                promociones = _listarPromociones.BuscarPorTipo(tipo.Value);
+            }
+            else if (!string.IsNullOrEmpty(vigencia))
+            {
+                // Solo filtrar por vigencia
+                promociones = _listarPromociones.BuscarPorVigencia(vigencia);
+            }
+            else
+            {
+                // Obtener todas
+                promociones = _listarPromociones.Obtener();
+            }
 
             return View(promociones);
         }
@@ -139,17 +82,11 @@ namespace AromasWeb.Controllers
         // GET: Promocion/CrearPromocion
         public IActionResult CrearPromocion()
         {
-            var tiposPromocion = new List<TipoPromocion>
-            {
-                new TipoPromocion { IdTipoPromocion = 1, Nombre = "Descuento Directo", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 2, Nombre = "2x1", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 3, Nombre = "Combo", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 4, Nombre = "Happy Hour", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 5, Nombre = "Día Especial", Estado = true }
-            };
-
+            var tiposPromocion = _listarTiposPromociones.Obtener();
             ViewBag.TodosTipos = tiposPromocion;
 
+            // Aquí deberías obtener las recetas disponibles de tu base de datos
+            // Por ahora, usaré datos de ejemplo
             var recetasDisponibles = new List<dynamic>
             {
                 new { IdReceta = 1, Nombre = "Torta de Chocolate", Categoria = "Pasteles", PrecioVenta = 28000m },
@@ -174,19 +111,12 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para guardar en la base de datos
                 TempData["Mensaje"] = "Promoción registrada correctamente";
                 return RedirectToAction(nameof(ListadoPromociones));
             }
 
-            var tiposPromocion = new List<TipoPromocion>
-            {
-                new TipoPromocion { IdTipoPromocion = 1, Nombre = "Descuento Directo", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 2, Nombre = "2x1", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 3, Nombre = "Combo", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 4, Nombre = "Happy Hour", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 5, Nombre = "Día Especial", Estado = true }
-            };
-
+            var tiposPromocion = _listarTiposPromociones.Obtener();
             ViewBag.TodosTipos = tiposPromocion;
 
             var recetasDisponibles = new List<dynamic>
@@ -205,15 +135,47 @@ namespace AromasWeb.Controllers
         // GET: Promocion/EditarPromocion/5
         public IActionResult EditarPromocion(int id)
         {
-            var tiposPromocion = new List<TipoPromocion>
+            var tiposPromocion = _listarTiposPromociones.Obtener();
+            ViewBag.TodosTipos = tiposPromocion;
+
+            var recetasDisponibles = new List<dynamic>
             {
-                new TipoPromocion { IdTipoPromocion = 1, Nombre = "Descuento Directo", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 2, Nombre = "2x1", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 3, Nombre = "Combo", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 4, Nombre = "Happy Hour", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 5, Nombre = "Día Especial", Estado = true }
+                new { IdReceta = 1, Nombre = "Torta de Chocolate", Categoria = "Pasteles", PrecioVenta = 28000m },
+                new { IdReceta = 2, Nombre = "Café Capuchino", Categoria = "Bebidas Calientes", PrecioVenta = 2500m },
+                new { IdReceta = 3, Nombre = "Croissant de Mantequilla", Categoria = "Panadería", PrecioVenta = 12000m },
+                new { IdReceta = 4, Nombre = "Galletas de Avena", Categoria = "Galletas", PrecioVenta = 9000m },
+                new { IdReceta = 5, Nombre = "Muffin de Arándanos", Categoria = "Panadería", PrecioVenta = 13200m },
+                new { IdReceta = 6, Nombre = "Brownie de Chocolate", Categoria = "Postres", PrecioVenta = 16000m },
+                new { IdReceta = 7, Nombre = "Smoothie de Fresa", Categoria = "Bebidas Frías", PrecioVenta = 4000m },
+                new { IdReceta = 8, Nombre = "Cheesecake de Vainilla", Categoria = "Pasteles", PrecioVenta = 25000m }
             };
 
+            ViewBag.RecetasDisponibles = recetasDisponibles;
+
+            var promocion = _listarPromociones.ObtenerPorId(id);
+
+            if (promocion == null)
+            {
+                TempData["Error"] = "Promoción no encontrada";
+                return RedirectToAction(nameof(ListadoPromociones));
+            }
+
+            return View(promocion);
+        }
+
+        // POST: Promocion/EditarPromocion
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarPromocion(Promocion promocion)
+        {
+            if (ModelState.IsValid)
+            {
+                // Aquí iría la lógica para actualizar en la base de datos
+                TempData["Mensaje"] = "Promoción actualizada correctamente";
+                return RedirectToAction(nameof(ListadoPromociones));
+            }
+
+            var tiposPromocion = _listarTiposPromociones.Obtener();
             ViewBag.TodosTipos = tiposPromocion;
 
             var recetasDisponibles = new List<dynamic>
@@ -226,47 +188,6 @@ namespace AromasWeb.Controllers
 
             ViewBag.RecetasDisponibles = recetasDisponibles;
 
-            var promocion = new Promocion
-            {
-                IdPromocion = id,
-                IdTipoPromocion = 1,
-                Nombre = "Descuento Navideño",
-                Descripcion = "20% de descuento en pasteles durante diciembre",
-                PorcentajeDescuento = 20m,
-                FechaInicio = new DateTime(2024, 12, 1),
-                FechaFin = new DateTime(2024, 12, 31),
-                Estado = true,
-                Recetas = new List<PromocionReceta>
-                {
-                    new PromocionReceta { IdPromocionReceta = 1, IdPromocion = id, IdReceta = 1, PorcentajeDescuento = 20m },
-                    new PromocionReceta { IdPromocionReceta = 2, IdPromocion = id, IdReceta = 8, PorcentajeDescuento = 20m }
-                }
-            };
-
-            return View(promocion);
-        }
-
-        // POST: Promocion/EditarPromocion
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EditarPromocion(Promocion promocion)
-        {
-            if (ModelState.IsValid)
-            {
-                TempData["Mensaje"] = "Promoción actualizada correctamente";
-                return RedirectToAction(nameof(ListadoPromociones));
-            }
-
-            var tiposPromocion = new List<TipoPromocion>
-            {
-                new TipoPromocion { IdTipoPromocion = 1, Nombre = "Descuento Directo", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 2, Nombre = "2x1", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 3, Nombre = "Combo", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 4, Nombre = "Happy Hour", Estado = true },
-                new TipoPromocion { IdTipoPromocion = 5, Nombre = "Día Especial", Estado = true }
-            };
-
-            ViewBag.TodosTipos = tiposPromocion;
             return View(promocion);
         }
 
@@ -275,6 +196,7 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EliminarPromocion(int id)
         {
+            // Aquí iría la lógica para eliminar la promoción
             TempData["Mensaje"] = "Promoción eliminada correctamente";
             return RedirectToAction(nameof(ListadoPromociones));
         }

@@ -1,56 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
-using System;
+using AromasWeb.Abstracciones.Logica.CategoriaReceta;
 using System.Collections.Generic;
 
 namespace AromasWeb.Controllers
 {
     public class CategoriaRecetaController : Controller
     {
+        private IListarCategoriasReceta _listarCategoriasReceta;
+
+        public CategoriaRecetaController()
+        {
+            _listarCategoriasReceta = new LogicaDeNegocio.CategoriasReceta.ListarCategoriasReceta();
+        }
+
         // GET: CategoriaReceta/ListadoCategoriasRecetas
         public IActionResult ListadoCategoriasRecetas(string buscar)
         {
             ViewBag.Buscar = buscar;
 
-            // Categorías de ejemplo
-            var categorias = new List<CategoriaReceta>
+            List<CategoriaReceta> categorias;
+
+            if (!string.IsNullOrEmpty(buscar))
             {
-                new CategoriaReceta
-                {
-                    IdCategoriaReceta = 1,
-                    Nombre = "Postres",
-                    Descripcion = "Recetas de postres y dulces",
-                    Estado = true
-                },
-                new CategoriaReceta
-                {
-                    IdCategoriaReceta = 2,
-                    Nombre = "Panes",
-                    Descripcion = "Recetas de panes artesanales",
-                    Estado = true
-                },
-                new CategoriaReceta
-                {
-                    IdCategoriaReceta = 3,
-                    Nombre = "Pasteles",
-                    Descripcion = "Recetas de pasteles y tortas",
-                    Estado = true
-                },
-                new CategoriaReceta
-                {
-                    IdCategoriaReceta = 4,
-                    Nombre = "Galletas",
-                    Descripcion = "Recetas de galletas y cookies",
-                    Estado = true
-                },
-                new CategoriaReceta
-                {
-                    IdCategoriaReceta = 5,
-                    Nombre = "Bebidas",
-                    Descripcion = "Bebidas frías y calientes",
-                    Estado = true
-                }
-            };
+                categorias = _listarCategoriasReceta.BuscarPorNombre(buscar);
+            }
+            else
+            {
+                categorias = _listarCategoriasReceta.Obtener();
+            }
 
             return View(categorias);
         }
@@ -79,14 +57,13 @@ namespace AromasWeb.Controllers
         // GET: CategoriaReceta/EditarCategoriaReceta/5
         public IActionResult EditarCategoriaReceta(int id)
         {
-            // Categoría de ejemplo
-            var categoria = new CategoriaReceta
+            var categoria = _listarCategoriasReceta.ObtenerPorId(id);
+
+            if (categoria == null)
             {
-                IdCategoriaReceta = id,
-                Nombre = "Postres",
-                Descripcion = "Recetas de postres y dulces",
-                Estado = true
-            };
+                TempData["Error"] = "Categoría de receta no encontrada";
+                return RedirectToAction(nameof(ListadoCategoriasRecetas));
+            }
 
             return View(categoria);
         }

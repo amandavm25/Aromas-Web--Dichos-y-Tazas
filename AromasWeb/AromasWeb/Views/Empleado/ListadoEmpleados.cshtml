@@ -56,67 +56,70 @@
             </div>
         </div>
 
+        <!-- Información de búsqueda -->
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+        {
+            <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
+                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                    Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong>
+                    - <strong>@(Model?.Count ?? 0)</strong> empleado(s) encontrado(s)
+                </p>
+            </div>
+        }
+
         <!-- Filtros -->
         <div style="margin-bottom: 3rem;" data-aos="fade-up">
-            <form method="get" action="@Url.Action("ListadoEmpleados", "Empleado")" style="display: contents;">
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-                    <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
-                        <i class="fas fa-filter" style="color: var(--gold);"></i> Filtrar:
-                    </span>
-                    <button type="submit" name="filtroEstado" value="" class="btn @(string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string) ? "btn-primary" : "btn-secondary")" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                        <span><i class="fas fa-th"></i> Todos</span>
-                    </button>
-                    <button type="submit" name="filtroEstado" value="activo" class="btn @(ViewBag.FiltroEstado == "activo" ? "btn-primary" : "btn-secondary")" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                        <span><i class="fas fa-check-circle"></i> Activos</span>
-                    </button>
-                    <button type="submit" name="filtroEstado" value="inactivo" class="btn @(ViewBag.FiltroEstado == "inactivo" ? "btn-primary" : "btn-secondary")" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                        <span><i class="fas fa-times-circle"></i> Inactivos</span>
-                    </button>
-                </div>
-            </form>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+                <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                    <i class="fas fa-filter" style="color: var(--gold);"></i> Filtrar por estado:
+                </span>
+                <a href="@Url.Action("ListadoEmpleados", "Empleado")"
+                   class="btn @(string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string) ? "btn-primary" : "btn-secondary")"
+                   style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                    <span><i class="fas fa-th"></i> Todos</span>
+                </a>
+                <a href="@Url.Action("ListadoEmpleados", "Empleado", new { filtroEstado = "activo" })"
+                   class="btn @(ViewBag.FiltroEstado == "activo" ? "btn-primary" : "btn-secondary")"
+                   style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                    <span><i class="fas fa-check-circle"></i> Activos</span>
+                </a>
+                <a href="@Url.Action("ListadoEmpleados", "Empleado", new { filtroEstado = "inactivo" })"
+                   class="btn @(ViewBag.FiltroEstado == "inactivo" ? "btn-primary" : "btn-secondary")"
+                   style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                    <span><i class="fas fa-times-circle"></i> Inactivos</span>
+                </a>
+            </div>
         </div>
 
-        <!-- Layout Principal: Tabla + Estadísticas -->
-        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;" data-aos="fade-up">
-
-            <!-- Tabla Principal -->
-            <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                <div style="overflow-x: auto; max-width: 100%;">
-                    <table id="laTablaDeEmpleados" style="margin-bottom: 0; width: 100%; min-width: 1200px; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
-                            <tr>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Identificación</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Correo</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Cargo</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Rol</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Antigüedad</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                var empleadosDemo = new List<dynamic>
-                                                        {
-                                                        new { Id = 1, Nombre = "María González Rodríguez", Identificacion = "1-1234-5678", Correo = "maria.gonzalez@entredichosytazas.com", Telefono = "8888-1234", Cargo = "Gerente General", Rol = "Administrador", FechaContratacion = "15/01/2023", Antiguedad = "2 año(s) y 10 mes(es)", Estado = true, EsAntiguo = true },
-                                                        new { Id = 2, Nombre = "Carlos Jiménez Mora", Identificacion = "2-2345-6789", Correo = "carlos.jimenez@entredichosytazas.com", Telefono = "8888-2345", Cargo = "Barista", Rol = "Empleado", FechaContratacion = "20/03/2025", Antiguedad = "8 mes(es)", Estado = true, EsAntiguo = false },
-                                                        new { Id = 3, Nombre = "Ana Patricia Vargas Solís", Identificacion = "1-3456-7890", Correo = "ana.vargas@entredichosytazas.com", Telefono = "8888-3456", Cargo = "Mesera", Rol = "Empleado", FechaContratacion = "10/09/2024", Antiguedad = "1 año(s) y 2 mes(es)", Estado = true, EsAntiguo = true },
-                                                        new { Id = 4, Nombre = "Roberto Fernández Castro", Identificacion = "1-4567-8901", Correo = "roberto.fernandez@entredichosytazas.com", Telefono = "8888-4567", Cargo = "Chef", Rol = "Empleado", FechaContratacion = "05/11/2022", Antiguedad = "3 año(s) y 0 mes(es)", Estado = true, EsAntiguo = true },
-                                                        new { Id = 5, Nombre = "Laura Martínez Pérez", Identificacion = "2-5678-9012", Correo = "laura.martinez@entredichosytazas.com", Telefono = "8888-5678", Cargo = "Cajera", Rol = "Empleado", FechaContratacion = "12/05/2025", Antiguedad = "6 mes(es)", Estado = false, EsAntiguo = false },
-                                                        new { Id = 6, Nombre = "José Luis Ramírez Quesada", Identificacion = "1-6789-0123", Correo = "jose.ramirez@entredichosytazas.com", Telefono = "8888-6789", Cargo = "Barista", Rol = "Empleado", FechaContratacion = "18/05/2024", Antiguedad = "1 año(s) y 6 mes(es)", Estado = true, EsAntiguo = true }
-                                                        };
-                            }
-
-                            @foreach (var empleado in empleadosDemo)
+        <!-- Tabla Principal -->
+        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
+            <div style="overflow-x: auto; max-width: 100%;">
+                <table id="laTablaDeEmpleados" style="margin-bottom: 0; width: 100%; min-width: 1200px; border-collapse: collapse;">
+                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+                        <tr>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Identificación</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Correo</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Cargo</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Rol</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Antigüedad</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var empleado in Model)
                             {
                                 <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@empleado.Id</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@empleado.IdEmpleado</td>
                                     <td style="padding: 1.2rem; color: var(--dark-green);">
                                         <div>
                                             <strong style="display: block;">@empleado.Nombre</strong>
-                                            @if (empleado.EsAntiguo)
+                                            @if (empleado.EsEmpleadoAntiguo)
                                             {
                                                 <span style="background: var(--gold); color: white; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.7rem; margin-top: 0.3rem; display: inline-block; width: fit-content;">
                                                     <i class="fas fa-award"></i> Antiguo
@@ -124,18 +127,19 @@
                                             }
                                         </div>
                                     </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal);">@empleado.Apellidos</td>
                                     <td style="padding: 1.2rem; color: var(--charcoal);">@empleado.Identificacion</td>
                                     <td style="padding: 1.2rem; color: var(--charcoal); font-size: 0.9rem;">@empleado.Correo</td>
                                     <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@empleado.Cargo</td>
                                     <td style="padding: 1.2rem;">
-                                        <span style="background: @(empleado.Rol == "Administrador" ? "var(--gold)" : "var(--olive-green)"); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
-                                            @empleado.Rol
+                                        <span style="background: @(empleado.NombreRol == "Administrador" ? "var(--gold)" : "var(--olive-green)"); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
+                                            @empleado.NombreRol
                                         </span>
                                     </td>
                                     <td style="padding: 1.2rem; color: var(--charcoal); font-size: 0.9rem;">
                                         <div style="display: flex; flex-direction: column;">
-                                            <span style="font-weight: 600; color: var(--dark-green);">@empleado.Antiguedad</span>
-                                            <small style="color: var(--charcoal); opacity: 0.7;">desde @empleado.FechaContratacion</small>
+                                            <span style="font-weight: 600; color: var(--dark-green);">@empleado.AnosTrabajados</span>
+                                            <small style="color: var(--charcoal); opacity: 0.7;">desde @empleado.FechaContratacionFormateada</small>
                                         </div>
                                     </td>
                                     <td style="padding: 1.2rem;">
@@ -151,24 +155,25 @@
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
                                         <button type="button"
                                                 class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarEmpleado", "Empleado", new { id = empleado.Id })'"
+                                                onclick="window.location.href='@Url.Action("EditarEmpleado", "Empleado", new { id = empleado.IdEmpleado })'"
                                                 style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button"
                                                 class="btn btn-sm btn-detalles"
-                                                data-id="@empleado.Id"
+                                                data-id="@empleado.IdEmpleado"
                                                 data-nombre="@empleado.Nombre"
+                                                data-apellidos="@empleado.Apellidos"
                                                 data-identificacion="@empleado.Identificacion"
                                                 data-correo="@empleado.Correo"
                                                 data-telefono="@empleado.Telefono"
                                                 data-cargo="@empleado.Cargo"
-                                                data-rol="@empleado.Rol"
-                                                data-fechacontratacion="@empleado.FechaContratacion"
-                                                data-antiguedad="@empleado.Antiguedad"
+                                                data-rol="@empleado.NombreRol"
+                                                data-fechacontratacion="@empleado.FechaContratacionFormateada"
+                                                data-antiguedad="@empleado.AnosTrabajados"
                                                 data-estado="@(empleado.Estado ? "Activo" : "Inactivo")"
-                                                data-esantiguo="@empleado.EsAntiguo"
+                                                data-esantiguo="@empleado.EsEmpleadoAntiguo"
                                                 style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesEmpleado"
@@ -177,8 +182,9 @@
                                         </button>
                                         <button type="button"
                                                 class="btn btn-sm btn-eliminar"
-                                                data-id="@empleado.Id"
+                                                data-id="@empleado.IdEmpleado"
                                                 data-nombre="@empleado.Nombre"
+                                                data-apellidos="@empleado.Apellidos"
                                                 data-identificacion="@empleado.Identificacion"
                                                 data-correo="@empleado.Correo"
                                                 data-cargo="@empleado.Cargo"
@@ -192,69 +198,28 @@
                                     </td>
                                 </tr>
                             }
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-green); font-size: 0.95rem;">
-                        Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">6</span></strong> de <strong id="totalRecords">6</strong> empleados
-                    </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            &lt; Anterior
-                        </button>
-                        <button id="btnSiguiente" class="btn btn-primary" onclick="paginaSiguiente()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            Siguiente &gt;
-                        </button>
-                    </div>
-                </div>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" style="padding: 3rem; text-align: center; color: var(--charcoal);">
+                                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
+                                    <p style="margin: 0; font-size: 1.1rem;">No se encontraron empleados</p>
+                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+                                    {
+                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Panel de Estadísticas (Derecha) -->
-            <div style="position: sticky; top: 100px;">
-                <!-- Empleados Antiguos -->
-                <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                    <div style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); color: white; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-award" style="font-size: 1.5rem;"></i>
-                            <div>
-                                <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Empleados Antiguos</h5>
-                                <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">+1 año de antigüedad</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 400px; overflow-y: auto;">
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-crown" style="color: var(--gold);"></i>
-                                Roberto Fernández
-                            </strong>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">Chef - 3 años</small>
-                        </div>
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-award" style="color: var(--gold);"></i>
-                                María González
-                            </strong>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">Gerente - 2 años 10 meses</small>
-                        </div>
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-award" style="color: var(--gold);"></i>
-                                José Luis Ramírez
-                            </strong>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">Barista - 1 año 6 meses</small>
-                        </div>
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-award" style="color: var(--gold);"></i>
-                                Ana Patricia Vargas
-                            </strong>
-                            <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">Mesera - 1 año 2 meses</small>
-                        </div>
-                    </div>
+            <!-- Footer de paginación -->
+            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                <div style="color: var(--dark-green); font-size: 0.95rem;">
+                    Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> empleados
                 </div>
             </div>
         </div>

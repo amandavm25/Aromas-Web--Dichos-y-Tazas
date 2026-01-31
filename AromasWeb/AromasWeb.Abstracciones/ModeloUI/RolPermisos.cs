@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace AromasWeb.Abstracciones.ModeloUI
 {
@@ -9,9 +10,11 @@ namespace AromasWeb.Abstracciones.ModeloUI
         public int IdRolPermiso { get; set; }
 
         [DisplayName("Rol")]
+        [Required(ErrorMessage = "El rol es requerido")]
         public int IdRol { get; set; }
 
         [DisplayName("Permiso")]
+        [Required(ErrorMessage = "El permiso es requerido")]
         public int IdPermiso { get; set; }
 
         // Propiedades de navegación

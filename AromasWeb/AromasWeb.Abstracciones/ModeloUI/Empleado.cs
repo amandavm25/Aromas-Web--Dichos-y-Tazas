@@ -17,10 +17,15 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [StringLength(20, ErrorMessage = "La identificación no puede exceder 20 caracteres")]
         public string Identificacion { get; set; }
 
-        [DisplayName("Nombre completo")]
-        [Required(ErrorMessage = "El nombre completo es requerido")]
+        [DisplayName("Nombre")]
+        [Required(ErrorMessage = "El nombre es requerido")]
         [StringLength(200, ErrorMessage = "El nombre no puede exceder 200 caracteres")]
-        public string NombreCompleto { get; set; }
+        public string Nombre { get; set; }
+
+        [DisplayName("Apellidos")]
+        [Required(ErrorMessage = "Los apellidos es requerido")]
+        [StringLength(200, ErrorMessage = "Los apellidos no puede exceder 200 caracteres")]
+        public string Apellidos { get; set; }
 
         [DisplayName("Correo electrónico")]
         [Required(ErrorMessage = "El correo es requerido")]

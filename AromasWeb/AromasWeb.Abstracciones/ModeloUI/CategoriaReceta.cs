@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace AromasWeb.Abstracciones.ModeloUI
@@ -19,6 +20,7 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [DisplayName("Estado")]
         public bool Estado { get; set; }
 
+        // Propiedades calculadas
         [DisplayName("Estado")]
         public string EstadoTexto
         {

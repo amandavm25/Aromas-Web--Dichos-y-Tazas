@@ -1,101 +1,51 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
-using System;
+using AromasWeb.Abstracciones.Logica.Empleado;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AromasWeb.Controllers
 {
     public class EmpleadoController : Controller
     {
+        private IListarEmpleados _listarEmpleados;
+
+        public EmpleadoController()
+        {
+            _listarEmpleados = new LogicaDeNegocio.Empleados.ListarEmpleados();
+        }
+
         // GET: Empleado/ListadoEmpleados
         public IActionResult ListadoEmpleados(string buscar, string filtroEstado)
         {
             ViewBag.Buscar = buscar;
             ViewBag.FiltroEstado = filtroEstado;
 
-            // Empleados de ejemplo
-            var empleados = new List<Empleado>
+            // Obtener empleados según los filtros
+            List<Empleado> empleados;
+
+            if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(filtroEstado))
             {
-                new Empleado
-                {
-                    IdEmpleado = 1,
-                    IdRol = 1,
-                    NombreRol = "Administrador",
-                    Identificacion = "1-1234-5678",
-                    NombreCompleto = "María González Rodríguez",
-                    Correo = "maria.gonzalez@entredichosytazas.com",
-                    Telefono = "8888-1234",
-                    Cargo = "Gerente General",
-                    FechaContratacion = DateTime.Now.AddYears(-2),
-                    Estado = true
-                },
-                new Empleado
-                {
-                    IdEmpleado = 2,
-                    IdRol = 2,
-                    NombreRol = "Empleado",
-                    Identificacion = "2-2345-6789",
-                    NombreCompleto = "Carlos Jiménez Mora",
-                    Correo = "carlos.jimenez@entredichosytazas.com",
-                    Telefono = "8888-2345",
-                    Cargo = "Barista",
-                    FechaContratacion = DateTime.Now.AddMonths(-8),
-                    Estado = true
-                },
-                new Empleado
-                {
-                    IdEmpleado = 3,
-                    IdRol = 2,
-                    NombreRol = "Empleado",
-                    Identificacion = "1-3456-7890",
-                    NombreCompleto = "Ana Patricia Vargas Solís",
-                    Correo = "ana.vargas@entredichosytazas.com",
-                    Telefono = "8888-3456",
-                    Cargo = "Mesera",
-                    FechaContratacion = DateTime.Now.AddMonths(-14),
-                    Estado = true
-                },
-                new Empleado
-                {
-                    IdEmpleado = 4,
-                    IdRol = 2,
-                    NombreRol = "Empleado",
-                    Identificacion = "1-4567-8901",
-                    NombreCompleto = "Roberto Fernández Castro",
-                    Correo = "roberto.fernandez@entredichosytazas.com",
-                    Telefono = "8888-4567",
-                    Cargo = "Chef",
-                    FechaContratacion = DateTime.Now.AddYears(-3),
-                    Estado = true
-                },
-                new Empleado
-                {
-                    IdEmpleado = 5,
-                    IdRol = 2,
-                    NombreRol = "Empleado",
-                    Identificacion = "2-5678-9012",
-                    NombreCompleto = "Laura Martínez Pérez",
-                    Correo = "laura.martinez@entredichosytazas.com",
-                    Telefono = "8888-5678",
-                    Cargo = "Cajera",
-                    FechaContratacion = DateTime.Now.AddMonths(-6),
-                    Estado = false
-                },
-                new Empleado
-                {
-                    IdEmpleado = 6,
-                    IdRol = 2,
-                    NombreRol = "Empleado",
-                    Identificacion = "1-6789-0123",
-                    NombreCompleto = "José Luis Ramírez Quesada",
-                    Correo = "jose.ramirez@entredichosytazas.com",
-                    Telefono = "8888-6789",
-                    Cargo = "Barista",
-                    FechaContratacion = DateTime.Now.AddMonths(-18),
-                    Estado = true
-                }
-            };
+                // Buscar por nombre y filtrar por estado
+                bool estado = filtroEstado == "activo";
+                empleados = _listarEmpleados.BuscarPorNombre(buscar)
+                    .FindAll(e => e.Estado == estado);
+            }
+            else if (!string.IsNullOrEmpty(buscar))
+            {
+                // Solo buscar por nombre
+                empleados = _listarEmpleados.BuscarPorNombre(buscar);
+            }
+            else if (!string.IsNullOrEmpty(filtroEstado))
+            {
+                // Solo filtrar por estado
+                bool estado = filtroEstado == "activo";
+                empleados = _listarEmpleados.BuscarPorEstado(estado);
+            }
+            else
+            {
+                // Obtener todos
+                empleados = _listarEmpleados.Obtener();
+            }
 
             return View(empleados);
         }
@@ -114,6 +64,7 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para guardar en la base de datos
                 TempData["Mensaje"] = "Empleado registrado correctamente";
                 return RedirectToAction(nameof(ListadoEmpleados));
             }
@@ -125,20 +76,13 @@ namespace AromasWeb.Controllers
         // GET: Empleado/EditarEmpleado/5
         public IActionResult EditarEmpleado(int id)
         {
-            // Empleado de ejemplo
-            var empleado = new Empleado
+            var empleado = _listarEmpleados.ObtenerPorId(id);
+
+            if (empleado == null)
             {
-                IdEmpleado = id,
-                IdRol = 2,
-                NombreRol = "Empleado",
-                Identificacion = "1-1234-5678",
-                NombreCompleto = "María González Rodríguez",
-                Correo = "maria.gonzalez@entredichosytazas.com",
-                Telefono = "8888-1234",
-                Cargo = "Gerente General",
-                FechaContratacion = DateTime.Now.AddYears(-2),
-                Estado = true
-            };
+                TempData["Error"] = "Empleado no encontrado";
+                return RedirectToAction(nameof(ListadoEmpleados));
+            }
 
             CargarRoles();
             return View(empleado);
@@ -151,6 +95,7 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para actualizar en la base de datos
                 TempData["Mensaje"] = "Empleado actualizado correctamente";
                 return RedirectToAction(nameof(ListadoEmpleados));
             }
@@ -164,6 +109,7 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EliminarEmpleado(int id)
         {
+            // Aquí iría la lógica para eliminar el empleado
             TempData["Mensaje"] = "Empleado eliminado correctamente";
             return RedirectToAction(nameof(ListadoEmpleados));
         }
@@ -173,6 +119,7 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CambiarEstado(int id)
         {
+            // Aquí iría la lógica para cambiar el estado del empleado
             TempData["Mensaje"] = "Estado del empleado actualizado correctamente";
             return RedirectToAction(nameof(ListadoEmpleados));
         }
@@ -184,6 +131,7 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Aquí iría la lógica para cambiar la contraseña
                 TempData["Mensaje"] = "Contraseña actualizada correctamente";
                 return RedirectToAction(nameof(ListadoEmpleados));
             }

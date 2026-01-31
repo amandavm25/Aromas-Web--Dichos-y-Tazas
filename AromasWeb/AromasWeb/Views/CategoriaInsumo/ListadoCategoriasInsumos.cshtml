@@ -83,75 +83,78 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @{
-                            var categoriasDemo = new List<dynamic>
-                                                {
-                                                new { Id = 1, Nombre = "Harinas", Descripcion = "Harinas y derivados para panificación", Fecha = "01/10/2024", Estado = true },
-                                                new { Id = 2, Nombre = "Endulzantes", Descripcion = "Azúcares, mieles y edulcorantes", Fecha = "01/10/2024", Estado = true },
-                                                new { Id = 3, Nombre = "Lácteos", Descripcion = "Leche, mantequilla, crema y derivados", Fecha = "01/10/2024", Estado = true },
-                                                new { Id = 4, Nombre = "Ingredientes Frescos", Descripcion = "Frutas, huevos y productos frescos", Fecha = "01/10/2024", Estado = true },
-                                                new { Id = 5, Nombre = "Chocolates", Descripcion = "Chocolate en polvo, barra y coberturas", Fecha = "01/10/2024", Estado = true },
-                                                new { Id = 6, Nombre = "Esencias", Descripcion = "Vainilla, extractos y aromatizantes", Fecha = "01/10/2024", Estado = true },
-                                                new { Id = 7, Nombre = "Leudantes", Descripcion = "Levadura, polvo de hornear y bicarbonato", Fecha = "01/10/2024", Estado = true }
-                                                };
-                        }
-
-                        @foreach (var cat in categoriasDemo)
+                        @if (Model != null && Model.Any())
                         {
-                            <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@cat.Id</td>
-                                <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
-                                    <i class="fas fa-tag" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
-                                    @cat.Nombre
-                                </td>
-                                <td style="padding: 1.2rem; color: var(--charcoal); max-width: 400px;">@cat.Descripcion</td>
-                                <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">
-                                    <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--olive-green);"></i>
-                                    @cat.Fecha
-                                </td>
-                                <td style="padding: 1.2rem;">
-                                    @if (cat.Estado)
+                            @foreach (var cat in Model)
+                            {
+                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@cat.IdCategoria</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
+                                        <i class="fas fa-tag" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
+                                        @cat.NombreCategoria
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); max-width: 400px;">@(cat.Descripcion ?? "Sin descripción")</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">
+                                        <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--olive-green);"></i>
+                                        @cat.FechaCreacionFormateada
+                                    </td>
+                                    <td style="padding: 1.2rem;">
+                                        @if (cat.Estado)
+                                        {
+                                            <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activa</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactiva</span>
+                                        }
+                                    </td>
+                                    <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        <button type="button"
+                                                class="btn btn-sm"
+                                                onclick="window.location.href='@Url.Action("EditarCategoriaInsumo", "CategoriaInsumo", new { id = cat.IdCategoria })'"
+                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-detalles-categoria"
+                                                data-id="@cat.IdCategoria"
+                                                data-nombre="@cat.NombreCategoria"
+                                                data-descripcion="@(cat.Descripcion ?? "Sin descripción")"
+                                                data-fecha="@cat.FechaCreacionFormateada"
+                                                data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
+                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalDetallesCategoria"
+                                                title="Ver detalles">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-eliminar-categoria"
+                                                data-id="@cat.IdCategoria"
+                                                data-nombre="@cat.NombreCategoria"
+                                                data-descripcion="@(cat.Descripcion ?? "Sin descripción")"
+                                                data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
+                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEliminarCategoria"
+                                                title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" style="padding: 3rem; text-align: center; color: var(--charcoal);">
+                                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
+                                    <p style="margin: 0; font-size: 1.1rem;">No se encontraron categorías</p>
+                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
                                     {
-                                        <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activa</span>
+                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
                                     }
-                                    else
-                                    {
-                                        <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactiva</span>
-                                    }
-                                </td>
-                                <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                    <button type="button"
-                                            class="btn btn-sm"
-                                            onclick="window.location.href='@Url.Action("EditarCategoriaInsumo", "CategoriaInsumo", new { id = cat.Id })'"
-                                            style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                            title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button type="button"
-                                            class="btn btn-sm btn-detalles-categoria"
-                                            data-id="@cat.Id"
-                                            data-nombre="@cat.Nombre"
-                                            data-descripcion="@cat.Descripcion"
-                                            data-fecha="@cat.Fecha"
-                                            data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
-                                            style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalDetallesCategoria"
-                                            title="Ver detalles">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button type="button"
-                                            class="btn btn-sm btn-eliminar-categoria"
-                                            data-id="@cat.Id"
-                                            data-nombre="@cat.Nombre"
-                                            data-descripcion="@cat.Descripcion"
-                                            data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
-                                            style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalEliminarCategoria"
-                                            title="Eliminar">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
                                 </td>
                             </tr>
                         }
@@ -162,15 +165,7 @@
             <!-- Footer de paginación -->
             <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
                 <div style="color: var(--dark-green); font-size: 0.95rem;">
-                    Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">7</span></strong> de <strong id="totalRecords">7</strong> categorías
-                </div>
-                <div style="display: flex; gap: 0.5rem;">
-                    <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                        &lt; Anterior
-                    </button>
-                    <button id="btnSiguiente" class="btn btn-primary" onclick="paginaSiguiente()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                        Siguiente &gt;
-                    </button>
+                    Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> categorías
                 </div>
             </div>
         </div>

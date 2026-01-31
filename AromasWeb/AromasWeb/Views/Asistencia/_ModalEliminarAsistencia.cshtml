@@ -3,104 +3,115 @@
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
             <div class="modal-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalEliminarAsistenciaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
+                <h5 class="modal-title" id="modalEliminarAsistenciaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.3rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-exclamation-triangle"></i>
+                        <i class="fas fa-trash-alt"></i>
                     </div>
-                    Confirmar Eliminación
+                    Eliminar Asistencia
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--white);">
-                <!-- Alerta de advertencia -->
-                <div class="feature-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(192, 57, 43, 0.1) 100%); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid #e74c3c;">
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <div style="width: 50px; height: 50px; background: #e74c3c; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; color: white;"></i>
-                        </div>
+            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+                <!-- Mensaje de advertencia -->
+                <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ffc107;"></i>
                         <div>
-                            <h6 style="color: #c0392b; margin: 0 0 0.5rem; font-weight: 700; font-size: 1.1rem;">¡ATENCIÓN!</h6>
-                            <p style="margin: 0; color: #c0392b; font-weight: 500; line-height: 1.6;">
-                                ¿Está seguro que desea <strong>ELIMINAR</strong> este registro de asistencia? Esta acción no se puede deshacer.
-                            </p>
+                            <strong style="color: #856404; font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">¡Advertencia!</strong>
+                            <p style="color: #856404; margin: 0; font-size: 0.95rem;">¿Está seguro que desea eliminar este registro de asistencia? Esta acción no se puede deshacer.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Información del registro -->
+                <!-- Información de la asistencia -->
                 <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
-                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
-                        <i class="fas fa-clock" style="color: var(--olive-green);"></i> Datos del Registro a Eliminar
+                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-info-circle" style="color: var(--gold);"></i> Información del Registro
                     </h6>
 
-                    <div style="display: grid; gap: 1.5rem;">
-                        <!-- ID -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-hashtag" style="color: var(--olive-green);"></i> ID
-                            </label>
-                            <p id="eliminar-id-display-asistencia" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
+                    <div style="display: grid; gap: 1.2rem;">
                         <!-- Empleado -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--cream);">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
+                                <i class="fas fa-user" style="color: #e74c3c;"></i> Empleado
                             </label>
-                            <p id="eliminar-nombre-empleado" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            <p id="eliminarNombre" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
                         <!-- Fecha -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--cream);">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calendar-day" style="color: var(--olive-green);"></i> Fecha
+                                <i class="fas fa-calendar-day" style="color: #e74c3c;"></i> Fecha
                             </label>
-                            <p id="eliminar-fecha-asistencia" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            <p id="eliminarFecha" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
                         </div>
 
                         <!-- Horario -->
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                    <i class="fas fa-sign-in-alt" style="color: var(--olive-green);"></i> Entrada
-                                </label>
-                                <p id="eliminar-entrada-asistencia" style="color: var(--dark-green); font-size: 1rem; font-weight: 600; margin: 0;"></p>
-                            </div>
-                            <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                    <i class="fas fa-sign-out-alt" style="color: var(--olive-green);"></i> Salida
-                                </label>
-                                <p id="eliminar-salida-asistencia" style="color: var(--dark-green); font-size: 1rem; font-weight: 600; margin: 0;"></p>
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--cream);">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
+                                <i class="fas fa-clock" style="color: #e74c3c;"></i> Horario
+                            </label>
+                            <div style="display: flex; gap: 1rem; color: var(--dark-green); font-weight: 600;">
+                                <span>Entrada: <strong id="eliminarEntrada"></strong></span>
+                                <span>|</span>
+                                <span>Salida: <strong id="eliminarSalida"></strong></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Advertencia adicional -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin-top: 1.5rem; border: 2px dashed #e74c3c;">
-                    <p style="margin: 0; color: #c0392b; font-size: 0.95rem; display: flex; align-items: start; gap: 0.7rem;">
-                        <i class="fas fa-info-circle" style="font-size: 1.2rem; margin-top: 0.2rem;"></i>
-                        <span><strong>Nota importante:</strong> Se eliminará permanentemente este registro de asistencia y no podrá ser recuperado.</span>
-                    </p>
-                </div>
+                <!-- Formulario de eliminación -->
+                <form id="formEliminarAsistencia" method="post" action="">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="eliminar-id-asistencia" name="id" value="" />
+                </form>
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; gap: 1rem;">
-                <form id="formEliminarAsistencia" method="post" action="" style="display: flex; gap: 1rem; width: 100%; justify-content: flex-end;">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" id="eliminar-id-asistencia" name="IdAsistencia" />
-
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
-                        <span><i class="fas fa-times"></i> Cancelar</span>
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, #e74c3c, #c0392b); padding: 0.9rem 2.5rem; border-radius: 50px;">
-                        <span><i class="fas fa-trash"></i> Eliminar Registro</span>
-                    </button>
-                </form>
+            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem; gap: 1rem;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2rem; border-radius: 50px;">
+                    <span><i class="fas fa-times"></i> Cancelar</span>
+                </button>
+                <button type="button" class="btn" onclick="confirmarEliminacionAsistencia()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; padding: 0.9rem 2rem; border-radius: 50px; box-shadow: var(--shadow-md);">
+                    <span><i class="fas fa-trash-alt"></i> Eliminar Registro</span>
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesEliminar = document.querySelectorAll('.btn-eliminar-asistencia');
+
+        botonesEliminar.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const nombre = this.getAttribute('data-nombre');
+                const fecha = this.getAttribute('data-fecha');
+                const entrada = this.getAttribute('data-entrada');
+                const salida = this.getAttribute('data-salida');
+
+                // Llenar el modal con los datos
+                document.getElementById('eliminar-id-asistencia').value = id;
+                document.getElementById('eliminarNombre').textContent = nombre;
+                document.getElementById('eliminarFecha').textContent = fecha;
+                document.getElementById('eliminarEntrada').textContent = entrada;
+                document.getElementById('eliminarSalida').textContent = salida;
+
+                // Actualizar la acción del formulario
+                const form = document.getElementById('formEliminarAsistencia');
+                form.action = '/Asistencia/EliminarAsistencia';
+            });
+        });
+    });
+
+    function confirmarEliminacionAsistencia() {
+        const form = document.getElementById('formEliminarAsistencia');
+        if (form) {
+            form.submit();
+        }
+    }
+</script>

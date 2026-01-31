@@ -1,106 +1,122 @@
 ﻿<div class="modal fade" id="modalEliminarReceta" tabindex="-1" aria-labelledby="modalEliminarRecetaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalEliminarRecetaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: var(--white); border: none; padding: 2rem;">
+                <h5 class="modal-title" id="modalEliminarRecetaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.3rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-exclamation-triangle"></i>
+                        <i class="fas fa-trash-alt"></i>
                     </div>
-                    Confirmar Eliminación
+                    Eliminar Receta
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--white);">
-                <!-- Alerta de advertencia -->
-                <div class="feature-card" style="background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(200, 35, 51, 0.1) 100%); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid #dc3545;">
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <div style="width: 50px; height: 50px; background: #dc3545; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; color: white;"></i>
-                        </div>
+            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+                <!-- Mensaje de advertencia -->
+                <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ffc107;"></i>
                         <div>
-                            <h6 style="color: #721c24; margin: 0 0 0.5rem; font-weight: 700; font-size: 1.1rem;">¡ATENCIÓN!</h6>
-                            <p style="margin: 0; color: #721c24; font-weight: 500; line-height: 1.6;">
-                                ¿Está seguro que desea <strong>ELIMINAR</strong> esta receta de forma permanente? Esta acción no se puede deshacer.
-                            </p>
+                            <strong style="color: #856404; font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">¡Advertencia!</strong>
+                            <p style="color: #856404; margin: 0; font-size: 0.95rem;">Esta acción no se puede deshacer. La receta será eliminada permanentemente del sistema.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Información de la receta -->
                 <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
-                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
-                        <i class="fas fa-book-open" style="color: var(--olive-green);"></i> Detalles de la Receta a Eliminar
+                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-info-circle" style="color: var(--gold);"></i> Información de la Receta
                     </h6>
 
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
-                        <!-- ID -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-hashtag" style="color: var(--olive-green);"></i> ID
-                            </label>
-                            <p id="eliminar-id-display-receta" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
+                    <div style="display: grid; gap: 1.2rem;">
                         <!-- Nombre -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--cream);">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-utensils" style="color: var(--olive-green);"></i> Nombre
+                                <i class="fas fa-book-open" style="color: #e74c3c;"></i> Nombre de la Receta
                             </label>
-                            <p id="eliminar-nombre-receta" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            <p id="eliminar-nombre-receta" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
                         <!-- Categoría -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--cream);">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-tag" style="color: var(--olive-green);"></i> Categoría
+                                <i class="fas fa-tag" style="color: #e74c3c;"></i> Categoría
                             </label>
                             <p id="eliminar-categoria-receta" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
                         </div>
 
-                        <!-- Porciones -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-cookie-bite" style="color: var(--olive-green);"></i> Porciones
-                            </label>
-                            <p id="eliminar-porciones-receta" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
-                        </div>
-
-                        <!-- Costo Total -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-dollar-sign" style="color: var(--gold);"></i> Costo Total
-                            </label>
-                            <p id="eliminar-costo-receta" style="color: var(--gold); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
-                        </div>
-
                         <!-- Disponibilidad -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--cream);">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-toggle-on" style="color: var(--olive-green);"></i> Disponibilidad
+                                <i class="fas fa-toggle-on" style="color: #e74c3c;"></i> Disponibilidad
                             </label>
-                            <span id="eliminar-disponibilidad-badge-receta" class="badge" style="font-size: 0.9rem; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600;"></span>
+                            <span id="eliminar-disponibilidad-badge" class="badge" style="font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
                         </div>
                     </div>
                 </div>
+
+                <!-- Formulario de eliminación -->
+                <form id="formEliminarReceta" method="post" action="">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="eliminar-id-receta" name="id" value="" />
+                </form>
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; gap: 1rem;">
-                <form id="formEliminarReceta" method="post" action="" style="display: flex; gap: 1rem; width: 100%; justify-content: flex-end;">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" id="eliminar-id-receta" name="IdReceta" />
-
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
-                        <span><i class="fas fa-times"></i> Cancelar</span>
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, #dc3545, #c82333); padding: 0.9rem 2.5rem; border-radius: 50px;">
-                        <span><i class="fas fa-trash"></i> Eliminar</span>
-                    </button>
-                </form>
+            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem; gap: 1rem;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2rem; border-radius: 50px;">
+                    <span><i class="fas fa-times"></i> Cancelar</span>
+                </button>
+                <button type="button" class="btn" onclick="confirmarEliminacion()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; padding: 0.9rem 2rem; border-radius: 50px; box-shadow: var(--shadow-md);">
+                    <span><i class="fas fa-trash-alt"></i> Eliminar Receta</span>
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesEliminar = document.querySelectorAll('.btn-eliminar-receta');
+
+        botonesEliminar.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const nombre = this.getAttribute('data-nombre');
+                const categoria = this.getAttribute('data-categoria');
+                const disponibilidad = this.getAttribute('data-disponibilidad');
+
+                // Llenar el modal con los datos
+                document.getElementById('eliminar-id-receta').value = id;
+                document.getElementById('eliminar-nombre-receta').textContent = nombre;
+                document.getElementById('eliminar-categoria-receta').textContent = categoria;
+
+                // Configurar el badge de disponibilidad
+                const disponibilidadBadge = document.getElementById('eliminar-disponibilidad-badge');
+                if (disponibilidad === 'Disponible') {
+                    disponibilidadBadge.textContent = 'Disponible';
+                    disponibilidadBadge.style.background = '#28a745';
+                    disponibilidadBadge.style.color = 'white';
+                } else {
+                    disponibilidadBadge.textContent = 'No disponible';
+                    disponibilidadBadge.style.background = '#dc3545';
+                    disponibilidadBadge.style.color = 'white';
+                }
+
+                // Actualizar la acción del formulario
+                const form = document.getElementById('formEliminarReceta');
+                form.action = '/Receta/EliminarReceta';
+            });
+        });
+    });
+
+    function confirmarEliminacion() {
+        const form = document.getElementById('formEliminarReceta');
+        if (form) {
+            form.submit();
+        }
+    }
+</script>

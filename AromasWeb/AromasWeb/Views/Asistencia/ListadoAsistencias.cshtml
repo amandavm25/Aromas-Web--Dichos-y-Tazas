@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Gestión de Asistencia";
+    var totalAsistencias = Model?.Count ?? 0;
+    var horasTotales = Model?.Sum(a => a.HorasTotales) ?? 0;
+    var horasExtras = Model?.Sum(a => a.HorasExtras) ?? 0;
 }
 
 <!-- Hero Section -->
@@ -32,6 +35,33 @@
 <!-- Content Section -->
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
+
+        <!-- Resumen de Asistencias -->
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalAsistencias</h3>
+                <p style="margin: 0.5rem 0;">Total Registros</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@horasTotales.ToString("N2")</h3>
+                <p style="margin: 0.5rem 0;">Horas Trabajadas</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@horasExtras.ToString("N2")</h3>
+                <p style="margin: 0.5rem 0;">Horas Extras</p>
+            </div>
+        </div>
 
         <!-- Barra de búsqueda y botones -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
@@ -81,103 +111,94 @@
                                value="@ViewBag.FechaFin"
                                style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white);">
                     </div>
-                </div>
-            </form>
-        </div>
 
-        <!-- Filtros de estado -->
-        <div style="margin-bottom: 3rem;" data-aos="fade-up">
-            <form method="get" action="@Url.Action("ListadoAsistencias", "Asistencia")" style="display: contents;">
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-                    <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
-                        <i class="fas fa-filter" style="color: var(--gold);"></i> Filtrar:
-                    </span>
-                    <button type="submit" name="filtroEstado" value="" class="btn @(string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string) ? "btn-primary" : "btn-secondary")" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                        <span><i class="fas fa-th"></i> Todos</span>
-                    </button>
-                    <button type="submit" name="filtroEstado" value="completo" class="btn @(ViewBag.FiltroEstado == "completo" ? "btn-primary" : "btn-secondary")" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                        <span><i class="fas fa-check-circle"></i> Completos</span>
-                    </button>
-                    <button type="submit" name="filtroEstado" value="encurso" class="btn @(ViewBag.FiltroEstado == "encurso" ? "btn-primary" : "btn-secondary")" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
-                        <span><i class="fas fa-clock"></i> En Curso</span>
+                    <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0.75rem 2rem;">
+                        <span><i class="fas fa-filter"></i> Filtrar</span>
                     </button>
                 </div>
             </form>
         </div>
 
-        <!-- Layout Principal: Tabla + Estadísticas -->
-        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;" data-aos="fade-up">
+        <!-- Información de búsqueda -->
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || !string.IsNullOrWhiteSpace(ViewBag.FechaInicio as string))
+        {
+            <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
+                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+                    {
+                        <span>Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong></span>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.FechaInicio as string) && !string.IsNullOrWhiteSpace(ViewBag.FechaFin as string))
+                    {
+                        <span>- Rango: <strong style="color: var(--gold-bright);">@ViewBag.FechaInicio al @ViewBag.FechaFin</strong></span>
+                    }
+                    - <strong>@(Model?.Count ?? 0)</strong> asistencia(s) encontrada(s)
+                </p>
+            </div>
+        }
 
-            <!-- Tabla Principal -->
-            <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                <div class="table-responsive">
-                    <table id="laTablaDeAsistencias" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
-                            <tr>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Entrada</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Salida</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Almuerzo</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Horas</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+        <!-- Tabla Principal -->
+        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
+            <div class="table-responsive">
+                <table style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
+                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+                        <tr>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Entrada</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Salida</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Almuerzo</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Horas</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
                             @foreach (var asistencia in Model)
                             {
-                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
+                                var estado = asistencia.HoraSalida.HasValue ? "Completo" : "Pendiente";
+                                var estadoColor = estado == "Completo" ? "#27ae60" : "var(--gold-bright)";
+                                var diaSemana = asistencia.Fecha.ToString("dddd", new System.Globalization.CultureInfo("es-ES"));
+
+                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: background 0.3s;">
                                     <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@asistencia.IdAsistencia</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-green);">
-                                        <div>
-                                            <strong style="display: block;">@asistencia.NombreEmpleado</strong>
-                                            <small style="color: var(--charcoal); opacity: 0.7;">@asistencia.CargoEmpleado</small>
-                                        </div>
+                                    <td style="padding: 1.2rem;">
+                                        <strong style="color: var(--dark-green); font-size: 1rem; display: block;">@asistencia.NombreEmpleado</strong>
+                                        <small style="color: var(--charcoal); opacity: 0.7;">@asistencia.CargoEmpleado</small>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">
-                                        <div>
-                                            <strong style="display: block;">@asistencia.FechaFormateada</strong>
-                                            <small style="color: var(--charcoal); opacity: 0.7;">@asistencia.DiaSemana</small>
-                                        </div>
+                                    <td style="padding: 1.2rem;">
+                                        <span style="color: var(--dark-green); font-weight: 600;">@asistencia.Fecha.ToString("dd/MM/yyyy")</span>
+                                        <br />
+                                        <small style="color: var(--charcoal); opacity: 0.7;">@diaSemana</small>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@asistencia.HoraEntradaFormateada</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@asistencia.HoraEntrada.ToString(@"hh\:mm")</td>
                                     <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">
                                         @if (asistencia.HoraSalida.HasValue)
                                         {
-                                            <span>@asistencia.HoraSalidaFormateada</span>
+                                            @asistencia.HoraSalida.Value.ToString(@"hh\:mm")
                                         }
                                         else
                                         {
-                                            <span style="color: var(--gold); font-style: italic;">Pendiente</span>
+                                            <span style="color: var(--gold-bright);">-</span>
                                         }
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">@asistencia.TiempoAlmuerzoFormateado</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal);">@asistencia.TiempoAlmuerzo min</td>
                                     <td style="padding: 1.2rem;">
-                                        <div style="display: flex; flex-direction: column;">
-                                            <strong style="color: var(--dark-green);">@asistencia.HorasTrabajadasTexto</strong>
-                                            @if (asistencia.HoraSalida.HasValue)
-                                            {
-                                                <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.75rem;">@asistencia.DesgloseHoras</small>
-                                                @if (asistencia.TieneHorasExtras)
-                                                {
-                                                    <span style="background: var(--gold); color: white; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.7rem; margin-top: 0.3rem; display: inline-block; width: fit-content;">
-                                                        <i class="fas fa-star"></i> Extras
-                                                    </span>
-                                                }
-                                            }
-                                        </div>
+                                        <span style="color: var(--olive-green); font-weight: 700;">@asistencia.HorasTotales.ToString("F2")h</span>
+                                        @if (asistencia.HorasExtras > 0)
+                                        {
+                                            <br />
+                                            <small style="color: var(--gold-bright); font-weight: 600;">+@asistencia.HorasExtras.ToString("F2")h extras</small>
+                                        }
                                     </td>
                                     <td style="padding: 1.2rem;">
-                                        @if (asistencia.HoraSalida.HasValue)
-                                        {
-                                            <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Completo</span>
-                                        }
-                                        else
-                                        {
-                                            <span style="background: var(--gold); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">En curso</span>
-                                        }
+                                        <span class="badge" style="background: @estadoColor; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                            @estado
+                                        </span>
                                     </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
                                         @if (!asistencia.HoraSalida.HasValue)
@@ -185,7 +206,7 @@
                                             <button type="button"
                                                     class="btn btn-sm"
                                                     onclick="window.location.href='@Url.Action("RegistrarSalida", "Asistencia", new { id = asistencia.IdAsistencia })'"
-                                                    style="background: #27ae60; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     title="Registrar Salida">
                                                 <i class="fas fa-sign-out-alt"></i>
                                             </button>
@@ -198,34 +219,33 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button"
-                                                class="btn btn-sm btn-detalles"
-                                                data-id="@asistencia.IdAsistencia"
+                                                class="btn btn-sm btn-detalles-asistencia"
                                                 data-nombre="@asistencia.NombreEmpleado"
                                                 data-identificacion="@asistencia.IdentificacionEmpleado"
                                                 data-cargo="@asistencia.CargoEmpleado"
-                                                data-fecha="@asistencia.FechaFormateada"
-                                                data-dia="@asistencia.DiaSemana"
-                                                data-entrada="@asistencia.HoraEntradaFormateada"
-                                                data-salida="@asistencia.HoraSalidaFormateada"
-                                                data-almuerzo="@asistencia.TiempoAlmuerzoFormateado"
-                                                data-horastotales="@asistencia.HorasTrabajadasTexto"
+                                                data-fecha="@asistencia.Fecha.ToString("dd/MM/yyyy")"
+                                                data-dia="@diaSemana"
+                                                data-entrada="@asistencia.HoraEntrada.ToString(@"hh\:mm")"
+                                                data-salida="@(asistencia.HoraSalida.HasValue? asistencia.HoraSalida.Value.ToString(@"hh\:mm") : "Pendiente")"
+                                                data-almuerzo="@asistencia.TiempoAlmuerzo minutos"
+                                                data-horastotales="@asistencia.HorasTotales.ToString("F2") horas"
                                                 data-horasregulares="@asistencia.HorasRegulares.ToString("F2")"
                                                 data-horasextras="@asistencia.HorasExtras.ToString("F2")"
-                                                data-estado="@asistencia.EstadoRegistro"
-                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-estado="@estado"
+                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesAsistencia"
                                                 title="Ver detalles">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                         <button type="button"
-                                                class="btn btn-sm btn-eliminar"
+                                                class="btn btn-sm btn-eliminar-asistencia"
                                                 data-id="@asistencia.IdAsistencia"
                                                 data-nombre="@asistencia.NombreEmpleado"
-                                                data-fecha="@asistencia.FechaFormateada"
-                                                data-entrada="@asistencia.HoraEntradaFormateada"
-                                                data-salida="@asistencia.HoraSalidaFormateada"
-                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-fecha="@asistencia.Fecha.ToString("dd/MM/yyyy")"
+                                                data-entrada="@asistencia.HoraEntrada.ToString(@"hh\:mm")"
+                                                data-salida="@(asistencia.HoraSalida.HasValue? asistencia.HoraSalida.Value.ToString(@"hh\:mm") : "Pendiente")"
+                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalEliminarAsistencia"
                                                 title="Eliminar">
@@ -234,60 +254,28 @@
                                     </td>
                                 </tr>
                             }
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-green); font-size: 0.95rem;">
-                        Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">@Model.Count</span></strong> de <strong id="totalRecords">@Model.Count</strong> registros
-                    </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            &lt; Anterior
-                        </button>
-                        <button id="btnSiguiente" class="btn btn-primary" onclick="paginaSiguiente()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            Siguiente &gt;
-                        </button>
-                    </div>
-                </div>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" style="padding: 3rem; text-align: center; color: var(--charcoal);">
+                                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
+                                    <p style="margin: 0; font-size: 1.1rem;">No se encontraron registros de asistencia</p>
+                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || !string.IsNullOrWhiteSpace(ViewBag.FechaInicio as string))
+                                    {
+                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros filtros o términos de búsqueda</p>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Panel de Estadísticas (Derecha) -->
-            <div style="position: sticky; top: 100px;">
-                <!-- Horas Extras -->
-                <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                    <div style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); color: white; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-star" style="font-size: 1.5rem;"></i>
-                            <div>
-                                <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Horas Extras Hoy</h5>
-                                <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">Empleados destacados</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 300px; overflow-y: auto;">
-                        @foreach (var asistencia in Model.Where(a => a.TieneHorasExtras && a.Fecha.Date == DateTime.Now.Date))
-                        {
-                            <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                                <strong style="color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-user" style="color: var(--gold);"></i>
-                                    @asistencia.NombreEmpleado
-                                </strong>
-                                <small style="color: var(--charcoal); opacity: 0.7; display: block; margin-top: 0.3rem;">
-                                    @asistencia.HorasExtras.ToString("F2")h extras - @asistencia.CargoEmpleado
-                                </small>
-                            </div>
-                        }
-                        @if (!Model.Any(a => a.TieneHorasExtras && a.Fecha.Date == DateTime.Now.Date))
-                        {
-                            <div style="text-align: center; padding: 2rem; color: var(--charcoal); opacity: 0.7;">
-                                <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.5;"></i>
-                                <p style="margin: 0;">No hay horas extras registradas hoy</p>
-                            </div>
-                        }
-                    </div>
+            <!-- Footer de paginación -->
+            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
+                <div style="color: var(--dark-green); font-size: 0.95rem;">
+                    Mostrando <strong>@(Model?.Count ?? 0)</strong> registro(s) de asistencia
                 </div>
             </div>
         </div>
