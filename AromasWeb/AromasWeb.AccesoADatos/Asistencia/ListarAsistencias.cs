@@ -1,4 +1,5 @@
 ﻿using AromasWeb.Abstracciones.Logica.Asistencia;
+using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.AccesoADatos.Modelos;
 using System;
 using System.Collections.Generic;
@@ -151,5 +152,77 @@ namespace AromasWeb.AccesoADatos.Asistencias
                 CargoEmpleado = cargoEmpleado
             };
         }
+
+        public bool ExisteEntradaAbierta(int idEmpleado, DateTime fecha)
+        {
+            using (var contexto = new Contexto())
+            {
+                return contexto.Asistencia.Any(a =>
+                    a.IdEmpleado == idEmpleado &&
+                    a.Fecha.Date == fecha.Date &&
+                    a.HoraSalida == null);
+
+            }
+
+        }
+        public void CrearEntrada(Abstracciones.ModeloUI.Asistencia asistencia)
+        {
+            using (var contexto = new Contexto())
+            {
+                var entidad = new AsistenciaAD
+                {
+                    IdEmpleado = asistencia.IdEmpleado,
+                    Fecha = asistencia.Fecha,
+                    HoraEntrada = asistencia.HoraEntrada,
+                    TiempoAlmuerzo = asistencia.TiempoAlmuerzo,
+                    HorasRegulares = asistencia.HorasRegulares,
+                    HorasExtras = asistencia.HorasExtras,
+                    HorasTotales = asistencia.HorasTotales
+                };
+                contexto.Asistencia.Add(entidad);
+                contexto.SaveChanges();
+            }
+        }
+
+        public Abstracciones.ModeloUI.Asistencia ObtenerEntradaAbierta(int idEmpleado)
+        {
+            using (var contexto = new Contexto())
+            {
+                var asistenciaAD = contexto.Asistencia
+                    .FirstOrDefault(a => a.IdEmpleado == idEmpleado && a.HoraSalida == null);
+
+                if (asistenciaAD != null)
+                    return null;
+                    
+                return ConvertirObjetoParaUI(asistenciaAD, contexto);
+                }
+            }
+
+        public void RegistrarSalida(int idAsistencia, TimeSpan horaSalida)
+        { using (var contexto = new Contexto())
+            {
+                var asistencia = contexto.Asistencia.FirstOrDefault(a => a.IdAsistencia == idAsistencia);
+                if (asistencia != null)
+                {
+                    asistencia.HoraSalida = horaSalida;
+                    contexto.SaveChanges();
+                }
+            }
+        }
+
+        public List<Asistencia> ObtenerHistorialPorEmpleado(int idEmpleado)
+        {
+            using (var contexto = new Contexto())
+            {
+                var asistencias = contexto.Asistencia
+                    .Where(a => a.IdEmpleado == idEmpleado)
+                    .OrderByDescending(a => a.Fecha)
+                    .ThenByDescending(a => a.HoraEntrada)
+                    .ToList();
+
+                return asistencias.Select(a => ConvertirObjetoParaUI(a, contexto)).ToList();
+            }
+        }
     }
+
 }

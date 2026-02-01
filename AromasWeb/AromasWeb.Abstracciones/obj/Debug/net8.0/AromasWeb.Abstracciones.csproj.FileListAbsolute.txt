@@ -59,3 +59,16 @@ C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrol
 C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\refint\AromasWeb.Abstracciones.dll
 C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.pdb
 C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\ref\AromasWeb.Abstracciones.dll
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\bin\Debug\net8.0\AromasWeb.Abstracciones.deps.json
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\bin\Debug\net8.0\AromasWeb.Abstracciones.dll
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\bin\Debug\net8.0\AromasWeb.Abstracciones.pdb
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.csproj.AssemblyReference.cache
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.AssemblyInfoInputs.cache
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.AssemblyInfo.cs
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.csproj.CoreCompileInputs.cache
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.sourcelink.json
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.dll
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\refint\AromasWeb.Abstracciones.dll
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.pdb
+C:\Users\Amanda Valverde Mora\Documents\FINCA LA LOLITA\PROYECTO FINAL\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\ref\AromasWeb.Abstracciones.dll
