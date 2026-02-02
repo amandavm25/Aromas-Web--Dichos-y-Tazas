@@ -59,3 +59,4 @@ C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrol
 C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\refint\AromasWeb.Abstracciones.dll
 C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.pdb
 C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\ref\AromasWeb.Abstracciones.dll
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.Abstracciones\obj\Debug\net8.0\AromasWeb.Abstracciones.csproj.AssemblyReference.cache

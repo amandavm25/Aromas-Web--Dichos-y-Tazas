@@ -14,3 +14,19 @@ C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrol
 C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\refint\AromasWeb.AccesoADatos.dll
 C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWeb.AccesoADatos.pdb
 C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\ref\AromasWeb.AccesoADatos.dll
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\bin\Debug\net8.0\AromasWeb.AccesoADatos.deps.json
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\bin\Debug\net8.0\AromasWeb.AccesoADatos.dll
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\bin\Debug\net8.0\AromasWeb.AccesoADatos.pdb
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\bin\Debug\net8.0\AromasWeb.Abstracciones.dll
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\bin\Debug\net8.0\AromasWeb.Abstracciones.pdb
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWeb.AccesoADatos.csproj.AssemblyReference.cache
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWeb.AccesoADatos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWeb.AccesoADatos.AssemblyInfoInputs.cache
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWeb.AccesoADatos.AssemblyInfo.cs
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWeb.AccesoADatos.csproj.CoreCompileInputs.cache
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWeb.AccesoADatos.sourcelink.json
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWe.3FF53D90.Up2Date
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWeb.AccesoADatos.dll
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\refint\AromasWeb.AccesoADatos.dll
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\AromasWeb.AccesoADatos.pdb
+C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb.AccesoADatos\obj\Debug\net8.0\ref\AromasWeb.AccesoADatos.dll
