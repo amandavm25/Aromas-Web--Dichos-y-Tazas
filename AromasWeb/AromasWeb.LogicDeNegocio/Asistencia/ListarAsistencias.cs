@@ -38,5 +38,22 @@ namespace AromasWeb.LogicaDeNegocio.Asistencias
         {
             return _listarAsistencias.ObtenerPorId(id);
         }
+
+        public bool ExisteEntradaAbierta(int idEmpleado, DateTime fecha)
+        {
+            return _listarAsistencias.ExisteEntradaAbierta(idEmpleado, fecha);
+        }
+
+        public void CrearEntrada(Asistencia asistencia)
+        {
+            _listarAsistencias.CrearEntrada(asistencia);
+        }
+
+        public Asistencia ObtenerEntradaAbierta(int idEmpleado) =>
+            _listarAsistencias.ObtenerEntradaAbierta(idEmpleado);
+        
+        public void RegistrarSalida(int idAsistencia, TimeSpan horaSalida) =>
+            _listarAsistencias.RegistrarSalida(idAsistencia, horaSalida);
+
     }
 }

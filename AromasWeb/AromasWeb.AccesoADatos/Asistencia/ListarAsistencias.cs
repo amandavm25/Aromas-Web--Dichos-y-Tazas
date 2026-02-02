@@ -151,5 +151,88 @@ namespace AromasWeb.AccesoADatos.Asistencias
                 CargoEmpleado = cargoEmpleado
             };
         }
+
+        public bool ExisteEntradaAbierta(int idEmpleado, DateTime fecha)
+        {
+            using (var contexto = new Contexto())
+            {
+                return contexto.Asistencia.Any(a =>
+                    a.IdEmpleado == idEmpleado &&
+                    a.Fecha.Date == fecha.Date &&
+                    a.HoraSalida == null
+                );
+            }
+        }
+
+        public void CrearEntrada(Abstracciones.ModeloUI.Asistencia asistencia)
+        {
+            using (var contexto = new Contexto())
+            {
+                var entidad = new AsistenciaAD
+                {
+                    IdEmpleado = asistencia.IdEmpleado,
+                    Fecha = asistencia.Fecha,
+                    HoraEntrada = asistencia.HoraEntrada,
+                    TiempoAlmuerzo = asistencia.TiempoAlmuerzo,
+                    HorasRegulares = asistencia.HorasRegulares,
+                    HorasExtras = asistencia.HorasExtras,
+                    HorasTotales = asistencia.HorasTotales
+                };
+
+                contexto.Asistencia.Add(entidad);
+                contexto.SaveChanges();
+            }
+        }
+
+        public Abstracciones.ModeloUI.Asistencia ObtenerEntradaAbierta(int idEmpleado)
+        {
+            using (var contexto = new Contexto())
+            {
+                var entidad = contexto.Asistencia
+                    .Where(a => a.IdEmpleado == idEmpleado && a.HoraSalida == null)
+                    .OrderByDescending(a => a.Fecha)
+                    .ThenByDescending(a => a.HoraEntrada)
+                    .FirstOrDefault();
+
+                return entidad != null ? ConvertirObjetoParaUI(entidad, contexto) : null;
+            }
+        }
+
+        public void RegistrarSalida(int idAsistencia, TimeSpan horaSalida)
+        {
+            using (var contexto = new Contexto())
+            {
+                var asistencia = contexto.Asistencia.FirstOrDefault(a => a.IdAsistencia == idAsistencia);
+
+                if (asistencia == null)
+                    throw new Exception("No se encontró la asistencia para registrar salida.");
+
+                if (asistencia.HoraSalida != null)
+                    throw new Exception("Esta asistencia ya tiene salida registrada.");
+
+                asistencia.HoraSalida = horaSalida;
+
+                var tiempoTrabajado = asistencia.HoraSalida.Value - asistencia.HoraEntrada;
+                var horasTrabajadas = (decimal)tiempoTrabajado.TotalHours - (asistencia.TiempoAlmuerzo / 60m);
+                asistencia.HorasTotales = Math.Max(0, horasTrabajadas);
+
+                if (asistencia.HorasTotales <= 8)
+                {
+                    asistencia.HorasRegulares = asistencia.HorasTotales;
+                    asistencia.HorasExtras = 0;
+                }
+                else
+                {
+                    asistencia.HorasRegulares = 8;
+                    asistencia.HorasExtras = asistencia.HorasTotales - 8;
+                }
+
+                contexto.SaveChanges();
+            }
+        }
+
     }
+
 }
+
+

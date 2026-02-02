@@ -37,8 +37,7 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
+            <div class="contact-form-wrapper contact-form" data-aos="fade-up">
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información del Registro -->
@@ -104,7 +103,6 @@
                         <span><i class="fas fa-check"></i> Registrar Entrada</span>
                     </button>
                 </div>
-            </form>
         </div>
                 }
     </div>

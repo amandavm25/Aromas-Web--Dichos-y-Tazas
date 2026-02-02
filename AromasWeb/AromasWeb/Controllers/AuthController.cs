@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
+using Microsoft.AspNetCore.Http;
 using System;
 
 namespace AromasWeb.Controllers
@@ -34,6 +35,7 @@ namespace AromasWeb.Controllers
                 HttpContext.Session.SetString("UsuarioTipo", "admin");
                 HttpContext.Session.SetString("UsuarioNombre", "Administrador");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
+                
 
                 TempData["Mensaje"] = "¡Bienvenido Administrador!";
                 return RedirectToAction("Index", "Home");
@@ -44,6 +46,7 @@ namespace AromasWeb.Controllers
                 HttpContext.Session.SetString("UsuarioTipo", "empleado");
                 HttpContext.Session.SetString("UsuarioNombre", "Empleado");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
+                HttpContext.Session.SetInt32("IdEmpleado", 1);
 
                 TempData["Mensaje"] = "¡Bienvenido Empleado!";
                 return RedirectToAction("Index", "Home");

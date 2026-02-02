@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AromasWeb.Abstracciones.ModeloUI
 {
@@ -41,13 +42,13 @@ namespace AromasWeb.Abstracciones.ModeloUI
 
         // Propiedades de navegación
         [DisplayName("Empleado")]
-        public string NombreEmpleado { get; set; }
+        public string? NombreEmpleado { get; set; }
 
         [DisplayName("Identificación")]
-        public string IdentificacionEmpleado { get; set; }
+        public string? IdentificacionEmpleado { get; set; }
 
         [DisplayName("Cargo")]
-        public string CargoEmpleado { get; set; }
+        public string? CargoEmpleado { get; set; }
 
         // Propiedades calculadas
         [DisplayName("Fecha")]

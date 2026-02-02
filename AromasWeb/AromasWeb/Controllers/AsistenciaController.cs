@@ -2,6 +2,7 @@
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Asistencia;
 using AromasWeb.Abstracciones.Logica.Empleado;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace AromasWeb.Controllers
             _listarAsistencias = new LogicaDeNegocio.Asistencias.ListarAsistencias();
             _listarEmpleados = new LogicaDeNegocio.Empleados.ListarEmpleados();
         }
+
+        //ADMIN-LISTADO GENERAL
 
         // GET: Asistencia/ListadoAsistencias
         public IActionResult ListadoAsistencias(string buscar, DateTime? fechaInicio, DateTime? fechaFin)
@@ -59,11 +62,149 @@ namespace AromasWeb.Controllers
             return View(asistencias);
         }
 
-        // GET: Asistencia/ListadoAsistencias
+        //EMPLEADO - MI HISTORIAL
+
         public IActionResult MiHistorialAsistencias()
         {
-            return View();
+            int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 0;
+
+            if (idEmpleado == 0)
+
+                return RedirectToAction("Login", "Auth");
+
+            var empleado = _listarEmpleados.ObtenerPorId(idEmpleado);
+            ViewBag.Empleado = empleado;
+
+            var asistencias = _listarAsistencias.BuscarPorEmpleado(idEmpleado);
+
+            foreach (var asistencia in asistencias)
+            {
+                asistencia.CalcularHoras();
+
+            }
+            return View(asistencias);
         }
+
+        // EMPLEADO- MI ENTRADA GET
+
+        [HttpGet]
+        public IActionResult MiEntrada()
+        {
+            int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 0;
+
+            if (idEmpleado == 0)
+
+                return RedirectToAction("Login", "Auth");
+
+            var empleado = _listarEmpleados.ObtenerPorId(idEmpleado);
+
+            ViewBag.Empleado = empleado;
+
+            var model = new Asistencia
+            {
+                IdEmpleado = idEmpleado,
+                Fecha = DateTime.Now.Date,
+                HoraEntrada = DateTime.Now.TimeOfDay
+            };
+
+            return View(model);
+        }
+
+        // EMPLEADO- MI ENTRADA POST
+        // POST: Asistencia/MiEntrada
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MiEntrada(Asistencia asistencia)
+        {
+
+            int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 0;
+            if (idEmpleado == 0) return RedirectToAction("Login", "Auth");
+
+            asistencia.IdEmpleado = idEmpleado;
+
+            asistencia.Fecha = DateTime.SpecifyKind(asistencia.Fecha.Date, DateTimeKind.Utc);
+
+            var empleado = _listarEmpleados.ObtenerPorId(asistencia.IdEmpleado);
+            ViewBag.Empleado = empleado;
+
+            if (!ModelState.IsValid) return View(asistencia);
+
+            var yaExiste = _listarAsistencias.ExisteEntradaAbierta(asistencia.IdEmpleado, asistencia.Fecha);
+            if (yaExiste)
+            {
+                ModelState.AddModelError("", "Ya existe una entrada sin salida para este empleado en la fecha seleccionada.");
+                return View(asistencia);
+            }
+
+            _listarAsistencias.CrearEntrada(asistencia);
+            TempData["Mensaje"] = "Entrada registrada correctamente.";
+            return RedirectToAction("MiHistorialAsistencias");
+        }
+        
+
+
+        //EMPLEADO MI SALIDA GET
+
+        [HttpGet]
+        public IActionResult MiSalida()
+        {
+            int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 0;
+
+            if (idEmpleado == 0)
+                return RedirectToAction("Login", "Auth");
+
+            var empleado = _listarEmpleados.ObtenerPorId(idEmpleado);
+            ViewBag.Empleado = empleado;
+
+            var entradaABierta = _listarAsistencias.ObtenerEntradaAbierta(idEmpleado);
+
+            if (entradaABierta == null)
+            {
+                TempData["Error"] = "No tienes una entrada abierta para registrar la salida.";
+                return RedirectToAction(nameof(MiEntrada));
+            }
+            entradaABierta.HoraSalida = DateTime.Now.TimeOfDay;
+            return View(entradaABierta);
+
+
+        }
+
+        //EMPLEADO MI SALIDA POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MiSalida(Asistencia asistencia)
+        {
+            int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 0;
+
+            if (idEmpleado == 0)
+                return RedirectToAction("Login", "Auth");
+
+            asistencia.IdEmpleado = idEmpleado;
+            var empleado = _listarEmpleados.ObtenerPorId(idEmpleado);
+            ViewBag.Empleado = empleado;
+
+            if (!asistencia.HoraSalida.HasValue)
+            { 
+                ModelState.AddModelError("", "La hora de salida es obligatoria.");
+        }
+
+                if (!ModelState.IsValid)
+            {
+                    return View(asistencia);
+
+                }
+
+                asistencia.CalcularHoras();
+
+                _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value);
+
+                TempData["Mensaje"] = "Salida registrada correctamente.";
+
+            return RedirectToAction("MiHistorialAsistencias");
+
+            }
+
+        //ADMIN - REGISTRAR ENTRADA 
 
         // GET: Asistencia/RegistrarEntrada
         public IActionResult RegistrarEntrada()
@@ -84,23 +225,34 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RegistrarEntrada(Asistencia asistencia)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // Aquí iría la lógica para guardar en la base de datos
-                TempData["Mensaje"] = "Registro de inicio de jornada correctamente";
+                CargarEmpleados();
+                return View(asistencia);
+
+            }
+            var yaExiste = _listarAsistencias.ExisteEntradaAbierta(asistencia.IdEmpleado, asistencia.Fecha);
+            if (yaExiste)
+            {
+                ModelState.AddModelError("", "Ya existe una entrada sin salida para este empleado en la fecha seleccionada.");
+                CargarEmpleados();
+                return View(asistencia);
+            }
+
+            _listarAsistencias.CrearEntrada(asistencia);
+            // Aquí iría la lógica para guardar en la base de datos
+            TempData["Mensaje"] = "Registro de inicio de jornada correctamente";
                 return RedirectToAction(nameof(ListadoAsistencias));
             }
 
-            CargarEmpleados();
-            return View(asistencia);
-        }
+        //ADMIN REGISTRAR SALIDA
 
         // GET: Asistencia/RegistrarSalida/5
         public IActionResult RegistrarSalida(int id)
         {
             var asistencia = _listarAsistencias.ObtenerPorId(id);
 
-            if (asistencia == null)
+            if (asistencia == null || asistencia.HoraSalida.HasValue)
             {
                 TempData["Error"] = "Asistencia no encontrada";
                 return RedirectToAction(nameof(ListadoAsistencias));
@@ -116,30 +268,22 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RegistrarSalida(Asistencia asistencia)
         {
-            if (ModelState.IsValid)
-            {
+            if (!asistencia.HoraSalida.HasValue)
+                ModelState.AddModelError("", "La hora de salida es obligatoria.");
+
+            if (!ModelState.IsValid)
+                return View(asistencia);
+
+            
                 asistencia.CalcularHoras();
-                // Aquí iría la lógica para actualizar en la base de datos
-                TempData["Mensaje"] = "Registro de finalización de jornada correctamente";
+            _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value);
+
+            // Aquí iría la lógica para actualizar en la base de datos
+            TempData["Mensaje"] = "Registro de finalización de jornada correctamente";
                 return RedirectToAction(nameof(ListadoAsistencias));
             }
 
-            return View(asistencia);
-        }
-
-        // GET: Asistencia/RegistrarSalida/5
-        public IActionResult MiEntrada(int id)
-        {
-            return View();
-        }
-
-        // POST: Asistencia/RegistrarSalida
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult MiSalida(Asistencia asistencia)
-        {
-            return View();
-        }
+        
 
         // GET: Asistencia/EditarAsistencia/5
         public IActionResult EditarAsistencia(int id)

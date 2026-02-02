@@ -2,7 +2,8 @@
 
 @{
     ViewBag.Title = "Mi Salida";
-    var empleado = (AromasWeb.Abstracciones.ModeloUI.Empleado)ViewBag.EmpleadoActual;
+	var empleado = ViewBag.Empleado as AromasWeb.Abstracciones.ModeloUI.Empleado;
+
 }
 
 <!-- Hero Section -->
@@ -20,7 +21,14 @@
                 <span class="hero-title-accent">Salida</span>
             </h1>
             <p class="hero-subtitle">
-                @empleado.Nombre + @empleado.Apellidos - @empleado.Cargo
+				@if (empleado != null)
+                {
+                    @($"{empleado.Nombre} {empleado.Apellidos} - {empleado.Cargo}")
+                }
+                else
+                {
+                    <text>Empleado</text>
+                }
             </p>
         </div>
     </div>
@@ -42,8 +50,7 @@
             @Html.HiddenFor(model => model.Fecha)
             @Html.HiddenFor(model => model.HoraEntrada)
 
-            <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
+            <div class="contact-form-wrapper contact-form" data-aos="fade-up">
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información del Empleado -->
@@ -165,7 +172,6 @@
                             <span><i class="fas fa-check"></i> Registrar Mi Salida</span>
                         </button>
                     </div>
-                </form>
             </div>
         }
     </div>
