@@ -59,6 +59,12 @@ namespace AromasWeb.Controllers
             return View(asistencias);
         }
 
+        // GET: Asistencia/ListadoAsistencias
+        public IActionResult MiHistorialAsistencias()
+        {
+            return View();
+        }
+
         // GET: Asistencia/RegistrarEntrada
         public IActionResult RegistrarEntrada()
         {
@@ -119,6 +125,20 @@ namespace AromasWeb.Controllers
             }
 
             return View(asistencia);
+        }
+
+        // GET: Asistencia/RegistrarSalida/5
+        public IActionResult MiEntrada(int id)
+        {
+            return View();
+        }
+
+        // POST: Asistencia/RegistrarSalida
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MiSalida(Asistencia asistencia)
+        {
+            return View();
         }
 
         // GET: Asistencia/EditarAsistencia/5

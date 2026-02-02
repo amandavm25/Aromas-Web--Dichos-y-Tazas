@@ -12,6 +12,7 @@ wwwroot\js\modulo.js
 wwwroot\js\permiso.js
 wwwroot\js\planilla.js
 wwwroot\js\promocion.js
+wwwroot\js\receta-editar.js
 wwwroot\js\receta.js
 wwwroot\js\recuperarContrasenna.js
 wwwroot\js\registro.js
