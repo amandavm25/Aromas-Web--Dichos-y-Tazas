@@ -11,469 +11,469 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AromasWeb
 build_property.RootNamespace = AromasWeb
-build_property.ProjectDir = C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb\
+build_property.ProjectDir = C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Kendall\Documents\GitHub\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb
+build_property.MSBuildProjectDirectory = C:\Users\evely\OneDrive\Documentos\Fidelitas\VII Cuatrimestre\Diseño y Desarrollo de Sistemas\Aromas-Web--Dichos-y-Tazas\AromasWeb\AromasWeb
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/EditarAsistencia.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/EditarAsistencia.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxFZGl0YXJBc2lzdGVuY2lhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/ListadoAsistencias.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/ListadoAsistencias.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxMaXN0YWRvQXNpc3RlbmNpYXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/MiEntrada.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/MiEntrada.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxNaUVudHJhZGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/MiHistorialAsistencias.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/MiHistorialAsistencias.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxNaUhpc3RvcmlhbEFzaXN0ZW5jaWFzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/MiSalida.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/MiSalida.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxNaVNhbGlkYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/RegistrarEntrada.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/RegistrarEntrada.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxSZWdpc3RyYXJFbnRyYWRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/RegistrarSalida.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/RegistrarSalida.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxSZWdpc3RyYXJTYWxpZGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/_ModalDetallesAsistencia.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/_ModalDetallesAsistencia.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxfTW9kYWxEZXRhbGxlc0FzaXN0ZW5jaWEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/_ModalEliminarAsistencia.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Asistencia/_ModalEliminarAsistencia.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpc3RlbmNpYVxfTW9kYWxFbGltaW5hckFzaXN0ZW5jaWEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/Login.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/OlvideContrasenna.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/OlvideContrasenna.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxPbHZpZGVDb250cmFzZW5uYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/Registro.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/Registro.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZWdpc3Ryby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/RestablecerContrasenna.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Auth/RestablecerContrasenna.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZXN0YWJsZWNlckNvbnRyYXNlbm5hLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Bitacora/ListadoBitacoras.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Bitacora/ListadoBitacoras.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQml0YWNvcmFcTGlzdGFkb0JpdGFjb3Jhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Bitacora/_ModalDetallesBitacora.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Bitacora/_ModalDetallesBitacora.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQml0YWNvcmFcX01vZGFsRGV0YWxsZXNCaXRhY29yYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/CrearCategoriaInsumo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/CrearCategoriaInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhSW5zdW1vXENyZWFyQ2F0ZWdvcmlhSW5zdW1vLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/EditarCategoriaInsumo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/EditarCategoriaInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhSW5zdW1vXEVkaXRhckNhdGVnb3JpYUluc3Vtby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/ListadoCategoriasInsumos.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/ListadoCategoriasInsumos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhSW5zdW1vXExpc3RhZG9DYXRlZ29yaWFzSW5zdW1vcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/_ModalDetallesCategoriaInsumo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/_ModalDetallesCategoriaInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhSW5zdW1vXF9Nb2RhbERldGFsbGVzQ2F0ZWdvcmlhSW5zdW1vLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/_ModalEliminarCategoriaInsumo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaInsumo/_ModalEliminarCategoriaInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhSW5zdW1vXF9Nb2RhbEVsaW1pbmFyQ2F0ZWdvcmlhSW5zdW1vLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/CrearCategoriaReceta.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/CrearCategoriaReceta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhUmVjZXRhXENyZWFyQ2F0ZWdvcmlhUmVjZXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/EditarCategoriaReceta.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/EditarCategoriaReceta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhUmVjZXRhXEVkaXRhckNhdGVnb3JpYVJlY2V0YS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/ListadoCategoriasRecetas.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/ListadoCategoriasRecetas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhUmVjZXRhXExpc3RhZG9DYXRlZ29yaWFzUmVjZXRhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/_ModalDetallesCategoriaReceta.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/_ModalDetallesCategoriaReceta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhUmVjZXRhXF9Nb2RhbERldGFsbGVzQ2F0ZWdvcmlhUmVjZXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/_ModalEliminarCategoriaReceta.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/CategoriaReceta/_ModalEliminarCategoriaReceta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhUmVjZXRhXF9Nb2RhbEVsaW1pbmFyQ2F0ZWdvcmlhUmVjZXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/CrearCliente.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/CrearCliente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxDcmVhckNsaWVudGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/EditarCliente.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/EditarCliente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxFZGl0YXJDbGllbnRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/EditarMiReserva.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/EditarMiReserva.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxFZGl0YXJNaVJlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/EditarPerfil.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/EditarPerfil.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxFZGl0YXJQZXJmaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/HistorialReservas.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/HistorialReservas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxIaXN0b3JpYWxSZXNlcnZhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/ListadoClientes.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/ListadoClientes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxMaXN0YWRvQ2xpZW50ZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/MiPerfil.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/MiPerfil.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxNaVBlcmZpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/MisReservas.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/MisReservas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxNaXNSZXNlcnZhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalCancelarReserva.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalCancelarReserva.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxfTW9kYWxDYW5jZWxhclJlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalDetallesCliente.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalDetallesCliente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxfTW9kYWxEZXRhbGxlc0NsaWVudGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalDetallesReserva.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalDetallesReserva.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxfTW9kYWxEZXRhbGxlc1Jlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalEliminarCliente.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Cliente/_ModalEliminarCliente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxfTW9kYWxFbGltaW5hckNsaWVudGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/CrearEmpleado.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/CrearEmpleado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cQ3JlYXJFbXBsZWFkby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/EditarEmpleado.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/EditarEmpleado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cRWRpdGFyRW1wbGVhZG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/HistorialEmpleado.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/HistorialEmpleado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cSGlzdG9yaWFsRW1wbGVhZG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/ListadoEmpleados.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/ListadoEmpleados.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cTGlzdGFkb0VtcGxlYWRvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/_ModalDetallesEmpleado.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/_ModalDetallesEmpleado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cX01vZGFsRGV0YWxsZXNFbXBsZWFkby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/_ModalEliminarEmpleado.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Empleado/_ModalEliminarEmpleado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cX01vZGFsRWxpbWluYXJFbXBsZWFkby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/CrearTarifa.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/CrearTarifa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXENyZWFyVGFyaWZhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/ListadoTarifas.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/ListadoTarifas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXExpc3RhZG9UYXJpZmFzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/MiHistorial.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/MiHistorial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXE1pSGlzdG9yaWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/VerHistorialEmpleado.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/VerHistorialEmpleado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXFZlckhpc3RvcmlhbEVtcGxlYWRvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/_ModalDetallesTarifa.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/HistorialTarifa/_ModalDetallesTarifa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGlzdG9yaWFsVGFyaWZhXF9Nb2RhbERldGFsbGVzVGFyaWZhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Home/Index.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Home/Privacy.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/CrearInsumo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/CrearInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXENyZWFySW5zdW1vLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/EditarInsumo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/EditarInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXEVkaXRhckluc3Vtby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/ListadoInsumos.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/ListadoInsumos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXExpc3RhZG9JbnN1bW9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/_ModalDetallesInsumo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/_ModalDetallesInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXF9Nb2RhbERldGFsbGVzSW5zdW1vLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/_ModalEliminarInsumo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Insumo/_ModalEliminarInsumo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zdW1vXF9Nb2RhbEVsaW1pbmFySW5zdW1vLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/CrearModulo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/CrearModulo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXENyZWFyTW9kdWxvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/EditarModulo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/EditarModulo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXEVkaXRhck1vZHVsby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/ListadoModulos.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/ListadoModulos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXExpc3RhZG9Nb2R1bG9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/_ModalDetallesModulo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/_ModalDetallesModulo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXF9Nb2RhbERldGFsbGVzTW9kdWxvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/_ModalEliminarModulo.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Modulo/_ModalEliminarModulo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxvXF9Nb2RhbEVsaW1pbmFyTW9kdWxvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/MovimientoInsumo/HistorialMovimientos.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/MovimientoInsumo/HistorialMovimientos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aW1pZW50b0luc3Vtb1xIaXN0b3JpYWxNb3ZpbWllbnRvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/MovimientoInsumo/RegistrarMovimiento.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/MovimientoInsumo/RegistrarMovimiento.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aW1pZW50b0luc3Vtb1xSZWdpc3RyYXJNb3ZpbWllbnRvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/AsignarPermisos.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/AsignarPermisos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xBc2lnbmFyUGVybWlzb3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/CrearPermiso.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/CrearPermiso.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xDcmVhclBlcm1pc28uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/EditarPermiso.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/EditarPermiso.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xFZGl0YXJQZXJtaXNvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/ListadoPermisos.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/ListadoPermisos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xMaXN0YWRvUGVybWlzb3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/_ModalDetallesPermiso.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/_ModalDetallesPermiso.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xfTW9kYWxEZXRhbGxlc1Blcm1pc28uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/_ModalEliminarPermiso.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Permiso/_ModalEliminarPermiso.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzb1xfTW9kYWxFbGltaW5hclBlcm1pc28uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/CalcularPlanilla.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/CalcularPlanilla.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcQ2FsY3VsYXJQbGFuaWxsYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/ListadoPlanillas.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/ListadoPlanillas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcTGlzdGFkb1BsYW5pbGxhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/MiPlanilla.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/MiPlanilla.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcTWlQbGFuaWxsYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/PlanillasEmpleado.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/PlanillasEmpleado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcUGxhbmlsbGFzRW1wbGVhZG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/VerDetallePlanilla.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/VerDetallePlanilla.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcVmVyRGV0YWxsZVBsYW5pbGxhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/_ModalPagarPlanilla.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Planilla/_ModalPagarPlanilla.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbmlsbGFcX01vZGFsUGFnYXJQbGFuaWxsYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/CrearPromocion.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/CrearPromocion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvbW9jaW9uXENyZWFyUHJvbW9jaW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/EditarPromocion.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/EditarPromocion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvbW9jaW9uXEVkaXRhclByb21vY2lvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/ListadoPromociones.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/ListadoPromociones.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvbW9jaW9uXExpc3RhZG9Qcm9tb2Npb25lcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/_ModalDetallesPromocion.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/_ModalDetallesPromocion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvbW9jaW9uXF9Nb2RhbERldGFsbGVzUHJvbW9jaW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/_ModalEliminarPromocion.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Promocion/_ModalEliminarPromocion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvbW9jaW9uXF9Nb2RhbEVsaW1pbmFyUHJvbW9jaW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/CrearReceta.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/CrearReceta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZXRhXENyZWFyUmVjZXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/EditarReceta.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/EditarReceta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZXRhXEVkaXRhclJlY2V0YS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/ListadoRecetas.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/ListadoRecetas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZXRhXExpc3RhZG9SZWNldGFzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/_ModalDetallesReceta.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/_ModalDetallesReceta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZXRhXF9Nb2RhbERldGFsbGVzUmVjZXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/_ModalEliminarReceta.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Receta/_ModalEliminarReceta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZXRhXF9Nb2RhbEVsaW1pbmFyUmVjZXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/CrearReserva.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/CrearReserva.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxDcmVhclJlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/EditarReserva.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/EditarReserva.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxFZGl0YXJSZXNlcnZhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/ListadoReservas.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/ListadoReservas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxMaXN0YWRvUmVzZXJ2YXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/RegistrarReservaCliente.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/RegistrarReservaCliente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxSZWdpc3RyYXJSZXNlcnZhQ2xpZW50ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/_ModalCancelarReserva.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/_ModalCancelarReserva.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxfTW9kYWxDYW5jZWxhclJlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/_ModalDetallesReserva.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Reserva/_ModalDetallesReserva.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YVxfTW9kYWxEZXRhbGxlc1Jlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/CrearRol.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/CrearRol.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXENyZWFyUm9sLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/EditarRol.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/EditarRol.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXEVkaXRhclJvbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/ListadoRoles.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/ListadoRoles.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXExpc3RhZG9Sb2xlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/_ModalDetallesRol.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/_ModalDetallesRol.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXF9Nb2RhbERldGFsbGVzUm9sLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/_ModalEliminarRol.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Rol/_ModalEliminarRol.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXF9Nb2RhbEVsaW1pbmFyUm9sLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Shared/Error.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/CrearSolicitud.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/CrearSolicitud.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xDcmVhclNvbGljaXR1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/EditarSolicitud.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/EditarSolicitud.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xFZGl0YXJTb2xpY2l0dWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/ListadoSolicitudes.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/ListadoSolicitudes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xMaXN0YWRvU29saWNpdHVkZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/MisSolicitudes.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/MisSolicitudes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xNaXNTb2xpY2l0dWRlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/VerSolicitudesEmpleado.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/VerSolicitudesEmpleado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xWZXJTb2xpY2l0dWRlc0VtcGxlYWRvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalAprobarSolicitud.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalAprobarSolicitud.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xfTW9kYWxBcHJvYmFyU29saWNpdHVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalDetallesSolicitud.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalDetallesSolicitud.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xfTW9kYWxEZXRhbGxlc1NvbGljaXR1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalEliminarSolicitud.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalEliminarSolicitud.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xfTW9kYWxFbGltaW5hclNvbGljaXR1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalRechazarSolicitud.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/SolicitudVacaciones/_ModalRechazarSolicitud.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkVmFjYWNpb25lc1xfTW9kYWxSZWNoYXphclNvbGljaXR1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/CrearTipoPromocion.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/CrearTipoPromocion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1Byb21vY2lvblxDcmVhclRpcG9Qcm9tb2Npb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/EditarTipoPromocion.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/EditarTipoPromocion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1Byb21vY2lvblxFZGl0YXJUaXBvUHJvbW9jaW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/ListadoTiposPromociones.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/ListadoTiposPromociones.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1Byb21vY2lvblxMaXN0YWRvVGlwb3NQcm9tb2Npb25lcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/_ModalDetallesTipoPromocion.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/_ModalDetallesTipoPromocion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1Byb21vY2lvblxfTW9kYWxEZXRhbGxlc1RpcG9Qcm9tb2Npb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/_ModalEliminarTipoPromocion.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/TipoPromocion/_ModalEliminarTipoPromocion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1Byb21vY2lvblxfTW9kYWxFbGltaW5hclRpcG9Qcm9tb2Npb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/_ViewImports.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/_ViewStart.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Kendall/Documents/GitHub/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Shared/_Layout.cshtml]
+[C:/Users/evely/OneDrive/Documentos/Fidelitas/VII Cuatrimestre/Diseño y Desarrollo de Sistemas/Aromas-Web--Dichos-y-Tazas/AromasWeb/AromasWeb/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-fmevv1jail

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj": {}
+    "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Diseño y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj": {
+    "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Diseño y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj",
+        "projectUniqueName": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Diseño y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj",
         "projectName": "AromasWeb.Abstracciones",
-        "projectPath": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj",
-        "packagesPath": "C:\\Users\\Kendall\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Kendall\\Documents\\GitHub\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\obj\\",
+        "projectPath": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Diseño y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj",
+        "packagesPath": "C:\\Users\\evely\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Diseño y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Kendall\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\evely\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -67,20 +67,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.23, 8.0.23]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.23, 8.0.23]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[8.0.23, 8.0.23]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"

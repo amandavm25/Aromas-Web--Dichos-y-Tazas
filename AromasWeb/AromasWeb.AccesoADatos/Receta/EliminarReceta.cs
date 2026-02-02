@@ -1,21 +1,4 @@
-﻿//using AromasWeb.Abstracciones.Logica.Receta;
-//using AromasWeb.AccesoADatos.Modelos;
-//using Microsoft.EntityFrameworkCore;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace AromasWeb.AccesoADatos.Receta
-//{
-//    internal class EliminarReceta
-//    {
-//    }
-//}
-
-
-using AromasWeb.Abstracciones.Logica.Receta;
+﻿using AromasWeb.Abstracciones.Logica.Receta;
 using AromasWeb.AccesoADatos.Modelos;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -36,7 +19,10 @@ namespace AromasWeb.AccesoADatos.Receta
         {
             try
             {
+                // Cargar la receta CON sus ingredientes usando Include
+                // Esto permite que Entity Framework sepa que debe eliminar los hijos también
                 RecetaAD recetaAEliminar = _contexto.Receta
+                    .Include(r => r.RecetaInsumos)  // ⭐ Cargar la relación
                     .FirstOrDefault(r => r.IdReceta == id);
 
                 if (recetaAEliminar == null)
@@ -55,23 +41,37 @@ namespace AromasWeb.AccesoADatos.Receta
                     recetaAEliminar.CantidadPorciones,
                     recetaAEliminar.PrecioVenta,
                     recetaAEliminar.CostoTotal,
-                    recetaAEliminar.Disponibilidad
+                    recetaAEliminar.Disponibilidad,
+                    CantidadIngredientes = recetaAEliminar.RecetaInsumos?.Count ?? 0
                 };
 
+                System.Diagnostics.Debug.WriteLine($"Eliminando receta '{recetaAEliminar.Nombre}' con {infoReceta.CantidadIngredientes} ingredientes");
+
+                // Con DeleteBehavior.Cascade configurado en el Contexto,
+                // EF Core eliminará automáticamente los RecetaInsumo asociados
                 _contexto.Receta.Remove(recetaAEliminar);
                 int cantidadDeDatosEliminados = _contexto.SaveChanges();
 
-                // Aquí podrías agregar auditoría si la implementas
-                // if (cantidadDeDatosEliminados > 0)
-                // {
-                //     _auditoria.RegistrarEliminacion("Receta", id, infoReceta);
-                // }
+                if (cantidadDeDatosEliminados > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine($"✓ Receta eliminada exitosamente");
+                }
 
                 return cantidadDeDatosEliminados;
             }
             catch (DbUpdateException dbEx)
             {
-                throw new Exception("No se puede eliminar la receta porque tiene registros relacionados (ingredientes, pedidos, etc.)", dbEx);
+                // Esto podría ocurrir si la receta está en PromocionReceta u otras tablas
+                System.Diagnostics.Debug.WriteLine($"Error de BD al eliminar receta: {dbEx.Message}");
+
+                // Verificar si el error es por relaciones con otras tablas
+                if (dbEx.InnerException != null &&
+                    dbEx.InnerException.Message.Contains("foreign key constraint"))
+                {
+                    throw new Exception("No se puede eliminar la receta porque está siendo utilizada en promociones, pedidos u otros registros relacionados.", dbEx);
+                }
+
+                throw new Exception("No se puede eliminar la receta. Verifica que no esté siendo utilizada en otros registros.", dbEx);
             }
             catch (Exception ex)
             {

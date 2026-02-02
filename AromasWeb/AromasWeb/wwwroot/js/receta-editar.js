@@ -4,10 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let ingredienteIndex = 0;
     const insumosData = {}; // Almacena información de insumos (costo, disponibilidad, etc.)
 
-    // Cargar datos de insumos desde el servidor (esto debería venir del ViewBag)
+    // Cargar datos de insumos desde el servidor
     function cargarDatosInsumos() {
-        // En producción, esto vendría del ViewBag.TodosInsumos
-        // Por ahora es un ejemplo de la estructura
         const insumos = window.insumosDisponibles || [];
 
         insumos.forEach(insumo => {

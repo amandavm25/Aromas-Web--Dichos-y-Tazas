@@ -4,35 +4,40 @@
 let ingredienteIndex = 0;
 let insumosDisponibles = [];
 
-// Datos de demo de insumos (en producción vendrían del servidor)
-const insumosDemoData = [
-    { id: 1, nombre: "Harina de Trigo", unidad: "kg", costo: 2500.00, disponible: 50.00 },
-    { id: 2, nombre: "Azúcar Blanca", unidad: "kg", costo: 1200.00, disponible: 8.00 },
-    { id: 3, nombre: "Mantequilla", unidad: "kg", costo: 4500.00, disponible: 25.00 },
-    { id: 4, nombre: "Huevos", unidad: "Unid", costo: 200.00, disponible: 150.00 },
-    { id: 5, nombre: "Chocolate en Polvo", unidad: "g", costo: 8.00, disponible: 3000.00 },
-    { id: 6, nombre: "Vainilla Líquida", unidad: "mL", costo: 7.00, disponible: 500.00 },
-    { id: 7, nombre: "Leche Entera", unidad: "L", costo: 1500.00, disponible: 20.00 },
-    { id: 8, nombre: "Levadura en Polvo", unidad: "g", costo: 2.80, disponible: 1000.00 }
-];
-
 // ============================================
 // INICIALIZACIÓN
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
-    // Cargar insumos disponibles
-    insumosDisponibles = insumosDemoData;
+    console.log('Inicializando receta.js...');
 
-    // Agregar primer ingrediente automáticamente si estamos en crear
+    // ⭐ Cargar insumos desde window.insumosDisponibles (viene del servidor)
+    if (window.insumosDisponibles && Array.isArray(window.insumosDisponibles)) {
+        insumosDisponibles = window.insumosDisponibles;
+        console.log('Insumos cargados:', insumosDisponibles.length);
+    } else {
+        console.warn('No se encontraron insumos en window.insumosDisponibles');
+        insumosDisponibles = [];
+    }
+
+    // Configurar botón de agregar ingrediente
     const btnAgregar = document.getElementById('btnAgregarIngrediente');
     if (btnAgregar) {
-        // Solo agregar automáticamente si no hay ingredientes cargados
+        console.log('Botón agregar ingrediente encontrado');
+
+        btnAgregar.addEventListener('click', function (e) {
+            e.preventDefault();
+            console.log('Click en agregar ingrediente');
+            agregarIngrediente();
+        });
+
+        // Agregar primer ingrediente automáticamente si estamos en crear
         const container = document.getElementById('ingredientes-container');
         if (container && container.children.length === 0) {
+            console.log('Agregando primer ingrediente automáticamente');
             agregarIngrediente();
         }
-
-        btnAgregar.addEventListener('click', agregarIngrediente);
+    } else {
+        console.error('Botón agregar ingrediente NO encontrado');
     }
 
     // Event listener para precio de venta
@@ -55,75 +60,114 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Calcular costos iniciales
     calcularResumenCostos();
+
+    console.log('receta.js inicializado correctamente');
 });
 
 // ============================================
 // GESTIÓN DE INGREDIENTES
 // ============================================
 function agregarIngrediente() {
+    console.log('Ejecutando agregarIngrediente()');
+
     const template = document.getElementById('ingrediente-template');
     const container = document.getElementById('ingredientes-container');
 
-    if (!template || !container) return;
+    if (!template) {
+        console.error('Template de ingrediente no encontrado');
+        return;
+    }
+
+    if (!container) {
+        console.error('Container de ingredientes no encontrado');
+        return;
+    }
+
+    if (!insumosDisponibles || insumosDisponibles.length === 0) {
+        console.error('No hay insumos disponibles para agregar');
+        mostrarNotificacion('No hay insumos disponibles. Por favor, agrega insumos primero.', 'error');
+        return;
+    }
+
+    console.log('Template y container encontrados');
+    console.log('Insumos disponibles:', insumosDisponibles.length);
 
     // Clonar template
     const clone = template.content.cloneNode(true);
-
-    // Actualizar índices
-    const inputs = clone.querySelectorAll('input, select');
-    inputs.forEach(input => {
-        if (input.name) {
-            input.name = input.name.replace('INDEX', ingredienteIndex);
-        }
-    });
+    console.log('Template clonado');
 
     // Llenar select de insumos
     const selectInsumo = clone.querySelector('.select-insumo');
+
+    if (!selectInsumo) {
+        console.error('Select de insumo no encontrado en el template');
+        return;
+    }
+
+    console.log('Llenando select con', insumosDisponibles.length, 'insumos');
+
     insumosDisponibles.forEach(insumo => {
         const option = document.createElement('option');
         option.value = insumo.id;
-        option.textContent = `${insumo.nombre} (${insumo.unidad})`;
-        option.setAttribute('data-costo', insumo.costo);
-        option.setAttribute('data-disponible', insumo.disponible);
-        option.setAttribute('data-unidad', insumo.unidad);
+        option.textContent = `${insumo.nombre} (${insumo.unidadMedida})`;
+        option.setAttribute('data-costo', insumo.costoUnitario);
+        option.setAttribute('data-disponible', insumo.cantidadDisponible);
+        option.setAttribute('data-unidad', insumo.unidadMedida);
         selectInsumo.appendChild(option);
     });
+
+    console.log('Select llenado con opciones');
 
     // Event listeners para el nuevo ingrediente
     const selectInsumoElement = clone.querySelector('.select-insumo');
     const inputCantidad = clone.querySelector('.input-cantidad');
     const btnEliminar = clone.querySelector('.btn-eliminar-ingrediente');
 
-    selectInsumoElement.addEventListener('change', function () {
-        actualizarCostoIngrediente(this.closest('.ingrediente-item'));
-        validarDisponibilidad(this.closest('.ingrediente-item'));
-    });
+    if (selectInsumoElement) {
+        selectInsumoElement.addEventListener('change', function () {
+            actualizarCostoIngrediente(this.closest('.ingrediente-item'));
+            validarDisponibilidad(this.closest('.ingrediente-item'));
+        });
+    }
 
-    inputCantidad.addEventListener('input', function () {
-        actualizarCostoIngrediente(this.closest('.ingrediente-item'));
-        validarDisponibilidad(this.closest('.ingrediente-item'));
-    });
+    if (inputCantidad) {
+        inputCantidad.addEventListener('input', function () {
+            actualizarCostoIngrediente(this.closest('.ingrediente-item'));
+            validarDisponibilidad(this.closest('.ingrediente-item'));
+        });
+    }
 
-    btnEliminar.addEventListener('click', function () {
-        eliminarIngrediente(this.closest('.ingrediente-item'));
-    });
+    if (btnEliminar) {
+        btnEliminar.addEventListener('click', function () {
+            eliminarIngrediente(this.closest('.ingrediente-item'));
+        });
+    }
 
     container.appendChild(clone);
     ingredienteIndex++;
 
+    console.log('Ingrediente agregado. Total:', ingredienteIndex);
+
     // Animar entrada
     const items = container.querySelectorAll('.ingrediente-item');
     const lastItem = items[items.length - 1];
-    lastItem.style.opacity = '0';
-    lastItem.style.transform = 'translateY(20px)';
-    setTimeout(() => {
-        lastItem.style.transition = 'all 0.3s ease';
-        lastItem.style.opacity = '1';
-        lastItem.style.transform = 'translateY(0)';
-    }, 10);
+
+    if (lastItem) {
+        lastItem.style.opacity = '0';
+        lastItem.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            lastItem.style.transition = 'all 0.3s ease';
+            lastItem.style.opacity = '1';
+            lastItem.style.transform = 'translateY(0)';
+        }, 10);
+    }
+
+    mostrarNotificacion('Ingrediente agregado', 'success');
 }
 
 function eliminarIngrediente(item) {
+    if (!item) return;
+
     item.style.transition = 'all 0.3s ease';
     item.style.opacity = '0';
     item.style.transform = 'translateX(-20px)';
@@ -141,9 +185,13 @@ function eliminarIngrediente(item) {
 }
 
 function actualizarCostoIngrediente(item) {
+    if (!item) return;
+
     const selectInsumo = item.querySelector('.select-insumo');
     const inputCantidad = item.querySelector('.input-cantidad');
     const inputCosto = item.querySelector('.costo-ingrediente');
+
+    if (!selectInsumo || !inputCantidad || !inputCosto) return;
 
     const selectedOption = selectInsumo.options[selectInsumo.selectedIndex];
     const costoUnitario = parseFloat(selectedOption.getAttribute('data-costo') || 0);
@@ -160,12 +208,14 @@ function actualizarCostoIngrediente(item) {
 }
 
 function validarDisponibilidad(item) {
+    if (!item) return;
+
     const selectInsumo = item.querySelector('.select-insumo');
     const inputCantidad = item.querySelector('.input-cantidad');
     const alertaStock = item.querySelector('.alerta-stock');
     const mensajeAlerta = item.querySelector('.mensaje-alerta');
 
-    if (!selectInsumo.value) return;
+    if (!selectInsumo || !selectInsumo.value) return;
 
     const selectedOption = selectInsumo.options[selectInsumo.selectedIndex];
     const disponible = parseFloat(selectedOption.getAttribute('data-disponible') || 0);
@@ -173,12 +223,16 @@ function validarDisponibilidad(item) {
     const unidad = selectedOption.getAttribute('data-unidad') || '';
 
     if (cantidad > disponible) {
-        alertaStock.style.display = 'block';
-        mensajeAlerta.textContent = `Stock insuficiente. Disponible: ${disponible} ${unidad}`;
-        item.style.borderLeft = '4px solid #e74c3c';
+        if (alertaStock && mensajeAlerta) {
+            alertaStock.style.display = 'block';
+            mensajeAlerta.textContent = `Stock insuficiente. Disponible: ${disponible} ${unidad}`;
+            item.style.borderLeft = '4px solid #e74c3c';
+        }
     } else if (cantidad > 0) {
-        alertaStock.style.display = 'none';
-        item.style.borderLeft = '';
+        if (alertaStock) {
+            alertaStock.style.display = 'none';
+            item.style.borderLeft = '';
+        }
     }
 }
 
@@ -196,7 +250,7 @@ function calcularResumenCostos() {
         const selectInsumo = item.querySelector('.select-insumo');
         const inputCantidad = item.querySelector('.input-cantidad');
 
-        if (selectInsumo.value && inputCantidad.value) {
+        if (selectInsumo && selectInsumo.value && inputCantidad && inputCantidad.value) {
             const selectedOption = selectInsumo.options[selectInsumo.selectedIndex];
             const costoUnitario = parseFloat(selectedOption.getAttribute('data-costo') || 0);
             const cantidad = parseFloat(inputCantidad.value || 0);
@@ -284,13 +338,6 @@ function initializeModalsReceta() {
         boton.addEventListener('click', function () {
             const id = this.getAttribute('data-id');
             const nombre = this.getAttribute('data-nombre');
-            const categoria = this.getAttribute('data-categoria');
-            const porciones = this.getAttribute('data-porciones');
-            const costo = this.getAttribute('data-costo');
-            const precio = this.getAttribute('data-precio');
-            const ganancia = this.getAttribute('data-ganancia');
-            const margen = this.getAttribute('data-margen');
-
             console.log('Mostrando detalles de receta:', nombre);
         });
     });
@@ -326,7 +373,7 @@ function ordenarPorRentabilidad() {
                 card.style.opacity = '1';
                 card.style.transform = 'scale(1)';
             }, index * 50);
-        });
+        }, 300);
     }, 300);
 
     mostrarNotificacion('Recetas ordenadas por rentabilidad', 'success');

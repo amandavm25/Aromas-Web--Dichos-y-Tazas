@@ -3,34 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\receta\\editarreceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:views\\receta\\editarreceta.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\wwwroot\\js\\receta-editar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:wwwroot\\js\\receta-editar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{1A7C0A4E-EDE0-413C-A570-99F323CFDA51}|..\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.abstracciones\\logica\\asistencia\\ilistarasistencias.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\controllers\\recetacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|solutionrelative:controllers\\recetacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4CCFD3E1-E4C2-48B9-9B9C-DB945AB8B9EC}|..\\AromasWeb.LogicDeNegocio\\AromasWeb.LogicDeNegocio.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.logicdenegocio\\receta\\actualizarreceta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4CCFD3E1-E4C2-48B9-9B9C-DB945AB8B9EC}|..\\AromasWeb.LogicDeNegocio\\AromasWeb.LogicDeNegocio.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.logicdenegocio\\receta\\obtenerreceta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE7D3D85-1A2D-4277-B9B3-83973DCCB2D1}|..\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.accesoadatos\\receta\\actualizarreceta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE7D3D85-1A2D-4277-B9B3-83973DCCB2D1}|..\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.accesoadatos\\receta\\obtenerreceta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A7C0A4E-EDE0-413C-A570-99F323CFDA51}|..\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.abstracciones\\logica\\receta\\iobtenerreceta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A7C0A4E-EDE0-413C-A570-99F323CFDA51}|..\\AromasWeb.Abstracciones\\AromasWeb.Abstracciones.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.abstracciones\\logica\\receta\\iactualizarreceta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE7D3D85-1A2D-4277-B9B3-83973DCCB2D1}|..\\AromasWeb.AccesoADatos\\AromasWeb.AccesoADatos.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb.accesoadatos\\receta\\eliminarreceta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DBC3A844-B768-4131-83D8-AF71DF05F7E3}|AromasWeb.csproj|c:\\users\\evely\\onedrive\\documentos\\fidelitas\\vii cuatrimestre\\dise\u00F1o y desarrollo de sistemas\\aromas-web--dichos-y-tazas\\aromasweb\\aromasweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -59,7 +39,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -71,136 +51,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "receta-editar.js",
-              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\receta-editar.js",
-              "RelativeDocumentMoniker": "wwwroot\\js\\receta-editar.js",
-              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\js\\receta-editar.js",
-              "RelativeToolTip": "wwwroot\\js\\receta-editar.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-02-02T00:23:38.29Z",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAowA0AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T22:34:01.143Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EditarReceta.cshtml",
-              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Receta\\EditarReceta.cshtml",
-              "RelativeDocumentMoniker": "Views\\Receta\\EditarReceta.cshtml",
-              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Receta\\EditarReceta.cshtml",
-              "RelativeToolTip": "Views\\Receta\\EditarReceta.cshtml",
-              "ViewState": "AgIAACYBAAAAAAAAAAAiwDcBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-02T00:22:44.695Z",
+              "DocumentIndex": 1,
+              "Title": "IListarAsistencias.cs",
+              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\Logica\\Asistencia\\IListarAsistencias.cs",
+              "RelativeDocumentMoniker": "..\\AromasWeb.Abstracciones\\Logica\\Asistencia\\IListarAsistencias.cs",
+              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\Logica\\Asistencia\\IListarAsistencias.cs",
+              "RelativeToolTip": "..\\AromasWeb.Abstracciones\\Logica\\Asistencia\\IListarAsistencias.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T22:33:43.827Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "RecetaController.cs",
-              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\RecetaController.cs",
-              "RelativeDocumentMoniker": "Controllers\\RecetaController.cs",
-              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Controllers\\RecetaController.cs",
-              "RelativeToolTip": "Controllers\\RecetaController.cs",
-              "ViewState": "AgIAABsBAAAAAAAAAAAAwDsBAAABAAAAAAAAAA==",
+              "Title": "EliminarReceta.cs",
+              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\Receta\\EliminarReceta.cs",
+              "RelativeDocumentMoniker": "..\\AromasWeb.AccesoADatos\\Receta\\EliminarReceta.cs",
+              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\Receta\\EliminarReceta.cs",
+              "RelativeToolTip": "..\\AromasWeb.AccesoADatos\\Receta\\EliminarReceta.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T00:22:03.623Z",
+              "WhenOpened": "2026-02-02T22:29:10.399Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ActualizarReceta.cs",
-              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.LogicDeNegocio\\Receta\\ActualizarReceta.cs",
-              "RelativeDocumentMoniker": "..\\AromasWeb.LogicDeNegocio\\Receta\\ActualizarReceta.cs",
-              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.LogicDeNegocio\\Receta\\ActualizarReceta.cs",
-              "RelativeToolTip": "..\\AromasWeb.LogicDeNegocio\\Receta\\ActualizarReceta.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T00:21:42.826Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ObtenerReceta.cs",
-              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.LogicDeNegocio\\Receta\\ObtenerReceta.cs",
-              "RelativeDocumentMoniker": "..\\AromasWeb.LogicDeNegocio\\Receta\\ObtenerReceta.cs",
-              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.LogicDeNegocio\\Receta\\ObtenerReceta.cs",
-              "RelativeToolTip": "..\\AromasWeb.LogicDeNegocio\\Receta\\ObtenerReceta.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T00:21:22.051Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ActualizarReceta.cs",
-              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\Receta\\ActualizarReceta.cs",
-              "RelativeDocumentMoniker": "..\\AromasWeb.AccesoADatos\\Receta\\ActualizarReceta.cs",
-              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\Receta\\ActualizarReceta.cs",
-              "RelativeToolTip": "..\\AromasWeb.AccesoADatos\\Receta\\ActualizarReceta.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAAwGgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T00:20:53.608Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ObtenerReceta.cs",
-              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\Receta\\ObtenerReceta.cs",
-              "RelativeDocumentMoniker": "..\\AromasWeb.AccesoADatos\\Receta\\ObtenerReceta.cs",
-              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\Receta\\ObtenerReceta.cs",
-              "RelativeToolTip": "..\\AromasWeb.AccesoADatos\\Receta\\ObtenerReceta.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAAwD0AAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T00:20:14.332Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IObtenerReceta.cs",
-              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\Logica\\Receta\\IObtenerReceta.cs",
-              "RelativeDocumentMoniker": "..\\AromasWeb.Abstracciones\\Logica\\Receta\\IObtenerReceta.cs",
-              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\Logica\\Receta\\IObtenerReceta.cs",
-              "RelativeToolTip": "..\\AromasWeb.Abstracciones\\Logica\\Receta\\IObtenerReceta.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T00:19:40.202Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "IActualizarReceta.cs",
-              "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\Logica\\Receta\\IActualizarReceta.cs",
-              "RelativeDocumentMoniker": "..\\AromasWeb.Abstracciones\\Logica\\Receta\\IActualizarReceta.cs",
-              "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.Abstracciones\\Logica\\Receta\\IActualizarReceta.cs",
-              "RelativeToolTip": "..\\AromasWeb.Abstracciones\\Logica\\Receta\\IActualizarReceta.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T00:19:12.67Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAiwBYAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAiwBcAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-31T01:08:44.227Z"
+              "WhenOpened": "2026-01-31T01:08:44.227Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 4,
               "Title": "Contexto.cs",
               "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb.AccesoADatos\\Contexto.cs",
               "RelativeDocumentMoniker": "..\\AromasWeb.AccesoADatos\\Contexto.cs",
@@ -212,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 6,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -224,7 +127,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
@@ -236,7 +139,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 7,
               "Title": "site.css",
               "DocumentMoniker": "C:\\Users\\evely\\OneDrive\\Documentos\\Fidelitas\\VII Cuatrimestre\\Dise\u00F1o y Desarrollo de Sistemas\\Aromas-Web--Dichos-y-Tazas\\AromasWeb\\AromasWeb\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\site.css",

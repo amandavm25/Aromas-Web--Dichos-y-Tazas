@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace AromasWeb.Controllers
 {
@@ -16,7 +17,9 @@ namespace AromasWeb.Controllers
         private IListarCategoriasReceta _listarCategoriasReceta;
         private IObtenerReceta _obtenerReceta;
         private IActualizarReceta _actualizarReceta;
-        private IListarInsumos _listarInsumos; // Necesario para obtener los insumos disponibles
+        private ICrearReceta _crearReceta;
+        private IEliminarReceta _eliminarReceta;
+        private IListarInsumos _listarInsumos;
 
         public RecetaController()
         {
@@ -24,7 +27,9 @@ namespace AromasWeb.Controllers
             _listarCategoriasReceta = new LogicaDeNegocio.CategoriasReceta.ListarCategoriasReceta();
             _obtenerReceta = new LogicaDeNegocio.Recetas.ObtenerReceta();
             _actualizarReceta = new LogicaDeNegocio.Recetas.ActualizarReceta();
-            _listarInsumos = new LogicaDeNegocio.Insumos.ListarInsumos(); // Asumiendo que existe esta clase
+            _crearReceta = new LogicaDeNegocio.Recetas.CrearReceta();
+            _eliminarReceta = new LogicaDeNegocio.Recetas.EliminarReceta();
+            _listarInsumos = new LogicaDeNegocio.Insumos.ListarInsumos();
         }
 
         // GET: Receta/ListadoRecetas
@@ -34,14 +39,11 @@ namespace AromasWeb.Controllers
             ViewBag.Categoria = categoria;
             ViewBag.Disponibilidad = disponibilidad;
 
-            // Obtener todas las categorías para el filtro
             var categorias = _listarCategoriasReceta.Obtener();
             ViewBag.TodasCategorias = categorias;
 
-            // Obtener recetas según los filtros
             List<Receta> recetas;
 
-            // Aplicar filtro de búsqueda por nombre
             if (!string.IsNullOrEmpty(buscar))
             {
                 recetas = _listarRecetas.BuscarPorNombre(buscar);
@@ -51,13 +53,11 @@ namespace AromasWeb.Controllers
                 recetas = _listarRecetas.Obtener();
             }
 
-            // Aplicar filtro de categoría
             if (categoria.HasValue)
             {
                 recetas = recetas.FindAll(r => r.IdCategoriaReceta == categoria.Value);
             }
 
-            // Aplicar filtro de disponibilidad
             if (!string.IsNullOrEmpty(disponibilidad))
             {
                 if (disponibilidad == "disponible")
@@ -87,7 +87,7 @@ namespace AromasWeb.Controllers
             return View(receta);
         }
 
-        // GET: Receta/ObtenerIngredientes/5 - Para carga dinámica en modal
+        // GET: Receta/ObtenerIngredientes/5
         [HttpGet]
         public IActionResult ObtenerIngredientes(int id)
         {
@@ -98,7 +98,6 @@ namespace AromasWeb.Controllers
                 return Json(new List<object>());
             }
 
-            // Transformar los ingredientes al formato necesario para el modal
             var ingredientes = receta.Ingredientes.Select(i => new
             {
                 nombreInsumo = i.NombreInsumo,
@@ -125,23 +124,127 @@ namespace AromasWeb.Controllers
         // POST: Receta/CrearReceta
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CrearReceta(Receta receta)
+        public async Task<IActionResult> CrearReceta(Receta receta, List<int> IngredientesIdInsumo, List<decimal> IngredientesCantidad)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Aquí iría la lógica para guardar en la base de datos
-                TempData["Mensaje"] = "Receta registrada correctamente";
-                return RedirectToAction(nameof(ListadoRecetas));
+                // ⭐ Remover validaciones de campos calculados
+                ModelState.Remove("CostoTotal");
+                ModelState.Remove("CostoPorcion");
+                ModelState.Remove("GananciaNeta");
+                ModelState.Remove("PorcentajeMargen");
+                ModelState.Remove("NombreCategoria");
+                ModelState.Remove("Ingredientes");
+
+                if (!ModelState.IsValid)
+                {
+                    var categorias = _listarCategoriasReceta.Obtener();
+                    ViewBag.TodasCategorias = categorias;
+
+                    var insumos = _listarInsumos.Obtener();
+                    ViewBag.TodosInsumos = insumos;
+
+                    return View(receta);
+                }
+
+                // ⭐ Procesar ingredientes del formulario
+                receta.Ingredientes = new List<RecetaInsumo>();
+
+                if (IngredientesIdInsumo != null && IngredientesCantidad != null)
+                {
+                    // Obtener todos los insumos para calcular costos
+                    var todosInsumos = _listarInsumos.Obtener();
+
+                    for (int i = 0; i < IngredientesIdInsumo.Count; i++)
+                    {
+                        if (i < IngredientesCantidad.Count && IngredientesCantidad[i] > 0)
+                        {
+                            var insumo = todosInsumos.FirstOrDefault(ins => ins.IdInsumo == IngredientesIdInsumo[i]);
+
+                            if (insumo != null)
+                            {
+                                decimal costoIngrediente = IngredientesCantidad[i] * insumo.CostoUnitario;
+
+                                receta.Ingredientes.Add(new RecetaInsumo
+                                {
+                                    IdInsumo = IngredientesIdInsumo[i],
+                                    CantidadUtilizada = IngredientesCantidad[i],
+                                    CostoUnitario = insumo.CostoUnitario,
+                                    CostoTotalIngrediente = costoIngrediente
+                                });
+                            }
+                        }
+                    }
+                }
+
+                // ⭐ Validar que tenga al menos un ingrediente
+                if (receta.Ingredientes == null || !receta.Ingredientes.Any())
+                {
+                    ModelState.AddModelError("", "Debes agregar al menos un ingrediente a la receta");
+
+                    var categorias = _listarCategoriasReceta.Obtener();
+                    ViewBag.TodasCategorias = categorias;
+
+                    var insumos = _listarInsumos.Obtener();
+                    ViewBag.TodosInsumos = insumos;
+
+                    return View(receta);
+                }
+
+                // ⭐ Calcular costos totales
+                decimal costoTotal = receta.Ingredientes.Sum(i => i.CostoTotalIngrediente);
+                receta.CostoTotal = costoTotal;
+                receta.CostoPorcion = receta.CantidadPorciones > 0
+                    ? costoTotal / receta.CantidadPorciones
+                    : 0;
+
+                // ⭐ Calcular ganancia y margen si hay precio de venta
+                if (receta.PrecioVenta.HasValue && receta.PrecioVenta.Value > 0)
+                {
+                    receta.GananciaNeta = receta.PrecioVenta.Value - costoTotal;
+                    receta.PorcentajeMargen = costoTotal > 0
+                        ? ((receta.PrecioVenta.Value - costoTotal) / costoTotal) * 100
+                        : 0;
+                }
+                else
+                {
+                    receta.GananciaNeta = 0;
+                    receta.PorcentajeMargen = 0;
+                }
+
+                // ⭐ Guardar la receta
+                int resultado = await _crearReceta.Crear(receta);
+
+                if (resultado > 0)
+                {
+                    TempData["Mensaje"] = "Receta registrada correctamente";
+                    return RedirectToAction(nameof(ListadoRecetas));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "No se pudo registrar la receta en la base de datos");
+
+                    var categorias = _listarCategoriasReceta.Obtener();
+                    ViewBag.TodasCategorias = categorias;
+
+                    var insumos = _listarInsumos.Obtener();
+                    ViewBag.TodosInsumos = insumos;
+
+                    return View(receta);
+                }
             }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error al registrar la receta: {ex.Message}");
 
-            // Si hay errores, recargar las categorías e insumos
-            var categorias = _listarCategoriasReceta.Obtener();
-            ViewBag.TodasCategorias = categorias;
+                var categorias = _listarCategoriasReceta.Obtener();
+                ViewBag.TodasCategorias = categorias;
 
-            var insumos = _listarInsumos.Obtener();
-            ViewBag.TodosInsumos = insumos;
+                var insumos = _listarInsumos.Obtener();
+                ViewBag.TodosInsumos = insumos;
 
-            return View(receta);
+                return View(receta);
+            }
         }
 
         // GET: Receta/EditarReceta/5
@@ -157,7 +260,6 @@ namespace AromasWeb.Controllers
                     return RedirectToAction(nameof(ListadoRecetas));
                 }
 
-                // Cargar categorías e insumos para los dropdowns
                 var categorias = _listarCategoriasReceta.Obtener();
                 ViewBag.TodasCategorias = categorias;
 
@@ -180,7 +282,6 @@ namespace AromasWeb.Controllers
         {
             try
             {
-                // Remover validaciones que se calculan automáticamente
                 ModelState.Remove("CostoTotal");
                 ModelState.Remove("CostoPorcion");
                 ModelState.Remove("GananciaNeta");
@@ -199,7 +300,6 @@ namespace AromasWeb.Controllers
                     return View(receta);
                 }
 
-                // Procesar los ingredientes recibidos del formulario
                 receta.Ingredientes = new List<RecetaInsumo>();
 
                 if (IngredientesIdInsumo != null && IngredientesCantidad != null)
@@ -217,7 +317,6 @@ namespace AromasWeb.Controllers
                     }
                 }
 
-                // Validar que tenga al menos un ingrediente
                 if (receta.Ingredientes == null || !receta.Ingredientes.Any())
                 {
                     ModelState.AddModelError("", "Debes agregar al menos un ingrediente a la receta");
@@ -231,7 +330,6 @@ namespace AromasWeb.Controllers
                     return View(receta);
                 }
 
-                // Actualizar la receta
                 int resultado = _actualizarReceta.Actualizar(receta);
 
                 if (resultado > 0)
@@ -271,8 +369,24 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EliminarReceta(int id)
         {
-            // Aquí iría la lógica para eliminar la receta
-            TempData["Mensaje"] = "Receta eliminada correctamente";
+            try
+            {
+                int resultado = _eliminarReceta.Eliminar(id);
+
+                if (resultado > 0)
+                {
+                    TempData["Mensaje"] = "Receta eliminada correctamente";
+                }
+                else
+                {
+                    TempData["Error"] = "No se pudo eliminar la receta";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error: {ex.Message}";
+            }
+
             return RedirectToAction(nameof(ListadoRecetas));
         }
 
@@ -291,7 +405,6 @@ namespace AromasWeb.Controllers
                     return RedirectToAction(nameof(ListadoRecetas));
                 }
 
-                // Cambiar la disponibilidad
                 receta.Disponibilidad = !receta.Disponibilidad;
 
                 int resultado = _actualizarReceta.Actualizar(receta);
