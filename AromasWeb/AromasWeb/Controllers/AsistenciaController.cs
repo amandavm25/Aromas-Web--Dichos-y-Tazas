@@ -60,13 +60,12 @@ namespace AromasWeb.Controllers
         }
 
         // GET: Asistencia/RegistrarEntrada
-        public IActionResult RegistrarEntrada(int? idEmpleado)
+        public IActionResult RegistrarEntrada()
         {
             CargarEmpleados();
 
             var model = new Asistencia
             {
-                IdEmpleado = idEmpleado ?? 0,
                 Fecha = DateTime.Now.Date,
                 HoraEntrada = DateTime.Now.TimeOfDay
             };
@@ -79,28 +78,15 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RegistrarEntrada(Asistencia asistencia)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                CargarEmpleados();
-                return View(asistencia);
-
-            }
-
-            var yaExiste = _listarAsistencias.ExisteEntradaAbierta(asistencia.IdEmpleado, asistencia.Fecha);
-            if (yaExiste)
-            {
-                ModelState.AddModelError("", "Ya existe un registro de entrada sin salida para este empleado en la fecha seleccionada.");
-                CargarEmpleados();
-                return View(asistencia);
-            }
-            else
-            {
-                _listarAsistencias.CrearEntrada(asistencia);
-
                 // Aquí iría la lógica para guardar en la base de datos
                 TempData["Mensaje"] = "Registro de inicio de jornada correctamente";
                 return RedirectToAction(nameof(ListadoAsistencias));
             }
+
+            CargarEmpleados();
+            return View(asistencia);
         }
 
         // GET: Asistencia/RegistrarSalida/5
@@ -108,7 +94,7 @@ namespace AromasWeb.Controllers
         {
             var asistencia = _listarAsistencias.ObtenerPorId(id);
 
-            if (asistencia == null || asistencia.HoraSalida.HasValue)
+            if (asistencia == null)
             {
                 TempData["Error"] = "Asistencia no encontrada";
                 return RedirectToAction(nameof(ListadoAsistencias));
@@ -124,20 +110,16 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RegistrarSalida(Asistencia asistencia)
         {
-            if (!ModelState.IsValid || !asistencia.HoraSalida.HasValue)
-                    {
-                TempData["Error"] = "Datos inválidos para registrar la salida";
-                return RedirectToAction(nameof(ListadoAsistencias));
-            }
+            if (ModelState.IsValid)
+            {
                 asistencia.CalcularHoras();
-
-            _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value);
-
-            // Aquí iría la lógica para actualizar en la base de datos
-            TempData["Mensaje"] = "Registro de finalización de jornada correctamente";
+                // Aquí iría la lógica para actualizar en la base de datos
+                TempData["Mensaje"] = "Registro de finalización de jornada correctamente";
                 return RedirectToAction(nameof(ListadoAsistencias));
             }
 
+            return View(asistencia);
+        }
 
         // GET: Asistencia/EditarAsistencia/5
         public IActionResult EditarAsistencia(int id)
@@ -197,56 +179,5 @@ namespace AromasWeb.Controllers
 
             ViewBag.Empleados = empleadosDropdown;
         }
-
-        [HttpGet]
-        public IActionResult HistorialAdmin (int idEmpleado)
-        {
-            var historial = _listarAsistencias.ObtenerHistorialPorEmpleado(idEmpleado);
-            
-            return View(historial);
-        }
-
-        public IActionResult HistorialAdmini(int idEmpleado)
-        {
-            var asistencias = _listarAsistencias.BuscarPorEmpleado(idEmpleado);
-        
-            foreach (var asistencia in asistencias)
-            {
-                asistencia.CalcularHoras();
-            }
-            return View(asistencias);
-        }
-
-
-        [HttpGet]
-        public IActionResult MiEntrada(int idEmpleado)
-        {
-
-            return RedirectToAction(nameof(RegistrarEntrada), new { idEmpleado = idEmpleado });
-        }
-
-        [HttpGet]
-        public IActionResult MiSalida(int idEmpleado)
-        {
-
-            var abierta = _listarAsistencias.ObtenerEntradaAbierta(idEmpleado);
-
-            if (abierta == null)
-            {
-                TempData["Error"] = "No hay una entrada abierta para registrar salida.";
-                return RedirectToAction(nameof(ListadoAsistencias));
-            }
-
-            return RedirectToAction(nameof(RegistrarSalida), new { id = abierta.IdAsistencia });
-        }
-
- 
-        [HttpGet]
-        public IActionResult MiHistorial(int idEmpleado)
-        {
-
-            return RedirectToAction(nameof(HistorialAdmin), new { idEmpleado = idEmpleado });
-        }
-
     }
 }

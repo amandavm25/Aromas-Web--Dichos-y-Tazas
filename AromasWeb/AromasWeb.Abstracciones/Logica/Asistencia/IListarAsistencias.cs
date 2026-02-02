@@ -10,15 +10,6 @@ namespace AromasWeb.Abstracciones.Logica.Asistencia
         List<AsistenciaUI> BuscarPorEmpleado(int idEmpleado);
         List<AsistenciaUI> BuscarPorFecha(DateTime fecha);
         List<AsistenciaUI> BuscarPorRangoFechas(DateTime fechaInicio, DateTime fechaFin);
-        List<AsistenciaUI> ObtenerHistorialPorEmpleado(int idEmpleado);
-
         AsistenciaUI ObtenerPorId(int id);
-
-        bool ExisteEntradaAbierta(int idEmpleado, DateTime fecha);
-        void CrearEntrada(AsistenciaUI asistencia);
-
-        void RegistrarSalida(int idAsistencia, TimeSpan horaSalida);
-
-        AsistenciaUI ObtenerEntradaAbierta(int idEmpleado);
     }
 }
