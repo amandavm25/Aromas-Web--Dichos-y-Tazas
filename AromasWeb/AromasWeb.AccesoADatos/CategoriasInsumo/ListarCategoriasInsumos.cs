@@ -21,17 +21,7 @@ namespace AromasWeb.AccesoADatos.CategoriasInsumo
                 }
                 catch (Exception ex)
                 {
-                    // Log del error
-                    Console.WriteLine($"Error al obtener categorías: {ex.Message}");
-                    Console.WriteLine($"Stack trace: {ex.StackTrace}");
-
-                    // Si hay inner exception, también logearla
-                    if (ex.InnerException != null)
-                    {
-                        Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                    }
-
-                    throw; // Re-lanzar la excepción
+                    throw;
                 }
             }
         }
@@ -50,7 +40,6 @@ namespace AromasWeb.AccesoADatos.CategoriasInsumo
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error al buscar categorías por nombre: {ex.Message}");
                     throw;
                 }
             }
@@ -67,7 +56,6 @@ namespace AromasWeb.AccesoADatos.CategoriasInsumo
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error al obtener categoría por ID: {ex.Message}");
                     throw;
                 }
             }

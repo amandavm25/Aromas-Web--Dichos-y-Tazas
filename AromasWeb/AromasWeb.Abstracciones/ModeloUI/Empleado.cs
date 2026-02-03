@@ -55,6 +55,10 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [DisplayName("Estado")]
         public bool Estado { get; set; }
 
+        [DisplayName("Tarifa por hora")]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public decimal TarifaActual { get; set; }
+
         // Propiedades de navegación
         [DisplayName("Rol")]
         public string NombreRol { get; set; }

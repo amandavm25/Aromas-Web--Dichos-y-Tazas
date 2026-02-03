@@ -212,16 +212,56 @@ namespace AromasWeb.AccesoADatos.Planillas
             {
                 try
                 {
-                    var detallesAD = contexto.DetallePlanilla
+                    // JOIN con la tabla Asistencia para obtener HoraEntrada, HoraSalida y TiempoAlmuerzo
+                    var detallesConAsistencia = contexto.DetallePlanilla
                         .Where(d => d.IdPlanilla == idPlanilla)
-                        .OrderBy(d => d.Fecha)
+                        .Join(
+                            contexto.Asistencia,
+                            detalle => detalle.IdAsistencia,
+                            asistencia => asistencia.IdAsistencia,
+                            (detalle, asistencia) => new
+                            {
+                                Detalle = detalle,
+                                Asistencia = asistencia
+                            }
+                        )
+                        .OrderBy(x => x.Detalle.Fecha)
                         .ToList();
 
-                    return detallesAD.Select(d => ConvertirDetalleParaUI(d)).ToList();
+                    var detallesUI = new List<Abstracciones.ModeloUI.DetallePlanilla>();
+
+                    foreach (var item in detallesConAsistencia)
+                    {
+                        var detalleUI = new Abstracciones.ModeloUI.DetallePlanilla
+                        {
+                            IdDetallePlanilla = item.Detalle.IdDetallePlanilla,
+                            IdPlanilla = item.Detalle.IdPlanilla,
+                            IdAsistencia = item.Detalle.IdAsistencia,
+                            Fecha = item.Detalle.Fecha,
+                            HorasRegulares = item.Detalle.HorasRegulares,
+                            HorasExtras = item.Detalle.HorasExtras,
+                            Subtotal = item.Detalle.Subtotal,
+                            // Obtener datos de la asistencia
+                            HoraEntrada = item.Asistencia.HoraEntrada,
+                            HoraSalida = item.Asistencia.HoraSalida,
+                            TiempoAlmuerzo = item.Asistencia.TiempoAlmuerzo > 0
+                                ? TimeSpan.FromMinutes(item.Asistencia.TiempoAlmuerzo)
+                                : (TimeSpan?)null
+                        };
+
+                        detallesUI.Add(detalleUI);
+                    }
+
+                    return detallesUI;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error al obtener detalles de planilla: {ex.Message}");
+                    Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                    }
                     throw;
                 }
             }
@@ -252,23 +292,6 @@ namespace AromasWeb.AccesoADatos.Planillas
                     : "Empleado no encontrado",
                 IdentificacionEmpleado = planillaAD.Empleado?.Identificacion ?? "N/A",
                 CargoEmpleado = planillaAD.Empleado?.Cargo ?? "N/A"
-            };
-        }
-
-        private Abstracciones.ModeloUI.DetallePlanilla ConvertirDetalleParaUI(DetallePlanillaAD detalleAD)
-        {
-            return new Abstracciones.ModeloUI.DetallePlanilla
-            {
-                IdDetallePlanilla = detalleAD.IdDetallePlanilla,
-                IdPlanilla = detalleAD.IdPlanilla,
-                IdAsistencia = detalleAD.IdAsistencia,
-                Fecha = detalleAD.Fecha,
-                HoraEntrada = detalleAD.HoraEntrada,
-                HoraSalida = detalleAD.HoraSalida,
-                TiempoAlmuerzo = detalleAD.TiempoAlmuerzo,
-                HorasRegulares = detalleAD.HorasRegulares,
-                HorasExtras = detalleAD.HorasExtras,
-                Subtotal = detalleAD.Subtotal
             };
         }
     }

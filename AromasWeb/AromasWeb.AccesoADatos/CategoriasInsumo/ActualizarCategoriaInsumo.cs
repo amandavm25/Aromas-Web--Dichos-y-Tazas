@@ -47,7 +47,6 @@ namespace AromasWeb.AccesoADatos.CategoriasInsumo
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error al actualizar categoría: {ex.Message}");
                 throw;
             }
         }

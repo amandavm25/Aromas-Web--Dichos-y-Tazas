@@ -402,16 +402,16 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.PeriodoInicio).IsRequired().HasColumnName("periodoinicio");
                 entity.Property(e => e.PeriodoFin).IsRequired().HasColumnName("periodofin");
                 entity.Property(e => e.TarifaHora).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("tarifahora");
-                entity.Property(e => e.TotalHorasRegulares).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("totalhorasregulares");
-                entity.Property(e => e.TotalHorasExtras).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("totalhorasextras");
-                entity.Property(e => e.PagoHorasRegulares).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("pagohorasregulares");
-                entity.Property(e => e.PagoHorasExtras).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("pagohorasextras");
-                entity.Property(e => e.PagoBruto).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("pagobruto");
-                entity.Property(e => e.DeduccionCCSS).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("deduccionccss");
-                entity.Property(e => e.ImpuestoRenta).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("impuestorenta");
-                entity.Property(e => e.OtrasDeducciones).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("otrasdeducciones");
-                entity.Property(e => e.TotalDeducciones).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("totaldeducciones");
-                entity.Property(e => e.PagoNeto).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("pagoneto");
+                entity.Property(e => e.TotalHorasRegulares).HasColumnType("decimal(10,2)").HasColumnName("totalhorasregulares").HasDefaultValue(0);
+                entity.Property(e => e.TotalHorasExtras).HasColumnType("decimal(10,2)").HasColumnName("totalhorasextras").HasDefaultValue(0);
+                entity.Property(e => e.PagoHorasRegulares).HasColumnType("decimal(10,2)").HasColumnName("pagohorasregulares").HasDefaultValue(0);
+                entity.Property(e => e.PagoHorasExtras).HasColumnType("decimal(10,2)").HasColumnName("pagohorasextras").HasDefaultValue(0);
+                entity.Property(e => e.PagoBruto).HasColumnType("decimal(10,2)").HasColumnName("pagobruto").HasDefaultValue(0);
+                entity.Property(e => e.DeduccionCCSS).HasColumnType("decimal(10,2)").HasColumnName("deduccionccss").HasDefaultValue(0);
+                entity.Property(e => e.ImpuestoRenta).HasColumnType("decimal(10,2)").HasColumnName("impuestorenta").HasDefaultValue(0);
+                entity.Property(e => e.OtrasDeducciones).HasColumnType("decimal(10,2)").HasColumnName("otrasdeducciones").HasDefaultValue(0);
+                entity.Property(e => e.TotalDeducciones).HasColumnType("decimal(10,2)").HasColumnName("totaldeducciones").HasDefaultValue(0);
+                entity.Property(e => e.PagoNeto).HasColumnType("decimal(10,2)").HasColumnName("pagoneto").HasDefaultValue(0);
                 entity.Property(e => e.Estado).IsRequired().HasMaxLength(20).HasColumnName("estado").HasDefaultValue("Calculado");
 
                 // Relación con Empleado
@@ -422,8 +422,8 @@ namespace AromasWeb.AccesoADatos
 
                 // Índices
                 entity.HasIndex(e => e.IdEmpleado);
-                entity.HasIndex(e => new { e.PeriodoInicio, e.PeriodoFin });
                 entity.HasIndex(e => e.Estado);
+                entity.HasIndex(e => new { e.PeriodoInicio, e.PeriodoFin });
             });
 
             // Configuración de DetallePlanilla
@@ -435,12 +435,9 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.IdPlanilla).IsRequired().HasColumnName("idplanilla");
                 entity.Property(e => e.IdAsistencia).IsRequired().HasColumnName("idasistencia");
                 entity.Property(e => e.Fecha).IsRequired().HasColumnName("fecha");
-                entity.Property(e => e.HoraEntrada).IsRequired().HasColumnName("horaentrada");
-                entity.Property(e => e.HoraSalida).IsRequired().HasColumnName("horasalida");
-                entity.Property(e => e.TiempoAlmuerzo).IsRequired().HasColumnName("tiempoalmuerzo");
-                entity.Property(e => e.HorasRegulares).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("horasregulares");
-                entity.Property(e => e.HorasExtras).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("horasextras");
-                entity.Property(e => e.Subtotal).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("subtotal");
+                entity.Property(e => e.HorasRegulares).HasColumnType("decimal(5,2)").HasColumnName("horasregulares").HasDefaultValue(0);
+                entity.Property(e => e.HorasExtras).HasColumnType("decimal(5,2)").HasColumnName("horasextras").HasDefaultValue(0);
+                entity.Property(e => e.Subtotal).HasColumnType("decimal(10,2)").HasColumnName("subtotal").HasDefaultValue(0);
 
                 // Relación con Planilla
                 entity.HasOne(e => e.Planilla)

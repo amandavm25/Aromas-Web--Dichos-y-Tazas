@@ -51,14 +51,24 @@
                         </h5>
                     </div>
 
-                    <!-- Nombre Completo -->
+                    <!-- Nombre -->
                     <div class="form-group">
                         <label>
                             <i class="fas fa-user"></i>
-                            Nombre Completo
+                            Nombre
                         </label>
-                        @Html.EditorFor(model => model.Nombre + model.Apellidos, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Juan Pérez Rodríguez" } })
-                        @Html.ValidationMessageFor(model => model.Nombre + model.Apellidos, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Juan" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Apellidos -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-user"></i>
+                            Apellidos
+                        </label>
+                        @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Pérez Rodríguez" } })
+                        @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
                     </div>
 
                     <!-- Identificación y Teléfono -->

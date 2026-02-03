@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,33 +8,31 @@ namespace AromasWeb.AccesoADatos.Modelos
     public class DetallePlanillaAD
     {
         [Key]
+        [Column("iddetalleplanilla")]
         public int IdDetallePlanilla { get; set; }
 
         [Required]
+        [Column("idplanilla")]
         public int IdPlanilla { get; set; }
 
         [Required]
+        [Column("idasistencia")]
         public int IdAsistencia { get; set; }
 
         [Required]
+        [Column("fecha")]
         public DateTime Fecha { get; set; }
 
         [Required]
-        public TimeSpan HoraEntrada { get; set; }
-
-        [Required]
-        public TimeSpan HoraSalida { get; set; }
-
-        [Required]
-        public TimeSpan TiempoAlmuerzo { get; set; }
-
-        [Required]
+        [Column("horasregulares")]
         public decimal HorasRegulares { get; set; }
 
         [Required]
+        [Column("horasextras")]
         public decimal HorasExtras { get; set; }
 
         [Required]
+        [Column("subtotal")]
         public decimal Subtotal { get; set; }
 
         // Propiedades de navegación

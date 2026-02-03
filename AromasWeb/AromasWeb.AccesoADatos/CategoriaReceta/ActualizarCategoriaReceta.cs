@@ -47,7 +47,6 @@ namespace AromasWeb.AccesoADatos.CategoriasReceta
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error al actualizar categoría de receta: {ex.Message}");
                 throw;
             }
         }

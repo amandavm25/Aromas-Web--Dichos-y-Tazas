@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.SolicitudVacaciones;
+using AromasWeb.AccesoADatos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,99 @@ namespace AromasWeb.Controllers
         public SolicitudVacacionesController()
         {
             _listarSolicitudesVacaciones = new LogicaDeNegocio.SolicitudesVacaciones.ListarSolicitudesVacaciones();
+        }
+
+        // GET: SolicitudVacaciones/MisSolicitudes
+        public IActionResult MisSolicitudes()
+        {
+            // Obtener el ID del empleado de la sesión
+            int idEmpleadoActual = HttpContext.Session.GetInt32("IdEmpleado") ?? 1;
+            ViewBag.IdEmpleado = idEmpleadoActual;
+
+            // Obtener información del empleado desde la base de datos
+            var empleadoInfo = ObtenerDatosEmpleadoPorId(idEmpleadoActual);
+
+            if (empleadoInfo != null)
+            {
+                ViewBag.NombreEmpleado = $"{empleadoInfo.Nombre} {empleadoInfo.Apellidos}";
+                ViewBag.CargoEmpleado = empleadoInfo.Cargo;
+
+                // Calcular meses trabajados
+                var mesesTrabajados = (int)((DateTime.Now - empleadoInfo.FechaContratacion).TotalDays / 30);
+                ViewBag.MesesTrabajados = mesesTrabajados;
+
+                // Calcular días acumulados (1 día por mes trabajado)
+                var diasAcumulados = mesesTrabajados;
+                ViewBag.DiasAcumulados = diasAcumulados;
+
+                // Calcular días tomados (solicitudes aprobadas)
+                decimal diasTomados = 0;
+                using (var contexto = new Contexto())
+                {
+                    diasTomados = contexto.SolicitudVacaciones
+                        .Where(s => s.IdEmpleado == idEmpleadoActual && s.Estado == "Aprobada")
+                        .Sum(s => (decimal?)s.DiasSolicitados) ?? 0;
+                }
+                ViewBag.DiasTomados = diasTomados;
+
+                // Calcular días disponibles
+                var diasDisponibles = diasAcumulados - diasTomados;
+                ViewBag.DiasDisponibles = diasDisponibles;
+            }
+            else
+            {
+                ViewBag.NombreEmpleado = "Empleado";
+                ViewBag.CargoEmpleado = "N/A";
+                ViewBag.MesesTrabajados = 0;
+                ViewBag.DiasAcumulados = 0;
+                ViewBag.DiasTomados = 0;
+                ViewBag.DiasDisponibles = 0;
+            }
+
+            // Obtener mis solicitudes
+            var misSolicitudes = _listarSolicitudesVacaciones.BuscarPorEmpleado(idEmpleadoActual);
+
+            return View(misSolicitudes);
+        }
+
+        // GET: SolicitudVacaciones/VerSolicitudesEmpleado/1
+        public IActionResult VerSolicitudesEmpleado(int id)
+        {
+            ViewBag.IdEmpleado = id;
+
+            // Obtener información del empleado
+            var empleado = ObtenerDatosEmpleadoPorId(id);
+            ViewBag.Empleado = empleado;
+
+            if (empleado != null)
+            {
+                // Calcular meses trabajados
+                var mesesTrabajados = (int)((DateTime.Now - empleado.FechaContratacion).TotalDays / 30);
+                ViewBag.MesesTrabajados = mesesTrabajados;
+
+                // Calcular días acumulados
+                var diasAcumulados = mesesTrabajados;
+                ViewBag.DiasAcumulados = diasAcumulados;
+
+                // Calcular días tomados
+                decimal diasTomados = 0;
+                using (var contexto = new Contexto())
+                {
+                    diasTomados = contexto.SolicitudVacaciones
+                        .Where(s => s.IdEmpleado == id && s.Estado == "Aprobada")
+                        .Sum(s => (decimal?)s.DiasSolicitados) ?? 0;
+                }
+                ViewBag.DiasTomados = diasTomados;
+
+                // Calcular días disponibles
+                var diasDisponibles = diasAcumulados - diasTomados;
+                ViewBag.DiasDisponibles = diasDisponibles;
+            }
+
+            // Obtener solicitudes del empleado
+            var solicitudes = _listarSolicitudesVacaciones.BuscarPorEmpleado(id);
+
+            return View(solicitudes);
         }
 
         // GET: SolicitudVacaciones/ListadoSolicitudes
@@ -147,56 +241,68 @@ namespace AromasWeb.Controllers
             return RedirectToAction(nameof(ListadoSolicitudes));
         }
 
+        // MÉTODO AUXILIAR: Obtener datos del empleado por ID
+        private Empleado ObtenerDatosEmpleadoPorId(int id)
+        {
+            using (var contexto = new Contexto())
+            {
+                try
+                {
+                    var empleadoAD = contexto.Empleado.FirstOrDefault(e => e.IdEmpleado == id);
+
+                    if (empleadoAD == null)
+                        return null;
+
+                    // Convertir de AccesoADatos.Modelos.EmpleadoAD a ModeloUI.Empleado
+                    return new Empleado
+                    {
+                        IdEmpleado = empleadoAD.IdEmpleado,
+                        IdRol = empleadoAD.IdRol,
+                        Identificacion = empleadoAD.Identificacion,
+                        Nombre = empleadoAD.Nombre,
+                        Apellidos = empleadoAD.Apellidos,
+                        Correo = empleadoAD.Correo,
+                        Telefono = empleadoAD.Telefono,
+                        Cargo = empleadoAD.Cargo,
+                        FechaContratacion = empleadoAD.FechaContratacion,
+                        Estado = empleadoAD.Estado
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al obtener datos del empleado: {ex.Message}");
+                    return null;
+                }
+            }
+        }
+
         // Método auxiliar para cargar empleados
         private void CargarEmpleados()
         {
-            var empleados = new List<dynamic>
+            using (var contexto = new Contexto())
             {
-                new {
-                    IdEmpleado = 1,
-                    NombreCompleto = "María González Rodríguez",
-                    Cargo = "Gerente General",
-                    FechaContratacion = DateTime.Now.AddYears(-2).AddMonths(-10),
-                    DiasDisponibles = 34
-                },
-                new {
-                    IdEmpleado = 2,
-                    NombreCompleto = "Carlos Jiménez Mora",
-                    Cargo = "Barista",
-                    FechaContratacion = DateTime.Now.AddMonths(-8),
-                    DiasDisponibles = 8
-                },
-                new {
-                    IdEmpleado = 3,
-                    NombreCompleto = "Ana Patricia Vargas Solís",
-                    Cargo = "Mesera",
-                    FechaContratacion = DateTime.Now.AddMonths(-14),
-                    DiasDisponibles = 14
-                },
-                new {
-                    IdEmpleado = 4,
-                    NombreCompleto = "Roberto Fernández Castro",
-                    Cargo = "Chef",
-                    FechaContratacion = DateTime.Now.AddYears(-3),
-                    DiasDisponibles = 30
-                },
-                new {
-                    IdEmpleado = 5,
-                    NombreCompleto = "Laura Martínez Pérez",
-                    Cargo = "Cajera",
-                    FechaContratacion = DateTime.Now.AddMonths(-6),
-                    DiasDisponibles = 6
-                },
-                new {
-                    IdEmpleado = 6,
-                    NombreCompleto = "José Luis Ramírez Quesada",
-                    Cargo = "Barista",
-                    FechaContratacion = DateTime.Now.AddMonths(-18),
-                    DiasDisponibles = 14
-                }
-            };
+                try
+                {
+                    var empleados = contexto.Empleado
+                        .Where(e => e.Estado == true)
+                        .OrderBy(e => e.Nombre)
+                        .ThenBy(e => e.Apellidos)
+                        .Select(e => new
+                        {
+                            IdEmpleado = e.IdEmpleado,
+                            NombreCompleto = e.Nombre + " " + e.Apellidos,
+                            Cargo = e.Cargo
+                        })
+                        .ToList();
 
-            ViewBag.Empleados = empleados;
+                    ViewBag.Empleados = empleados;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar empleados: {ex.Message}");
+                    ViewBag.Empleados = new List<dynamic>();
+                }
+            }
         }
     }
 }

@@ -21,14 +21,6 @@ namespace AromasWeb.AccesoADatos.CategoriasReceta
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error al obtener categorías de recetas: {ex.Message}");
-                    Console.WriteLine($"Stack trace: {ex.StackTrace}");
-
-                    if (ex.InnerException != null)
-                    {
-                        Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                    }
-
                     throw;
                 }
             }
@@ -48,7 +40,6 @@ namespace AromasWeb.AccesoADatos.CategoriasReceta
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error al buscar categorías de recetas por nombre: {ex.Message}");
                     throw;
                 }
             }
@@ -65,7 +56,6 @@ namespace AromasWeb.AccesoADatos.CategoriasReceta
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error al obtener categoría de receta por ID: {ex.Message}");
                     throw;
                 }
             }
