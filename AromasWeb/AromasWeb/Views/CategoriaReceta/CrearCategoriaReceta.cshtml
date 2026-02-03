@@ -33,68 +33,66 @@
 <!-- Formulario Section -->
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 900px;">
-        @using (Html.BeginForm("CrearCategoriaReceta", "CategoriaReceta", FormMethod.Post))
+        @using (Html.BeginForm("CrearCategoriaReceta", "CategoriaReceta", FormMethod.Post, new { @class = "contact-form" }))
         {
             @Html.AntiForgeryToken()
 
             <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información del Registro -->
-                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-book"></i> Información de la Categoría
-                        </h5>
-                    </div>
+                <!-- Información del Registro -->
+                <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-book"></i> Información de la Categoría
+                    </h5>
+                </div>
 
-                    <!-- Nombre de la Categoría -->
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-book"></i>
-                            Nombre de la Categoría
-                        </label>
-                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Postres" } })
-                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-                    </div>
+                <!-- Nombre de la Categoría -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-book"></i>
+                        Nombre de la Categoría
+                    </label>
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Postres" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
 
-                    <!-- Descripción -->
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-align-left"></i>
-                            Descripción
-                        </label>
-                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4", placeholder = "Describe el tipo de recetas que incluirá esta categoría..." })
-                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                            Máximo 500 caracteres
-                        </small>
-                    </div>
+                <!-- Descripción -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-align-left"></i>
+                        Descripción
+                    </label>
+                    @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4", placeholder = "Describe el tipo de recetas que incluirá esta categoría..." })
+                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                    <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                        <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                        Máximo 500 caracteres
+                    </small>
+                </div>
 
-                    <!-- Información adicional -->
-                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 1rem;">
-                            <i class="fas fa-info-circle" style="color: var(--olive-green); font-size: 2rem;"></i>
-                            <div>
-                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.3rem;">Organización de Recetas</strong>
-                                <p style="margin: 0; color: var(--charcoal); opacity: 0.85; font-size: 0.95rem;">
-                                    Esta categoría te ayudará a clasificar y organizar mejor tus recetas en el sistema.
-                                </p>
-                            </div>
+                <!-- Información adicional -->
+                <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-info-circle" style="color: var(--olive-green); font-size: 2rem;"></i>
+                        <div>
+                            <strong style="color: var(--dark-green); display: block; margin-bottom: 0.3rem;">Organización de Recetas</strong>
+                            <p style="margin: 0; color: var(--charcoal); opacity: 0.85; font-size: 0.95rem;">
+                                Esta categoría te ayudará a clasificar y organizar mejor tus recetas en el sistema.
+                            </p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoCategoriasRecetas", "CategoriaReceta")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
-                            <span><i class="fas fa-save"></i> Agregar Categoría</span>
-                        </button>
-                    </div>
-                </form>
+                <!-- Botones -->
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoCategoriasRecetas", "CategoriaReceta")'" style="flex: 1;">
+                        <span><i class="fas fa-times"></i> Cancelar</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
+                        <span><i class="fas fa-save"></i> Agregar Categoría</span>
+                    </button>
+                </div>
             </div>
         }
     </div>

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AromasWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff4d1a2a926cceb52f7a0943549cc9983fd519d4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cea631ad21f80f77f6e965f2060e4f553a3d677a")]
 [assembly: System.Reflection.AssemblyProductAttribute("AromasWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AromasWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
