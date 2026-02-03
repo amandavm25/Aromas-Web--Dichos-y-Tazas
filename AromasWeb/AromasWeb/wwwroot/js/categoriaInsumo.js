@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const id = this.getAttribute('data-id');
             const nombre = this.getAttribute('data-nombre');
             const descripcion = this.getAttribute('data-descripcion');
-            const fecha = this.getAttribute('data-fecha');
             const estado = this.getAttribute('data-estado');
 
             // Llenar el modal con los datos

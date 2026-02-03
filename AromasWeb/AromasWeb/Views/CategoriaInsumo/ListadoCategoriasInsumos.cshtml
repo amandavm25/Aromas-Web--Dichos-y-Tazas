@@ -94,10 +94,6 @@
                                         @cat.NombreCategoria
                                     </td>
                                     <td style="padding: 1.2rem; color: var(--charcoal); max-width: 400px;">@(cat.Descripcion ?? "Sin descripción")</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">
-                                        <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--olive-green);"></i>
-                                        @cat.FechaCreacionFormateada
-                                    </td>
                                     <td style="padding: 1.2rem;">
                                         @if (cat.Estado)
                                         {
@@ -121,7 +117,6 @@
                                                 data-id="@cat.IdCategoria"
                                                 data-nombre="@cat.NombreCategoria"
                                                 data-descripcion="@(cat.Descripcion ?? "Sin descripción")"
-                                                data-fecha="@cat.FechaCreacionFormateada"
                                                 data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
                                                 style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"

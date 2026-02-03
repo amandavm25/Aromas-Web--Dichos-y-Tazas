@@ -33,99 +33,76 @@
 <!-- Formulario Section -->
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 900px;">
-        @using (Html.BeginForm("EditarCategoriaInsumo", "CategoriaInsumo", FormMethod.Post))
+        @using (Html.BeginForm("EditarCategoriaInsumo", "CategoriaInsumo", FormMethod.Post, new { @class = "contact-form" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.IdCategoria)
 
             <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información del Registro -->
-                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-tag"></i> Información de la Categoría
-                        </h5>
-                    </div>
+                <!-- Información del Registro -->
+                <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-tag"></i> Información de la Categoría
+                    </h5>
+                </div>
 
-                    <!-- Nombre de la Categoría -->
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-tag"></i>
-                            Nombre de la Categoría
-                        </label>
-                        @Html.EditorFor(model => model.NombreCategoria, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Harinas" } })
-                        @Html.ValidationMessageFor(model => model.NombreCategoria, "", new { @class = "text-danger" })
-                    </div>
+                <!-- Nombre de la Categoría -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-tag"></i>
+                        Nombre de la Categoría
+                    </label>
+                    @Html.EditorFor(model => model.NombreCategoria, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Harinas" } })
+                    @Html.ValidationMessageFor(model => model.NombreCategoria, "", new { @class = "text-danger" })
+                </div>
 
-                    <!-- Descripción -->
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-align-left"></i>
-                            Descripción
-                        </label>
-                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4", placeholder = "Describe el tipo de insumos que incluirá esta categoría..." })
-                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                            Máximo 500 caracteres
-                        </small>
-                    </div>
+                <!-- Descripción -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-align-left"></i>
+                        Descripción
+                    </label>
+                    @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4", placeholder = "Describe el tipo de insumos que incluirá esta categoría..." })
+                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                    <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                        <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                        Máximo 500 caracteres
+                    </small>
+                </div>
 
-                    <!-- Estado de la Categoría -->
-                    <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
-                            @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
-                            <span style="flex: 1;">
-                                <i class="fas fa-toggle-on"></i>
-                                Estado de la Categoría (Activa/Inactiva)
-                            </span>
-                        </label>
-                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                            <i class="fas fa-exclamation-triangle" style="color: var(--gold-bright);"></i>
-                            Al desactivar una categoría, los insumos asociados no se eliminarán pero quedarán sin categoría activa
-                        </small>
-                    </div>
+                <!-- Estado de la Categoría -->
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
+                        @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
+                        <span style="flex: 1;">
+                            <i class="fas fa-toggle-on"></i>
+                            Estado de la Categoría (Activa/Inactiva)
+                        </span>
+                    </label>
+                    @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                    <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--gold-bright);"></i>
+                        Al desactivar una categoría, los insumos asociados no se eliminarán pero quedarán sin categoría activa
+                    </small>
+                </div>
 
-                    <!-- Info de fechas -->
-                    <div class="feature-card" style="margin-bottom: 2rem;">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                            <div>
-                                <label style="display: block; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Creación
-                                </label>
-                                <p style="margin: 0; color: var(--dark-green); font-weight: 600;">
-                                    @(Model?.FechaCreacion.ToString("dd/MM/yyyy HH:mm") ?? "N/A")
-                                </p>
-                            </div>
-                            <div>
-                                <label style="display: block; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-calendar-check" style="color: var(--olive-green);"></i> Última Actualización
-                                </label>
-                                <p style="margin: 0; color: var(--dark-green); font-weight: 600;">
-                                    @(Model?.FechaActualizacion.ToString("dd/MM/yyyy HH:mm") ?? "N/A")
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoCategoriasInsumos", "CategoriaInsumo")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
-                            <span><i class="fas fa-check"></i> Guardar Cambios</span>
-                        </button>
-                    </div>
-                </form>
+                <!-- Botones -->
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoCategoriasInsumos", "CategoriaInsumo")'" style="flex: 1;">
+                        <span><i class="fas fa-times"></i> Cancelar</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
+                        <span><i class="fas fa-check"></i> Guardar Cambios</span>
+                    </button>
+                </div>
             </div>
         }
     </div>
 </section>
 
 @section Scripts {
-    <script src="~/js/categoria.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/categoriaInsumo.js"></script>
 }

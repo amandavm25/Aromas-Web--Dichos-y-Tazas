@@ -19,11 +19,5 @@ namespace AromasWeb.AccesoADatos.Modelos
 
         [Required]
         public bool Estado { get; set; }
-
-        [Required]
-        public DateTime FechaCreacion { get; set; }
-
-        [Required]
-        public DateTime FechaActualizacion { get; set; }
     }
 }

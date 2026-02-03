@@ -80,9 +80,7 @@ namespace AromasWeb.AccesoADatos.CategoriasInsumo
                 IdCategoria = categoriaAD.IdCategoria,
                 NombreCategoria = categoriaAD.NombreCategoria,
                 Descripcion = categoriaAD.Descripcion,
-                Estado = categoriaAD.Estado,
-                FechaCreacion = categoriaAD.FechaCreacion,
-                FechaActualizacion = categoriaAD.FechaActualizacion
+                Estado = categoriaAD.Estado
             };
         }
     }

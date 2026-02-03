@@ -110,8 +110,6 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.NombreCategoria).IsRequired().HasMaxLength(100).HasColumnName("nombrecategoria");
                 entity.Property(e => e.Descripcion).HasMaxLength(500).HasColumnName("descripcion");
                 entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);
-                entity.Property(e => e.FechaCreacion).IsRequired().HasColumnName("fechacreacion").HasDefaultValueSql("CURRENT_TIMESTAMP");
-                entity.Property(e => e.FechaActualizacion).IsRequired().HasColumnName("fechaactualizacion").HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
 
             // Configuración de Insumo

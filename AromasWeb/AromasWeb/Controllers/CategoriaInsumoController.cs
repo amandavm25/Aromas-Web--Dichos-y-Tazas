@@ -2,16 +2,26 @@
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.CategoriaInsumo;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
 
 namespace AromasWeb.Controllers
 {
     public class CategoriaInsumoController : Controller
     {
         private IListarCategoriasInsumo _listarCategoriasInsumo;
+        private ICrearCategoriaInsumo _crearCategoriaInsumo;
+        private IActualizarCategoriaInsumo _actualizarCategoriaInsumo;
+        private IEliminarCategoriaInsumo _eliminarCategoriaInsumo;
+        private IObtenerCategoriaInsumo _obtenerCategoriaInsumo;
 
         public CategoriaInsumoController()
         {
             _listarCategoriasInsumo = new LogicaDeNegocio.CategoriasInsumo.ListarCategoriasInsumo();
+            _crearCategoriaInsumo = new LogicaDeNegocio.CategoriasInsumo.CrearCategoriaInsumo();
+            _actualizarCategoriaInsumo = new LogicaDeNegocio.CategoriasInsumo.ActualizarCategoriaInsumo();
+            _eliminarCategoriaInsumo = new LogicaDeNegocio.CategoriasInsumo.EliminarCategoriaInsumo();
+            _obtenerCategoriaInsumo = new LogicaDeNegocio.CategoriasInsumo.ObtenerCategoriaInsumo();
         }
 
         // GET: CategoriaInsumo/ListadoCategoriasInsumos
@@ -21,13 +31,21 @@ namespace AromasWeb.Controllers
 
             List<CategoriaInsumo> categorias;
 
-            if (!string.IsNullOrEmpty(buscar))
+            try
             {
-                categorias = _listarCategoriasInsumo.BuscarPorNombre(buscar);
+                if (!string.IsNullOrEmpty(buscar))
+                {
+                    categorias = _listarCategoriasInsumo.BuscarPorNombre(buscar);
+                }
+                else
+                {
+                    categorias = _listarCategoriasInsumo.Obtener();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                categorias = _listarCategoriasInsumo.Obtener();
+                TempData["Error"] = $"Error al cargar las categorías: {ex.Message}";
+                categorias = new List<CategoriaInsumo>();
             }
 
             return View(categorias);
@@ -42,13 +60,31 @@ namespace AromasWeb.Controllers
         // POST: CategoriaInsumo/CrearCategoriaInsumo
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CrearCategoriaInsumo(CategoriaInsumo categoria)
+        public async Task<IActionResult> CrearCategoriaInsumo(CategoriaInsumo categoria)
         {
             if (ModelState.IsValid)
             {
-                // Aquí iría la lógica para guardar en la base de datos
-                TempData["Mensaje"] = "Categoría registrada correctamente";
-                return RedirectToAction(nameof(ListadoCategoriasInsumos));
+                try
+                {
+                    // Establecer valores por defecto
+                    categoria.Estado = true;
+
+                    int resultado = await _crearCategoriaInsumo.Crear(categoria);
+
+                    if (resultado > 0)
+                    {
+                        TempData["Mensaje"] = "Categoría registrada correctamente";
+                        return RedirectToAction(nameof(ListadoCategoriasInsumos));
+                    }
+                    else
+                    {
+                        TempData["Error"] = "No se pudo registrar la categoría";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = $"Error al registrar la categoría: {ex.Message}";
+                }
             }
 
             return View(categoria);
@@ -57,15 +93,23 @@ namespace AromasWeb.Controllers
         // GET: CategoriaInsumo/EditarCategoriaInsumo/5
         public IActionResult EditarCategoriaInsumo(int id)
         {
-            var categoria = _listarCategoriasInsumo.ObtenerPorId(id);
-
-            if (categoria == null)
+            try
             {
-                TempData["Error"] = "Categoría no encontrada";
+                var categoria = _obtenerCategoriaInsumo.Obtener(id);
+
+                if (categoria == null)
+                {
+                    TempData["Error"] = "Categoría no encontrada";
+                    return RedirectToAction(nameof(ListadoCategoriasInsumos));
+                }
+
+                return View(categoria);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar la categoría: {ex.Message}";
                 return RedirectToAction(nameof(ListadoCategoriasInsumos));
             }
-
-            return View(categoria);
         }
 
         // POST: CategoriaInsumo/EditarCategoriaInsumo
@@ -75,9 +119,24 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Aquí iría la lógica para actualizar en la base de datos
-                TempData["Mensaje"] = "Categoría actualizada correctamente";
-                return RedirectToAction(nameof(ListadoCategoriasInsumos));
+                try
+                {
+                    int resultado = _actualizarCategoriaInsumo.Actualizar(categoria);
+
+                    if (resultado > 0)
+                    {
+                        TempData["Mensaje"] = "Categoría actualizada correctamente";
+                        return RedirectToAction(nameof(ListadoCategoriasInsumos));
+                    }
+                    else
+                    {
+                        TempData["Error"] = "No se pudo actualizar la categoría";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = $"Error al actualizar la categoría: {ex.Message}";
+                }
             }
 
             return View(categoria);
@@ -88,8 +147,24 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EliminarCategoriaInsumo(int id)
         {
-            // Aquí iría la lógica para eliminar la categoría
-            TempData["Mensaje"] = "Categoría eliminada correctamente";
+            try
+            {
+                int resultado = _eliminarCategoriaInsumo.Eliminar(id);
+
+                if (resultado > 0)
+                {
+                    TempData["Mensaje"] = "Categoría eliminada correctamente";
+                }
+                else
+                {
+                    TempData["Error"] = "No se pudo eliminar la categoría";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al eliminar la categoría: {ex.Message}";
+            }
+
             return RedirectToAction(nameof(ListadoCategoriasInsumos));
         }
     }

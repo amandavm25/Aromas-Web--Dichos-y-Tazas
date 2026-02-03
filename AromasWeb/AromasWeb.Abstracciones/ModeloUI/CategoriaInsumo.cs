@@ -20,12 +20,6 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [DisplayName("Estado")]
         public bool Estado { get; set; }
 
-        [DisplayName("Fecha de Creación")]
-        public DateTime FechaCreacion { get; set; }
-
-        [DisplayName("Fecha de Actualización")]
-        public DateTime FechaActualizacion { get; set; }
-
         // Propiedades calculadas
         [DisplayName("Estado")]
         public string EstadoTexto
@@ -33,24 +27,6 @@ namespace AromasWeb.Abstracciones.ModeloUI
             get
             {
                 return Estado ? "Activo" : "Inactivo";
-            }
-        }
-
-        [DisplayName("Fecha de Creación")]
-        public string FechaCreacionFormateada
-        {
-            get
-            {
-                return FechaCreacion.ToString("dd/MM/yyyy HH:mm");
-            }
-        }
-
-        [DisplayName("Fecha de Actualización")]
-        public string FechaActualizacionFormateada
-        {
-            get
-            {
-                return FechaActualizacion.ToString("dd/MM/yyyy HH:mm");
             }
         }
     }
