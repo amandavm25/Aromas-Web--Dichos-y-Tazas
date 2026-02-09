@@ -2,6 +2,7 @@
 using AromasWeb.AccesoADatos.Modelos;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace AromasWeb.AccesoADatos.Asistencias
@@ -62,8 +63,11 @@ namespace AromasWeb.AccesoADatos.Asistencias
             {
                 try
                 {
+                    var inicio = DateTime.SpecifyKind(fecha.Date, DateTimeKind.Utc);
+                    var fin = inicio.AddDays(1);
+
                     List<AsistenciaAD> asistenciasAD = contexto.Asistencia
-                        .Where(a => a.Fecha.Date == fecha.Date)
+                        .Where(a => a.Fecha >= inicio && a.Fecha <fin)
                         .OrderBy(a => a.HoraEntrada)
                         .ToList();
                     return asistenciasAD.Select(a => ConvertirObjetoParaUI(a, contexto)).ToList();
@@ -82,8 +86,12 @@ namespace AromasWeb.AccesoADatos.Asistencias
             {
                 try
                 {
+                    var inicio = DateTime.SpecifyKind(fechaInicio.Date, DateTimeKind.Utc);
+
+                    var fin = DateTime.SpecifyKind(fechaFin.Date, DateTimeKind.Utc).AddDays(1);
+
                     List<AsistenciaAD> asistenciasAD = contexto.Asistencia
-                        .Where(a => a.Fecha.Date >= fechaInicio.Date && a.Fecha.Date <= fechaFin.Date)
+                        .Where(a => a.Fecha >= inicio && a.Fecha < fin)
                         .OrderByDescending(a => a.Fecha)
                         .ThenByDescending(a => a.HoraEntrada)
                         .ToList();
@@ -135,11 +143,13 @@ namespace AromasWeb.AccesoADatos.Asistencias
                 // Si hay error, usar valores por defecto
             }
 
+            var fechaUtc = DateTime.SpecifyKind(asistenciaAD.Fecha, DateTimeKind.Utc);
+
             return new Abstracciones.ModeloUI.Asistencia
             {
                 IdAsistencia = asistenciaAD.IdAsistencia,
                 IdEmpleado = asistenciaAD.IdEmpleado,
-                Fecha = asistenciaAD.Fecha,
+                Fecha = fechaUtc,
                 HoraEntrada = asistenciaAD.HoraEntrada,
                 HoraSalida = asistenciaAD.HoraSalida,
                 TiempoAlmuerzo = asistenciaAD.TiempoAlmuerzo,
@@ -156,9 +166,14 @@ namespace AromasWeb.AccesoADatos.Asistencias
         {
             using (var contexto = new Contexto())
             {
+
+                var inicioDiaUtc = DateTime.SpecifyKind(fecha.Date, DateTimeKind.Utc);
+                var finDiaUtc = inicioDiaUtc.AddDays(1);
+
                 return contexto.Asistencia.Any(a =>
                     a.IdEmpleado == idEmpleado &&
-                    a.Fecha.Date == fecha.Date &&
+                    a.Fecha >= inicioDiaUtc &&
+                    a.Fecha < finDiaUtc &&
                     a.HoraSalida == null
                 );
             }
@@ -171,7 +186,7 @@ namespace AromasWeb.AccesoADatos.Asistencias
                 var entidad = new AsistenciaAD
                 {
                     IdEmpleado = asistencia.IdEmpleado,
-                    Fecha = asistencia.Fecha,
+                    Fecha = DateTime.SpecifyKind(asistencia.Fecha.Date, DateTimeKind.Utc),
                     HoraEntrada = asistencia.HoraEntrada,
                     TiempoAlmuerzo = asistencia.TiempoAlmuerzo,
                     HorasRegulares = asistencia.HorasRegulares,
