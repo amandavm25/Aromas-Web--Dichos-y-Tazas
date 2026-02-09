@@ -1,13 +1,13 @@
 # =========================
 # Build results
 # =========================
-bin/
-obj/
+**/bin/
+**/obj/
 
 # =========================
 # Visual Studio files
 # =========================
-.vs/
+**/.vs/
 *.user
 *.suo
 *.userosscache
@@ -43,3 +43,8 @@ project.nuget.cache
 # Publish output
 # =========================
 publish/
+
+# Cache/temporary
+*.cache
+*.dll
+*.pdb
