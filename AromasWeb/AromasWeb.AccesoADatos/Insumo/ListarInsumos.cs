@@ -126,5 +126,30 @@ namespace AromasWeb.AccesoADatos.Insumos
                 FechaActualizacion = insumoAD.FechaActualizacion
             };
         }
+
+        public void Crear(Abstracciones.ModeloUI.Insumo insumo)
+
+        {
+            using (var contexto = new Contexto())
+            {
+                var entidad = new InsumoAD
+                {
+                    NombreInsumo = insumo.NombreInsumo,
+                    UnidadMedida = insumo.UnidadMedida,
+                    IdCategoria = insumo.IdCategoria,
+                    CostoUnitario = insumo.CostoUnitario,
+                    CantidadDisponible = insumo.CantidadDisponible,
+                    StockMinimo = insumo.StockMinimo,
+                    Estado = true,
+                    FechaCreacion = DateTime.UtcNow,
+                    FechaActualizacion = DateTime.UtcNow
+
+                };
+
+                contexto.Insumo.Add(entidad);
+                contexto.SaveChanges();
+            }
+        }
     }
+
 }

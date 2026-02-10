@@ -10,5 +10,7 @@ namespace AromasWeb.Abstracciones.Logica.Insumo
         List<InsumoUI> BuscarPorCategoria(int idCategoria);
         InsumoUI ObtenerPorId(int id);
         List<InsumoUI> ObtenerBajoStock();
+
+        void Crear(InsumoUI insumo);
     }
 }

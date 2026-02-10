@@ -78,11 +78,15 @@
                                                 new { Id = 7, Nombre = "Leudantes" }
                                                 };
                             }
-                            <select name="IdCategoriaInsumo" class="form-control">
+                            <select name="IdCategoria" class="form-control">
                                 <option value="">-- Selecciona una categoría --</option>
                                 @foreach (var cat in categoriasInsumo)
                                 {
-                                    <option value="@cat.Id">@cat.Nombre</option>
+                                    <option value="@cat.Id"
+											selected="@(Model.IdCategoria == cat.Id ? "selected" : null)">
+                                    
+                                            @cat.Nombre
+                                       </option>
                                 }
                             </select>
                             @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
