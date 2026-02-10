@@ -31,8 +31,8 @@
 </section>
 
 <!-- Formulario Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 900px;">
+<section class="admin-form-section">
+    <div class="container" style="max-width: 80%;">
         @using (Html.BeginForm("RegistrarSalida", "Asistencia", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
@@ -41,14 +41,13 @@
             @Html.HiddenFor(model => model.Fecha)
             @Html.HiddenFor(model => model.HoraEntrada)
 
-            <div class="contact-form-wrapper contact-form" data-aos="fade-up">
+            <div class="admin-form-wrapper" data-aos="fade-up">
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información del Empleado -->
-                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-user"></i> Información del Empleado
-                        </h5>
+                <div class="admin-form-header">
+                    <i class="fas fa-box"></i>
+                        <h5> Información del Empleado</h5>
                     </div>
 
                     <!-- Datos del Empleado -->
@@ -117,25 +116,23 @@
                     </div>
 
                     <!-- Información adicional -->
-                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 1rem;">
-                            <i class="fas fa-info-circle" style="color: var(--olive-green); font-size: 2rem;"></i>
-                            <div>
-                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.3rem;">Cálculo Automático de Horas</strong>
-                                <p style="margin: 0; color: var(--charcoal); opacity: 0.85; font-size: 0.95rem;">
-                                    El sistema calculará automáticamente las horas trabajadas, diferenciando entre horas regulares (hasta 8 horas) y horas extras (más de 8 horas).
-                                </p>
-                            </div>
+                    <div class="admin-form-info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                             <strong>Cálculo Automático de Horas</strong>
+                             <p>El sistema calculará automáticamente las horas trabajadas, diferenciando entre horas regulares (hasta 8 horas) y horas extras (más de 8 horas).</p>
                         </div>
                     </div>
 
                     <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoAsistencias", "Asistencia")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
+                <div class="admin-form-footer">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoAsistencias", "Asistencia")'">
+                        <i class="fas fa-times"></i>
+                            <span> Cancelar</span>
                         </button>
-                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
-                            <span><i class="fas fa-check"></i> Registrar Salida</span>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                            <span>> Registrar Salida</span>
                         </button>
                     </div>
             </div>
