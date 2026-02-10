@@ -96,10 +96,10 @@
         }
 
         <!-- Tabla Principal -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
+        <div class="admin-table-container">
             <div class="table-responsive">
-                <table style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+                <table class="admin-table">
+                    <thead>
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
@@ -197,8 +197,8 @@
             </div>
 
             <!-- Footer de paginación -->
-            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                <div style="color: var(--dark-green); font-size: 0.95rem;">
+            <div class="admin-table-footer">
+                <div class="admin-table-footer-text">
                     Mostrando <strong>@(Model?.Count ?? 0)</strong> categoría(s)
                 </div>
             </div>

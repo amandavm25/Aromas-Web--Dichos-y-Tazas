@@ -137,19 +137,19 @@
         <div style="display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start;" data-aos="fade-up">
 
             <!-- Tabla Principal -->
-            <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
+            <div class="admin-table-container">
                 <div class="table-responsive">
-                    <table id="laTablaDeInsumos" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+                    <table class="admin-table">
+                        <thead>
                             <tr>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Unidad</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Costo</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Cantidad</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Stock</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Unidad</th>
+                                <th>Costo</th>
+                                <th>Cantidad</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -157,59 +157,58 @@
                             {
                                 @foreach (var insumo in Model)
                                 {
-                                    <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@insumo.IdInsumo</td>
-                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
-                                            <i class="fas fa-box" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
+                                    <tr>
+                                        <td class="td-id">@insumo.IdInsumo</td>
+                                        <td class="td-nombre">
+                                            <i class="fas fa-box"></i>
                                             @insumo.NombreInsumo
                                         </td>
-                                        <td style="padding: 1.2rem; color: var(--charcoal);">@insumo.UnidadMedida</td>
-                                        <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@insumo.CostoUnitario.ToString("C2")</td>
-                                        <td style="padding: 1.2rem; color: var(--charcoal);">
-                                            <span style="background: var(--cream); padding: 0.3rem 0.8rem; border-radius: 15px; font-weight: 600;">
+                                        <td>@insumo.UnidadMedida</td>
+                                        <td style="font-weight: 600;">@insumo.CostoUnitario.ToString("C2")</td>
+                                        <td>
+                                            <span class="badge-cantidad">
                                                 @insumo.CantidadDisponible.ToString("N2")
                                             </span>
                                         </td>
-                                        <td style="padding: 1.2rem;">
+                                        <td>
                                             @if (insumo.EstadoStock == "Bajo")
                                             {
-                                                <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                                <span class="badge-stock bajo">
                                                     <i class="fas fa-exclamation-triangle"></i> Bajo
                                                 </span>
                                             }
                                             else if (insumo.EstadoStock == "Medio")
                                             {
-                                                <span style="background: #f39c12; color: var(--white); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                                <span class="badge-stock medio">
                                                     <i class="fas fa-exclamation-circle"></i> Medio
                                                 </span>
                                             }
                                             else
                                             {
-                                                <span style="background: #27ae60; color: var(--white); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                                <span class="badge-stock normal">
                                                     <i class="fas fa-check-circle"></i> Normal
                                                 </span>
                                             }
                                         </td>
-                                        <td style="padding: 1.2rem;">
+                                        <td>
                                             @if (insumo.Estado)
                                             {
-                                                <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activo</span>
+                                                <span class="badge-estado activo">Activo</span>
                                             }
                                             else
                                             {
-                                                <span style="background: #95a5a6; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactivo</span>
+                                                <span class="badge-estado inactivo">Inactivo</span>
                                             }
                                         </td>
-                                        <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        <td style="text-align: center; white-space: nowrap;">
                                             <button type="button"
-                                                    class="btn btn-sm"
+                                                    class="btn-table-action btn-table-edit"
                                                     onclick="window.location.href='@Url.Action("EditarInsumo", "Insumo", new { id = insumo.IdInsumo })'"
-                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                             <button type="button"
-                                                    class="btn btn-sm btn-detalles"
+                                                    class="btn-table-action btn-table-view btn-detalles"
                                                     data-id="@insumo.IdInsumo"
                                                     data-nombre="@insumo.NombreInsumo"
                                                     data-unidad="@insumo.UnidadMedida"
@@ -218,21 +217,19 @@
                                                     data-cantidad="@insumo.CantidadDisponible.ToString("N2")"
                                                     data-stockminimo="@insumo.StockMinimo.ToString("N2")"
                                                     data-estado="@(insumo.Estado ? "Activo" : "Inactivo")"
-                                                    style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalDetallesInsumo"
                                                     title="Ver detalles">
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             <button type="button"
-                                                    class="btn btn-sm btn-eliminar"
+                                                    class="btn-table-action btn-table-delete btn-eliminar"
                                                     data-id="@insumo.IdInsumo"
                                                     data-nombre="@insumo.NombreInsumo"
                                                     data-categoria="@(categorias.FirstOrDefault(c => c.IdCategoria == insumo.IdCategoria)?.NombreCategoria ?? "Sin categoría")"
                                                     data-unidad="@insumo.UnidadMedida"
                                                     data-cantidad="@insumo.CantidadDisponible.ToString("N2")"
                                                     data-estado="@(insumo.Estado ? "Activo" : "Inactivo")"
-                                                    style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalEliminarInsumo"
                                                     title="Eliminar">
@@ -245,12 +242,12 @@
                             else
                             {
                                 <tr>
-                                    <td colspan="8" style="padding: 3rem; text-align: center; color: var(--charcoal);">
-                                        <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
-                                        <p style="margin: 0; font-size: 1.1rem;">No se encontraron insumos</p>
+                                    <td colspan="8" class="admin-table-empty">
+                                        <i class="fas fa-inbox"></i>
+                                        <p>No se encontraron insumos</p>
                                         @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || ViewBag.Categoria != null)
                                         {
-                                            <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros filtros o términos de búsqueda</p>
+                                            <p class="empty-subtitle">Intenta con otros filtros o términos de búsqueda</p>
                                         }
                                     </td>
                                 </tr>
@@ -260,8 +257,8 @@
                 </div>
 
                 <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-green); font-size: 0.95rem;">
+                <div class="admin-table-footer">
+                    <div class="admin-table-footer-text">
                         Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> insumos
                     </div>
                 </div>

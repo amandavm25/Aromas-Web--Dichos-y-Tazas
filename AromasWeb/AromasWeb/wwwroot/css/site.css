@@ -323,7 +323,7 @@ body:hover .custom-cursor-follower {
 
 .btn-nav {
     padding: 0.8rem 1.8rem;
-    background: linear-gradient(135deg, var(--olive-green), var(--dark-green));
+    background: var(--olive-green);
     color: var(--cream);
     border-radius: 50px;
     font-weight: 600;
@@ -395,7 +395,7 @@ body:hover .custom-cursor-follower {
     }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--olive-green), var(--dark-green));
+    background: var(--olive-green);
     color: var(--cream);
     box-shadow: var(--shadow-md);
     border: 2px solid transparent;
@@ -2298,3 +2298,220 @@ section {
         transform: translateY(0);
     }
 }
+
+/* ============================================
+   TABLAS ADMINISTRATIVAS ELEGANTES
+   ============================================ */
+
+.admin-table-container {
+    background: var(--white);
+    border-radius: 25px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.admin-table {
+    margin-bottom: 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .admin-table tbody tr:nth-child(even) {
+        background: rgba(239, 231, 200, 0.35); /* Crema ligeramente más visible */
+    }
+
+    /* Encabezado de tabla - Verde oscuro sólido */
+    .admin-table thead {
+        background: var(--dark-green);
+    }
+
+        .admin-table thead th {
+            padding: 1.2rem;
+            color: var(--cream);
+            font-weight: 600;
+            border: none;
+            text-align: left;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+            .admin-table thead th:last-child {
+                text-align: center;
+            }
+
+    /* Cuerpo de tabla - Fondo suave intercalado */
+    .admin-table tbody tr {
+        border-bottom: 1px solid rgba(143, 142, 106, 0.08);
+        transition: background-color 0.2s ease;
+    }
+
+admin-table-footer
+
+.admin-table tbody tr:hover {
+    background: rgba(143, 142, 106, 0.12);
+}
+
+    .admin-table tbody td {
+        padding: 1.2rem;
+        color: var(--charcoal);
+        font-size: 0.95rem;
+    }
+
+    /* Columna de ID */
+    .admin-table .td-id {
+        color: var(--dark-green);
+        font-weight: 600;
+        font-family: var(--font-primary);
+    }
+
+    /* Columna de nombre con icono */
+    .admin-table .td-nombre {
+        color: var(--dark-green);
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+
+        .admin-table .td-nombre i {
+            color: var(--gold-bright);
+            margin-right: 0.5rem;
+        }
+
+/* Badges y pills */
+.badge-cantidad {
+    background: var(--cream);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-stock {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+    .badge-stock.bajo {
+        background: #e74c3c;
+        color: var(--white);
+    }
+
+    .badge-stock.medio {
+        background: #f39c12;
+        color: var(--white);
+    }
+
+    .badge-stock.normal {
+        background: #27ae60;
+        color: var(--white);
+    }
+
+.badge-estado {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+    .badge-estado.activo {
+        background: #27ae60;
+        color: var(--white);
+    }
+
+    .badge-estado.inactivo {
+        background: #95a5a6;
+        color: var(--white);
+    }
+
+/* Botones de acción en tabla */
+.btn-table-action {
+    border: none;
+    margin: 0 0.25rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition-base);
+    font-size: 0.9rem;
+}
+
+    .btn-table-action:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm);
+    }
+
+.btn-table-edit {
+    background: var(--olive-green);
+    color: var(--white);
+}
+
+    .btn-table-edit:hover {
+        background: var(--dark-olive);
+    }
+
+.btn-table-view {
+    background: #3498db;
+    color: var(--white);
+}
+
+    .btn-table-view:hover {
+        background: #2980b9;
+    }
+
+.btn-table-delete {
+    background: #e74c3c;
+    color: var(--white);
+}
+
+    .btn-table-delete:hover {
+        background: #c0392b;
+    }
+
+/* Footer de tabla */
+.admin-table-footer {
+    padding: 1.5rem;
+    background: var(--dark-green);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(143, 142, 106, 0.1);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.admin-table-footer-text {
+    color: var(--cream);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Estado vacío */
+.admin-table-empty {
+    padding: 3rem;
+    text-align: center;
+    color: var(--charcoal);
+}
+
+    .admin-table-empty i {
+        font-size: 3rem;
+        color: var(--olive-green);
+        opacity: 0.5;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .admin-table-empty p {
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    .admin-table-empty .empty-subtitle {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.7;
+        font-size: 0.95rem;
+    }

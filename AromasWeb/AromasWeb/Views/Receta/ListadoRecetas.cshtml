@@ -157,11 +157,11 @@
 
         <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;">
             <!-- Tabla de Recetas (Izquierda) -->
-            <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
+            <div class="admin-table-container">
+                <div class="table-responsive">
+                    <table class="admin-table">
                         <thead>
-                            <tr style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white);">
+                            <tr>
                                 <th style="padding: 1.2rem; text-align: left; font-weight: 600; white-space: nowrap;">Nombre</th>
                                 <th style="padding: 1.2rem; text-align: left; font-weight: 600; white-space: nowrap;">Categoría</th>
                                 <th style="padding: 1.2rem; text-align: center; font-weight: 600; white-space: nowrap;">Porciones</th>
@@ -277,8 +277,8 @@
                 </div>
 
                 <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-green); font-size: 0.95rem;">
+                <div class="admin-table-footer">
+                    <div class="admin-table-footer-text">
                         Mostrando <strong>@(Model?.Count ?? 0)</strong> receta(s)
                     </div>
                 </div>
