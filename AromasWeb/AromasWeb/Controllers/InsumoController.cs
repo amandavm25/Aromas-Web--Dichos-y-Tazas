@@ -69,18 +69,18 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CrearInsumo(Insumo insumo)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // Aquí iría la lógica para guardar en la base de datos
-                TempData["Mensaje"] = "Insumo registrado correctamente";
-                return RedirectToAction(nameof(ListadoInsumos));
+                var categorias = _listarCategoriasInsumo.Obtener();
+                ViewBag.TodasCategorias = categorias;
+                return View(insumo);
+
             }
 
-            // Si hay errores, recargar las categorías
-            var categorias = _listarCategoriasInsumo.Obtener();
-            ViewBag.TodasCategorias = categorias;
+            _listarInsumos.Crear(insumo);
 
-            return View(insumo);
+            TempData["Mensaje"] = "Insumo registrado correctamente";
+            return RedirectToAction(nameof(ListadoInsumos));
         }
 
         // GET: Insumo/EditarInsumo/5
@@ -107,6 +107,8 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                _listarInsumos.Actualizar(insumo);
+
                 // Aquí iría la lógica para actualizar en la base de datos
                 TempData["Mensaje"] = "Insumo actualizado correctamente";
                 return RedirectToAction(nameof(ListadoInsumos));

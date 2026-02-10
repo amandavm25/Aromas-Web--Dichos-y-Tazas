@@ -37,5 +37,15 @@ namespace AromasWeb.LogicaDeNegocio.Insumos
         {
             return _listarInsumos.ObtenerBajoStock();
         }
+
+        public void Crear (Insumo insumo)
+        {
+            _listarInsumos.Crear(insumo);
+        }
+
+        public void Actualizar (Insumo insumo)
+        {
+            _listarInsumos.Actualizar(insumo);
+        }
     }
 }

@@ -39,7 +39,6 @@
             @Html.HiddenFor(model => model.IdInsumo)
 
             <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
                     @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                     <!-- Información del Insumo -->
@@ -78,11 +77,15 @@
                                                 new { Id = 7, Nombre = "Leudantes" }
                                                 };
                             }
-                            <select name="IdCategoriaInsumo" class="form-control">
+                            <select name="IdCategoria" class="form-control">
                                 <option value="">-- Selecciona una categoría --</option>
                                 @foreach (var cat in categoriasInsumo)
                                 {
-                                    <option value="@cat.Id">@cat.Nombre</option>
+                                    <option value="@cat.Id"
+											selected="@(Model.IdCategoria == cat.Id ? "selected" : null)">
+                                    
+                                            @cat.Nombre
+                                       </option>
                                 }
                             </select>
                             @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
@@ -95,13 +98,14 @@
                             </label>
                             <select name="UnidadMedida" class="form-control">
                                 <option value="">-- Selecciona una unidad --</option>
-                                <option value="Kilogramos">Kilogramos (kg)</option>
-                                <option value="Gramos">Gramos (g)</option>
-                                <option value="Litros">Litros (L)</option>
-                                <option value="Mililitros">Mililitros (mL)</option>
-                                <option value="Unidades">Unidades</option>
-                                <option value="Libras">Libras (lb)</option>
-                                <option value="Onzas">Onzas (oz)</option>
+
+                                <option value="Kilogramos" selected="@(Model.UnidadMedida == "Kilogramos" ? "selected" : null)">Kilogramos (kg)</option>
+                                <option value="Gramos" selected="@(Model.UnidadMedida == "Gramos" ? "selected" : null)">Gramos (g)</option>
+                                <option value="Litros" selected="@(Model.UnidadMedida == "Litros" ? "selected" : null)">Litros (L)</option>
+                                <option value="Mililitros" selected="@(Model.UnidadMedida == "Mililitros" ? "selected" : null)">Mililitros (mL)</option>
+                                <option value="Unidades" selected="@(Model.UnidadMedida == "Unidades" ? "selected" : null)">Unidades</option>
+                                <option value="Libras" selected="@(Model.UnidadMedida == "Libras" ? "selected" : null)">Libras (lb)</option>
+                                <option value="Onzas" selected="@(Model.UnidadMedida == "Onzas" ? "selected" : null)">Onzas (oz)</option>
                             </select>
                             @Html.ValidationMessageFor(model => model.UnidadMedida, "", new { @class = "text-danger" })
                         </div>
@@ -110,7 +114,7 @@
                     <!-- Costo Unitario -->
                     <div class="form-group">
                         <label>
-                            <i class="fas fa-dollar-sign"></i>
+                            <i class="fas fa-colon-sign"></i>
                             Costo Unitario
                         </label>
                         @Html.EditorFor(model => model.CostoUnitario, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" } })
@@ -147,7 +151,7 @@
                     <!-- Estado del Insumo -->
                     <div class="form-group">
                         <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: #F5EDD8; border-radius: 15px; cursor: pointer;">
-                            @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
+                            @Html.CheckBoxFor(model => model.Estado, new { @class = "form-check-input", id = "estadoCheckbox" })
                             <span style="flex: 1;">
                                 <i class="fas fa-toggle-on"></i>
                                 Estado del Insumo (Activo/Inactivo)
@@ -182,7 +186,6 @@
                             <span><i class="fas fa-check"></i> Guardar Cambios</span>
                         </button>
                     </div>
-                </form>
             </div>
         }
     </div>
