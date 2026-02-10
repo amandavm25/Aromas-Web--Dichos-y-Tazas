@@ -107,6 +107,8 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                _listarInsumos.Actualizar(insumo);
+
                 // Aquí iría la lógica para actualizar en la base de datos
                 TempData["Mensaje"] = "Insumo actualizado correctamente";
                 return RedirectToAction(nameof(ListadoInsumos));

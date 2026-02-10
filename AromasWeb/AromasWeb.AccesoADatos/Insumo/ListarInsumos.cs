@@ -150,6 +150,25 @@ namespace AromasWeb.AccesoADatos.Insumos
                 contexto.SaveChanges();
             }
         }
+
+        public void Actualizar(Abstracciones.ModeloUI.Insumo insumo)
+        {
+            using (var contexto = new Contexto())
+            {
+                var entidad = contexto.Insumo.FirstOrDefault(i => i.IdInsumo == insumo.IdInsumo);
+                if (entidad != null)
+                {
+                    entidad.NombreInsumo = insumo.NombreInsumo;
+                    entidad.UnidadMedida = insumo.UnidadMedida;
+                    entidad.IdCategoria = insumo.IdCategoria;
+                    entidad.CostoUnitario = insumo.CostoUnitario;
+                    entidad.StockMinimo = insumo.StockMinimo;
+                    entidad.Estado = insumo.Estado;
+                    entidad.FechaActualizacion = DateTime.UtcNow;
+                    contexto.SaveChanges();
+                }
+            }
+        }
     }
 
 }

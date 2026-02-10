@@ -42,5 +42,10 @@ namespace AromasWeb.LogicaDeNegocio.Insumos
         {
             _listarInsumos.Crear(insumo);
         }
+
+        public void Actualizar (Insumo insumo)
+        {
+            _listarInsumos.Actualizar(insumo);
+        }
     }
 }

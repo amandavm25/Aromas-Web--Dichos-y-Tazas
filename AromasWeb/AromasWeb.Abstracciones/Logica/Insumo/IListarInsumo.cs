@@ -12,5 +12,8 @@ namespace AromasWeb.Abstracciones.Logica.Insumo
         List<InsumoUI> ObtenerBajoStock();
 
         void Crear(InsumoUI insumo);
+
+        void Actualizar(InsumoUI insumo);
+
     }
 }
