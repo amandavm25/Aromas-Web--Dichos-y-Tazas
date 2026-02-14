@@ -97,7 +97,7 @@ function showTooltip(event, text) {
     tooltipElement.textContent = text;
     tooltipElement.style.cssText = `
         position: fixed;
-        background: linear-gradient(135deg, var(--dark-teal), var(--teal));
+        background: linear-gradient(135deg, var(--dark-green), var(--olive-green));
         color: white;
         padding: 0.7rem 1.2rem;
         border-radius: 12px;
@@ -129,7 +129,7 @@ function hideTooltip() {
 }
 
 // ============================================
-// PAGINACIÓN - CORREGIDA
+// PAGINACIÓN
 // ============================================
 let paginaActual = 1;
 const registrosPorPagina = 10;
@@ -213,6 +213,7 @@ function initializeModals() {
         boton.addEventListener('click', function () {
             const id = this.getAttribute('data-id');
             const nombre = this.getAttribute('data-nombre');
+            const apellidos = this.getAttribute('data-apellidos');
             const identificacion = this.getAttribute('data-identificacion');
             const correo = this.getAttribute('data-correo');
             const telefono = this.getAttribute('data-telefono');
@@ -223,43 +224,56 @@ function initializeModals() {
             const estado = this.getAttribute('data-estado');
             const esAntiguo = this.getAttribute('data-esantiguo') === 'True';
 
+            // Llenar información general
             document.getElementById('detalles-id-empleado').textContent = id;
-            document.getElementById('detalles-nombre-empleado').textContent = nombre;
+            document.getElementById('detalles-nombre-empleado').textContent = nombre + ' ' + apellidos;
             document.getElementById('detalles-identificacion-empleado').textContent = identificacion;
             document.getElementById('detalles-correo-empleado').textContent = correo;
             document.getElementById('detalles-telefono-empleado').textContent = telefono;
             document.getElementById('detalles-fechacontratacion-empleado').textContent = fechaContratacion;
             document.getElementById('detalles-antiguedad-empleado').textContent = antiguedad;
 
+            // Cargo
             const cargoEl = document.querySelector('#detalles-cargo-empleado span');
-            cargoEl.textContent = cargo;
+            if (cargoEl) {
+                cargoEl.textContent = cargo;
+            }
 
+            // Badge de empleado antiguo
             const antiguoEl = document.getElementById('detalles-empleado-antiguo');
-            if (esAntiguo) {
-                antiguoEl.style.display = 'flex';
-            } else {
-                antiguoEl.style.display = 'none';
+            if (antiguoEl) {
+                if (esAntiguo) {
+                    antiguoEl.style.display = 'flex';
+                } else {
+                    antiguoEl.style.display = 'none';
+                }
             }
 
+            // Badge de rol
             const rolBadge = document.getElementById('detalles-rol-empleado');
-            rolBadge.textContent = rol;
-            if (rol === 'Administrador') {
-                rolBadge.style.background = 'var(--coral)';
-                rolBadge.style.color = 'white';
-            } else {
-                rolBadge.style.background = 'var(--teal)';
-                rolBadge.style.color = 'white';
+            if (rolBadge) {
+                rolBadge.textContent = rol;
+                if (rol === 'Administrador') {
+                    rolBadge.style.background = 'var(--gold)';
+                    rolBadge.style.color = 'white';
+                } else {
+                    rolBadge.style.background = 'var(--olive-green)';
+                    rolBadge.style.color = 'white';
+                }
             }
 
+            // Badge de estado
             const estadoBadge = document.getElementById('detalles-estado-badge-empleado');
-            if (estado === 'Activo') {
-                estadoBadge.textContent = 'Activo';
-                estadoBadge.style.background = '#27ae60';
-                estadoBadge.style.color = 'white';
-            } else {
-                estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#e74c3c';
-                estadoBadge.style.color = 'white';
+            if (estadoBadge) {
+                if (estado === 'Activo') {
+                    estadoBadge.textContent = 'Activo';
+                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.color = 'white';
+                } else {
+                    estadoBadge.textContent = 'Inactivo';
+                    estadoBadge.style.background = '#e74c3c';
+                    estadoBadge.style.color = 'white';
+                }
             }
         });
     });
@@ -273,6 +287,7 @@ function initializeModals() {
         boton.addEventListener('click', function () {
             const id = this.getAttribute('data-id');
             const nombre = this.getAttribute('data-nombre');
+            const apellidos = this.getAttribute('data-apellidos');
             const identificacion = this.getAttribute('data-identificacion');
             const correo = this.getAttribute('data-correo');
             const cargo = this.getAttribute('data-cargo');
@@ -280,22 +295,28 @@ function initializeModals() {
 
             document.getElementById('eliminar-id-display-empleado').textContent = id;
             document.getElementById('eliminar-id-empleado').value = id;
-            document.getElementById('eliminar-nombre-empleado').textContent = nombre;
+            document.getElementById('eliminar-nombre-empleado').textContent = nombre + ' ' + apellidos;
             document.getElementById('eliminar-identificacion-empleado').textContent = identificacion;
             document.getElementById('eliminar-correo-empleado').textContent = correo;
             document.getElementById('eliminar-cargo-empleado').textContent = cargo;
 
             const estadoBadge = document.getElementById('eliminar-estado-badge-empleado');
-            if (estado === 'Activo') {
-                estadoBadge.textContent = 'Activo';
-                estadoBadge.style.background = '#27ae60';
-            } else {
-                estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#e74c3c';
+            if (estadoBadge) {
+                if (estado === 'Activo') {
+                    estadoBadge.textContent = 'Activo';
+                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.color = 'white';
+                } else {
+                    estadoBadge.textContent = 'Inactivo';
+                    estadoBadge.style.background = '#e74c3c';
+                    estadoBadge.style.color = 'white';
+                }
             }
 
             const form = document.getElementById('formEliminarEmpleado');
-            form.action = '/Empleado/EliminarEmpleado/' + id;
+            if (form) {
+                form.action = '/Empleado/EliminarEmpleado';
+            }
         });
     });
 
@@ -310,22 +331,29 @@ function initializeModals() {
             const nombre = this.getAttribute('data-nombre');
             const estado = this.getAttribute('data-estado');
 
-            document.getElementById('estado-id-empleado').value = id;
-            document.getElementById('estado-nombre-empleado').textContent = nombre;
+            const formInput = document.getElementById('estado-id-empleado');
+            if (formInput) formInput.value = id;
+
+            const nombreEl = document.getElementById('estado-nombre-empleado');
+            if (nombreEl) nombreEl.textContent = nombre;
 
             const estadoBadge = document.getElementById('estado-actual-badge');
-            if (estado === 'Activo') {
-                estadoBadge.textContent = 'Activo';
-                estadoBadge.style.background = '#27ae60';
-                estadoBadge.style.color = 'white';
-            } else {
-                estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#e74c3c';
-                estadoBadge.style.color = 'white';
+            if (estadoBadge) {
+                if (estado === 'Activo') {
+                    estadoBadge.textContent = 'Activo';
+                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.color = 'white';
+                } else {
+                    estadoBadge.textContent = 'Inactivo';
+                    estadoBadge.style.background = '#e74c3c';
+                    estadoBadge.style.color = 'white';
+                }
             }
 
             const form = document.getElementById('formCambiarEstado');
-            form.action = '/Empleado/CambiarEstado/' + id;
+            if (form) {
+                form.action = '/Empleado/CambiarEstado';
+            }
         });
     });
 }
@@ -439,6 +467,9 @@ function mostrarNotificacion(mensaje, tipo) {
     }, 3000);
 }
 
+// ============================================
+// ESTILOS DE ANIMACIONES - UNA SOLA VEZ
+// ============================================
 const notifStyle = document.createElement('style');
 notifStyle.innerHTML = `
     @keyframes slideIn {

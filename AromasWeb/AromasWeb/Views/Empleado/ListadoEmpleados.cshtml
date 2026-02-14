@@ -93,14 +93,15 @@
         </div>
 
         <!-- Tabla Principal -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
-            <div style="overflow-x: auto; max-width: 100%;">
-                <table id="laTablaDeEmpleados" style="margin-bottom: 0; width: 100%; min-width: 1200px; border-collapse: collapse;">
-                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+        <div class="admin-table-container">
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Identificación</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Celular</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Correo</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Cargo</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Rol</th>
@@ -180,21 +181,6 @@
                                                 title="Ver detalles">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-eliminar"
-                                                data-id="@empleado.IdEmpleado"
-                                                data-nombre="@empleado.Nombre"
-                                                data-apellidos="@empleado.Apellidos"
-                                                data-identificacion="@empleado.Identificacion"
-                                                data-correo="@empleado.Correo"
-                                                data-cargo="@empleado.Cargo"
-                                                data-estado="@(empleado.Estado ? "Activo" : "Inactivo")"
-                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalEliminarEmpleado"
-                                                title="Eliminar">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -217,8 +203,8 @@
             </div>
 
             <!-- Footer de paginación -->
-            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                <div style="color: var(--dark-green); font-size: 0.95rem;">
+            <div class="admin-table-footer">
+                <div class="admin-table-footer-text">
                     Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> empleados
                 </div>
             </div>

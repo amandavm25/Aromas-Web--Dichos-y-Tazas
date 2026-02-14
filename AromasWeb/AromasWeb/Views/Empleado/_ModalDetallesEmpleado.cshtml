@@ -35,14 +35,6 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                     <!-- Columna Izquierda -->
                     <div style="display: grid; gap: 1.5rem;">
-                        <!-- ID -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-hashtag" style="color: var(--olive-green); font-size: 1.1rem;"></i> ID del Empleado
-                            </label>
-                            <p id="detalles-id-empleado" style="color: var(--dark-green); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
                         <!-- Identificación -->
                         <div class="feature-card" style="padding: 1.5rem; margin: 0;">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
@@ -114,3 +106,76 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesDetalles = document.querySelectorAll('.btn-detalles');
+
+        botonesDetalles.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const nombre = this.getAttribute('data-nombre');
+                const apellidos = this.getAttribute('data-apellidos');
+                const identificacion = this.getAttribute('data-identificacion');
+                const correo = this.getAttribute('data-correo');
+                const telefono = this.getAttribute('data-telefono');
+                const cargo = this.getAttribute('data-cargo');
+                const rol = this.getAttribute('data-rol');
+                const fechaContratacion = this.getAttribute('data-fechacontratacion');
+                const antiguedad = this.getAttribute('data-antiguedad');
+                const estado = this.getAttribute('data-estado');
+                const esAntiguo = this.getAttribute('data-esantiguo') === 'True';
+
+                // Llenar información general
+                document.getElementById('detalles-nombre-empleado').textContent = nombre + ' ' + apellidos;
+                document.getElementById('detalles-identificacion-empleado').textContent = identificacion;
+                document.getElementById('detalles-correo-empleado').textContent = correo;
+                document.getElementById('detalles-telefono-empleado').textContent = telefono;
+                document.getElementById('detalles-fechacontratacion-empleado').textContent = fechaContratacion;
+                document.getElementById('detalles-antiguedad-empleado').textContent = antiguedad;
+
+                // Cargo
+                const cargoEl = document.querySelector('#detalles-cargo-empleado span');
+                if (cargoEl) {
+                    cargoEl.textContent = cargo;
+                }
+
+                // Badge de empleado antiguo
+                const antiguoEl = document.getElementById('detalles-empleado-antiguo');
+                if (antiguoEl) {
+                    if (esAntiguo) {
+                        antiguoEl.style.display = 'flex';
+                    } else {
+                        antiguoEl.style.display = 'none';
+                    }
+                }
+
+                // Badge de rol
+                const rolBadge = document.getElementById('detalles-rol-empleado');
+                if (rolBadge) {
+                    rolBadge.textContent = rol;
+                    if (rol === 'Administrador') {
+                        rolBadge.style.background = 'var(--gold)';
+                        rolBadge.style.color = 'white';
+                    } else {
+                        rolBadge.style.background = 'var(--olive-green)';
+                        rolBadge.style.color = 'white';
+                    }
+                }
+
+                // Badge de estado
+                const estadoBadge = document.getElementById('detalles-estado-badge-empleado');
+                if (estadoBadge) {
+                    if (estado === 'Activo') {
+                        estadoBadge.textContent = 'Activo';
+                        estadoBadge.style.background = '#27ae60';
+                        estadoBadge.style.color = 'white';
+                    } else {
+                        estadoBadge.textContent = 'Inactivo';
+                        estadoBadge.style.background = '#e74c3c';
+                        estadoBadge.style.color = 'white';
+                    }
+                }
+            });
+        });
+    });
+</script>
