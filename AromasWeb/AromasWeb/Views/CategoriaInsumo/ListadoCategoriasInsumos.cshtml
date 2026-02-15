@@ -85,10 +85,13 @@
                     <tbody>
                         @if (Model != null && Model.Any())
                         {
+                            int contador = 1;
                             @foreach (var cat in Model)
                             {
                                 <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@cat.IdCategoria</td>
+                                    <td style="padding: 1.2rem; text-align: center;">
+                                        <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
+                                    </td>
                                     <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
                                         <i class="fas fa-tag" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
                                         @cat.NombreCategoria
@@ -138,6 +141,7 @@
                                         </button>
                                     </td>
                                 </tr>
+                                contador++;
                             }
                         }
                         else

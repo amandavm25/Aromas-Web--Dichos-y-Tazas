@@ -113,88 +113,83 @@
                     <tbody>
                         @if (Model != null && Model.Any())
                         {
-                            @foreach (var empleado in Model)
+                            int contador = 1;
+                            foreach (var empleado in Model)
                             {
-                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@empleado.IdEmpleado</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-green);">
-                                        <div>
-                                            <strong style="display: block;">@empleado.Nombre</strong>
-                                            @if (empleado.EsEmpleadoAntiguo)
-                                            {
-                                                <span style="background: var(--gold); color: white; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.7rem; margin-top: 0.3rem; display: inline-block; width: fit-content;">
-                                                    <i class="fas fa-award"></i> Antiguo
-                                                </span>
-                                            }
-                                        </div>
+                                <tr>
+                                    <!-- Número consecutivo -->
+                                    <td style="padding: 1.2rem; text-align: center;">
+                                        <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">@empleado.Apellidos</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">@empleado.Identificacion</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); font-size: 0.9rem;">@empleado.Correo</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@empleado.Cargo</td>
+
+                                    <!-- Nombre completo -->
                                     <td style="padding: 1.2rem;">
-                                        <span style="background: @(empleado.NombreRol == "Administrador" ? "var(--gold)" : "var(--olive-green)"); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
-                                            @empleado.NombreRol
+                                        <strong style="color: var(--dark-green); font-size: 1rem;">@empleado.Nombre @empleado.Apellidos</strong>
+                                    </td>
+
+                                    <!-- Identificación -->
+                                    <td style="padding: 1.2rem;">
+                                        <span style="color: var(--charcoal);">@empleado.Identificacion</span>
+                                    </td>
+
+                                    <!-- Correo -->
+                                    <td style="padding: 1.2rem;">
+                                        <span style="color: var(--charcoal);">@empleado.Correo</span>
+                                    </td>
+
+                                    <!-- Cargo -->
+                                    <td style="padding: 1.2rem;">
+                                        <span style="background: var(--cream); color: var(--dark-green); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
+                                            @empleado.Cargo
                                         </span>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); font-size: 0.9rem;">
-                                        <div style="display: flex; flex-direction: column;">
-                                            <span style="font-weight: 600; color: var(--dark-green);">@empleado.AnosTrabajados</span>
-                                            <small style="color: var(--charcoal); opacity: 0.7;">desde @empleado.FechaContratacionFormateada</small>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1.2rem;">
-                                        @if (empleado.Estado)
+
+                                    <!-- Rol -->
+                                    <td style="padding: 1.2rem; text-align: center;">
+                                        @if (empleado.NombreRol == "Administrador")
                                         {
-                                            <span style="background: #27ae60; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activo</span>
+                                            <span class="badge" style="background: var(--gold); color: white; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
+                                                <i class="fas fa-crown"></i> @empleado.NombreRol
+                                            </span>
                                         }
                                         else
                                         {
-                                            <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactivo</span>
+                                            <span class="badge" style="background: var(--olive-green); color: white; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
+                                                <i class="fas fa-user"></i> @empleado.NombreRol
+                                            </span>
                                         }
                                     </td>
+
+                                    <!-- Estado -->
+                                    <td style="padding: 1.2rem; text-align: center;">
+                                        @if (empleado.Estado)
+                                        {
+                                            <span class="badge" style="background: #27ae60; color: white; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
+                                                <i class="fas fa-check-circle"></i> Activo
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge" style="background: #e74c3c; color: white; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
+                                                <i class="fas fa-times-circle"></i> Inactivo
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <!-- Acciones -->
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                        <button type="button"
-                                                class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarEmpleado", "Empleado", new { id = empleado.IdEmpleado })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-detalles"
-                                                data-id="@empleado.IdEmpleado"
-                                                data-nombre="@empleado.Nombre"
-                                                data-apellidos="@empleado.Apellidos"
-                                                data-identificacion="@empleado.Identificacion"
-                                                data-correo="@empleado.Correo"
-                                                data-telefono="@empleado.Telefono"
-                                                data-cargo="@empleado.Cargo"
-                                                data-rol="@empleado.NombreRol"
-                                                data-fechacontratacion="@empleado.FechaContratacionFormateada"
-                                                data-antiguedad="@empleado.AnosTrabajados"
-                                                data-estado="@(empleado.Estado ? "Activo" : "Inactivo")"
-                                                data-esantiguo="@empleado.EsEmpleadoAntiguo"
-                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalDetallesEmpleado"
-                                                title="Ver detalles">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
+                                        <!-- Botones de acción aquí -->
                                     </td>
                                 </tr>
+                                contador++;
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="9" style="padding: 3rem; text-align: center; color: var(--charcoal);">
+                                <td colspan="8" style="padding: 3rem; text-align: center; color: var(--charcoal);">
                                     <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
                                     <p style="margin: 0; font-size: 1.1rem;">No se encontraron empleados</p>
-                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
-                                    {
-                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
-                                    }
                                 </td>
                             </tr>
                         }

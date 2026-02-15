@@ -155,10 +155,13 @@
                         <tbody>
                             @if (Model != null && Model.Any())
                             {
+                                int contador = 1;
                                 @foreach (var insumo in Model)
                                 {
                                     <tr>
-                                        <td class="td-id">@insumo.IdInsumo</td>
+                                        <td style="padding: 1.2rem; text-align: center;">
+                                            <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
+                                        </td>
                                         <td class="td-nombre">
                                             <i class="fas fa-box"></i>
                                             @insumo.NombreInsumo
@@ -237,6 +240,7 @@
                                             </button>
                                         </td>
                                     </tr>
+                                    contador++;
                                 }
                             }
                             else

@@ -176,9 +176,13 @@
                         <tbody>
                             @if (Model != null && Model.Any())
                             {
+                                int contador = 1;
                                 foreach (var receta in Model)
                                 {
                                     <tr style="border-bottom: 1px solid var(--cream); transition: background 0.3s;">
+                                        <td style="padding: 1.2rem; text-align: center;">
+                                            <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
+                                        </td>
                                         <td style="padding: 1.2rem;">
                                             <strong style="color: var(--dark-green); font-size: 1rem;">@receta.Nombre</strong>
                                         </td>
@@ -257,6 +261,7 @@
                                             </button>
                                         </td>
                                     </tr>
+                                    contador++;
                                 }
                             }
                             else
