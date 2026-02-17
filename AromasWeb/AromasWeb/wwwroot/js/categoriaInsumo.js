@@ -34,34 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // ============================================
-    // MODAL DE ELIMINAR CATEGORÍA
-    // ============================================
-    const botonesEliminar = document.querySelectorAll('.btn-eliminar-categoria');
-
-    botonesEliminar.forEach(boton => {
-        boton.addEventListener('click', function () {
-            // Obtener datos del botón
-            const id = this.getAttribute('data-id');
-            const nombre = this.getAttribute('data-nombre');
-            const descripcion = this.getAttribute('data-descripcion');
-            const estado = this.getAttribute('data-estado');
-
-            // Llenar el modal con los datos
-            document.getElementById('eliminar-id-display-categoria').textContent = id;
-            document.getElementById('eliminar-nombre-categoria').textContent = nombre;
-            document.getElementById('eliminar-descripcion-categoria').textContent = descripcion;
-            document.getElementById('eliminar-estado-categoria').textContent = estado;
-
-            // Establecer el ID en el campo oculto del formulario
-            document.getElementById('eliminar-id-categoria').value = id;
-
-            // Configurar la acción del formulario
-            const form = document.getElementById('formEliminarCategoria');
-            form.action = '/CategoriaInsumo/EliminarCategoriaInsumo/' + id;
-        });
-    });
-
     // ==========================================
     // VALIDACIÓN Y MENSAJES
     // ==========================================

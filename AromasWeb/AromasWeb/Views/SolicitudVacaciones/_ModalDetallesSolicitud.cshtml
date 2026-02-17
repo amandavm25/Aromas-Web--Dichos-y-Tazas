@@ -1,8 +1,9 @@
 ﻿<div class="modal fade" id="modalDetallesSolicitud" tabindex="-1" aria-labelledby="modalDetallesSolicitudLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none; padding: 2rem;">
+            <div class="modal-header" style="background: var(--olive-green); color: var(--white); border: none; padding: 2rem;">
                 <h5 class="modal-title" id="modalDetallesSolicitudLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-umbrella-beach"></i>
@@ -13,113 +14,81 @@
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--white);">
-                <!-- Título de la Solicitud -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green); display: flex; align-items: center; justify-content: space-between;">
-                    <div>
-                        <h5 id="detalles-nombre-empleado" style="color: var(--dark-green); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
-                        <p style="margin: 0.5rem 0 0; color: var(--charcoal); opacity: 0.7; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-id-card"></i>
-                            <span id="detalles-identificacion-empleado"></span>
-                        </p>
-                        <p style="margin: 0.5rem 0 0; color: var(--gold-bright); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-briefcase"></i>
-                            <span id="detalles-cargo-empleado"></span>
-                        </p>
-                    </div>
-                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); border: 3px solid var(--gold);">
-                        <i class="fas fa-user-tie" style="font-size: 2rem; color: white;"></i>
+            <div class="modal-body" style="padding: 2.5rem; background: var(--light-cream);">
+
+                <!-- Información del Empleado -->
+                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green);">
+                    <h5 id="detalles-nombre-empleado" style="color: var(--dark-green); margin: 0 0 0.5rem; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
+                    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7;">Identificación:</small>
+                            <p id="detalles-identificacion-empleado" style="margin: 0; color: var(--dark-green); font-weight: 600;"></p>
+                        </div>
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7;">Cargo:</small>
+                            <p id="detalles-cargo-empleado" style="margin: 0; color: var(--dark-green); font-weight: 600;"></p>
+                        </div>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                    <!-- Columna Izquierda -->
-                    <div style="display: grid; gap: 1.5rem;">
-                        <!-- ID -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-hashtag" style="color: var(--olive-green); font-size: 1.1rem;"></i> ID de Solicitud
-                            </label>
-                            <p id="detalles-id-solicitud" style="color: var(--dark-green); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
-                        <!-- Fecha de Solicitud -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calendar-alt" style="color: var(--olive-green); font-size: 1.1rem;"></i> Fecha de Solicitud
-                            </label>
-                            <p id="detalles-fechasolicitud" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
-                        </div>
-
-                        <!-- Período de Vacaciones -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calendar-week" style="color: var(--olive-green); font-size: 1.1rem;"></i> Período de Vacaciones
-                            </label>
-                            <div style="background: var(--cream); padding: 1rem; border-radius: 10px;">
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-play" style="color: #27ae60; font-size: 0.8rem;"></i>
-                                    <strong style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Inicio:</strong>
-                                    <span id="detalles-fechainicio" style="color: var(--dark-green); font-weight: 600;"></span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-stop" style="color: var(--gold-bright); font-size: 0.8rem;"></i>
-                                    <strong style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Fin:</strong>
-                                    <span id="detalles-fechafin" style="color: var(--dark-green); font-weight: 600;"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Días Solicitados -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-clock" style="color: var(--olive-green); font-size: 1.1rem;"></i> Días Laborables Solicitados
-                            </label>
-                            <p style="margin: 0;">
-                                <span id="detalles-diassolicitados" style="color: var(--dark-green); font-size: 2rem; font-weight: 700;"></span>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 1rem; margin-left: 0.5rem;">días</span>
-                            </p>
-                        </div>
+                <!-- Fecha de Solicitud, Estado, Antigüedad -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-paper-plane" style="color: var(--olive-green);"></i> Fecha Solicitud
+                        </label>
+                        <p id="detalles-fechasolicitud" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
                     </div>
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-toggle-on" style="color: var(--olive-green);"></i> Estado
+                        </label>
+                        <div id="detalles-estado-badge"></div>
+                    </div>
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-hourglass-half" style="color: var(--olive-green);"></i> Antigüedad
+                        </label>
+                        <p id="detalles-antiguedad" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                    </div>
+                </div>
 
-                    <!-- Columna Derecha -->
-                    <div style="display: grid; gap: 1.5rem;">
-                        <!-- Días Disponibles -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calendar-check" style="color: var(--olive-green); font-size: 1.1rem;"></i> Días Disponibles (Antes)
+                <!-- Período -->
+                <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                    <i class="fas fa-calendar-alt" style="color: var(--gold);"></i> Período de Vacaciones
+                </h6>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-play" style="color: #27ae60;"></i> Fecha de Inicio
+                        </label>
+                        <p id="detalles-fechainicio" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                    </div>
+                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                            <i class="fas fa-stop" style="color: #e74c3c;"></i> Fecha de Fin
+                        </label>
+                        <p id="detalles-fechafin" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                    </div>
+                </div>
+
+                <!-- Resumen de Días -->
+                <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
+                    <i class="fas fa-calendar-check" style="color: var(--gold);"></i> Resumen de Días
+                </h6>
+                <div style="background: linear-gradient(135deg, var(--cream) 0%, rgba(240, 234, 214, 0.5) 100%); padding: 1.5rem; border-radius: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                <i class="fas fa-clock" style="color: var(--olive-green);"></i> Días Solicitados
                             </label>
-                            <p style="margin: 0;">
-                                <span id="detalles-diasdisponibles" style="color: var(--gold-bright); font-size: 2rem; font-weight: 700;"></span>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 1rem; margin-left: 0.5rem;">días</span>
-                            </p>
+                            <p id="detalles-diassolicitados" style="color: var(--gold-bright); font-size: 1.5rem; font-weight: 700; margin: 0;"></p>
                         </div>
-
-                        <!-- Días Después de Solicitud -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calculator" style="color: var(--olive-green); font-size: 1.1rem;"></i> Días Después de Solicitud
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+                                <i class="fas fa-calendar-check" style="color: var(--olive-green);"></i> Días Disponibles
                             </label>
-                            <p style="margin: 0;">
-                                <span id="detalles-diastemporales" style="color: var(--gold-bright); font-size: 2rem; font-weight: 700;"></span>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 1rem; margin-left: 0.5rem;">días</span>
-                            </p>
-                        </div>
-
-                        <!-- Estado -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-info-circle" style="color: var(--olive-green); font-size: 1.1rem;"></i> Estado de la Solicitud
-                            </label>
-                            <span id="detalles-estado-badge" class="badge" style="font-size: 1.2rem; padding: 0.7rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
-                        </div>
-
-                        <!-- Fecha de Respuesta -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-reply" style="color: var(--olive-green); font-size: 1.1rem;"></i> Fecha de Respuesta
-                            </label>
-                            <p id="detalles-fecharespuesta" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                            <p id="detalles-diasdisponibles" style="font-size: 1.5rem; font-weight: 700; margin: 0;"></p>
                         </div>
                     </div>
                 </div>

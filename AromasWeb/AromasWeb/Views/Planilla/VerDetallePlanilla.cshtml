@@ -18,9 +18,6 @@
             <h1 class="hero-title" style="font-size: 3.5rem;">
                 Detalle Completo
             </h1>
-            <p class="hero-subtitle">
-                @planilla.NombreEmpleado • @planilla.PeriodoFormateado
-            </p>
         </div>
     </div>
     <div class="scroll-indicator">
@@ -35,39 +32,39 @@
     <div class="container" style="max-width: 1400px;">
 
         <!-- Información del Empleado y Período -->
-        <div class="feature-card" style="background: white; margin-bottom: 3rem; padding: 2.5rem; border-left: 5px solid var(--olive-green);" data-aos="fade-up">
+        <div class="feature-card" style="background: var(--white); margin-bottom: 3rem; padding: 2.5rem; border-left: 5px solid var(--olive-green);" data-aos="fade-up">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
                 <div>
                     <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-user" style="font-size: 1.5rem; color: white;"></i>
+                        <i class="fas fa-user" style="font-size: 1.5rem; color: var(--white);"></i>
                     </div>
                     <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Empleado</p>
                     <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@planilla.NombreEmpleado</h4>
                 </div>
                 <div>
                     <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-id-card" style="font-size: 1.5rem; color: white;"></i>
+                        <i class="fas fa-id-card" style="font-size: 1.5rem; color: var(--white);"></i>
                     </div>
                     <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Identificación</p>
                     <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@planilla.IdentificacionEmpleado</h4>
                 </div>
                 <div>
                     <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-briefcase" style="font-size: 1.5rem; color: white;"></i>
+                        <i class="fas fa-briefcase" style="font-size: 1.5rem; color: var(--white);"></i>
                     </div>
                     <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Cargo</p>
                     <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@planilla.CargoEmpleado</h4>
                 </div>
                 <div>
                     <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-calendar-alt" style="font-size: 1.5rem; color: white;"></i>
+                        <i class="fas fa-calendar-alt" style="font-size: 1.5rem; color: var(--white);"></i>
                     </div>
                     <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Período</p>
                     <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@planilla.PeriodoFormateado</h4>
                 </div>
                 <div>
                     <div style="width: 60px; height: 60px; background: var(--gold); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-dollar-sign" style="font-size: 1.5rem; color: white;"></i>
+                        <i class="fas fa-dollar-sign" style="font-size: 1.5rem; color: var(--white);"></i>
                     </div>
                     <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Tarifa por Hora</p>
                     <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">₡@planilla.TarifaHora.ToString("N2")</h4>
@@ -77,31 +74,23 @@
 
         <!-- Resumen de Pagos -->
         <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
-                <div class="feature-icon">
-                    <i class="fas fa-clock"></i>
-                </div>
+            <div class="feature-card" style="background: var(--white);" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@planilla.TotalHorasRegulares.ToString("N2")h</h3>
                 <p style="margin: 0.5rem 0;">Horas Regulares</p>
             </div>
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-icon">
-                    <i class="fas fa-star"></i>
-                </div>
+            <div class="feature-card" style="background: var(--white);" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon"><i class="fas fa-star"></i></div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@planilla.TotalHorasExtras.ToString("N2")h</h3>
                 <p style="margin: 0.5rem 0;">Horas Extras</p>
             </div>
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon">
-                    <i class="fas fa-money-bill-wave"></i>
-                </div>
+            <div class="feature-card" style="background: var(--white);" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon"><i class="fas fa-money-bill-wave"></i></div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@planilla.PagoBruto.ToString("N0")</h3>
                 <p style="margin: 0.5rem 0;">Pago Bruto</p>
             </div>
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-icon">
-                    <i class="fas fa-hand-holding-usd"></i>
-                </div>
+            <div class="feature-card" style="background: var(--white);" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon"><i class="fas fa-hand-holding-usd"></i></div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@planilla.PagoNeto.ToString("N0")</h3>
                 <p style="margin: 0.5rem 0;">Pago Neto</p>
             </div>
@@ -112,43 +101,44 @@
             <a href="@Url.Action("ListadoPlanillas", "Planilla")" class="btn btn-secondary">
                 <span><i class="fas fa-arrow-left"></i> Volver al Listado</span>
             </a>
-            <button onclick="window.print()" class="btn" style="background: var(--olive-green); color: white; border: none; margin-left: auto;">
+            <button onclick="window.print()" class="btn btn-primary" style="margin-left: auto;">
                 <span><i class="fas fa-print"></i> Imprimir Desglose</span>
             </button>
         </div>
 
-        <!-- Desglose Diario -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: 3rem;" data-aos="fade-up">
-            <div style="background: var(--olive-green); padding: 1.5rem 2rem;">
-                <h4 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-weight: 700;">
-                    <i class="fas fa-calendar-day"></i> Desglose Diario de Jornadas
-                </h4>
+        <!-- Tabla de Desglose Diario -->
+        <div class="admin-table-container" style="margin-bottom: 3rem;" data-aos="fade-up">
+
+            <!-- Encabezado de la tabla (mismo estilo que admin-form-header) -->
+            <div class="admin-form-header">
+                <i class="fas fa-calendar-day"></i>
+                <h5>Desglose Diario de Jornadas</h5>
             </div>
 
             <div class="table-responsive">
-                <table class="table" style="margin: 0; width: 100%; border-collapse: collapse;">
-                    <thead style="background: var(--cream);">
+                <table class="admin-table">
+                    <thead>
                         <tr>
-                            <th style="padding: 1rem; text-align: left; color: var(--dark-green); font-weight: 700; font-size: 0.9rem;">Fecha</th>
-                            <th style="padding: 1rem; text-align: left; color: var(--dark-green); font-weight: 700; font-size: 0.9rem;">Día</th>
-                            <th style="padding: 1rem; text-align: left; color: var(--dark-green); font-weight: 700; font-size: 0.9rem;">Entrada</th>
-                            <th style="padding: 1rem; text-align: left; color: var(--dark-green); font-weight: 700; font-size: 0.9rem;">Salida</th>
-                            <th style="padding: 1rem; text-align: left; color: var(--dark-green); font-weight: 700; font-size: 0.9rem;">Almuerzo</th>
-                            <th style="padding: 1rem; text-align: left; color: var(--dark-green); font-weight: 700; font-size: 0.9rem;">Total Horas</th>
-                            <th style="padding: 1rem; text-align: left; color: var(--dark-green); font-weight: 700; font-size: 0.9rem;">H. Regulares</th>
-                            <th style="padding: 1rem; text-align: left; color: var(--dark-green); font-weight: 700; font-size: 0.9rem;">H. Extras</th>
-                            <th style="padding: 1rem; text-align: left; color: var(--dark-green); font-weight: 700; font-size: 0.9rem;">Subtotal</th>
+                            <th style="padding: 1.2rem;">Fecha</th>
+                            <th style="padding: 1.2rem;">Día</th>
+                            <th style="padding: 1.2rem;">Entrada</th>
+                            <th style="padding: 1.2rem;">Salida</th>
+                            <th style="padding: 1.2rem;">Almuerzo</th>
+                            <th style="padding: 1.2rem;">Total Horas</th>
+                            <th style="padding: 1.2rem;">H. Regulares</th>
+                            <th style="padding: 1.2rem;">H. Extras</th>
+                            <th style="padding: 1.2rem;">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var detalle in Model)
                         {
-                            <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
+                            <tr>
                                 <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@detalle.FechaFormateada</td>
                                 <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@detalle.DiaSemanaCalculado</td>
                                 <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@detalle.HoraEntradaFormateada</td>
                                 <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@detalle.HoraSalidaFormateada</td>
-                                <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">@detalle.TiempoAlmuerzoFormateado</td>
+                                <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@detalle.TiempoAlmuerzoFormateado</td>
                                 <td style="padding: 1.2rem; color: var(--olive-green); font-weight: 700;">@detalle.TotalHorasDia.ToString("F2")h</td>
                                 <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@detalle.HorasRegulares.ToString("F2")h</td>
                                 <td style="padding: 1.2rem;">
@@ -167,7 +157,7 @@
                             </tr>
                         }
                     </tbody>
-                    <tfoot style="background: var(--cream);">
+                    <tfoot style="background: var(--light-cream);">
                         <tr>
                             <td colspan="5" style="padding: 1.2rem; text-align: right; font-weight: 700; color: var(--dark-green);">TOTALES:</td>
                             <td style="padding: 1.2rem; font-weight: 700; color: var(--olive-green);">@Model.Sum(d => d.TotalHorasDia).ToString("F2")h</td>
@@ -180,75 +170,77 @@
             </div>
         </div>
 
-        <!-- Sección de Deducciones -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 2.5rem;" data-aos="fade-up">
-            <h4 style="color: var(--dark-green); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                <i class="fas fa-calculator"></i> Resumen de Pagos y Deducciones
-            </h4>
+        <!-- Resumen de Pagos y Deducciones -->
+        <div class="admin-table-container" data-aos="fade-up">
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <!-- Columna Izquierda: Pagos -->
-                <div>
-                    <h6 style="color: var(--olive-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-money-bill-wave"></i> Pagos
-                    </h6>
-
-                    <div style="display: grid; gap: 1rem;">
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Pago Horas Regulares:</span>
-                            <strong style="color: var(--dark-green); font-size: 1.2rem;">₡@planilla.PagoHorasRegulares.ToString("N2")</strong>
-                        </div>
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Pago Horas Extras (150%):</span>
-                            <strong style="color: var(--gold-bright); font-size: 1.2rem;">₡@planilla.PagoHorasExtras.ToString("N2")</strong>
-                        </div>
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center; background: var(--cream); border-left: 5px solid var(--olive-green);">
-                            <span style="color: var(--dark-green); font-weight: 700; font-size: 1.1rem;">Pago Bruto Total:</span>
-                            <strong style="color: var(--olive-green); font-size: 1.5rem;">₡@planilla.PagoBruto.ToString("N2")</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Columna Derecha: Deducciones -->
-                <div>
-                    <h6 style="color: var(--gold); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-minus-circle"></i> Deducciones
-                    </h6>
-
-                    <div style="display: grid; gap: 1rem;">
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">CCSS (10.67%):</span>
-                            <strong style="color: var(--gold); font-size: 1.2rem;">₡@planilla.DeduccionCCSS.ToString("N2")</strong>
-                        </div>
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Impuesto sobre la Renta:</span>
-                            <strong style="color: var(--gold); font-size: 1.2rem;">₡@planilla.ImpuestoRenta.ToString("N2")</strong>
-                        </div>
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Otras Deducciones:</span>
-                            <strong style="color: var(--gold); font-size: 1.2rem;">₡@planilla.OtrasDeducciones.ToString("N2")</strong>
-                        </div>
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center; background: var(--cream); border-left: 5px solid var(--gold);">
-                            <span style="color: var(--dark-green); font-weight: 700; font-size: 1.1rem;">Total Deducciones:</span>
-                            <strong style="color: var(--gold); font-size: 1.5rem;">₡@planilla.TotalDeducciones.ToString("N2")</strong>
-                        </div>
-                    </div>
-                </div>
+            <div class="admin-form-header">
+                <i class="fas fa-calculator"></i>
+                <h5>Resumen de Pagos y Deducciones</h5>
             </div>
 
-            <!-- Pago Neto Final -->
-            <div class="feature-card" style="margin-top: 2rem; padding: 2rem; background: white; border-left: 5px solid var(--olive-green);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="admin-form-body">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+
+                    <!-- Pagos -->
+                    <div>
+                        <h6 style="color: var(--olive-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-money-bill-wave"></i> Pagos
+                        </h6>
+                        <div style="display: grid; gap: 1rem;">
+                            <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Pago Horas Regulares:</span>
+                                <strong style="color: var(--dark-green); font-size: 1.2rem;">₡@planilla.PagoHorasRegulares.ToString("N2")</strong>
+                            </div>
+                            <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Pago Horas Extras (150%):</span>
+                                <strong style="color: var(--gold-bright); font-size: 1.2rem;">₡@planilla.PagoHorasExtras.ToString("N2")</strong>
+                            </div>
+                            <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center; background: var(--cream); border-left: 5px solid var(--olive-green);">
+                                <span style="color: var(--dark-green); font-weight: 700; font-size: 1.1rem;">Pago Bruto Total:</span>
+                                <strong style="color: var(--olive-green); font-size: 1.5rem;">₡@planilla.PagoBruto.ToString("N2")</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deducciones -->
+                    <div>
+                        <h6 style="color: var(--gold); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-minus-circle"></i> Deducciones
+                        </h6>
+                        <div style="display: grid; gap: 1rem;">
+                            <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">CCSS (10.67%):</span>
+                                <strong style="color: var(--gold); font-size: 1.2rem;">₡@planilla.DeduccionCCSS.ToString("N2")</strong>
+                            </div>
+                            <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Impuesto sobre la Renta:</span>
+                                <strong style="color: var(--gold); font-size: 1.2rem;">₡@planilla.ImpuestoRenta.ToString("N2")</strong>
+                            </div>
+                            <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Otras Deducciones:</span>
+                                <strong style="color: var(--gold); font-size: 1.2rem;">₡@planilla.OtrasDeducciones.ToString("N2")</strong>
+                            </div>
+                            <div class="feature-card" style="padding: 1.5rem; margin: 0; display: flex; justify-content: space-between; align-items: center; background: var(--cream); border-left: 5px solid var(--gold);">
+                                <span style="color: var(--dark-green); font-weight: 700; font-size: 1.1rem;">Total Deducciones:</span>
+                                <strong style="color: var(--gold); font-size: 1.5rem;">₡@planilla.TotalDeducciones.ToString("N2")</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pago Neto Final -->
+                <div class="feature-card" style="margin-top: 2rem; padding: 2rem; background: var(--white); border-left: 5px solid var(--olive-green); display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.95rem;">Pago Neto a Recibir</p>
                         <h2 style="margin: 0.5rem 0 0; font-size: 3rem; font-weight: 700; font-family: var(--font-primary); color: var(--dark-green);">₡@planilla.PagoNeto.ToString("N2")</h2>
                     </div>
-                    <div style="width: 80px; height: 80px; background: var(--olive-green); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-hand-holding-usd" style="font-size: 2.5rem; color: white;"></i>
+                    <div style="width: 80px; height: 80px; background: var(--olive-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="fas fa-hand-holding-usd" style="font-size: 2.5rem; color: var(--white);"></i>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 

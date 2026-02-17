@@ -75,180 +75,171 @@
             </div>
         </div>
 
-        <!-- Estadísticas de Planillas -->
+        <!-- Estadísticas -->
         <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
-                <div class="feature-icon">
-                    <i class="fas fa-file-invoice"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-file-invoice"></i></div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@Model.Count</h3>
                 <p style="margin: 0.5rem 0;">Planillas Totales</p>
             </div>
-
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-icon">
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                    ₡@Model.Sum(p => p.PagoNeto).ToString("N0")
-                </h3>
+                <div class="feature-icon"><i class="fas fa-dollar-sign"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@Model.Sum(p => p.PagoNeto).ToString("N0")</h3>
                 <p style="margin: 0.5rem 0;">Total Recibido</p>
             </div>
-
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                    ₡@(Model.Any() ? Model.Average(p => p.PagoNeto).ToString("N0") : "0")
-                </h3>
+                <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@(Model.Any() ? Model.Average(p => p.PagoNeto).ToString("N0") : "0")</h3>
                 <p style="margin: 0.5rem 0;">Promedio por Planilla</p>
             </div>
-
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-icon">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                    @Model.Sum(p => p.TotalHorasTrabajadas).ToString("N2")h
-                </h3>
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@Model.Sum(p => p.TotalHorasTrabajadas).ToString("N2")h</h3>
                 <p style="margin: 0.5rem 0;">Total Horas Trabajadas</p>
             </div>
         </div>
 
         <!-- Botones de Acción -->
         <div style="display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;" data-aos="fade-up">
-            <a href="@Url.Action("CalcularPlanilla", "Planilla", new { idEmpleado = empleado.IdEmpleado })" class="btn btn-primary">
+            <a href="@Url.Action("CalcularPlanilla", "Planilla", new { idEmpleado = empleado.IdEmpleado })" class="btn btn-primary btn-3d">
                 <span><i class="fas fa-calculator"></i> Calcular Nueva Planilla</span>
             </a>
             <a href="@Url.Action("ListadoPlanillas", "Planilla")" class="btn btn-secondary">
                 <span><i class="fas fa-arrow-left"></i> Volver al Listado</span>
             </a>
-            <button onclick="window.print()" class="btn" style="background: #27ae60; color: white; border: none; margin-left: auto;">
+            <button onclick="window.print()" class="btn btn-primary" style="background: #27ae60; margin-left: auto;">
                 <span><i class="fas fa-print"></i> Imprimir Historial</span>
             </button>
         </div>
 
         <!-- Filtros de Fecha -->
-        <div style="background: var(--white); padding: 2rem; border-radius: 25px; box-shadow: var(--shadow-lg); margin-bottom: 3rem;" data-aos="fade-up">
-            <h5 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                <i class="fas fa-filter" style="color: var(--olive-green);"></i> Filtrar Planillas
-            </h5>
-            <form method="get" action="@Url.Action("PlanillasEmpleado", "Planilla")" style="display: flex; gap: 1rem; align-items: end; flex-wrap: wrap;">
-                <input type="hidden" name="id" value="@empleado.IdEmpleado" />
-
-                <div style="flex: 1; min-width: 200px;">
-                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem;">
-                        <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Fecha Inicio
-                    </label>
-                    <input type="date" name="fechaInicio" value="@ViewBag.FechaInicio" class="form-control" style="padding: 0.9rem; border-radius: 15px; border: 2px solid var(--cream);" />
-                </div>
-
-                <div style="flex: 1; min-width: 200px;">
-                    <label style="display: block; color: var(--dark-green); font-weight: 600; margin-bottom: 0.5rem;">
-                        <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Fecha Fin
-                    </label>
-                    <input type="date" name="fechaFin" value="@ViewBag.FechaFin" class="form-control" style="padding: 0.9rem; border-radius: 15px; border: 2px solid var(--cream);" />
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="padding: 0.9rem 2rem;">
-                    <span><i class="fas fa-search"></i> Filtrar</span>
-                </button>
-            </form>
+        <div class="admin-table-container" style="margin-bottom: 3rem;" data-aos="fade-up">
+            <div class="admin-form-header">
+                <i class="fas fa-filter"></i>
+                <h5>Filtrar Planillas</h5>
+            </div>
+            <div class="admin-form-body">
+                <form method="get" action="@Url.Action("PlanillasEmpleado", "Planilla")" style="display: flex; gap: 1rem; align-items: end; flex-wrap: wrap;">
+                    <input type="hidden" name="id" value="@empleado.IdEmpleado" />
+                    <div class="form-group" style="flex: 1; min-width: 200px; margin: 0;">
+                        <label><i class="fas fa-calendar-alt"></i> Fecha Inicio</label>
+                        <input type="date" name="fechaInicio" value="@ViewBag.FechaInicio" class="form-control" />
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 200px; margin: 0;">
+                        <label><i class="fas fa-calendar-check"></i> Fecha Fin</label>
+                        <input type="date" name="fechaFin" value="@ViewBag.FechaFin" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="padding: 0.9rem 2rem; align-self: flex-end;">
+                        <span><i class="fas fa-search"></i> Filtrar</span>
+                    </button>
+                </form>
+            </div>
         </div>
 
-        <!-- Listado de Planillas -->
-        <div style="background: var(--cream); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
-            <h4 style="color: var(--dark-green); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                <i class="fas fa-history"></i> Historial de Planillas
-            </h4>
+        <!-- Historial de Planillas -->
+        <div class="admin-table-container" data-aos="fade-up">
+            <div class="admin-form-header">
+                <i class="fas fa-history"></i>
+                <h5>Historial de Planillas</h5>
+            </div>
 
             @if (Model.Any())
             {
-                <div style="display: grid; gap: 2rem;">
-                    @foreach (var planilla in Model)
-                    {
-                        var esReciente = planilla == Model.First();
-                        var colorEstado = planilla.Estado switch
+                <div class="admin-form-body" style="display: block;">
+                    <div style="display: grid; gap: 1.5rem;">
+                        @foreach (var planilla in Model)
                         {
-                            "Pagado" => "var(--olive-green)",
-                            "Calculado" => "var(--gold-bright)",
-                            "Anulado" => "#e74c3c",
-                            _ => "var(--charcoal)"
-                        };
-
-                        <div class="feature-card" style="position: relative; padding: 2rem; border-left: 5px solid @colorEstado; background: white;">
-                            @if (esReciente)
+                            var esReciente = planilla == Model.First();
+                            var colorEstado = planilla.Estado switch
                             {
-                                <div style="position: absolute; top: 1rem; right: 1rem;">
-                                    <span style="background: var(--gold-bright); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
-                                        <i class="fas fa-star"></i> Más Reciente
-                                    </span>
-                                </div>
-                            }
+                                "Pagado" => "var(--olive-green)",
+                                "Calculado" => "var(--gold-bright)",
+                                "Anulado" => "#e74c3c",
+                                _ => "var(--charcoal)"
+                            };
 
-                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 2rem; align-items: center;">
-                                <div>
-                                    <h5 style="margin: 0 0 0.5rem; color: var(--dark-green); font-weight: 700; font-size: 1.3rem;">
-                                        @planilla.PeriodoFormateado
-                                    </h5>
-                                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.95rem;">
-                                        <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i>
-                                        @planilla.DiasPeriodo días • Tarifa: ₡@planilla.TarifaHora.ToString("N2")/h
-                                    </p>
+                            <div class="feature-card" style="position: relative; padding: 2rem; border-left: 5px solid @colorEstado; background: white; margin: 0;">
+                                @if (esReciente)
+                                {
+                                    <div style="position: absolute; top: 1rem; right: 1rem;">
+                                        <span class="badge" style="background: var(--gold-bright); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                            <i class="fas fa-star"></i> Más Reciente
+                                        </span>
+                                    </div>
+                                }
+
+                                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 2rem; align-items: center;">
+                                    <div>
+                                        <h5 style="margin: 0 0 0.5rem; color: var(--dark-green); font-weight: 700; font-size: 1.3rem;">@planilla.PeriodoFormateado</h5>
+                                        <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.95rem;">
+                                            <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i>
+                                            @planilla.DiasPeriodo días • Tarifa: ₡@planilla.TarifaHora.ToString("N2")/h
+                                        </p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Horas Totales</p>
+                                        <strong style="color: var(--olive-green); font-size: 1.3rem;">@planilla.TotalHorasTrabajadas.ToString("N2")h</strong>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Pago Bruto</p>
+                                        <strong style="color: var(--dark-green); font-size: 1.3rem;">₡@planilla.PagoBruto.ToString("N0")</strong>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Pago Neto</p>
+                                        <strong style="color: var(--olive-green); font-size: 1.5rem; font-family: var(--font-primary);">₡@planilla.PagoNeto.ToString("N0")</strong>
+                                    </div>
+                                    <div>
+                                        <a href="@Url.Action("VerDetallePlanilla", "Planilla", new { id = planilla.IdPlanilla })"
+                                           class="btn btn-primary"
+                                           style="white-space: nowrap; padding: 0.7rem 1.5rem;">
+                                            <span><i class="fas fa-eye"></i> Ver Detalle</span>
+                                        </a>
+                                    </div>
                                 </div>
 
-                                <div style="text-align: center;">
-                                    <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Horas Totales</p>
-                                    <strong style="color: var(--olive-green); font-size: 1.3rem;">@planilla.TotalHorasTrabajadas.ToString("N2")h</strong>
-                                </div>
-
-                                <div style="text-align: center;">
-                                    <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Pago Bruto</p>
-                                    <strong style="color: var(--dark-green); font-size: 1.3rem;">₡@planilla.PagoBruto.ToString("N0")</strong>
-                                </div>
-
-                                <div style="text-align: center;">
-                                    <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Pago Neto</p>
-                                    <strong style="color: var(--olive-green); font-size: 1.5rem; font-family: var(--font-primary);">₡@planilla.PagoNeto.ToString("N0")</strong>
-                                </div>
-
-                                <div>
-                                    <a href="@Url.Action("VerDetallePlanilla", "Planilla", new { id = planilla.IdPlanilla })"
-                                       class="btn btn-primary"
-                                       style="white-space: nowrap; padding: 0.7rem 1.5rem;">
-                                        <span><i class="fas fa-eye"></i> Ver Detalle</span>
-                                    </a>
+                                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--cream); display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                                    <div>
+                                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"><i class="fas fa-clock"></i> H. Regulares:</span>
+                                        <strong style="color: var(--olive-green); margin-left: 0.5rem;">@planilla.TotalHorasRegulares.ToString("N2")h</strong>
+                                    </div>
+                                    <div>
+                                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"><i class="fas fa-star"></i> H. Extras:</span>
+                                        <strong style="color: var(--gold-bright); margin-left: 0.5rem;">@planilla.TotalHorasExtras.ToString("N2")h</strong>
+                                    </div>
+                                    <div>
+                                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"><i class="fas fa-minus-circle"></i> Deducciones:</span>
+                                        <strong style="color: var(--gold); margin-left: 0.5rem;">₡@planilla.TotalDeducciones.ToString("N0")</strong>
+                                    </div>
+                                    <div>
+                                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"><i class="fas fa-toggle-on"></i> Estado:</span>
+                                        <span class="badge" style="background: @colorEstado; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600; margin-left: 0.5rem;">
+                                            @planilla.Estado
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
+                        }
+                    </div>
+                </div>
 
-                            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--cream); display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                                <div>
-                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"><i class="fas fa-clock"></i> H. Regulares:</span>
-                                    <strong style="color: var(--olive-green); margin-left: 0.5rem;">@planilla.TotalHorasRegulares.ToString("N2")h</strong>
-                                </div>
-                                <div>
-                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"><i class="fas fa-star"></i> H. Extras:</span>
-                                    <strong style="color: var(--gold-bright); margin-left: 0.5rem;">@planilla.TotalHorasExtras.ToString("N2")h</strong>
-                                </div>
-                                <div>
-                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"><i class="fas fa-minus-circle"></i> Deducciones:</span>
-                                    <strong style="color: var(--gold); margin-left: 0.5rem;">₡@planilla.TotalDeducciones.ToString("N0")</strong>
-                                </div>
-                                <div>
-                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"><i class="fas fa-toggle-on"></i> Estado:</span>
-                                    <span style="background: @colorEstado; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600; margin-left: 0.5rem;">
-                                        @planilla.Estado
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                <!-- Footer de paginación -->
+                <div class="admin-table-footer">
+                    <div class="admin-table-footer-text">
+                        Mostrando <strong id="startCard">0</strong> - <strong id="endCard">0</strong> de <strong id="totalCards">0</strong> registros
+                    </div>
+                    <div class="pagination-buttons">
+                        <button id="btnAnteriorCards" class="pagination-btn">
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <button id="btnSiguienteCards" class="pagination-btn">
+                            Siguiente <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             }
             else
             {
-                <div style="text-align: center; padding: 3rem; color: var(--charcoal); opacity: 0.7;">
+                <div style="padding: 3rem; text-align: center; color: var(--charcoal); opacity: 0.7;">
                     <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
                     <p style="margin: 0; font-size: 1.1rem; font-weight: 600;">No hay planillas registradas</p>
                     <p style="margin: 0.5rem 0 0; font-size: 0.95rem;">Este empleado aún no tiene planillas calculadas</p>

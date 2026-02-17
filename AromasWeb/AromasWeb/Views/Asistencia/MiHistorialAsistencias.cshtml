@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Mi Historial de Asistencias";
-	var empleado = ViewBag.Empleado as AromasWeb.Abstracciones.ModeloUI.Empleado;
+    var empleado = ViewBag.Empleado as AromasWeb.Abstracciones.ModeloUI.Empleado;
 }
 
 <!-- Hero Section -->
@@ -16,15 +16,16 @@
                 Mi Control de Asistencias
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
-				Hola, <span class="hero-title-accent">
-					@(empleado != null ? $"{empleado.Nombre} {empleado.Apellidos}" :"Empleado") </span>
+                Hola, <span class="hero-title-accent">
+                    @(empleado != null ? $"{empleado.Nombre} {empleado.Apellidos}" : "Empleado")
+                </span>
             </h1>
             <p class="hero-subtitle">
                 Consulta tu historial de entradas y salidas
             </p>
 
             <!-- Info rápida del empleado -->
-            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem; margin-bottom: 3rem; color: black;">
+            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem; margin-bottom: 3rem; color: var(--charcoal);">
                 <div>
                     <i class="fas fa-briefcase" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
                     <strong style="display: block; font-size: 1.1rem;">@empleado.Cargo</strong>
@@ -125,142 +126,174 @@
         </div>
 
         <!-- Timeline de Mi Historial -->
-        <div style="background: var(--cream); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
-            <h4 style="color: var(--dark-green); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                <i class="fas fa-history"></i> Mi Historial de Asistencias
-            </h4>
-
-            @if (Model.Any())
+        <div class="timeline-container" data-aos="fade-up">
+            @if (Model != null && Model.Any())
             {
-                <div style="position: relative; padding-left: 3rem;">
-                    <!-- Línea vertical -->
-                    <div style="position: absolute; left: 1rem; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--olive-green) 0%, var(--gold) 100%);"></div>
+                <div class="timeline-header">
+                    <h2>
+                        <i class="fas fa-history" style="color: var(--gold);"></i>
+                        Mi Historial de Asistencias
+                    </h2>
+                    <p>Visualiza el detalle de tus registros de asistencia</p>
+                </div>
 
-                    @foreach (var asistencia in Model)
+                <div id="historial-timeline">
+                    @foreach (var asistencia in Model.OrderByDescending(a => a.Fecha))
                     {
-                        var esHoy = asistencia.Fecha.Date == DateTime.Now.Date;
-                        var colorLinea = esHoy ? "var(--olive-green)" : "var(--charcoal)";
+                        var diaSemana = asistencia.Fecha.ToString("dddd", new System.Globalization.CultureInfo("es-ES"));
                         var tieneSalida = asistencia.HoraSalida.HasValue;
+                        var estadoClass = tieneSalida ? "complete" : "in-progress";
 
-                        <div class="feature-card" style="position: relative; margin-bottom: 2rem; padding: 2rem; border-left: 5px solid @colorLinea; background: white;">
-                            <!-- Punto en la línea -->
-                            <div style="position: absolute; left: -3rem; top: 2rem; width: 20px; height: 20px; background: @colorLinea; border-radius: 50%; border: 4px solid var(--white); box-shadow: 0 0 0 3px @colorLinea;"></div>
+                        <div class="timeline-card">
+                            <!-- Contenido del card -->
+                            <div class="timeline-card-content">
+                                <div class="timeline-card-header">
+                                    <!-- Fecha y día -->
+                                    <div>
+                                        <div class="timeline-date-wrapper">
+                                            <div class="timeline-date-badge">
+                                                <div class="timeline-date-day">
+                                                    @asistencia.Fecha.ToString("dd")
+                                                </div>
+                                                <div class="timeline-date-month">
+                                                    @asistencia.Fecha.ToString("MMM", new System.Globalization.CultureInfo("es-ES"))
+                                                </div>
+                                            </div>
+                                            <div class="timeline-date-info">
+                                                <h3>@diaSemana</h3>
+                                                <p>@asistencia.Fecha.ToString("dd/MM/yyyy")</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-                                <div style="flex: 1;">
-                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.7rem; flex-wrap: wrap;">
-                                        <h5 style="margin: 0; color: var(--dark-green); font-weight: 700; font-size: 1.5rem; font-family: var(--font-primary);">
-                                            @asistencia.Fecha.ToString("dddd, dd 'de' MMMM 'de' yyyy")
-                                        </h5>
-                                        @if (esHoy)
-                                        {
-                                            <span style="background: var(--olive-green); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
-                                                <i class="fas fa-calendar-day"></i> Hoy
-                                            </span>
-                                        }
-                                        @if (!tieneSalida)
-                                        {
-                                            <span style="background: var(--gold); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
-                                                <i class="fas fa-clock"></i> En progreso
-                                            </span>
-                                        }
+                                    <!-- Estado -->
+                                    <div style="text-align: right;">
+                                        <span class="timeline-status-badge @estadoClass">
+                                            @if (tieneSalida)
+                                            {
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>Completo</span>
+                                            }
+                                            else
+                                            {
+                                                <i class="fas fa-hourglass-half"></i>
+                                                <span>En curso</span>
+                                            }
+                                        </span>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Detalles de Horario -->
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
-                                <div>
-                                    <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-sign-in-alt" style="color: var(--olive-green);"></i> Entrada
-                                    </label>
-                                    <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.3rem;">
-                                        @asistencia.HoraEntrada.ToString(@"hh\:mm")
-                                    </p>
+                                <!-- Detalles de Horario -->
+                                <div class="timeline-details-grid">
+                                    <div class="timeline-detail-item">
+                                        <label class="timeline-detail-label">
+                                            <i class="fas fa-sign-in-alt" style="color: var(--olive-green);"></i> Entrada
+                                        </label>
+                                        <p class="timeline-detail-value">
+                                            @asistencia.HoraEntrada.ToString(@"hh\:mm")
+                                        </p>
+                                    </div>
+
+                                    @if (tieneSalida)
+                                    {
+                                        <div class="timeline-detail-item">
+                                            <label class="timeline-detail-label">
+                                                <i class="fas fa-sign-out-alt" style="color: var(--gold);"></i> Salida
+                                            </label>
+                                            <p class="timeline-detail-value">
+                                                @asistencia.HoraSalida?.ToString(@"hh\:mm")
+                                            </p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="timeline-detail-item pending">
+                                            <label class="timeline-detail-label">
+                                                <i class="fas fa-sign-out-alt" style="color: var(--gold);"></i> Salida
+                                            </label>
+                                            <p class="timeline-detail-value pending">
+                                                Pendiente
+                                            </p>
+                                        </div>
+                                    }
+
+                                    <div class="timeline-detail-item">
+                                        <label class="timeline-detail-label">
+                                            <i class="fas fa-utensils" style="color: var(--gold-bright);"></i> Almuerzo
+                                        </label>
+                                        <p class="timeline-detail-value">
+                                            @asistencia.TiempoAlmuerzo min
+                                        </p>
+                                    </div>
                                 </div>
+
                                 @if (tieneSalida)
                                 {
-                                    <div>
-                                        <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                            <i class="fas fa-sign-out-alt" style="color: var(--gold);"></i> Salida
-                                        </label>
-                                        <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.3rem;">
-                                            @asistencia.HoraSalida?.ToString(@"hh\:mm")
-                                        </p>
+                                    <!-- Estadísticas de Horas -->
+                                    <div class="timeline-stats">
+                                        <div class="timeline-stats-grid">
+                                            <div class="timeline-stat-item">
+                                                <p class="timeline-stat-label">
+                                                    <i class="fas fa-clock"></i> Horas Regulares
+                                                </p>
+                                                <strong class="timeline-stat-value">
+                                                    @asistencia.HorasRegulares.ToString("N2")h
+                                                </strong>
+                                            </div>
+                                            <div class="timeline-stat-item">
+                                                <p class="timeline-stat-label">
+                                                    <i class="fas fa-business-time"></i> Horas Extra
+                                                </p>
+                                                <strong class="timeline-stat-value extra">
+                                                    @asistencia.HorasExtras.ToString("N2")h
+                                                </strong>
+                                            </div>
+                                            <div class="timeline-stat-item">
+                                                <p class="timeline-stat-label">
+                                                    <i class="fas fa-hourglass-half"></i> Horas Totales
+                                                </p>
+                                                <strong class="timeline-stat-value total">
+                                                    @asistencia.HorasTotales.ToString("N2")h
+                                                </strong>
+                                            </div>
+                                        </div>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div>
-                                        <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                            <i class="fas fa-sign-out-alt" style="color: var(--gold);"></i> Salida
-                                        </label>
-                                        <p style="margin: 0; color: var(--gold); font-weight: 600; font-size: 1.1rem;">
-                                            Pendiente
+                                    <div class="timeline-info-message">
+                                        <p>
+                                            <i class="fas fa-info-circle" style="color: var(--gold);"></i>
+                                            <span>Esta jornada está en progreso. Registra tu salida para calcular las horas trabajadas.</span>
                                         </p>
                                     </div>
                                 }
-                                <div>
-                                    <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-utensils" style="color: var(--gold-bright);"></i> Almuerzo
-                                    </label>
-                                    <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">
-                                        @asistencia.TiempoAlmuerzo min
-                                    </p>
-                                </div>
                             </div>
-
-                            @if (tieneSalida)
-                            {
-                                <!-- Estadísticas de Horas -->
-                                <div style="background: var(--cream); padding: 1.5rem; border-radius: 15px;">
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;">
-                                        <div>
-                                            <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
-                                                <i class="fas fa-clock"></i> Horas Regulares
-                                            </p>
-                                            <strong style="color: var(--olive-green); font-size: 1.5rem; font-family: var(--font-primary);">
-                                                @asistencia.HorasRegulares.ToString("N2")h
-                                            </strong>
-                                        </div>
-                                        <div>
-                                            <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
-                                                <i class="fas fa-business-time"></i> Horas Extra
-                                            </p>
-                                            <strong style="color: var(--gold); font-size: 1.5rem; font-family: var(--font-primary);">
-                                                @asistencia.HorasExtras.ToString("N2")h
-                                            </strong>
-                                        </div>
-                                        <div>
-                                            <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
-                                                <i class="fas fa-hourglass-half"></i> Horas Totales
-                                            </p>
-                                            <strong style="color: var(--dark-green); font-size: 1.5rem; font-family: var(--font-primary);">
-                                                @asistencia.HorasTotales.ToString("N2")h
-                                            </strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div style="background: #FFF9E6; padding: 1.5rem; border-radius: 15px; border-left: 3px solid var(--gold);">
-                                    <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.7rem;">
-                                        <i class="fas fa-info-circle" style="color: var(--gold);"></i>
-                                        <span>Esta jornada está en progreso. Registra tu salida para calcular las horas trabajadas.</span>
-                                    </p>
-                                </div>
-                            }
                         </div>
                     }
+                </div>
+
+                <!-- Footer de paginación de cards -->
+                <div class="timeline-pagination-footer">
+                    <div class="timeline-pagination-info">
+                        Mostrando <strong id="startCard">0</strong> - <strong id="endCard">0</strong> de <strong id="totalCards">0</strong> registros
+                    </div>
+                    <div class="timeline-pagination-buttons">
+                        <button id="btnAnteriorCards" class="timeline-pagination-btn">
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <button id="btnSiguienteCards" class="timeline-pagination-btn">
+                            Siguiente <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             }
             else
             {
-                <div class="feature-card" style="text-align: center; padding: 4rem 2rem;">
-                    <i class="fas fa-calendar-times" style="font-size: 4rem; color: var(--charcoal); opacity: 0.3; margin-bottom: 1rem;"></i>
-                    <h5 style="color: var(--dark-green); margin-bottom: 1rem;">No hay registros de asistencia</h5>
-                    <p style="color: var(--charcoal); opacity: 0.7; margin-bottom: 2rem;">
+                <div class="feature-card timeline-empty">
+                    <i class="fas fa-calendar-times"></i>
+                    <h5>No hay registros de asistencia</h5>
+                    <p>
                         Aún no tienes registros de asistencia en el período seleccionado.
                     </p>
                     <a href="@Url.Action("MiEntrada", "Asistencia")" class="btn btn-primary">

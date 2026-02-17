@@ -318,16 +318,6 @@ namespace AromasWeb.Controllers
             return View(asistencia);
         }
 
-        // POST: Asistencia/EliminarAsistencia/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EliminarAsistencia(int id)
-        {
-            // Aquí iría la lógica para eliminar la asistencia
-            TempData["Mensaje"] = "Asistencia eliminada correctamente";
-            return RedirectToAction(nameof(ListadoAsistencias));
-        }
-
         // Método auxiliar para cargar empleados dinámicamente desde la base de datos
         private void CargarEmpleados()
         {

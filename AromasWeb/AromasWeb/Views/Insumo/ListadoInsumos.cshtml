@@ -225,19 +225,6 @@
                                                     title="Ver detalles">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <button type="button"
-                                                    class="btn-table-action btn-table-delete btn-eliminar"
-                                                    data-id="@insumo.IdInsumo"
-                                                    data-nombre="@insumo.NombreInsumo"
-                                                    data-categoria="@(categorias.FirstOrDefault(c => c.IdCategoria == insumo.IdCategoria)?.NombreCategoria ?? "Sin categoría")"
-                                                    data-unidad="@insumo.UnidadMedida"
-                                                    data-cantidad="@insumo.CantidadDisponible.ToString("N2")"
-                                                    data-estado="@(insumo.Estado ? "Activo" : "Inactivo")"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalEliminarInsumo"
-                                                    title="Eliminar">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
                                         </td>
                                     </tr>
                                     contador++;
@@ -263,7 +250,16 @@
                 <!-- Footer de paginación -->
                 <div class="admin-table-footer">
                     <div class="admin-table-footer-text">
-                        Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> insumos
+                        Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                    </div>
+
+                    <div class="pagination-buttons">
+                        <button id="btnAnterior" class="pagination-btn">
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <button id="btnSiguiente" class="pagination-btn">
+                            Siguiente <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -318,7 +314,6 @@
 </section>
 
 <partial name="_ModalDetallesInsumo" />
-<partial name="_ModalEliminarInsumo" />
 
 @section Scripts {
     <script src="~/js/insumo.js"></script>

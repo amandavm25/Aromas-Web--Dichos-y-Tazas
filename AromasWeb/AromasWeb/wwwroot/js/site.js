@@ -548,3 +548,217 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// ============================================
+// PAGINACIÓN GENERAL PARA TABLAS
+// ============================================
+function initTablePagination(config = {}) {
+    // Configuración por defecto
+    const settings = {
+        tableId: config.tableId,
+        recordsPerPage: config.recordsPerPage || 5,
+        prevButtonId: config.prevButtonId || 'btnAnterior',
+        nextButtonId: config.nextButtonId || 'btnSiguiente',
+        startRecordId: config.startRecordId || 'startRecord',
+        endRecordId: config.endRecordId || 'endRecord',
+        totalRecordsId: config.totalRecordsId || 'totalRecords'
+    };
+
+    let currentPage = 1;
+
+    // Función para mostrar página
+    function showPage() {
+        const table = document.getElementById(settings.tableId);
+        const tbody = table ? table.querySelector('tbody') : null;
+        if (!tbody) return;
+
+        const allRows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.querySelector('td[colspan]'));
+        const totalRecords = allRows.length;
+
+        const start = (currentPage - 1) * settings.recordsPerPage;
+        const end = start + settings.recordsPerPage;
+
+        allRows.forEach((row, index) => {
+            row.style.display = (index >= start && index < end) ? '' : 'none';
+        });
+
+        const totalPages = Math.ceil(totalRecords / settings.recordsPerPage);
+
+        // Actualizar textos
+        const startRecord = document.getElementById(settings.startRecordId);
+        const endRecord = document.getElementById(settings.endRecordId);
+        const totalRecordsEl = document.getElementById(settings.totalRecordsId);
+
+        if (startRecord) startRecord.textContent = totalRecords > 0 ? start + 1 : 0;
+        if (endRecord) endRecord.textContent = Math.min(end, totalRecords);
+        if (totalRecordsEl) totalRecordsEl.textContent = totalRecords;
+
+        // Actualizar botones
+        const btnPrev = document.getElementById(settings.prevButtonId);
+        const btnNext = document.getElementById(settings.nextButtonId);
+
+        if (btnPrev) {
+            btnPrev.disabled = currentPage === 1;
+        }
+
+        if (btnNext) {
+            btnNext.disabled = currentPage === totalPages || totalRecords === 0;
+        }
+    }
+
+    // Función anterior
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            showPage();
+        }
+    }
+
+    // Función siguiente
+    function nextPage() {
+        const table = document.getElementById(settings.tableId);
+        const tbody = table ? table.querySelector('tbody') : null;
+        if (!tbody) return;
+
+        const allRows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.querySelector('td[colspan]'));
+        const totalPages = Math.ceil(allRows.length / settings.recordsPerPage);
+
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage();
+        }
+    }
+
+    // Configurar botones
+    const btnPrev = document.getElementById(settings.prevButtonId);
+    const btnNext = document.getElementById(settings.nextButtonId);
+
+    if (btnPrev) {
+        btnPrev.onclick = prevPage;
+    }
+
+    if (btnNext) {
+        btnNext.onclick = nextPage;
+    }
+
+    // Mostrar primera página
+    showPage();
+
+    // Retornar funciones para uso externo si es necesario
+    return {
+        showPage,
+        prevPage,
+        nextPage,
+        getCurrentPage: () => currentPage,
+        setPage: (page) => {
+            currentPage = page;
+            showPage();
+        }
+    };
+}
+
+// ============================================
+// PAGINACIÓN GENERAL PARA CARDS
+// ============================================
+function initCardsPagination(config = {}) {
+    // Configuración por defecto
+    const settings = {
+        containerId: config.containerId,
+        cardsPerPage: config.cardsPerPage || 3,
+        prevButtonId: config.prevButtonId || 'btnAnteriorCards',
+        nextButtonId: config.nextButtonId || 'btnSiguienteCards',
+        startCardId: config.startCardId || 'startCard',
+        endCardId: config.endCardId || 'endCard',
+        totalCardsId: config.totalCardsId || 'totalCards'
+    };
+
+    let currentPage = 1;
+
+    // Función para mostrar página
+    function showPage() {
+        const container = document.getElementById(settings.containerId);
+        if (!container) return;
+
+        const allCards = Array.from(container.children);
+        const totalCards = allCards.length;
+
+        const start = (currentPage - 1) * settings.cardsPerPage;
+        const end = start + settings.cardsPerPage;
+
+        allCards.forEach((card, index) => {
+            card.style.display = (index >= start && index < end) ? '' : 'none';
+        });
+
+        const totalPages = Math.ceil(totalCards / settings.cardsPerPage);
+
+        // Actualizar textos
+        const startCard = document.getElementById(settings.startCardId);
+        const endCard = document.getElementById(settings.endCardId);
+        const totalCardsEl = document.getElementById(settings.totalCardsId);
+
+        if (startCard) startCard.textContent = totalCards > 0 ? start + 1 : 0;
+        if (endCard) endCard.textContent = Math.min(end, totalCards);
+        if (totalCardsEl) totalCardsEl.textContent = totalCards;
+
+        // Actualizar botones
+        const btnPrev = document.getElementById(settings.prevButtonId);
+        const btnNext = document.getElementById(settings.nextButtonId);
+
+        if (btnPrev) {
+            btnPrev.disabled = currentPage === 1;
+        }
+
+        if (btnNext) {
+            btnNext.disabled = currentPage === totalPages || totalCards === 0;
+        }
+    }
+
+    // Función anterior
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            showPage();
+        }
+    }
+
+    // Función siguiente
+    function nextPage() {
+        const container = document.getElementById(settings.containerId);
+        if (!container) return;
+
+        const allCards = Array.from(container.children);
+        const totalPages = Math.ceil(allCards.length / settings.cardsPerPage);
+
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage();
+        }
+    }
+
+    // Configurar botones
+    const btnPrev = document.getElementById(settings.prevButtonId);
+    const btnNext = document.getElementById(settings.nextButtonId);
+
+    if (btnPrev) {
+        btnPrev.onclick = prevPage;
+    }
+
+    if (btnNext) {
+        btnNext.onclick = nextPage;
+    }
+
+    // Mostrar primera página
+    showPage();
+
+    // Retornar funciones para uso externo
+    return {
+        showPage,
+        prevPage,
+        nextPage,
+        getCurrentPage: () => currentPage,
+        setPage: (page) => {
+            currentPage = page;
+            showPage();
+        }
+    };
+}

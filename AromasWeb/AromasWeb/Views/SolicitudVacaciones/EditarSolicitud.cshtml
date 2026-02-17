@@ -24,15 +24,13 @@
         </div>
     </div>
     <div class="scroll-indicator">
-        <div class="mouse">
-            <div class="wheel"></div>
-        </div>
+        <div class="mouse"><div class="wheel"></div></div>
     </div>
 </section>
 
 <!-- Formulario Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 900px;">
+<section class="admin-form-section">
+    <div class="container" style="max-width: 80%;">
         @using (Html.BeginForm("EditarSolicitud", "SolicitudVacaciones", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
@@ -40,148 +38,114 @@
             @Html.HiddenFor(model => model.IdEmpleado)
             @Html.HiddenFor(model => model.Estado)
 
-            <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+            <div class="admin-form-wrapper" data-aos="fade-up">
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información del Empleado -->
-                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-user-tie"></i> Información del Empleado
-                        </h5>
-                    </div>
+                <!-- Sección Empleado -->
+                <div class="admin-form-header">
+                    <i class="fas fa-user-tie"></i>
+                    <h5>Información del Empleado</h5>
+                </div>
 
-                    <!-- Información del empleado (no editable) -->
-                    <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; box-shadow: var(--shadow-sm);">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
-                                </label>
-                                <p style="color: var(--dark-green); font-weight: 600; margin: 0;">@Model.NombreEmpleado</p>
-                            </div>
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-briefcase" style="color: var(--olive-green);"></i> Cargo
-                                </label>
-                                <p style="color: var(--dark-green); font-weight: 600; margin: 0;">@ViewBag.CargoEmpleado</p>
-                            </div>
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Contratación
-                                </label>
-                                <p style="color: var(--dark-green); font-weight: 600; margin: 0;">@Model.FechaContratacionEmpleado.ToString("dd/MM/yyyy")</p>
-                            </div>
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-calendar-check" style="color: var(--gold-bright);"></i> Días Disponibles
-                                </label>
-                                <p style="color: var(--gold-bright); font-weight: 700; font-size: 1.3rem; margin: 0;">@Model.DiasDisponibles días</p>
-                                @Html.HiddenFor(model => model.DiasDisponibles)
-                            </div>
+                <div style="margin: 0 0 1.5rem; padding: 1.5rem; background: var(--cream); border-radius: 20px; border-left: 5px solid var(--olive-green);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
+                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
+                            </small>
+                            <strong style="color: var(--dark-green);">@Model.NombreEmpleado</strong>
+                        </div>
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
+                                <i class="fas fa-briefcase" style="color: var(--olive-green);"></i> Cargo
+                            </small>
+                            <strong style="color: var(--dark-green);">@ViewBag.CargoEmpleado</strong>
+                        </div>
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
+                                <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Contratación
+                            </small>
+                            <strong style="color: var(--dark-green);">@Model.FechaContratacionEmpleado.ToString("dd/MM/yyyy")</strong>
+                        </div>
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
+                                <i class="fas fa-calendar-check" style="color: var(--gold-bright);"></i> Días Disponibles
+                            </small>
+                            <strong style="color: var(--gold-bright); font-size: 1.3rem;">@Model.DiasDisponibles días</strong>
                         </div>
                     </div>
+                    @Html.HiddenFor(model => model.DiasDisponibles)
+                </div>
 
-                    <!-- Información de la Solicitud -->
-                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-calendar-alt"></i> Información de la Solicitud
-                        </h5>
-                    </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar"></i> Fecha de Solicitud</label>
+                    @Html.EditorFor(model => model.FechaSolicitud, new { htmlAttributes = new { @class = "form-control", type = "date", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.FechaSolicitud, "", new { @class = "text-danger" })
+                    <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                        <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i> Fecha original de la solicitud
+                    </small>
+                </div>
 
-                    <!-- Fecha de Solicitud -->
+                <div class="form-row">
                     <div class="form-group">
-                        <label>
-                            <i class="fas fa-calendar"></i>
-                            Fecha de Solicitud
-                        </label>
-                        @Html.EditorFor(model => model.FechaSolicitud, new { htmlAttributes = new { @class = "form-control", type = "date", @readonly = "readonly" } })
-                        @Html.ValidationMessageFor(model => model.FechaSolicitud, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                            Fecha original en que se registró la solicitud
-                        </small>
+                        <label><i class="fas fa-play"></i> Fecha de Inicio</label>
+                        @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
                     </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-stop"></i> Fecha de Fin</label>
+                        @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-                    <!-- Fechas de Inicio y Fin -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-play"></i>
-                                Fecha de Inicio
-                            </label>
-                            @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                            @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+                <!-- Días calculados -->
+                <div class="form-group">
+                    <label><i class="fas fa-calculator"></i> Días Laborables</label>
+                    <div style="display: flex; align-items: center; gap: 1rem; background: var(--cream); border-radius: 15px; padding: 0.8rem 1.2rem;">
+                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Calculados automáticamente:</span>
+                        <span id="diasCalculados" style="background: var(--olive-green); color: white; font-size: 1.1rem; font-weight: 700; padding: 0.3rem 1rem; border-radius: 50px;">@Model.DiasSolicitados</span>
+                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">días (excluye domingos)</span>
+                    </div>
+                    @Html.HiddenFor(model => model.DiasSolicitados)
+                </div>
+
+                <!-- Alerta días insuficientes -->
+                <div id="alertaDias" style="display: none; background: rgba(231,76,60,0.1); padding: 1rem 1.5rem; border-radius: 15px; margin: 0 0 1.5rem; border-left: 5px solid #e74c3c;">
+                    <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="mensajeAlerta"></span>
+                    </p>
+                </div>
+
+                <div style="margin: 0 0 1.5rem; padding: 1.5rem; background: var(--cream); border-radius: 20px;">
+                    <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
+                                <i class="fas fa-hashtag" style="color: var(--olive-green);"></i> ID Solicitud
+                            </small>
+                            <strong style="color: var(--dark-green);">#@Model.IdSolicitud</strong>
                         </div>
-
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-stop"></i>
-                                Fecha de Fin
-                            </label>
-                            @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                            @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <!-- Días Calculados -->
-                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin: 0;">
-                                <i class="fas fa-calculator" style="color: var(--olive-green);"></i> Días Laborables Calculados
-                            </label>
-                            <div style="background: var(--olive-green); color: white; padding: 0.5rem 1.5rem; border-radius: 50px;">
-                                <span id="diasCalculados" style="font-size: 1.5rem; font-weight: 700;">@Model.DiasSolicitados</span>
-                                <span style="font-size: 0.9rem; margin-left: 0.3rem;">días</span>
-                            </div>
-                        </div>
-                        @Html.HiddenFor(model => model.DiasSolicitados)
-                        <small style="display: block; color: var(--charcoal); opacity: 0.7;">
-                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                            Se excluyen los domingos del cálculo. Los días laborables son de lunes a sábado.
-                        </small>
-                    </div>
-
-                    <!-- Validación de días disponibles -->
-                    <div id="alertaDias" style="display: none; background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(192, 57, 43, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin: 1.5rem 0; border-left: 5px solid #e74c3c;">
-                        <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
-                            <span id="mensajeAlerta"></span>
-                        </p>
-                    </div>
-
-                    <!-- Información Adicional -->
-                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-hashtag" style="color: var(--olive-green);"></i> ID de Solicitud
-                                </label>
-                                <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.IdSolicitud</p>
-                            </div>
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-info-circle" style="color: var(--olive-green);"></i> Estado
-                                </label>
-                                <p style="margin: 0.5rem 0 0;">
-                                    <span style="background: @Model.EstadoBadgeColor; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
-                                        @Model.Estado
-                                    </span>
-                                </p>
-                            </div>
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
+                                <i class="fas fa-info-circle" style="color: var(--olive-green);"></i> Estado Actual
+                            </small>
+                            <span style="background: @Model.EstadoBadgeColor; color: white; padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
+                                @Model.Estado
+                            </span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-3d" id="btnGuardar" style="flex: 1;">
-                            <span><i class="fas fa-check"></i> Guardar Cambios</span>
-                        </button>
-                    </div>
-                </form>
+                <!-- Botones -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")'">
+                        <span><i class="fas fa-times"></i> Cancelar</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-3d" id="btnGuardar">
+                        <span><i class="fas fa-check"></i> Guardar Cambios</span>
+                    </button>
+                </div>
             </div>
         }
     </div>
@@ -190,41 +154,29 @@
 @section Scripts {
     <script src="~/js/solicitudvacaciones.js"></script>
     <script>
-        // Script adicional para validar días disponibles en edición
-        document.addEventListener('DOMContentLoaded', function() {
-            const hiddenDiasDisponibles = document.querySelector('input[name="DiasDisponibles"]');
-            const alertaDias = document.getElementById('alertaDias');
-            const mensajeAlerta = document.getElementById('mensajeAlerta');
-            const btnGuardar = document.getElementById('btnGuardar');
+        document.addEventListener('DOMContentLoaded', function () {
+            const hiddenDias = document.querySelector('input[name="DiasDisponibles"]');
+            const alerta = document.getElementById('alertaDias');
+            const btn = document.getElementById('btnGuardar');
 
-            // Función para validar días disponibles
-            function validarDiasDisponibles() {
-                const diasSolicitados = parseInt(document.getElementById('diasCalculados').textContent);
-                const diasDisponibles = parseFloat(hiddenDiasDisponibles.value);
-
-                if (diasSolicitados > diasDisponibles) {
-                    mensajeAlerta.textContent = `No hay suficientes días disponibles. Solicitados: ${diasSolicitados} días, Disponibles: ${diasDisponibles} días`;
-                    alertaDias.style.display = 'block';
-                    btnGuardar.disabled = true;
-                    btnGuardar.style.opacity = '0.5';
-                    btnGuardar.style.cursor = 'not-allowed';
+            function validarDias() {
+                const solicitados = parseInt(document.getElementById('diasCalculados').textContent) || 0;
+                const disponibles = parseFloat(hiddenDias.value || '0');
+                if (solicitados > disponibles) {
+                    document.getElementById('mensajeAlerta').textContent = `Días insuficientes. Solicitados: ${solicitados}, Disponibles: ${disponibles}`;
+                    alerta.style.display = 'block';
+                    btn.disabled = true; btn.style.opacity = '0.5'; btn.style.cursor = 'not-allowed';
                 } else {
-                    alertaDias.style.display = 'none';
-                    btnGuardar.disabled = false;
-                    btnGuardar.style.opacity = '1';
-                    btnGuardar.style.cursor = 'pointer';
+                    alerta.style.display = 'none';
+                    btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
                 }
             }
 
-            // Observar cambios en el cálculo de días
-            const observer = new MutationObserver(validarDiasDisponibles);
-            const diasCalculadosElement = document.getElementById('diasCalculados');
-            if (diasCalculadosElement) {
-                observer.observe(diasCalculadosElement, { childList: true, characterData: true, subtree: true });
-            }
-
-            // Validar al cargar
-            validarDiasDisponibles();
+            new MutationObserver(validarDias).observe(
+                document.getElementById('diasCalculados'),
+                { childList: true, characterData: true, subtree: true }
+            );
+            validarDias();
         });
     </script>
 }

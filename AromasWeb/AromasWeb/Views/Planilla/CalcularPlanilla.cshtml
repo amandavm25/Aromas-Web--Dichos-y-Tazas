@@ -31,135 +31,123 @@
 </section>
 
 <!-- Formulario Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
+<section class="admin-form-section">
     <div class="container" style="max-width: 900px;">
         @using (Html.BeginForm("CalcularPlanilla", "Planilla", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
-            <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+            <div class="admin-form-wrapper" data-aos="fade-up">
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información del Cálculo -->
-                    <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
-                        <h5 style="color: var(--dark-green); margin: 0 0 1.5rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.4rem;">
-                            <i class="fas fa-calculator" style="color: var(--gold);"></i> Configuración del Cálculo
-                        </h5>
+                <!-- Encabezado del formulario -->
+                <div class="admin-form-header">
+                    <i class="fas fa-calculator"></i>
+                    <h5>Configuración del Cálculo</h5>
+                </div>
 
-                        <!-- Seleccionar Empleado -->
+                <div class="admin-form-body">
+
+                    <!-- Seleccionar Empleado -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-user"></i>
+                            Empleado
+                        </label>
+                        <select name="idEmpleado" class="form-control" required>
+                            <option value="">Seleccione un empleado</option>
+                            @foreach (var emp in ViewBag.Empleados)
+                            {
+                                <option value="@emp.IdEmpleado">@emp.NombreCompleto - @emp.Cargo</option>
+                            }
+                        </select>
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Empleado para el cual se calculará el pago
+                        </small>
+                    </div>
+
+                    <!-- Período -->
+                    <div class="form-row">
                         <div class="form-group">
-                            <label style="font-family: var(--font-secondary);">
-                                <i class="fas fa-user"></i>
-                                Empleado
+                            <label>
+                                <i class="fas fa-calendar-alt"></i>
+                                Fecha Inicio del Período
                             </label>
-                            <select name="idEmpleado" class="form-control" required>
-                                <option value="">Seleccione un empleado</option>
-                                @foreach (var emp in ViewBag.Empleados)
-                                {
-                                    <option value="@emp.IdEmpleado">@emp.NombreCompleto - @emp.Cargo</option>
-                                }
-                            </select>
-                            <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7; font-family: var(--font-secondary);">
-                                <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                                Empleado para el cual se calculará el pago
-                            </small>
+                            <input type="date" name="periodoInicio" class="form-control" required />
                         </div>
-
-                        <!-- Período -->
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label style="font-family: var(--font-secondary);">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    Fecha Inicio del Período
-                                </label>
-                                <input type="date" name="periodoInicio" class="form-control" required />
-                            </div>
-
-                            <div class="form-group">
-                                <label style="font-family: var(--font-secondary);">
-                                    <i class="fas fa-calendar-check"></i>
-                                    Fecha Fin del Período
-                                </label>
-                                <input type="date" name="periodoFin" class="form-control" required />
-                            </div>
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-calendar-check"></i>
+                                Fecha Fin del Período
+                            </label>
+                            <input type="date" name="periodoFin" class="form-control" required />
                         </div>
                     </div>
 
-                    <!-- Información de Cálculo -->
-                    <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: 2rem;">
-                        <div style="background: var(--cream); padding: 1.5rem; border-bottom: 2px solid var(--gold);">
-                            <h5 style="color: var(--dark-green); margin: 0; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.3rem;">
-                                <i class="fas fa-info-circle" style="color: var(--gold);"></i> ¿Cómo se calcula el pago?
-                            </h5>
+                </div>
+
+                <!-- Sección informativa: ¿Cómo se calcula? -->
+                <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 0; margin: 0;">
+                    <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-info-circle"></i> ¿Cómo se calcula el pago?
+                    </h5>
+                </div>
+
+                <div class="admin-form-body">
+                    <div style="display: grid; gap: 1.2rem;">
+
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--olive-green);">
+                            <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">1. Horas Trabajadas por Día</strong>
+                            <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
+                                (Hora Salida - Hora Entrada) - Tiempo Almuerzo
+                            </code>
                         </div>
 
-                        <div style="padding: 2rem;">
-                            <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; font-family: var(--font-secondary);">
-                                <i class="fas fa-calculator" style="color: var(--olive-green);"></i> Fórmulas de Cálculo
-                            </h6>
-
-                            <div style="display: grid; gap: 1.5rem;">
-                                <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--olive-green);">
-                                    <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem; font-family: var(--font-secondary);">
-                                        1. Horas Trabajadas por Día
-                                    </strong>
-                                    <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
-                                        (Hora Salida - Hora Entrada) - Tiempo Almuerzo
-                                    </code>
-                                </div>
-
-                                <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--dark-green);">
-                                    <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem; font-family: var(--font-secondary);">
-                                        2. Clasificación de Horas
-                                    </strong>
-                                    <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
-                                        Si Horas ≤ 8: Regulares = Horas, Extras = 0<br>
-                                        Si Horas > 8: Regulares = 8, Extras = Horas - 8
-                                    </code>
-                                </div>
-
-                                <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--gold-bright);">
-                                    <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem; font-family: var(--font-secondary);">
-                                        3. Pago Bruto
-                                    </strong>
-                                    <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
-                                        (Horas Regulares × Tarifa) + (Horas Extras × Tarifa × 1.5)
-                                    </code>
-                                </div>
-
-                                <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--gold);">
-                                    <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem; font-family: var(--font-secondary);">
-                                        4. Deducciones
-                                    </strong>
-                                    <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
-                                        CCSS = Pago Bruto × 10.67%<br>
-                                        Impuesto Renta = Según escala progresiva CR
-                                    </code>
-                                </div>
-
-                                <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--dark-green);">
-                                    <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem; font-family: var(--font-secondary);">
-                                        5. Pago Neto
-                                    </strong>
-                                    <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
-                                        Pago Bruto - Total Deducciones
-                                    </code>
-                                </div>
-                            </div>
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--dark-green);">
+                            <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">2. Clasificación de Horas</strong>
+                            <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
+                                Si Horas ≤ 8: Regulares = Horas, Extras = 0<br>
+                                Si Horas > 8: Regulares = 8, Extras = Horas - 8
+                            </code>
                         </div>
-                    </div>
 
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoPlanillas", "Planilla")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary" style="flex: 1;">
-                            <span><i class="fas fa-calculator"></i> Calcular Planilla</span>
-                        </button>
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--gold-bright);">
+                            <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">3. Pago Bruto</strong>
+                            <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
+                                (Horas Regulares × Tarifa) + (Horas Extras × Tarifa × 1.5)
+                            </code>
+                        </div>
+
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--gold);">
+                            <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">4. Deducciones</strong>
+                            <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
+                                CCSS = Pago Bruto × 10.67%<br>
+                                Impuesto Renta = Según escala progresiva CR
+                            </code>
+                        </div>
+
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--dark-green);">
+                            <strong style="color: var(--dark-green); display: block; margin-bottom: 0.5rem;">5. Pago Neto</strong>
+                            <code style="background: white; padding: 0.5rem; border-radius: 5px; display: block; font-family: 'Courier New', monospace; color: var(--charcoal);">
+                                Pago Bruto - Total Deducciones
+                            </code>
+                        </div>
+
                     </div>
-                </form>
+                </div>
+
+                <!-- Botones -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoPlanillas", "Planilla")'">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-calculator"></i>
+                        <span>Calcular Planilla</span>
+                    </button>
+                </div>
             </div>
         }
     </div>

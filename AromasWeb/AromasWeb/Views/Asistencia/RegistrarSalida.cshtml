@@ -42,99 +42,99 @@
             @Html.HiddenFor(model => model.HoraEntrada)
 
             <div class="admin-form-wrapper" data-aos="fade-up">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información del Empleado -->
+                <!-- Información del Empleado -->
                 <div class="admin-form-header">
                     <i class="fas fa-box"></i>
-                        <h5> Información del Empleado</h5>
-                    </div>
+                    <h5> Información del Empleado</h5>
+                </div>
 
-                    <!-- Datos del Empleado -->
-                    <div class="feature-card" style="margin-bottom: 2rem; padding: 1.5rem;">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
-                                </label>
-                                <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.NombreEmpleado</p>
-                            </div>
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-briefcase" style="color: var(--olive-green);"></i> Cargo
-                                </label>
-                                <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.CargoEmpleado</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Información de Horario -->
-                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-clock"></i> Información de Horario
-                        </h5>
-                    </div>
-
-                    <!-- Fecha y Hora de Entrada (solo lectura) -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-calendar-day"></i>
-                                Fecha
-                            </label>
-                            <input type="text" value="@Model.Fecha.ToString("dd/MM/yyyy")" class="form-control" readonly style="background: #F5EDD8;" />
-                        </div>
-
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-sign-in-alt"></i>
-                                Hora de Entrada
-                            </label>
-                            <input type="text" value="@Model.HoraEntrada.ToString(@"hh\:mm")" class="form-control" readonly style="background: #F5EDD8;" />
-                        </div>
-                    </div>
-
-                    <!-- Hora de Salida y Tiempo de Almuerzo -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-sign-out-alt"></i>
-                                Hora de Salida
-                            </label>
-                            <input type="time" name="HoraSalida" value="@Model.HoraSalida?.ToString(@"hh\:mm")" class="form-control" required />
-                            @Html.ValidationMessageFor(model => model.HoraSalida, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-utensils"></i>
-                                Tiempo de Almuerzo (minutos)
-                            </label>
-                            @Html.EditorFor(model => model.TiempoAlmuerzo, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", max = "120", placeholder = "Ej: 60" } })
-                            @Html.ValidationMessageFor(model => model.TiempoAlmuerzo, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <!-- Información adicional -->
-                    <div class="admin-form-info-box">
-                        <i class="fas fa-info-circle"></i>
+                <!-- Datos del Empleado -->
+                <div class="feature-card" style="margin-bottom: 2rem; padding: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div>
-                             <strong>Cálculo Automático de Horas</strong>
-                             <p>El sistema calculará automáticamente las horas trabajadas, diferenciando entre horas regulares (hasta 8 horas) y horas extras (más de 8 horas).</p>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
+                            </label>
+                            <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.NombreEmpleado</p>
+                        </div>
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-briefcase" style="color: var(--olive-green);"></i> Cargo
+                            </label>
+                            <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.CargoEmpleado</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Botones -->
+                <!-- Información de Horario -->
+                <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
+                    <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-clock"></i> Información de Horario
+                    </h5>
+                </div>
+
+                <!-- Fecha y Hora de Entrada (solo lectura) -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-calendar-day"></i>
+                            Fecha
+                        </label>
+                        <input type="text" value="@Model.Fecha.ToString("dd/MM/yyyy")" class="form-control" readonly style="background: #F5EDD8;" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-sign-in-alt"></i>
+                            Hora de Entrada
+                        </label>
+                        <input type="text" value="@Model.HoraEntrada.ToString(@"hh\:mm")" class="form-control" readonly style="background: #F5EDD8;" />
+                    </div>
+                </div>
+
+                <!-- Hora de Salida y Tiempo de Almuerzo -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-sign-out-alt"></i>
+                            Hora de Salida
+                        </label>
+                        <input type="time" name="HoraSalida" value="@Model.HoraSalida?.ToString(@"hh\:mm")" class="form-control" required />
+                        @Html.ValidationMessageFor(model => model.HoraSalida, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-utensils"></i>
+                            Tiempo de Almuerzo (minutos)
+                        </label>
+                        @Html.EditorFor(model => model.TiempoAlmuerzo, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", max = "120", placeholder = "Ej: 60" } })
+                        @Html.ValidationMessageFor(model => model.TiempoAlmuerzo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- Información adicional -->
+                <div class="admin-form-info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Cálculo Automático de Horas</strong>
+                        <p>El sistema calculará automáticamente las horas trabajadas, diferenciando entre horas regulares (hasta 8 horas) y horas extras (más de 8 horas).</p>
+                    </div>
+                </div>
+
+                <!-- Botones -->
                 <div class="admin-form-footer">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoAsistencias", "Asistencia")'">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoAsistencias", "Asistencia")'">
                         <i class="fas fa-times"></i>
-                            <span> Cancelar</span>
-                        </button>
+                        <span> Cancelar</span>
+                    </button>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i>
-                            <span>> Registrar Salida</span>
-                        </button>
-                    </div>
+                        <span>> Registrar Salida</span>
+                    </button>
+                </div>
             </div>
         }
     </div>

@@ -157,18 +157,6 @@
                                                 title="Ver detalles">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-eliminar-categoria"
-                                                data-id="@cat.IdCategoriaReceta"
-                                                data-nombre="@cat.Nombre"
-                                                data-descripcion="@cat.Descripcion"
-                                                data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
-                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalEliminarCategoria"
-                                                title="Eliminar">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
                                     </td>
                                 </tr>
                                 contador++;
@@ -203,7 +191,16 @@
             <!-- Footer de paginación -->
             <div class="admin-table-footer">
                 <div class="admin-table-footer-text">
-                    Mostrando <strong>@(Model?.Count ?? 0)</strong> categoría(s)
+                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                </div>
+
+                <div class="pagination-buttons">
+                    <button id="btnAnterior" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btnSiguiente" class="pagination-btn">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -211,7 +208,6 @@
 </section>
 
 <partial name="_ModalDetallesCategoriaReceta" />
-<partial name="_ModalEliminarCategoriaReceta" />
 
 @section Scripts {
     <script src="~/js/categoriaReceta.js"></script>

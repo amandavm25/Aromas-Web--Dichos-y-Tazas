@@ -1,5 +1,5 @@
-/* ============================================
-   VARIABLES Y CONFIGURACI”N - TSUR⁄
+Ôªø/* ============================================
+   VARIABLES Y CONFIGURACI√ìN - TSUR√ö
    ============================================ */
 
 :root {
@@ -15,7 +15,8 @@
     --light-olive: #A8A787;
     --dark-olive: #6F6E50;
     --cream-dark: #DDD5B8;
-    /* TipografÌa */
+    --light-cream: #F7F6F0;
+    /* Tipograf√≠a */
     --font-primary: 'Playfair Display', serif;
     --font-secondary: 'Lato', sans-serif;
     /* Sombras elegantes */
@@ -2317,10 +2318,10 @@ section {
 }
 
     .admin-table tbody tr:nth-child(even) {
-        background: rgba(239, 231, 200, 0.35); /* Crema ligeramente m·s visible */
+        background: rgba(239, 231, 200, 0.35); /* Crema ligeramente m√°s visible */
     }
 
-    /* Encabezado de tabla - Verde oscuro sÛlido */
+    /* Encabezado de tabla - Verde oscuro s√≥lido */
     .admin-table thead {
         background: var(--dark-green);
     }
@@ -2429,7 +2430,7 @@ admin-table-footer
         color: var(--white);
     }
 
-/* Botones de acciÛn en tabla */
+/* Botones de acci√≥n en tabla */
 .btn-table-action {
     border: none;
     margin: 0 0.25rem;
@@ -2490,7 +2491,7 @@ admin-table-footer
     font-weight: 500;
 }
 
-/* Estado vacÌo */
+/* Estado vac√≠o */
 .admin-table-empty {
     padding: 3rem;
     text-align: center;
@@ -2516,14 +2517,68 @@ admin-table-footer
         font-size: 0.95rem;
     }
 
+/* √ânfasis en los n√∫meros */
+.admin-table-footer-text strong {
+    color: var(--cream);
+    font-weight: 700;
+}
 
+/* Contenedor de botones de paginaci√≥n */
+.pagination-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
 
+/* Botones de navegaci√≥n */
+.pagination-btn {
+    background: var(--olive-green);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .pagination-btn:hover:not(:disabled) {
+        background: var(--dark-teal);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(32, 116, 118, 0.3);
+    }
+
+    .pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-table-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .pagination-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .pagination-btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
 
 /* ============================================
    FORMULARIOS ADMINISTRATIVOS
    ============================================ */
 
-/* Fondo de la secciÛn del formulario */
+/* Fondo de la secci√≥n del formulario */
 .admin-form-section {
     padding: 4rem 0;
     background: #EDEADE; /* Lino suave - diferente al cream pero no cansado */
@@ -2594,7 +2649,7 @@ admin-table-footer
     border-radius: 12px;
     font-family: var(--font-secondary);
     font-size: 0.95rem;
-    background: #FDFCF9; /* Mismo blanco c·lido de la tabla */
+    background: #FDFCF9; /* Mismo blanco c√°lido de la tabla */
     transition: var(--transition-base);
     color: var(--charcoal);
     width: 100%;
@@ -2609,7 +2664,7 @@ admin-table-footer
     background: var(--white);
 }
 
-/* SubtÌtulo informativo */
+/* Subt√≠tulo informativo */
 .admin-form-hint {
     display: block;
     margin-top: 0.5rem;
@@ -2622,7 +2677,7 @@ admin-table-footer
     color: var(--gold-bright);
 }
 
-/* Caja de informaciÛn */
+/* Caja de informaci√≥n */
 .admin-form-info-box {
     display: flex;
     align-items: center;
@@ -2674,7 +2729,515 @@ admin-table-footer
     padding: 10px 20px;
 }
 
-/* Cuando los form-group est·n dentro de form-row */
+/* Cuando los form-group est√°n dentro de form-row */
 .admin-form-wrapper .form-row .form-group {
     padding: 10px 5px;
+}
+
+/* ============================================
+   TIMELINE
+   ============================================ */
+
+/* Contenedor principal del timeline */
+.timeline-container {
+    background: var(--light-cream);
+    border-radius: 25px;
+    box-shadow: var(--shadow-lg);
+    padding: 3rem;
+}
+
+/* T√≠tulo del timeline */
+.timeline-header {
+    margin-bottom: 2rem;
+}
+
+    .timeline-header h2 {
+        font-family: var(--font-primary);
+        font-size: 2rem;
+        color: var(--dark-green);
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-header p {
+        color: var(--charcoal);
+        opacity: 0.7;
+        margin: 0;
+    }
+
+/* Card individual del timeline */
+.timeline-card {
+    background: white;
+    border-radius: 20px;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+    .timeline-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+/* Contenido del card (padding solo aqu√≠) */
+.timeline-card-content {
+    padding: 2rem;
+}
+
+/* Header del card - fecha y estado */
+.timeline-card-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    align-items: start;
+}
+
+/* Fecha del timeline */
+.timeline-date-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-date-badge {
+    background: var(--olive-green);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    min-width: 100px;
+}
+
+.timeline-date-day {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    display: block;
+}
+
+.timeline-date-month {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    display: block;
+}
+
+.timeline-date-info h3 {
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+    color: var(--dark-green);
+}
+
+.timeline-date-info p {
+    margin: 0;
+    color: var(--charcoal);
+    opacity: 0.7;
+    font-size: 0.95rem;
+}
+
+/* Badge de estado */
+.timeline-status-badge {
+    background: var(--gold);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+    .timeline-status-badge.complete {
+        background: #27ae60;
+    }
+
+    .timeline-status-badge.in-progress {
+        background: var(--gold);
+    }
+
+    .timeline-status-badge.pending {
+        background: #f39c12;
+    }
+
+    .timeline-status-badge.approved {
+        background: #27ae60;
+    }
+
+    .timeline-status-badge.rejected {
+        background: #e74c3c;
+    }
+
+    .timeline-status-badge.warning {
+        background: #f39c12;
+    }
+
+/* Grid de detalles */
+.timeline-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.timeline-detail-item {
+    background: var(--cream);
+    padding: 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+    .timeline-detail-item:hover {
+        background: var(--cream-dark);
+    }
+
+    .timeline-detail-item.pending {
+        background: #FFF9E6;
+        border: 2px dashed var(--gold);
+    }
+
+    .timeline-detail-item.highlight {
+        background: rgba(98, 170, 118, 0.1);
+        border: 2px solid var(--olive-green);
+    }
+
+.timeline-detail-label {
+    color: var(--charcoal);
+    opacity: 0.7;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-detail-value {
+    margin: 0;
+    color: var(--dark-green);
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+    .timeline-detail-value.pending {
+        color: var(--gold);
+        font-size: 1.1rem;
+    }
+
+    .timeline-detail-value.small {
+        font-size: 1rem;
+    }
+
+/* Secci√≥n de estad√≠sticas */
+.timeline-stats {
+    background: var(--cream);
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.timeline-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+}
+
+.timeline-stat-item {
+    text-align: left;
+}
+
+.timeline-stat-label {
+    margin: 0 0 0.3rem;
+    color: var(--charcoal);
+    opacity: 0.7;
+    font-size: 0.85rem;
+}
+
+.timeline-stat-value {
+    color: var(--olive-green);
+    font-size: 1.5rem;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    display: block;
+}
+
+    .timeline-stat-value.extra {
+        color: var(--gold);
+    }
+
+    .timeline-stat-value.total {
+        color: var(--dark-green);
+    }
+
+    .timeline-stat-value.success {
+        color: #27ae60;
+    }
+
+    .timeline-stat-value.warning {
+        color: #f39c12;
+    }
+
+/* Mensaje informativo */
+.timeline-info-message {
+    background: #FFF9E6;
+    padding: 1.5rem;
+    border-radius: 15px;
+    border-left: 4px solid var(--gold);
+}
+
+    .timeline-info-message p {
+        margin: 0;
+        color: var(--dark-green);
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+    }
+
+    .timeline-info-message.success {
+        background: rgba(39, 174, 96, 0.1);
+        border-left-color: #27ae60;
+    }
+
+    .timeline-info-message.error {
+        background: rgba(231, 76, 60, 0.1);
+        border-left-color: #e74c3c;
+    }
+
+/* Estado vac√≠o del timeline */
+.timeline-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+    .timeline-empty i {
+        font-size: 4rem;
+        color: var(--charcoal);
+        opacity: 0.3;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .timeline-empty h5 {
+        color: var(--dark-green);
+        margin-bottom: 1rem;
+    }
+
+    .timeline-empty p {
+        color: var(--charcoal);
+        opacity: 0.7;
+        margin-bottom: 2rem;
+    }
+
+/* Divisor entre secciones del timeline */
+.timeline-divider {
+    height: 2px;
+    background: var(--cream);
+    margin: 1.5rem 0;
+    opacity: 0.5;
+}
+
+/* Footer dentro del card del timeline */
+.timeline-card-footer {
+    background: var(--cream);
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--cream-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.timeline-card-footer-info {
+    color: var(--charcoal);
+    font-size: 0.9rem;
+}
+
+    .timeline-card-footer-info strong {
+        color: var(--dark-green);
+        font-weight: 600;
+    }
+
+.timeline-card-footer-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* NUEVO: Footer de paginaci√≥n del timeline (fuera de los cards) */
+.timeline-pagination-footer {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+    margin-top: 2rem;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.timeline-pagination-info {
+    color: var(--charcoal);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+    .timeline-pagination-info strong {
+        color: var(--dark-green);
+        font-weight: 700;
+    }
+
+.timeline-pagination-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.timeline-pagination-btn {
+    background: var(--olive-green);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .timeline-pagination-btn:hover:not(:disabled) {
+        background: var(--dark-green);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(62, 74, 58, 0.3);
+    }
+
+    .timeline-pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .timeline-container {
+        padding: 1.5rem;
+        border-radius: 15px;
+    }
+
+    .timeline-card-content {
+        padding: 1.5rem;
+    }
+
+    .timeline-card-header {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .timeline-date-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+
+    .timeline-date-badge {
+        min-width: 80px;
+        padding: 0.6rem 1rem;
+    }
+
+    .timeline-date-day {
+        font-size: 1.5rem;
+    }
+
+    .timeline-details-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .timeline-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .timeline-card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 1.5rem;
+    }
+
+    .timeline-card-footer-actions {
+        width: 100%;
+    }
+
+        .timeline-card-footer-actions .btn {
+            flex: 1;
+        }
+
+    .timeline-pagination-footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem 1.5rem;
+    }
+
+    .timeline-pagination-buttons {
+        width: 100%;
+    }
+
+    .timeline-pagination-btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .timeline-container {
+        padding: 1rem;
+    }
+
+    .timeline-card-content {
+        padding: 1rem;
+    }
+
+    .timeline-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .timeline-detail-value {
+        font-size: 1.1rem;
+    }
+
+    .timeline-stat-value {
+        font-size: 1.2rem;
+    }
+
+    .timeline-card-footer {
+        padding: 1rem;
+    }
+
+    .timeline-card-footer-actions {
+        flex-direction: column;
+    }
+
+        .timeline-card-footer-actions .btn {
+            width: 100%;
+        }
+
+    .timeline-pagination-footer {
+        padding: 1rem;
+    }
+
+    .timeline-pagination-buttons {
+        flex-direction: column;
+    }
+
+    .timeline-pagination-btn {
+        width: 100%;
+    }
 }

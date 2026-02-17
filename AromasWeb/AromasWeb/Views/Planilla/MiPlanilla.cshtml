@@ -23,7 +23,7 @@
             </p>
 
             <!-- Info rápida del empleado -->
-            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem; margin-bottom: 3rem; color: black;">
+            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem; margin-bottom: 3rem; color: var(--charcoal);">
                 <div>
                     <i class="fas fa-briefcase" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
                     <strong style="display: block; font-size: 1.1rem;">@empleado.Cargo</strong>
@@ -128,20 +128,24 @@
         </div>
 
         <!-- Historial de Planillas -->
-        <div style="background: var(--cream); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
-            <h4 style="color: var(--dark-green); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                <i class="fas fa-history"></i> Historial de Mis Planillas
-            </h4>
-
+        <div class="timeline-container" data-aos="fade-up">
             @if (Model.Any())
             {
-                <div style="display: grid; gap: 2rem;">
+                <div class="timeline-header">
+                    <h2>
+                        <i class="fas fa-history" style="color: var(--gold);"></i>
+                        Mi Historial de Planillas
+                    </h2>
+                    <p>Visualiza el detalle de tus planillas de pago</p>
+                </div>
+
+                <div id="historial-timeline">
                     @foreach (var planilla in Model)
                     {
                         var esReciente = planilla == Model.First();
                         var colorEstado = planilla.Estado == "Pagado" ? "var(--olive-green)" : "var(--gold-bright)";
 
-                        <div class="feature-card" style="position: relative; padding: 2rem; border-left: 5px solid @colorEstado; background: white;">
+                        <div class="feature-card" style="position: relative; padding: 2rem; border-left: 5px solid @colorEstado; background: white; margin-bottom: 0;">
                             @if (esReciente)
                             {
                                 <div style="position: absolute; top: 1rem; right: 1rem;">
@@ -209,12 +213,28 @@
                         </div>
                     }
                 </div>
+
+                <!-- Footer de paginación -->
+                <div class="timeline-pagination-footer">
+                    <div class="timeline-pagination-info">
+                        Mostrando <strong id="startCard">0</strong> - <strong id="endCard">0</strong> de <strong id="totalCards">0</strong> registros
+                    </div>
+                    <div class="timeline-pagination-buttons">
+                        <button id="btnAnteriorCards" class="timeline-pagination-btn">
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <button id="btnSiguienteCards" class="timeline-pagination-btn">
+                            Siguiente <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
             }
             else
             {
-                <div style="text-align: center; padding: 3rem; color: var(--charcoal); opacity: 0.7;">
-                    <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                    <p style="margin: 0; font-size: 1.1rem; font-weight: 600;">No hay planillas disponibles</p>
+                <div class="feature-card timeline-empty">
+                    <i class="fas fa-file-invoice"></i>
+                    <h5>No hay planillas disponibles</h5>
+                    <p>Aún no tienes planillas registradas en el sistema.</p>
                 </div>
             }
         </div>

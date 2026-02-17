@@ -127,13 +127,9 @@
                     <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                     @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
                     {
-                        <span>Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong></span>
+                        <span>Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong> - </span>
                     }
-                    @if (!string.IsNullOrWhiteSpace(ViewBag.FechaInicio as string) && !string.IsNullOrWhiteSpace(ViewBag.FechaFin as string))
-                    {
-                        <span>- Rango: <strong style="color: var(--gold-bright);">@ViewBag.FechaInicio al @ViewBag.FechaFin</strong></span>
-                    }
-                    - <strong>@(Model?.Count ?? 0)</strong> asistencia(s) encontrada(s)
+                    <strong>@totalAsistencias</strong> registro(s) encontrado(s)
                 </p>
             </div>
         }
@@ -141,7 +137,7 @@
         <!-- Tabla Principal -->
         <div class="admin-table-container">
             <div class="table-responsive">
-                <table class="admin-table">
+                <table class="admin-table" id="laTablaDeAsistencias">
                     <thead>
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
@@ -159,13 +155,13 @@
                         @if (Model != null && Model.Any())
                         {
                             int contador = 1;
-                            @foreach (var asistencia in Model)
+                            foreach (var asistencia in Model)
                             {
-                                var estado = asistencia.HoraSalida.HasValue ? "Completo" : "Pendiente";
-                                var estadoColor = estado == "Completo" ? "#27ae60" : "var(--gold-bright)";
                                 var diaSemana = asistencia.Fecha.ToString("dddd", new System.Globalization.CultureInfo("es-ES"));
+                                var estado = asistencia.HoraSalida.HasValue ? "Completo" : "En curso";
+                                var estadoColor = asistencia.HoraSalida.HasValue ? "#27ae60" : "var(--amber)";
 
-                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: background 0.3s;">
+                                <tr>
                                     <td style="padding: 1.2rem; text-align: center;">
                                         <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
                                     </td>
@@ -241,19 +237,6 @@
                                                 title="Ver detalles">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-eliminar-asistencia"
-                                                data-id="@asistencia.IdAsistencia"
-                                                data-nombre="@asistencia.NombreEmpleado"
-                                                data-fecha="@asistencia.Fecha.ToString("dd/MM/yyyy")"
-                                                data-entrada="@asistencia.HoraEntrada.ToString(@"hh\:mm")"
-                                                data-salida="@(asistencia.HoraSalida.HasValue? asistencia.HoraSalida.Value.ToString(@"hh\:mm") : "Pendiente")"
-                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalEliminarAsistencia"
-                                                title="Eliminar">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
                                     </td>
                                 </tr>
                                 contador++;
@@ -279,7 +262,16 @@
             <!-- Footer de paginación -->
             <div class="admin-table-footer">
                 <div class="admin-table-footer-text">
-                    Mostrando <strong>@(Model?.Count ?? 0)</strong> registro(s) de asistencia
+                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                </div>
+
+                <div class="pagination-buttons">
+                    <button id="btnAnterior" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btnSiguiente" class="pagination-btn">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -287,7 +279,6 @@
 </section>
 
 <partial name="_ModalDetallesAsistencia" />
-<partial name="_ModalEliminarAsistencia" />
 
 @section Scripts {
     <script src="~/js/asistencia.js"></script>

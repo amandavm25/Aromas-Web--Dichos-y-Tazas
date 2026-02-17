@@ -74,7 +74,7 @@
             </div>
         </div>
 
-        <!-- Estadísticas de Vacaciones -->
+        <!-- Estadísticas de vacaciones -->
         <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
                 <div class="feature-icon">
@@ -108,7 +108,7 @@
 
         <!-- Botones de Acción -->
         <div style="display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;" data-aos="fade-up">
-            <a href="@Url.Action("CrearSolicitud", "SolicitudVacaciones")" class="btn btn-primary">
+            <a href="@Url.Action("CrearSolicitud", "SolicitudVacaciones")" class="btn btn-primary btn-3d">
                 <span><i class="fas fa-plus"></i> Nueva Solicitud</span>
             </a>
             <a href="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")" class="btn btn-secondary">
@@ -120,20 +120,24 @@
         </div>
 
         <!-- Timeline de Solicitudes -->
-        <div style="background: var(--cream); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
-            <h4 style="color: var(--dark-green); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                <i class="fas fa-clock"></i> Historial de Solicitudes
-            </h4>
+        <div class="timeline-container" data-aos="fade-up">
+            <div class="timeline-header">
+                <h2><i class="fas fa-clock" style="color: var(--gold); margin-right: 0.7rem;"></i> Historial de Solicitudes</h2>
+                <p>Registro completo de las vacaciones solicitadas por el empleado</p>
+            </div>
 
             @if (Model.Any())
             {
-                <div style="position: relative; padding-left: 3rem;">
-                    <!-- Línea vertical -->
-                    <div style="position: absolute; left: 1rem; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--olive-green) 0%, var(--gold) 100%);"></div>
-
+                <div id="historial-solicitudes-timeline">
                     @foreach (var solicitud in Model)
                     {
-                        var estadoColor = solicitud.EstadoBadgeColor;
+                        var estadoColor = solicitud.Estado switch
+                        {
+                            "Aprobada" => "#27ae60",
+                            "Rechazada" => "#e74c3c",
+                            "Pendiente" => "#f39c12",
+                            _ => "var(--charcoal)"
+                        };
                         var estadoIcon = solicitud.Estado switch
                         {
                             "Aprobada" => "fa-check-circle",
@@ -141,86 +145,113 @@
                             "Pendiente" => "fa-clock",
                             _ => "fa-question-circle"
                         };
+                        var badgeClass = solicitud.Estado switch
+                        {
+                            "Aprobada" => "approved",
+                            "Rechazada" => "rejected",
+                            "Pendiente" => "warning",
+                            _ => ""
+                        };
 
-                        <div class="feature-card" style="position: relative; margin-bottom: 2rem; padding: 2rem; border-left: 5px solid @estadoColor; background: white;">
-                            <!-- Punto en la línea -->
-                            <div style="position: absolute; left: -3rem; top: 2rem; width: 20px; height: 20px; background: @estadoColor; border-radius: 50%; border: 4px solid var(--white); box-shadow: 0 0 0 3px @estadoColor;"></div>
-
-                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
-                                <div style="flex: 1;">
-                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.7rem; flex-wrap: wrap;">
-                                        <h5 style="margin: 0; color: var(--dark-green); font-weight: 700; font-size: 1.5rem; font-family: var(--font-primary);">
-                                            Solicitud #@solicitud.IdSolicitud
-                                        </h5>
-                                        <span style="background: @estadoColor; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
-                                            <i class="fas @estadoIcon"></i> @solicitud.Estado
-                                        </span>
+                        <div class="timeline-card">
+                            <div class="timeline-card-content">
+                                <div class="timeline-card-header">
+                                    <div class="timeline-date-wrapper">
+                                        <div class="timeline-date-badge">
+                                            <span class="timeline-date-day">@solicitud.FechaInicio.Day</span>
+                                            <span class="timeline-date-month">@solicitud.FechaInicio.ToString("MMM")</span>
+                                        </div>
+                                        <div class="timeline-date-info">
+                                            <h3>Solicitud #@solicitud.IdSolicitud</h3>
+                                            <p>@solicitud.PeriodoVacaciones</p>
+                                        </div>
                                     </div>
-                                    <div style="display: flex; flex-direction: column; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.95rem;">
-                                        <span>
-                                            <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i>
-                                            <strong>Período:</strong> @solicitud.PeriodoVacaciones
-                                        </span>
-                                        <span>
-                                            <i class="fas fa-clock" style="color: var(--gold-bright);"></i>
-                                            <strong>Días solicitados:</strong> @solicitud.DiasSolicitados días laborables
-                                        </span>
-                                        <span>
-                                            <i class="fas fa-calendar-plus" style="color: var(--gold-bright);"></i>
-                                            <strong>Solicitado el:</strong> @solicitud.FechaSolicitudFormateada
-                                        </span>
-                                        @if (solicitud.FechaRespuesta.HasValue)
-                                        {
-                                            <span>
-                                                <i class="fas fa-reply" style="color: var(--olive-green);"></i>
-                                                <strong>Respondido el:</strong> @solicitud.FechaRespuestaFormateada (@solicitud.TiempoRespuesta)
-                                            </span>
-                                        }
-                                    </div>
+                                    <span class="timeline-status-badge @badgeClass">
+                                        <i class="fas @estadoIcon"></i> @solicitud.Estado
+                                    </span>
                                 </div>
-                                <div style="text-align: right;">
-                                    <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Días Calendario</p>
-                                    <strong style="color: var(--gold); font-size: 1.5rem; font-family: var(--font-primary);">
-                                        @solicitud.DuracionCalendario
-                                    </strong>
-                                </div>
-                            </div>
 
-                            <div style="background: var(--cream); padding: 1.5rem; border-radius: 15px; margin-top: 1rem;">
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;">
-                                    <div>
-                                        <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
-                                            <i class="fas fa-calendar-check" style="color: var(--gold-bright);"></i> Días disponibles (antes)
+                                <div class="timeline-details-grid">
+                                    <div class="timeline-detail-item">
+                                        <p class="timeline-detail-label">
+                                            <i class="fas fa-clock" style="color: var(--gold-bright);"></i> Días solicitados
                                         </p>
-                                        <strong style="color: var(--dark-green); font-size: 1.2rem;">@solicitud.DiasDisponibles</strong>
+                                        <p class="timeline-detail-value">@solicitud.DiasSolicitados días lab.</p>
                                     </div>
-                                    @if (solicitud.Estado == "Aprobada")
+                                    <div class="timeline-detail-item">
+                                        <p class="timeline-detail-label">
+                                            <i class="fas fa-paper-plane" style="color: var(--olive-green);"></i> Solicitado el
+                                        </p>
+                                        <p class="timeline-detail-value small">@solicitud.FechaSolicitudFormateada</p>
+                                    </div>
+                                    @if (solicitud.FechaRespuesta.HasValue)
                                     {
-                                        <div>
-                                            <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
-                                                <i class="fas fa-arrow-right" style="color: var(--olive-green);"></i> Días después
+                                        <div class="timeline-detail-item">
+                                            <p class="timeline-detail-label">
+                                                <i class="fas fa-reply" style="color: var(--olive-green);"></i> Respondido el
                                             </p>
-                                            <strong style="color: var(--olive-green); font-size: 1.2rem;">@solicitud.DiasTemporales</strong>
-                                        </div>
-                                    }
-                                    else if (solicitud.Estado == "Pendiente")
-                                    {
-                                        <div>
-                                            <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">
-                                                <i class="fas fa-hourglass-half" style="color: var(--gold-bright);"></i> Días temporales
-                                            </p>
-                                            <strong style="color: var(--gold-bright); font-size: 1.2rem;">@solicitud.DiasTemporales</strong>
+                                            <p class="timeline-detail-value small">@solicitud.FechaRespuestaFormateada (@solicitud.TiempoRespuesta)</p>
                                         </div>
                                     }
                                 </div>
-                            </div>
 
-                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--cream); font-size: 0.85rem; color: var(--charcoal); opacity: 0.7;">
-                                <i class="fas fa-calendar-plus"></i>
-                                Registrado el @solicitud.FechaSolicitudFormateada
+                                <div class="timeline-stats">
+                                    <div class="timeline-stats-grid">
+                                        <div class="timeline-stat-item">
+                                            <p class="timeline-stat-label">
+                                                <i class="fas fa-calendar-check" style="color: var(--gold-bright);"></i> Días disponibles (antes)
+                                            </p>
+                                            <span class="timeline-stat-value total">@solicitud.DiasDisponibles</span>
+                                        </div>
+                                        @if (solicitud.Estado == "Aprobada")
+                                        {
+                                            <div class="timeline-stat-item">
+                                                <p class="timeline-stat-label">
+                                                    <i class="fas fa-arrow-right" style="color: var(--olive-green);"></i> Días después
+                                                </p>
+                                                <span class="timeline-stat-value success">@solicitud.DiasTemporales</span>
+                                            </div>
+                                        }
+                                        else if (solicitud.Estado == "Pendiente")
+                                        {
+                                            <div class="timeline-stat-item">
+                                                <p class="timeline-stat-label">
+                                                    <i class="fas fa-hourglass-half" style="color: var(--gold-bright);"></i> Días temporales
+                                                </p>
+                                                <span class="timeline-stat-value warning">@solicitud.DiasTemporales</span>
+                                            </div>
+                                        }
+                                        <div class="timeline-stat-item">
+                                            <p class="timeline-stat-label">
+                                                <i class="fas fa-calendar-plus" style="color: var(--gold-bright);"></i> Días calendario
+                                            </p>
+                                            <span class="timeline-stat-value extra">@solicitud.DuracionCalendario</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--cream); font-size: 0.85rem; color: var(--charcoal); opacity: 0.7;">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    Registrado el @solicitud.FechaSolicitudFormateada
+                                </div>
                             </div>
                         </div>
                     }
+                </div>
+
+                <!-- Footer de paginación -->
+                <div class="admin-table-footer" style="border-radius: 0 0 15px 15px; margin-top: 1rem;">
+                    <div class="admin-table-footer-text">
+                        Mostrando <strong id="startCard">0</strong> - <strong id="endCard">0</strong> de <strong id="totalCards">0</strong> registros
+                    </div>
+                    <div class="pagination-buttons">
+                        <button id="btnAnteriorCards" class="pagination-btn">
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <button id="btnSiguienteCards" class="pagination-btn">
+                            Siguiente <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             }
             else
@@ -234,27 +265,6 @@
         </div>
     </div>
 </section>
-
-<style>
-    @@media print {
-        .navbar, .footer, .scroll-to-top, .hero-leaves, .scroll-indicator, button, .btn {
-            display: none !important;
-        }
-
-        .hero {
-            min-height: auto !important;
-            padding: 2rem 0 1rem !important;
-        }
-
-        section {
-            padding: 1rem 0 !important;
-        }
-
-        body {
-            background: white !important;
-        }
-    }
-</style>
 
 @section Scripts {
     <script src="~/js/solicitudvacaciones.js"></script>

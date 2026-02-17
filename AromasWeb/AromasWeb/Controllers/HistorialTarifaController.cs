@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using AromasWeb.Abstracciones.ModeloUI;
+﻿using AromasWeb.Abstracciones.Logica.Empleado;
 using AromasWeb.Abstracciones.Logica.HistorialTarifa;
+using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.AccesoADatos;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace AromasWeb.Controllers
     public class HistorialTarifaController : Controller
     {
         private IListarHistorialTarifa _listarHistorialTarifa;
+        private IListarEmpleados _listarEmpleados;
 
         public HistorialTarifaController()
         {
             _listarHistorialTarifa = new LogicaDeNegocio.HistorialTarifas.ListarHistorialTarifa();
+            _listarEmpleados = new LogicaDeNegocio.Empleados.ListarEmpleados();
         }
 
         // GET: HistorialTarifa/ListadoTarifas
@@ -49,47 +52,46 @@ namespace AromasWeb.Controllers
         }
 
         // GET: HistorialTarifa/CrearTarifa
-        public IActionResult CrearTarifa(int? idEmpleado)
+    public IActionResult CrearTarifa(int? idEmpleado)
+    {
+        CargarEmpleados();
+        var nuevaTarifa = new HistorialTarifa
         {
-            var nuevaTarifa = new HistorialTarifa
-            {
-                FechaInicio = DateTime.Today,
-                FechaRegistro = DateTime.Now
-            };
-
-            if (idEmpleado.HasValue)
-            {
-                nuevaTarifa.IdEmpleado = idEmpleado.Value;
-            }
-
-            return View(nuevaTarifa);
-        }
-
-        // POST: HistorialTarifa/CrearTarifa
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CrearTarifa(HistorialTarifa tarifa)
+            FechaInicio = DateTime.Today,
+            FechaRegistro = DateTime.Now
+        };
+        if (idEmpleado.HasValue)
         {
-            if (ModelState.IsValid)
-            {
-                if (!tarifa.CumpleSalarioMinimo)
-                {
-                    TempData["Error"] = $"La tarifa debe ser mayor o igual a ₡{tarifa.TarifaMinimaLegal:N2} (salario mínimo legal)";
-                    return View(tarifa);
-                }
-
-                if (tarifa.FechaFin.HasValue && tarifa.FechaFin.Value <= tarifa.FechaInicio)
-                {
-                    TempData["Error"] = "La fecha de fin debe ser posterior a la fecha de inicio";
-                    return View(tarifa);
-                }
-
-                TempData["Mensaje"] = "Tarifa registrada correctamente";
-                return RedirectToAction(nameof(ListadoTarifas));
-            }
-
-            return View(tarifa);
+            nuevaTarifa.IdEmpleado = idEmpleado.Value;
         }
+        return View(nuevaTarifa);
+    }
+
+    // POST: HistorialTarifa/CrearTarifa
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult CrearTarifa(HistorialTarifa tarifa)
+    {
+        if (ModelState.IsValid)
+        {
+            if (!tarifa.CumpleSalarioMinimo)
+            {
+                TempData["Error"] = $"La tarifa debe ser mayor o igual a ₡{tarifa.TarifaMinimaLegal:N2} (salario mínimo legal)";
+                CargarEmpleados();
+                return View(tarifa);
+            }
+            if (tarifa.FechaFin.HasValue && tarifa.FechaFin.Value <= tarifa.FechaInicio)
+            {
+                TempData["Error"] = "La fecha de fin debe ser posterior a la fecha de inicio";
+                CargarEmpleados();
+                return View(tarifa);
+            }
+            TempData["Mensaje"] = "Tarifa registrada correctamente";
+            return RedirectToAction(nameof(ListadoTarifas));
+        }
+        CargarEmpleados();
+        return View(tarifa);
+    }
 
         // GET: HistorialTarifa/VerHistorialEmpleado/1
         public IActionResult VerHistorialEmpleado(int id)
@@ -166,6 +168,22 @@ namespace AromasWeb.Controllers
                     return null;
                 }
             }
+        }
+
+        // Método auxiliar privado
+        private void CargarEmpleados()
+        {
+            var empleados = _listarEmpleados.Obtener();
+
+            var empleadosDropdown = empleados.Select(e => new
+            {
+                IdEmpleado = e.IdEmpleado,
+                NombreCompleto = $"{e.Nombre} {e.Apellidos}",
+                Cargo = e.Cargo,
+                Identificacion = e.Identificacion
+            }).ToList();
+
+            ViewBag.Empleados = empleadosDropdown;
         }
     }
 }

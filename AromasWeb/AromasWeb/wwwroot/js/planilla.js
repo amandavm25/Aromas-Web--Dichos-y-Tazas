@@ -7,6 +7,22 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeTableHoverEffects();
     initializeModals();
     animateStatistics();
+
+    // Inicializar paginación de tabla usando la función general de site.js
+    if (document.getElementById('laTablaDePlanillas')) {
+        initTablePagination({
+            tableId: 'laTablaDePlanillas',
+            recordsPerPage: 5,
+            prevButtonId: 'btnAnterior',
+            nextButtonId: 'btnSiguiente',
+            startRecordId: 'startRecord',
+            endRecordId: 'endRecord',
+            totalRecordsId: 'totalRecords'
+        });
+    }
+
+    // Validación de formularios
+    initializeFormValidation();
 });
 
 // ============================================
@@ -107,7 +123,7 @@ function initializeTableHoverEffects() {
 
         rows.forEach(row => {
             row.addEventListener('mouseenter', function () {
-                this.style.background = 'linear-gradient(90deg, rgba(32, 116, 118, 0.05) 0%, transparent 100%)';
+                this.style.background = 'linear-gradient(90deg, rgba(143, 142, 106, 0.05) 0%, transparent 100%)';
                 this.style.transform = 'translateX(5px)';
                 this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
             });
@@ -151,7 +167,7 @@ function showTooltip(event, text) {
     tooltipElement.textContent = text;
     tooltipElement.style.cssText = `
         position: fixed;
-        background: linear-gradient(135deg, var(--dark-teal), var(--teal));
+        background: linear-gradient(135deg, var(--dark-green), var(--olive-green));
         color: white;
         padding: 0.7rem 1.2rem;
         border-radius: 12px;
@@ -195,13 +211,20 @@ function initializeModals() {
             const periodo = this.getAttribute('data-periodo');
             const neto = this.getAttribute('data-neto');
 
-            document.getElementById('pagar-id').value = id;
-            document.getElementById('pagar-empleado').textContent = empleado;
-            document.getElementById('pagar-periodo').textContent = periodo;
-            document.getElementById('pagar-neto').textContent = neto;
+            const elId = document.getElementById('pagar-id');
+            const elEmpleado = document.getElementById('pagar-empleado');
+            const elPeriodo = document.getElementById('pagar-periodo');
+            const elNeto = document.getElementById('pagar-neto');
+
+            if (elId) elId.value = id;
+            if (elEmpleado) elEmpleado.textContent = empleado;
+            if (elPeriodo) elPeriodo.textContent = periodo;
+            if (elNeto) elNeto.textContent = neto;
 
             const form = document.getElementById('formPagarPlanilla');
-            form.action = '/Planilla/MarcarComoPagado/' + id;
+            if (form) {
+                form.action = '/Planilla/MarcarComoPagado/' + id;
+            }
         });
     });
 }
@@ -209,7 +232,7 @@ function initializeModals() {
 // ============================================
 // VALIDACIÓN DE FORMULARIOS
 // ============================================
-document.addEventListener('DOMContentLoaded', function () {
+function initializeFormValidation() {
     const forms = document.querySelectorAll('form');
 
     forms.forEach(form => {
@@ -249,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-});
+}
 
 // ============================================
 // NOTIFICACIONES
@@ -280,7 +303,7 @@ function mostrarNotificacion(mensaje, tipo) {
         border-radius: 10px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.2);
         z-index: 10001;
-        animation: slideIn 0.3s ease;
+        animation: slideInNotif 0.3s ease;
         font-weight: 600;
         display: flex;
         align-items: center;
@@ -296,59 +319,58 @@ function mostrarNotificacion(mensaje, tipo) {
     document.body.appendChild(notification);
 
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
+        notification.style.animation = 'slideOutNotif 0.3s ease';
         setTimeout(() => {
             notification.remove();
         }, 300);
     }, 3000);
 }
 
-// ============================================
-// ESTILOS DE ANIMACIONES
-// ============================================
-const notifStyle = document.createElement('style');
-notifStyle.innerHTML = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
+// Agregar estilos de animación solo si no existen
+if (!document.getElementById('planilla-styles')) {
+    const planillaStyles = document.createElement('style');
+    planillaStyles.id = 'planilla-styles';
+    planillaStyles.innerHTML = `
+        @keyframes slideInNotif {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
-        to {
-            transform: translateX(0);
-            opacity: 1;
+        @keyframes slideOutNotif {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
         }
-    }
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
+        @keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
+        @keyframes tooltipFadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(10px);
+            }
         }
-    }
-    @keyframes tooltipFadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    @keyframes tooltipFadeOut {
-        from {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        to {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-    }
-`;
-document.head.appendChild(notifStyle);
-
-console.log('%c✓ Script de planillas cargado correctamente', 'color: #27ae60; font-weight: bold;');
+    `;
+    document.head.appendChild(planillaStyles);
+}

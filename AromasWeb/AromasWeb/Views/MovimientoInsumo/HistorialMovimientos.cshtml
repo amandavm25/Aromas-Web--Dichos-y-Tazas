@@ -264,7 +264,16 @@
             <!-- Footer de paginación -->
             <div class="admin-table-footer">
                 <div class="admin-table-footer-text">
-                    Mostrando <strong>@totalMovimientos</strong> movimiento(s)
+                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                </div>
+
+                <div class="pagination-buttons">
+                    <button id="btnAnterior" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btnSiguiente" class="pagination-btn">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>

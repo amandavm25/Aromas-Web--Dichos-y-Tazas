@@ -219,16 +219,17 @@
                 </div>
 
                 <!-- Footer de paginación -->
-                <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                    <div style="color: var(--dark-green); font-size: 0.95rem;">
-                        Mostrando <strong><span id="startRecord">1</span>-<span id="endRecord">@totalReservas</span></strong> de <strong id="totalRecords">@totalReservas</strong> reservas
+                <div class="admin-table-footer">
+                    <div class="admin-table-footer-text">
+                        Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
                     </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button id="btnAnterior" class="btn btn-secondary" onclick="paginaAnterior()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            &lt; Anterior
+
+                    <div class="pagination-buttons">
+                        <button id="btnAnterior" class="pagination-btn">
+                            <i class="fas fa-chevron-left"></i> Anterior
                         </button>
-                        <button id="btnSiguiente" class="btn btn-primary" onclick="paginaSiguiente()" style="border-radius: 50px; padding: 0.8rem 2rem;">
-                            Siguiente &gt;
+                        <button id="btnSiguiente" class="pagination-btn">
+                            Siguiente <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
                 </div>

@@ -3,6 +3,13 @@
 @{
     ViewBag.Title = "Historial de Tarifas del Empleado";
     var empleado = (AromasWeb.Abstracciones.ModeloUI.Empleado)ViewBag.Empleado;
+    var tarifaActual = Model.FirstOrDefault(t => t.EstadoVigencia == "Vigente");
+    var primeraTarifa = Model.OrderBy(t => t.FechaInicio).FirstOrDefault();
+    var crecimiento = 0m;
+    if (primeraTarifa != null && tarifaActual != null && primeraTarifa.TarifaHora > 0)
+    {
+        crecimiento = ((tarifaActual.TarifaHora - primeraTarifa.TarifaHora) / primeraTarifa.TarifaHora) * 100;
+    }
 }
 
 <!-- Hero Section -->
@@ -16,11 +23,35 @@
                 Historial Personal
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
-                Historial de Tarifas
+                Historial de <span class="hero-title-accent">Tarifas</span>
             </h1>
             <p class="hero-subtitle">
                 @empleado.Nombre @empleado.Apellidos • @empleado.Cargo
             </p>
+
+            <!-- Info rápida del empleado -->
+            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem; margin-bottom: 3rem; color: var(--charcoal);">
+                <div>
+                    <i class="fas fa-briefcase" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
+                    <strong style="display: block; font-size: 1.1rem;">@empleado.Cargo</strong>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Puesto Actual</span>
+                </div>
+                <div>
+                    <i class="fas fa-id-card" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
+                    <strong style="display: block; font-size: 1.1rem;">@empleado.Identificacion</strong>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Identificación</span>
+                </div>
+                <div>
+                    <i class="fas fa-calendar-alt" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
+                    <strong style="display: block; font-size: 1.1rem;">@empleado.AnosTrabajados</strong>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Antigüedad</span>
+                </div>
+                <div>
+                    <i class="fas fa-calendar-check" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.9;"></i>
+                    <strong style="display: block; font-size: 1.1rem;">@empleado.FechaContratacionFormateada</strong>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Fecha Contratación</span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="scroll-indicator">
@@ -32,50 +63,7 @@
 
 <!-- Content Section -->
 <section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 1400px;">
-
-        <!-- Información del Empleado -->
-        <div class="feature-card" style="background: white; margin-bottom: 3rem; padding: 2.5rem; border-left: 5px solid var(--olive-green);" data-aos="fade-up">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
-                <div>
-                    <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-user" style="font-size: 1.5rem; color: white;"></i>
-                    </div>
-                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Nombre Completo</p>
-                    <h4 style="margin: 0.3rem 0 0;k font-weight: 600; color: var(--dark-green);">@empleado.Nombre @empleado.Apellidos</h4>
-                </div>
-                <div>
-                    <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-id-card" style="font-size: 1.5rem; color: white;"></i>
-                    </div>
-                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Identificación</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleado.Identificacion</h4>
-                </div>
-                <div>
-                    <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-briefcase" style="font-size: 1.5rem; color: white;"></i>
-                    </div>
-                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Cargo</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleado.Cargo</h4>
-                </div>
-                <div>
-                    <div style="width: 60px; height: 60px; background: var(--gold); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-calendar" style="font-size: 1.5rem; color: white;"></i>
-                    </div>
-                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Fecha de Contratación</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleado.FechaContratacionFormateada</h4>
-                </div>
-                <div>
-                    <div style="width: 60px; height: 60px; background: var(--gold); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="fas fa-hourglass-half" style="font-size: 1.5rem; color: white;"></i>
-                    </div>
-                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Antigüedad</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">
-                        @empleado.AnosTrabajados
-                    </h4>
-                </div>
-            </div>
-        </div>
+    <div class="container" style="max-width: 1200px;">
 
         <!-- Estadísticas de Tarifas -->
         <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
@@ -84,9 +72,6 @@
                     <i class="fas fa-dollar-sign"></i>
                 </div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                    @{
-                        var tarifaActual = Model.FirstOrDefault(t => t.EstadoVigencia == "Vigente");
-                    }
                     @if (tarifaActual != null)
                     {
                         <text>₡@tarifaActual.TarifaHora.ToString("N2")</text>
@@ -98,6 +83,7 @@
                 </h3>
                 <p style="margin: 0.5rem 0;">Tarifa Actual por Hora</p>
             </div>
+
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
                 <div class="feature-icon">
                     <i class="fas fa-wallet"></i>
@@ -114,6 +100,7 @@
                 </h3>
                 <p style="margin: 0.5rem 0;">Salario Mensual Estimado</p>
             </div>
+
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
                 <div class="feature-icon">
                     <i class="fas fa-history"></i>
@@ -121,21 +108,12 @@
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@Model.Count</h3>
                 <p style="margin: 0.5rem 0;">Cambios de Tarifa</p>
             </div>
+
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
                 <div class="feature-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                    @{
-                        var primeraTarifa = Model.OrderBy(t => t.FechaInicio).FirstOrDefault();
-                        var crecimiento = 0m;
-                        if (primeraTarifa != null && tarifaActual != null && primeraTarifa.TarifaHora > 0)
-                        {
-                            crecimiento = ((tarifaActual.TarifaHora - primeraTarifa.TarifaHora) / primeraTarifa.TarifaHora) * 100;
-                        }
-                    }
-                    @crecimiento.ToString("N1")%
-                </h3>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@crecimiento.ToString("N1")%</h3>
                 <p style="margin: 0.5rem 0;">Crecimiento Salarial</p>
             </div>
         </div>
@@ -154,97 +132,164 @@
         </div>
 
         <!-- Timeline de Tarifas -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); padding: 3rem;" data-aos="fade-up">
-            <h4 style="color: var(--dark-green); margin-bottom: 2rem; font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                <i class="fas fa-clock"></i> Línea de Tiempo de Tarifas
-            </h4>
+        <div class="timeline-container" data-aos="fade-up">
+            @if (Model != null && Model.Any())
+            {
+                <div class="timeline-header">
+                    <h2>
+                        <i class="fas fa-clock" style="color: var(--gold);"></i>
+                        Línea de Tiempo de Tarifas
+                    </h2>
+                    <p>Evolución salarial completa del empleado</p>
+                </div>
 
-            <div style="position: relative; padding-left: 3rem;">
-                <!-- Línea vertical -->
-                <div style="position: absolute; left: 1rem; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--olive-green) 0%, var(--gold) 100%);"></div>
-
-                @foreach (var tarifa in Model)
-                {
-                    var estadoColor = tarifa.EstadoVigencia switch
+                <div id="historial-tarifa-timeline">
+                    @foreach (var tarifa in Model.OrderByDescending(t => t.FechaInicio))
                     {
-                        "Vigente" => "var(--olive-green)",
-                        "Vencida" => "#95a5a6",
-                        "Futura" => "var(--gold-bright)",
-                        _ => "#95a5a6"
-                    };
+                        var badgeClass = tarifa.EstadoVigencia switch
+                        {
+                            "Vigente" => "complete",
+                            "Vencida" => "rejected",
+                            "Futura" => "warning",
+                            _ => ""
+                        };
+                        var iconoEstado = tarifa.EstadoVigencia switch
+                        {
+                            "Vigente" => "fa-check-circle",
+                            "Vencida" => "fa-times-circle",
+                            "Futura" => "fa-calendar",
+                            _ => "fa-question-circle"
+                        };
 
-                    var estadoIcon = tarifa.EstadoVigencia switch
-                    {
-                        "Vigente" => "fa-check-circle",
-                        "Vencida" => "fa-clock",
-                        "Futura" => "fa-calendar",
-                        _ => "fa-question-circle"
-                    };
+                        <div class="timeline-card">
+                            <div class="timeline-card-content">
+                                <div class="timeline-card-header">
+                                    <!-- Fecha y referencia -->
+                                    <div class="timeline-date-wrapper">
+                                        <div class="timeline-date-badge">
+                                            <div class="timeline-date-day">@tarifa.FechaInicio.ToString("dd")</div>
+                                            <div class="timeline-date-month">@tarifa.FechaInicio.ToString("MMM", new System.Globalization.CultureInfo("es-ES"))</div>
+                                        </div>
+                                        <div class="timeline-date-info">
+                                            <h3>₡@tarifa.TarifaHora.ToString("N2") / hora</h3>
+                                            <p>Registro #@tarifa.IdHistorialTarifa</p>
+                                        </div>
+                                    </div>
 
-                    <div class="feature-card" style="position: relative; margin-bottom: 2rem; padding: 2rem; border-left: 5px solid @estadoColor; background: white;">
-                        <!-- Punto en la línea -->
-                        <div style="position: absolute; left: -3rem; top: 2rem; width: 20px; height: 20px; background: @estadoColor; border-radius: 50%; border: 4px solid var(--white); box-shadow: 0 0 0 3px @estadoColor;"></div>
-
-                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-                            <div style="flex: 1;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                                    <h5 style="margin: 0; color: var(--dark-green); font-weight: 700; font-size: 1.5rem;">
-                                        ₡@tarifa.TarifaHora.ToString("N2")/hora
-                                    </h5>
-                                    <span style="background: @estadoColor; color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
-                                        <i class="fas @estadoIcon"></i> @tarifa.EstadoVigencia
-                                    </span>
+                                    <!-- Estado -->
+                                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;">
+                                        <span class="timeline-status-badge @badgeClass">
+                                            <i class="fas @iconoEstado"></i> @tarifa.EstadoVigencia
+                                        </span>
+                                        @if (tarifa.CumpleSalarioMinimo)
+                                        {
+                                            <span class="timeline-status-badge complete" style="font-size: 0.75rem;">
+                                                <i class="fas fa-shield-alt"></i> Cumple mínimo
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="timeline-status-badge rejected" style="font-size: 0.75rem;">
+                                                <i class="fas fa-exclamation-triangle"></i> Bajo mínimo
+                                            </span>
+                                        }
+                                    </div>
                                 </div>
-                                <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.95rem;">
-                                    <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i>
-                                    <strong>Vigencia:</strong> @tarifa.FechaInicioFormateada
-                                    @if (tarifa.FechaFin.HasValue)
-                                    {
-                                        <text> - @tarifa.FechaFinFormateada</text>
-                                    }
-                                    else
-                                    {
-                                        <text> - Indefinido</text>
-                                    }
-                                    (@tarifa.DiasVigencia días)
-                                </p>
+
+                                <!-- Detalles de vigencia -->
+                                <div class="timeline-details-grid">
+                                    <div class="timeline-detail-item">
+                                        <label class="timeline-detail-label">
+                                            <i class="fas fa-play" style="color: #27ae60;"></i> Inicio
+                                        </label>
+                                        <p class="timeline-detail-value">@tarifa.FechaInicioFormateada</p>
+                                    </div>
+
+                                    <div class="timeline-detail-item">
+                                        <label class="timeline-detail-label">
+                                            <i class="fas fa-stop" style="color: #e74c3c;"></i> Fin
+                                        </label>
+                                        <p class="timeline-detail-value @(tarifa.FechaFin.HasValue ? "" : "pending")">
+                                            @(tarifa.FechaFin.HasValue? tarifa.FechaFinFormateada: "Indefinido")
+                                        </p>
+                                    </div>
+
+                                    <div class="timeline-detail-item">
+                                        <label class="timeline-detail-label">
+                                            <i class="fas fa-hourglass-half" style="color: var(--gold-bright);"></i> Vigencia
+                                        </label>
+                                        <p class="timeline-detail-value">@tarifa.DiasVigencia días</p>
+                                    </div>
+                                </div>
+
+                                <!-- Estadísticas salariales -->
+                                <div class="timeline-stats">
+                                    <div class="timeline-stats-grid">
+                                        <div class="timeline-stat-item">
+                                            <p class="timeline-stat-label">
+                                                <i class="fas fa-dollar-sign"></i> Tarifa por Hora
+                                            </p>
+                                            <strong class="timeline-stat-value">
+                                                ₡@tarifa.TarifaHora.ToString("N2")
+                                            </strong>
+                                        </div>
+                                        <div class="timeline-stat-item">
+                                            <p class="timeline-stat-label">
+                                                <i class="fas fa-wallet"></i> Salario Mensual
+                                            </p>
+                                            <strong class="timeline-stat-value extra">
+                                                ₡@tarifa.SalarioMensualEstimado.ToString("N2")
+                                            </strong>
+                                        </div>
+                                        <div class="timeline-stat-item">
+                                            <p class="timeline-stat-label">
+                                                <i class="fas fa-calendar-plus"></i> Registrado
+                                            </p>
+                                            <strong class="timeline-stat-value total" style="font-size: 0.95rem;">
+                                                @tarifa.FechaRegistroFormateada
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Motivo -->
+                                <div class="timeline-info-message">
+                                    <p>
+                                        <i class="fas fa-comment" style="color: var(--gold);"></i>
+                                        <span><strong>Motivo:</strong> @tarifa.Motivo</span>
+                                    </p>
+                                </div>
                             </div>
-                            <div style="text-align: right;">
-                                <p style="margin: 0 0 0.3rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Salario Mensual</p>
-                                <strong style="color: var(--gold); font-size: 1.3rem; font-family: var(--font-primary);">
-                                    ₡@tarifa.SalarioMensualEstimado.ToString("N2")
-                                </strong>
-                            </div>
                         </div>
+                    }
+                </div>
 
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
-                            <p style="margin: 0; color: var(--dark-green);">
-                                <i class="fas fa-comment" style="color: var(--gold);"></i>
-                                <strong>Motivo:</strong> @tarifa.Motivo
-                            </p>
-                        </div>
-
-                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--cream); display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--charcoal); opacity: 0.7;">
-                            <span>
-                                <i class="fas fa-calendar-plus"></i>
-                                Registrado: @tarifa.FechaRegistroFormateada
-                            </span>
-                            <span>
-                                ID: #@tarifa.IdHistorialTarifa
-                            </span>
-                        </div>
+                <!-- Footer de paginación -->
+                <div class="timeline-pagination-footer">
+                    <div class="timeline-pagination-info">
+                        Mostrando <strong id="startCard">0</strong> - <strong id="endCard">0</strong> de <strong id="totalCards">0</strong> registros
                     </div>
-                }
-
-                @if (!Model.Any())
-                {
-                    <div style="text-align: center; padding: 3rem; color: var(--charcoal); opacity: 0.7;">
-                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                        <p style="margin: 0; font-size: 1.1rem; font-weight: 600;">No hay registros de tarifas</p>
-                        <p style="margin: 0.5rem 0 0; font-size: 0.95rem;">Este empleado aún no tiene tarifas registradas</p>
+                    <div class="timeline-pagination-buttons">
+                        <button id="btnAnteriorCards" class="timeline-pagination-btn">
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <button id="btnSiguienteCards" class="timeline-pagination-btn">
+                            Siguiente <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
-                }
-            </div>
+                </div>
+            }
+            else
+            {
+                <div class="feature-card timeline-empty">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <h5>No hay registros de tarifas</h5>
+                    <p>Este empleado aún no tiene tarifas registradas.</p>
+                    <a href="@Url.Action("CrearTarifa", "HistorialTarifa", new { idEmpleado = empleado.IdEmpleado })" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Registrar Primera Tarifa
+                    </a>
+                </div>
+            }
         </div>
     </div>
 </section>

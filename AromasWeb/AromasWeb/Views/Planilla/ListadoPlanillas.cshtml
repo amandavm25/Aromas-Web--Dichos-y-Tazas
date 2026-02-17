@@ -33,8 +33,8 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
 
-        <!-- Resumen de Planillas DINÁMICO -->
-        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+        <!-- Resumen de Planillas -->
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" data-aos="fade-up">
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
                 <div class="feature-icon">
                     <i class="fas fa-file-invoice"></i>
@@ -65,39 +65,36 @@
                 </div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@((ViewBag.TotalAPagar ?? 0m).ToString("N0"))</h3>
                 <p style="margin: 0.5rem 0;">Total a Pagar</p>
-                <small style="opacity: 0.7; display: block; margin-top: 0.5rem;">
-                    Planillas pendientes
-                </small>
+                <small style="opacity: 0.7; display: block; margin-top: 0.5rem;">Planillas pendientes</small>
             </div>
         </div>
 
-        <!-- Barra de acciones -->
-        <div style="display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;" data-aos="fade-up">
-            <a href="@Url.Action("CalcularPlanilla", "Planilla")" class="btn btn-primary">
+        <!-- Barra de acciones y filtros -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
+            <a href="@Url.Action("CalcularPlanilla", "Planilla")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
                 <span><i class="fas fa-calculator"></i> Calcular Nueva Planilla</span>
             </a>
         </div>
 
-        <!-- Filtros DINÁMICOS -->
-        <div style="margin-bottom: 3rem;" data-aos="fade-up">
+        <!-- Filtros -->
+        <div style="margin-bottom: 2rem;" data-aos="fade-up">
             <form method="get" action="@Url.Action("ListadoPlanillas", "Planilla")" style="display: contents;">
                 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
                     <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
                         <i class="fas fa-filter" style="color: var(--gold);"></i> Filtrar:
                     </span>
 
-                    <!-- Filtro por Empleado DINÁMICO -->
                     <div style="position: relative;">
                         <i class="fas fa-user" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
-                        <select name="empleado" 
+                        <select name="empleado"
                                 style="border-radius: 50px; padding: 0.6rem 1.5rem 0.6rem 50px; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white); min-width: 200px; color: var(--dark-green); font-weight: 600; font-family: var(--font-secondary);">
                             <option value="">Todos los empleados</option>
                             @if (ViewBag.Empleados != null)
                             {
                                 foreach (var emp in ViewBag.Empleados)
                                 {
-                                    <option value="@emp.IdEmpleado" 
-                                            @@(ViewBag.EmpleadoFiltro != null && ViewBag.EmpleadoFiltro == emp.IdEmpleado ? "selected" : "")>
+                                    <option value="@emp.IdEmpleado"
+                                            @@(ViewBag.EmpleadoFiltro !=null && ViewBag.EmpleadoFiltro= =emp.IdEmpleado ? "selected" : "" )>
                                         @emp.NombreCompleto - @emp.Cargo
                                     </option>
                                 }
@@ -105,48 +102,36 @@
                         </select>
                     </div>
 
-                    <!-- Filtro por Estado CON SELECCIÓN MANTENIDA -->
                     <div style="position: relative;">
                         <i class="fas fa-toggle-on" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
-                        <select name="estado" 
+                        <select name="estado"
                                 style="border-radius: 50px; padding: 0.6rem 1.5rem 0.6rem 50px; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white); min-width: 180px; color: var(--dark-green); font-weight: 600; font-family: var(--font-secondary);">
                             <option value="">Todos los estados</option>
-                            <option value="Calculado" @@(ViewBag.EstadoFiltro == "Calculado" ? "selected" : "")>Calculado</option>
-                            <option value="Pagado" @@(ViewBag.EstadoFiltro == "Pagado" ? "selected" : "")>Pagado</option>
-                            <option value="Anulado" @@(ViewBag.EstadoFiltro == "Anulado" ? "selected" : "")>Anulado</option>
+                            <option value="Calculado" @@(ViewBag.EstadoFiltro= ="Calculado" ? "selected" : "" )>Calculado</option>
+                            <option value="Pagado" @@(ViewBag.EstadoFiltro= ="Pagado" ? "selected" : "" )>Pagado</option>
+                            <option value="Anulado" @@(ViewBag.EstadoFiltro= ="Anulado" ? "selected" : "" )>Anulado</option>
                         </select>
                     </div>
 
-                    <!-- Filtro por Período CON VALORES MANTENIDOS -->
                     <div style="position: relative;">
                         <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
-                        <input type="date" 
-                               name="fechaInicio" 
-                               value="@ViewBag.FechaInicio"
-                               placeholder="Fecha inicio"
+                        <input type="date" name="fechaInicio" value="@ViewBag.FechaInicio"
                                style="border-radius: 50px; padding: 0.6rem 1.5rem 0.6rem 50px; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white); color: var(--dark-green); font-weight: 600; font-family: var(--font-secondary);">
                     </div>
 
                     <div style="position: relative;">
                         <i class="fas fa-calendar-check" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
-                        <input type="date" 
-                               name="fechaFin" 
-                               value="@ViewBag.FechaFin"
-                               placeholder="Fecha fin"
+                        <input type="date" name="fechaFin" value="@ViewBag.FechaFin"
                                style="border-radius: 50px; padding: 0.6rem 1.5rem 0.6rem 50px; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white); color: var(--dark-green); font-weight: 600; font-family: var(--font-secondary);">
                     </div>
 
-                    <button type="submit" 
-                            class="btn btn-primary" 
-                            style="border-radius: 50px; padding: 0.6rem 1.5rem; white-space: nowrap;">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0.6rem 1.5rem; white-space: nowrap;">
                         <span><i class="fas fa-search"></i> Aplicar Filtros</span>
                     </button>
 
                     @if (ViewBag.EmpleadoFiltro != null || !string.IsNullOrEmpty(ViewBag.EstadoFiltro as string) || !string.IsNullOrEmpty(ViewBag.FechaInicio as string))
                     {
-                        <a href="@Url.Action("ListadoPlanillas", "Planilla")" 
-                           class="btn btn-secondary" 
-                           style="border-radius: 50px; padding: 0.6rem 1.5rem; white-space: nowrap;">
+                        <a href="@Url.Action("ListadoPlanillas", "Planilla")" class="btn btn-secondary" style="border-radius: 50px; padding: 0.6rem 1.5rem; white-space: nowrap;">
                             <span><i class="fas fa-times"></i> Limpiar Filtros</span>
                         </a>
                     }
@@ -154,75 +139,78 @@
             </form>
         </div>
 
-        <!-- Información de filtros activos -->
+        <!-- Info de filtros activos -->
         @if (ViewBag.EmpleadoFiltro != null || !string.IsNullOrEmpty(ViewBag.EstadoFiltro as string) || !string.IsNullOrEmpty(ViewBag.FechaInicio as string))
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
                 <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
                     <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                    Filtros activos - <strong>@(Model?.Count ?? 0)</strong> planilla(s) encontrada(s)
+                    Filtros activos — <strong>@(Model?.Count ?? 0)</strong> planilla(s) encontrada(s)
                 </p>
             </div>
         }
 
-        <!-- Tabla Principal DINÁMICA -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
-            <div style="overflow-x: auto; max-width: 100%;">
-                <table id="laTablaDePlanillas" style="margin-bottom: 0; width: 100%; min-width: 1400px; border-collapse: collapse;">
-                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+        <!-- Tabla Principal -->
+        <div class="admin-table-container" data-aos="fade-up">
+            <div class="table-responsive">
+                <table class="admin-table" id="laTablaDePlanillas" style="min-width: 1400px;">
+                    <thead>
                         <tr>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">#</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Empleado</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Período</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Tarifa/h</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">H. Regulares</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">H. Extras</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Pago Bruto</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Deducciones</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Pago Neto</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; font-family: var(--font-secondary);">Estado</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center; font-family: var(--font-secondary);">Acciones</th>
+                            <th style="padding: 1.2rem;">#</th>
+                            <th style="padding: 1.2rem;">Empleado</th>
+                            <th style="padding: 1.2rem;">Período</th>
+                            <th style="padding: 1.2rem;">Tarifa/h</th>
+                            <th style="padding: 1.2rem;">H. Regulares</th>
+                            <th style="padding: 1.2rem;">H. Extras</th>
+                            <th style="padding: 1.2rem;">Pago Bruto</th>
+                            <th style="padding: 1.2rem;">Deducciones</th>
+                            <th style="padding: 1.2rem;">Pago Neto</th>
+                            <th style="padding: 1.2rem;">Estado</th>
+                            <th style="padding: 1.2rem; text-align: center;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (Model != null && Model.Any())
                         {
+                            int contador = 1;
                             @foreach (var planilla in Model)
                             {
-                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-family: var(--font-secondary);">@planilla.IdPlanilla</td>
-                                    <td style="padding: 1.2rem; font-family: var(--font-secondary);">
-                                        <div>
-                                            <strong style="color: var(--dark-green);">@planilla.NombreEmpleado</strong>
-                                            <br>
-                                            <small style="color: var(--charcoal); opacity: 0.7;">@planilla.CargoEmpleado</small>
-                                        </div>
+                                <tr>
+                                    <td style="padding: 1.2rem;">
+                                        <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); font-family: var(--font-secondary);">
-                                        <div>
-                                            <strong>@planilla.PeriodoInicio.ToString("dd/MM/yyyy")</strong>
-                                            <br>
-                                            <small style="color: var(--charcoal); opacity: 0.7;">hasta @planilla.PeriodoFin.ToString("dd/MM/yyyy")</small>
-                                        </div>
+                                    <td style="padding: 1.2rem;">
+                                        <strong style="color: var(--dark-green); display: block;">@planilla.NombreEmpleado</strong>
+                                        <small style="color: var(--charcoal); opacity: 0.7;">@planilla.CargoEmpleado</small>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600; font-family: var(--font-secondary);">₡@planilla.TarifaHora.ToString("N2")</td>
-                                    <td style="padding: 1.2rem; color: var(--olive-green); font-weight: 600; font-family: var(--font-secondary);">@planilla.TotalHorasRegulares.ToString("N2")h</td>
-                                    <td style="padding: 1.2rem; color: var(--gold-bright); font-weight: 600; font-family: var(--font-secondary);">@planilla.TotalHorasExtras.ToString("N2")h</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 700; font-family: var(--font-secondary);">₡@planilla.PagoBruto.ToString("N0")</td>
-                                    <td style="padding: 1.2rem; color: var(--gold); font-weight: 600; font-family: var(--font-secondary);">₡@planilla.TotalDeducciones.ToString("N0")</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 700; font-size: 1.1rem; font-family: var(--font-secondary);">₡@planilla.PagoNeto.ToString("N0")</td>
-                                    <td style="padding: 1.2rem; font-family: var(--font-secondary);">
+                                    <td style="padding: 1.2rem;">
+                                        <strong style="color: var(--dark-green); display: block;">@planilla.PeriodoInicio.ToString("dd/MM/yyyy")</strong>
+                                        <small style="color: var(--charcoal); opacity: 0.7;">hasta @planilla.PeriodoFin.ToString("dd/MM/yyyy")</small>
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">₡@planilla.TarifaHora.ToString("N2")</td>
+                                    <td style="padding: 1.2rem; color: var(--olive-green); font-weight: 600;">@planilla.TotalHorasRegulares.ToString("N2")h</td>
+                                    <td style="padding: 1.2rem; color: var(--gold-bright); font-weight: 600;">@planilla.TotalHorasExtras.ToString("N2")h</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 700;">₡@planilla.PagoBruto.ToString("N0")</td>
+                                    <td style="padding: 1.2rem; color: var(--gold); font-weight: 600;">₡@planilla.TotalDeducciones.ToString("N0")</td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 700; font-size: 1.1rem;">₡@planilla.PagoNeto.ToString("N0")</td>
+                                    <td style="padding: 1.2rem;">
                                         @if (planilla.Estado.Equals("Pagado", StringComparison.OrdinalIgnoreCase))
                                         {
-                                            <span style="background: var(--olive-green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Pagado</span>
+                                            <span class="badge" style="background: var(--olive-green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                                <i class="fas fa-check-circle"></i> Pagado
+                                            </span>
                                         }
                                         else if (planilla.Estado.Equals("Calculado", StringComparison.OrdinalIgnoreCase))
                                         {
-                                            <span style="background: var(--gold-bright); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Calculado</span>
+                                            <span class="badge" style="background: var(--gold-bright); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                                <i class="fas fa-calculator"></i> Calculado
+                                            </span>
                                         }
                                         else
                                         {
-                                            <span style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Anulado</span>
+                                            <span class="badge" style="background: #e74c3c; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                                <i class="fas fa-times-circle"></i> Anulado
+                                            </span>
                                         }
                                     </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
@@ -250,6 +238,7 @@
                                         }
                                     </td>
                                 </tr>
+                                contador++;
                             }
                         }
                         else
@@ -270,9 +259,17 @@
             </div>
 
             <!-- Footer de paginación -->
-            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                <div style="color: var(--dark-green); font-size: 0.95rem; font-family: var(--font-secondary);">
-                    Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> planillas
+            <div class="admin-table-footer">
+                <div class="admin-table-footer-text">
+                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                </div>
+                <div class="pagination-buttons">
+                    <button id="btnAnterior" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btnSiguiente" class="pagination-btn">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>

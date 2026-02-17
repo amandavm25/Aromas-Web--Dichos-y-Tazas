@@ -5,7 +5,33 @@ document.addEventListener('DOMContentLoaded', function () {
     animateOnLoad();
     initializeTooltips();
     initializeTableHoverEffects();
-    mostrarPagina();
+
+    // Inicializar paginación de tabla usando la función general de site.js
+    if (document.getElementById('laTablaDeAsistencias')) {
+        initTablePagination({
+            tableId: 'laTablaDeAsistencias',
+            recordsPerPage: 5,
+            prevButtonId: 'btnAnterior',
+            nextButtonId: 'btnSiguiente',
+            startRecordId: 'startRecord',
+            endRecordId: 'endRecord',
+            totalRecordsId: 'totalRecords'
+        });
+    }
+
+    // Inicializar paginación de cards/timeline usando la función general de site.js
+    if (document.getElementById('historial-timeline')) {
+        initCardsPagination({
+            containerId: 'historial-timeline',
+            cardsPerPage: 3,
+            prevButtonId: 'btnAnteriorCards',
+            nextButtonId: 'btnSiguienteCards',
+            startCardId: 'startCard',
+            endCardId: 'endCard',
+            totalCardsId: 'totalCards'
+        });
+    }
+
     initializeModals();
 });
 
@@ -23,18 +49,6 @@ function animateOnLoad() {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0) scale(1)';
         }, index * 100);
-    });
-
-    const tableRows = document.querySelectorAll('tbody tr');
-    tableRows.forEach((row, index) => {
-        row.style.opacity = '0';
-        row.style.transform = 'translateX(-20px)';
-
-        setTimeout(() => {
-            row.style.transition = 'all 0.4s ease';
-            row.style.opacity = '1';
-            row.style.transform = 'translateX(0)';
-        }, 300 + (index * 50));
     });
 }
 
@@ -128,89 +142,13 @@ function hideTooltip() {
 }
 
 // ============================================
-// PAGINACIÓN
-// ============================================
-let paginaActual = 1;
-const registrosPorPagina = 10;
-
-function paginaAnterior() {
-    if (paginaActual > 1) {
-        paginaActual--;
-        mostrarPagina();
-    }
-}
-
-function paginaSiguiente() {
-    const tabla = document.getElementById('laTablaDeAsistencias');
-    const tbody = tabla ? tabla.querySelector('tbody') : null;
-    if (!tbody) return;
-
-    const todasLasFilas = tbody.querySelectorAll('tr');
-    const totalPaginas = Math.ceil(todasLasFilas.length / registrosPorPagina);
-
-    if (paginaActual < totalPaginas) {
-        paginaActual++;
-        mostrarPagina();
-    }
-}
-
-function mostrarPagina() {
-    const tabla = document.getElementById('laTablaDeAsistencias');
-    const tbody = tabla ? tabla.querySelector('tbody') : null;
-    if (!tbody) return;
-
-    const todasLasFilas = tbody.querySelectorAll('tr');
-    const totalRegistros = todasLasFilas.length;
-
-    const inicio = (paginaActual - 1) * registrosPorPagina;
-    const fin = inicio + registrosPorPagina;
-
-    todasLasFilas.forEach((fila, index) => {
-        if (index >= inicio && index < fin) {
-            fila.style.display = '';
-        } else {
-            fila.style.display = 'none';
-        }
-    });
-
-    const totalPaginas = Math.ceil(totalRegistros / registrosPorPagina);
-
-    const startRecord = document.getElementById('startRecord');
-    const endRecord = document.getElementById('endRecord');
-    const totalRecordsEl = document.getElementById('totalRecords');
-
-    if (startRecord) startRecord.textContent = totalRegistros > 0 ? inicio + 1 : 0;
-    if (endRecord) endRecord.textContent = Math.min(fin, totalRegistros);
-    if (totalRecordsEl) totalRecordsEl.textContent = totalRegistros;
-
-    const btnAnterior = document.getElementById('btnAnterior');
-    const btnSiguiente = document.getElementById('btnSiguiente');
-
-    if (btnAnterior) {
-        btnAnterior.disabled = paginaActual === 1;
-        btnAnterior.style.opacity = paginaActual === 1 ? '0.5' : '1';
-        btnAnterior.style.cursor = paginaActual === 1 ? 'not-allowed' : 'pointer';
-    }
-
-    if (btnSiguiente) {
-        btnSiguiente.disabled = paginaActual === totalPaginas || totalRegistros === 0;
-        btnSiguiente.style.opacity = (paginaActual === totalPaginas || totalRegistros === 0) ? '0.5' : '1';
-        btnSiguiente.style.cursor = (paginaActual === totalPaginas || totalRegistros === 0) ? 'not-allowed' : 'pointer';
-    }
-}
-
-// ============================================
 // MODALES
 // ============================================
 function initializeModals() {
-    // ============================================
-    // MODAL DETALLES ASISTENCIA
-    // ============================================
-    const botonesDetalles = document.querySelectorAll('.btn-detalles');
+    const botonesDetalles = document.querySelectorAll('.btn-detalles-asistencia');
 
     botonesDetalles.forEach(boton => {
         boton.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
             const nombre = this.getAttribute('data-nombre');
             const identificacion = this.getAttribute('data-identificacion');
             const cargo = this.getAttribute('data-cargo');
@@ -224,62 +162,51 @@ function initializeModals() {
             const horasExtras = this.getAttribute('data-horasextras');
             const estado = this.getAttribute('data-estado');
 
-            document.getElementById('detalles-id-asistencia').textContent = id;
-            document.getElementById('detalles-nombre-empleado').textContent = nombre;
-            document.getElementById('detalles-identificacion-empleado').textContent = identificacion;
-            document.getElementById('detalles-cargo-empleado').textContent = cargo;
-            document.getElementById('detalles-fecha-asistencia').textContent = fecha;
-            document.getElementById('detalles-dia-asistencia').textContent = dia;
-            document.getElementById('detalles-entrada-asistencia').textContent = entrada;
-            document.getElementById('detalles-salida-asistencia').textContent = salida;
-            document.getElementById('detalles-almuerzo-asistencia').textContent = almuerzo;
-            document.getElementById('detalles-horastotales-asistencia').textContent = horasTotales;
-            document.getElementById('detalles-horasregulares-asistencia').textContent = horasRegulares + 'h';
-            document.getElementById('detalles-horasextras-asistencia').textContent = horasExtras + 'h';
+            const elNombre = document.getElementById('detalles-nombre-empleado');
+            const elIdentificacion = document.getElementById('detalles-identificacion-empleado');
+            const elCargo = document.getElementById('detalles-cargo-empleado');
+            const elFecha = document.getElementById('detalles-fecha-asistencia');
+            const elDia = document.getElementById('detalles-dia-asistencia');
+            const elEntrada = document.getElementById('detalles-entrada-asistencia');
+            const elSalida = document.getElementById('detalles-salida-asistencia');
+            const elAlmuerzo = document.getElementById('detalles-almuerzo-asistencia');
+            const elHorasTotales = document.getElementById('detalles-horastotales-asistencia');
+            const elHorasRegulares = document.getElementById('detalles-horasregulares-asistencia');
+            const elHorasExtras = document.getElementById('detalles-horasextras-asistencia');
+
+            if (elNombre) elNombre.textContent = nombre;
+            if (elIdentificacion) elIdentificacion.textContent = identificacion;
+            if (elCargo) elCargo.textContent = cargo;
+            if (elFecha) elFecha.textContent = fecha;
+            if (elDia) elDia.textContent = dia;
+            if (elEntrada) elEntrada.textContent = entrada;
+            if (elSalida) elSalida.textContent = salida;
+            if (elAlmuerzo) elAlmuerzo.textContent = almuerzo;
+            if (elHorasTotales) elHorasTotales.textContent = horasTotales;
+            if (elHorasRegulares) elHorasRegulares.textContent = horasRegulares + 'h';
+            if (elHorasExtras) elHorasExtras.textContent = horasExtras + 'h';
 
             const estadoBadge = document.getElementById('detalles-estado-badge-asistencia');
-            if (estado === 'Completo') {
-                estadoBadge.textContent = 'Completo';
-                estadoBadge.style.background = '#27ae60';
-                estadoBadge.style.color = 'white';
-            } else {
-                estadoBadge.textContent = 'En curso';
-                estadoBadge.style.background = 'var(--amber)';
-                estadoBadge.style.color = 'white';
+            if (estadoBadge) {
+                if (estado === 'Completo') {
+                    estadoBadge.textContent = 'Completo';
+                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.color = 'white';
+                } else {
+                    estadoBadge.textContent = 'En curso';
+                    estadoBadge.style.background = 'var(--amber)';
+                    estadoBadge.style.color = 'white';
+                }
             }
 
-            // Mostrar/ocultar sección de horas extras
             const horasExtrasSection = document.getElementById('detalles-horasextras-section');
-            if (parseFloat(horasExtras) > 0) {
-                horasExtrasSection.style.display = 'flex';
-            } else {
-                horasExtrasSection.style.display = 'none';
+            if (horasExtrasSection) {
+                if (parseFloat(horasExtras) > 0) {
+                    horasExtrasSection.style.display = 'flex';
+                } else {
+                    horasExtrasSection.style.display = 'none';
+                }
             }
-        });
-    });
-
-    // ============================================
-    // MODAL ELIMINAR ASISTENCIA
-    // ============================================
-    const botonesEliminar = document.querySelectorAll('.btn-eliminar');
-
-    botonesEliminar.forEach(boton => {
-        boton.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            const nombre = this.getAttribute('data-nombre');
-            const fecha = this.getAttribute('data-fecha');
-            const entrada = this.getAttribute('data-entrada');
-            const salida = this.getAttribute('data-salida');
-
-            document.getElementById('eliminar-id-display-asistencia').textContent = id;
-            document.getElementById('eliminar-id-asistencia').value = id;
-            document.getElementById('eliminar-nombre-empleado').textContent = nombre;
-            document.getElementById('eliminar-fecha-asistencia').textContent = fecha;
-            document.getElementById('eliminar-entrada-asistencia').textContent = entrada;
-            document.getElementById('eliminar-salida-asistencia').textContent = salida;
-
-            const form = document.getElementById('formEliminarAsistencia');
-            form.action = '/Asistencia/EliminarAsistencia/' + id;
         });
     });
 }
@@ -313,7 +240,7 @@ function mostrarNotificacion(mensaje, tipo) {
         border-radius: 10px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.2);
         z-index: 10001;
-        animation: slideIn 0.3s ease;
+        animation: slideInNotif 0.3s ease;
         font-weight: 600;
         display: flex;
         align-items: center;
@@ -329,56 +256,58 @@ function mostrarNotificacion(mensaje, tipo) {
     document.body.appendChild(notification);
 
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
+        notification.style.animation = 'slideOutNotif 0.3s ease';
         setTimeout(() => {
             notification.remove();
         }, 300);
     }, 3000);
 }
 
-const notifStyle = document.createElement('style');
-notifStyle.innerHTML = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
+// Agregar estilos de animación solo si no existen
+if (!document.getElementById('asistencia-styles')) {
+    const asistenciaStyles = document.createElement('style');
+    asistenciaStyles.id = 'asistencia-styles';
+    asistenciaStyles.innerHTML = `
+        @keyframes slideInNotif {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
-        to {
-            transform: translateX(0);
-            opacity: 1;
+        @keyframes slideOutNotif {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
         }
-    }
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
+        @keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
+        @keyframes tooltipFadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(10px);
+            }
         }
-    }
-    @keyframes tooltipFadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    @keyframes tooltipFadeOut {
-        from {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        to {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-    }
-`;
-document.head.appendChild(notifStyle);
-
-console.log('%c✓ Script de asistencias cargado correctamente', 'color: #27ae60; font-weight: bold;');
+    `;
+    document.head.appendChild(asistenciaStyles);
+}

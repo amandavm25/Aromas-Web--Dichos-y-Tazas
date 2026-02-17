@@ -172,20 +172,6 @@
                                                 title="Ver detalles">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-eliminar-cliente"
-                                                data-id="@cliente.IdCliente"
-                                                data-nombre="@cliente.Nombre"
-                                                data-apellidos="@cliente.Apellidos"
-                                                data-identificacion="@cliente.Identificacion"
-                                                data-correo="@(cliente.Correo ?? "Sin correo")"
-                                                data-estado="@(cliente.Estado ? "Activo" : "Inactivo")"
-                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalEliminarCliente"
-                                                title="Eliminar">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -210,7 +196,16 @@
             <!-- Footer de paginación -->
             <div class="admin-table-footer">
                 <div class="admin-table-footer-text">
-                    Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> clientes
+                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                </div>
+
+                <div class="pagination-buttons">
+                    <button id="btnAnterior" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btnSiguiente" class="pagination-btn">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -218,7 +213,6 @@
 </section>
 
 <partial name="_ModalDetallesCliente" />
-<partial name="_ModalEliminarCliente" />
 
 @section Scripts {
     <script src="~/js/cliente.js"></script>

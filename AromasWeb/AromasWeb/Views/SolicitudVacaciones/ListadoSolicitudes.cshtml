@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Solicitudes de Vacaciones";
+    var totalSolicitudes = Model?.Count ?? 0;
+    var pendientes = Model?.Count(s => s.Estado == "Pendiente") ?? 0;
+    var aprobadas = Model?.Count(s => s.Estado == "Aprobada") ?? 0;
+    var rechazadas = Model?.Count(s => s.Estado == "Rechazada") ?? 0;
 }
 
 <!-- Hero Section -->
@@ -33,8 +37,43 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
 
+        <!-- Tarjetas de resumen -->
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalSolicitudes</h3>
+                <p style="margin: 0.5rem 0;">Total Solicitudes</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@pendientes</h3>
+                <p style="margin: 0.5rem 0;">Pendientes</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@aprobadas</h3>
+                <p style="margin: 0.5rem 0;">Aprobadas</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@rechazadas</h3>
+                <p style="margin: 0.5rem 0;">Rechazadas</p>
+            </div>
+        </div>
+
         <!-- Barra de búsqueda y botones -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
                     <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
@@ -44,13 +83,6 @@
                            placeholder="Buscar por empleado o identificación..."
                            style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
                 </div>
-                <select name="filtroEstado" 
-                        style="padding: 1rem 2rem; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); box-shadow: var(--shadow-sm);">
-                    <option value="">Todos los estados</option>
-                    <option value="Pendiente" @@(ViewBag.FiltroEstado == "Pendiente" ? "selected" : "")>Pendiente</option>
-                    <option value="Aprobada" @@(ViewBag.FiltroEstado == "Aprobada" ? "selected" : "")>Aprobada</option>
-                    <option value="Rechazada" @@(ViewBag.FiltroEstado == "Rechazada" ? "selected" : "")>Rechazada</option>
-                </select>
                 <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
                     <span><i class="fas fa-search"></i> Buscar</span>
                 </button>
@@ -63,7 +95,38 @@
             </div>
         </div>
 
-        <!-- Información de búsqueda -->
+        <!-- Filtros de estado -->
+        <div style="margin-bottom: 2rem;" data-aos="fade-up">
+            <form method="get" action="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")" style="display: contents;">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+                    <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                        <i class="fas fa-filter" style="color: var(--gold);"></i> Filtrar por estado:
+                    </span>
+                    <a href="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")"
+                       class="btn @(string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string) ? "btn-primary" : "btn-secondary")"
+                       style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                        <span><i class="fas fa-th"></i> Todos</span>
+                    </a>
+                    <a href="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones", new { filtroEstado = "Pendiente" })"
+                       class="btn @(ViewBag.FiltroEstado == "Pendiente" ? "btn-primary" : "btn-secondary")"
+                       style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                        <span><i class="fas fa-clock"></i> Pendientes</span>
+                    </a>
+                    <a href="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones", new { filtroEstado = "Aprobada" })"
+                       class="btn @(ViewBag.FiltroEstado == "Aprobada" ? "btn-primary" : "btn-secondary")"
+                       style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                        <span><i class="fas fa-check-circle"></i> Aprobadas</span>
+                    </a>
+                    <a href="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones", new { filtroEstado = "Rechazada" })"
+                       class="btn @(ViewBag.FiltroEstado == "Rechazada" ? "btn-primary" : "btn-secondary")"
+                       style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                        <span><i class="fas fa-times-circle"></i> Rechazadas</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Información de búsqueda activa -->
         @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || !string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string))
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
@@ -71,99 +134,105 @@
                     <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                     @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
                     {
-                        <span>Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong></span>
+                        <span>Resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong></span>
                     }
                     @if (!string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string))
                     {
-                        <span>- Estado: <strong style="color: var(--gold-bright);">@ViewBag.FiltroEstado</strong></span>
+                        <span>— Estado: <strong style="color: var(--gold-bright);">@ViewBag.FiltroEstado</strong></span>
                     }
-                    - <strong>@(Model?.Count ?? 0)</strong> solicitud(es) encontrada(s)
+                    — <strong>@totalSolicitudes</strong> solicitud(es) encontrada(s)
                 </p>
             </div>
         }
 
         <!-- Tabla Principal -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;" data-aos="fade-up">
+        <div class="admin-table-container" data-aos="fade-up">
             <div class="table-responsive">
-                <table id="laTablaDeSolicitudes" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                    <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+                <table id="laTablaDeSolicitudes" class="admin-table">
+                    <thead>
                         <tr>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Cargo</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Solicitud</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Período</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Días</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Disponibles</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                            <th>#</th>
+                            <th>Empleado</th>
+                            <th>Cargo</th>
+                            <th>Fecha Solicitud</th>
+                            <th>Período</th>
+                            <th>Días</th>
+                            <th>Disponibles</th>
+                            <th>Estado</th>
+                            <th style="text-align: center;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (Model != null && Model.Any())
                         {
-                            @foreach (var solicitud in Model)
+                            int contador = 1;
+                            foreach (var solicitud in Model)
                             {
-                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@solicitud.IdSolicitud</td>
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">
-                                        <div style="display: flex; flex-direction: column;">
-                                            <span style="font-size: 1.05rem;">
-                                                <i class="fas fa-user" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
-                                                @solicitud.NombreEmpleado
-                                            </span>
-                                            <span style="font-size: 0.85rem; color: var(--charcoal); opacity: 0.7; margin-top: 0.25rem;">
-                                                @solicitud.IdentificacionEmpleado
-                                            </span>
+                                <tr>
+                                    <td>
+                                        <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
+                                    </td>
+                                    <td>
+                                        <strong style="color: var(--dark-green); font-size: 1rem; display: block;">
+                                            <i class="fas fa-user" style="color: var(--gold-bright); margin-right: 0.4rem;"></i>
+                                            @solicitud.NombreEmpleado
+                                        </strong>
+                                        <small style="color: var(--charcoal); opacity: 0.7;">@solicitud.IdentificacionEmpleado</small>
+                                    </td>
+                                    <td style="color: var(--charcoal);">@solicitud.CargoEmpleado</td>
+                                    <td>
+                                        <span style="color: var(--dark-green); font-weight: 600;">
+                                            <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--olive-green);"></i>
+                                            @solicitud.FechaSolicitudFormateada
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                            <span><i class="fas fa-play" style="color: #27ae60; margin-right: 0.3rem;"></i>@solicitud.FechaInicioFormateada</span>
+                                            <span><i class="fas fa-stop" style="color: #e74c3c; margin-right: 0.3rem;"></i>@solicitud.FechaFinFormateada</span>
                                         </div>
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">@solicitud.CargoEmpleado</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">
-                                        <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--olive-green);"></i>
-                                        @solicitud.FechaSolicitudFormateada
-                                    </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); white-space: nowrap;">
-                                        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-                                            <span><i class="fas fa-play" style="color: #27ae60; margin-right: 0.3rem;"></i> @solicitud.FechaInicioFormateada</span>
-                                            <span><i class="fas fa-stop" style="color: #e74c3c; margin-right: 0.3rem;"></i> @solicitud.FechaFinFormateada</span>
-                                        </div>
-                                    </td>
-                                    <td style="padding: 1.2rem; text-align: center;">
-                                        <span style="background: var(--gold-bright); color: var(--white); padding: 0.5rem 1rem; border-radius: 50%; font-weight: 700; font-size: 1.1rem; display: inline-block; min-width: 50px;">
+                                    <td style="text-align: center;">
+                                        <span style="background: var(--gold-bright); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-weight: 700; font-size: 1rem; display: inline-block; min-width: 45px;">
                                             @solicitud.DiasSolicitados
                                         </span>
                                     </td>
-                                    <td style="padding: 1.2rem; text-align: center;">
+                                    <td style="text-align: center;">
                                         <span style="color: @(solicitud.DiasDisponibles >= solicitud.DiasSolicitados ? "#27ae60" : "#e74c3c"); font-weight: 600; font-size: 1.05rem;">
                                             @solicitud.DiasDisponibles.ToString("F0")
                                         </span>
                                     </td>
-                                    <td style="padding: 1.2rem;">
-                                        <span style="background: @solicitud.EstadoBadgeColor; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
+                                    <td>
+                                        <span class="badge" style="background: @solicitud.EstadoBadgeColor; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
                                             @solicitud.Estado
                                         </span>
                                     </td>
-                                    <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                    <td style="text-align: center; white-space: nowrap;">
                                         @if (solicitud.Estado == "Pendiente")
                                         {
-                                            <form method="post" action="@Url.Action("AprobarSolicitud", "SolicitudVacaciones", new { id = solicitud.IdSolicitud })" style="display: inline;">
-                                                @Html.AntiForgeryToken()
-                                                <button type="submit"
-                                                        class="btn btn-sm"
-                                                        style="background: #27ae60; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                        title="Aprobar">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            </form>
-                                            <form method="post" action="@Url.Action("RechazarSolicitud", "SolicitudVacaciones", new { id = solicitud.IdSolicitud })" style="display: inline;">
-                                                @Html.AntiForgeryToken()
-                                                <button type="submit"
-                                                        class="btn btn-sm"
-                                                        style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                        title="Rechazar">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </form>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-aprobar-solicitud"
+                                                    data-id="@solicitud.IdSolicitud"
+                                                    data-empleado="@solicitud.NombreEmpleado"
+                                                    data-periodo="@solicitud.PeriodoVacaciones"
+                                                    data-dias-solicitados="@solicitud.DiasSolicitados"
+                                                    style="background: #27ae60; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalAprobarSolicitud"
+                                                    title="Aprobar">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-rechazar-solicitud"
+                                                    data-id="@solicitud.IdSolicitud"
+                                                    data-empleado="@solicitud.NombreEmpleado"
+                                                    data-periodo="@solicitud.PeriodoVacaciones"
+                                                    style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalRechazarSolicitud"
+                                                    title="Rechazar">
+                                                <i class="fas fa-times"></i>
+                                            </button>
                                         }
                                         <button type="button"
                                                 class="btn btn-sm"
@@ -191,30 +260,20 @@
                                                 title="Ver detalles">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button"
-                                                class="btn btn-sm btn-eliminar-solicitud"
-                                                data-id="@solicitud.IdSolicitud"
-                                                data-empleado="@solicitud.NombreEmpleado"
-                                                data-periodo="@solicitud.PeriodoVacaciones"
-                                                style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalEliminarSolicitud"
-                                                title="Eliminar">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
                                     </td>
                                 </tr>
+                                contador++;
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="9" style="padding: 3rem; text-align: center; color: var(--charcoal);">
-                                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
-                                    <p style="margin: 0; font-size: 1.1rem;">No se encontraron solicitudes</p>
-                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
+                                <td colspan="9" class="admin-table-empty">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>No se encontraron solicitudes</p>
+                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || !string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string))
                                     {
-                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
+                                        <p class="empty-subtitle">Intenta con otros filtros o términos de búsqueda</p>
                                     }
                                 </td>
                             </tr>
@@ -224,163 +283,27 @@
             </div>
 
             <!-- Footer de paginación -->
-            <div style="padding: 1.5rem; background: var(--cream); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(143, 142, 106, 0.1); flex-wrap: wrap; gap: 1rem;">
-                <div style="color: var(--dark-green); font-size: 0.95rem;">
-                    Mostrando <strong>@(Model?.Count ?? 0)</strong> de <strong>@(Model?.Count ?? 0)</strong> solicitudes
+            <div class="admin-table-footer">
+                <div class="admin-table-footer-text">
+                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                </div>
+                <div class="pagination-buttons">
+                    <button id="btnAnterior" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btnSiguiente" class="pagination-btn">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Modal Detalles -->
-<div class="modal fade" id="modalDetallesSolicitud" tabindex="-1" aria-labelledby="modalDetallesSolicitudLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content" style="border-radius: 20px; border: none; overflow: hidden;">
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none;">
-                <h5 class="modal-title" id="modalDetallesSolicitudLabel">
-                    <i class="fas fa-info-circle"></i> Detalles de la Solicitud
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="padding: 2rem;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <div>
-                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Empleado:</label>
-                        <p id="detalleEmpleado" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
-                        <p id="detalleIdentificacion" style="color: var(--charcoal); font-size: 0.9rem; margin: 0.25rem 0 0 0;"></p>
-                    </div>
-                    <div>
-                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Cargo:</label>
-                        <p id="detalleCargo" style="color: var(--charcoal); margin: 0;"></p>
-                    </div>
-                </div>
-                <hr style="margin: 1.5rem 0; border-color: rgba(143, 142, 106, 0.2);">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <div>
-                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Fecha de Solicitud:</label>
-                        <p id="detalleFechaSolicitud" style="color: var(--charcoal); margin: 0;"></p>
-                    </div>
-                    <div>
-                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Estado:</label>
-                        <span id="detalleEstado"></span>
-                    </div>
-                </div>
-                <hr style="margin: 1.5rem 0; border-color: rgba(143, 142, 106, 0.2);">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <div>
-                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Fecha de Inicio:</label>
-                        <p id="detalleFechaInicio" style="color: var(--charcoal); margin: 0;"></p>
-                    </div>
-                    <div>
-                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Fecha de Fin:</label>
-                        <p id="detalleFechaFin" style="color: var(--charcoal); margin: 0;"></p>
-                    </div>
-                </div>
-                <hr style="margin: 1.5rem 0; border-color: rgba(143, 142, 106, 0.2);">
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
-                    <div>
-                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Días Solicitados:</label>
-                        <p id="detalleDiasSolicitados" style="color: var(--gold-bright); font-size: 1.5rem; font-weight: 700; margin: 0;"></p>
-                    </div>
-                    <div>
-                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Días Disponibles:</label>
-                        <p id="detalleDiasDisponibles" style="font-size: 1.5rem; font-weight: 700; margin: 0;"></p>
-                    </div>
-                    <div>
-                        <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Antigüedad:</label>
-                        <p id="detalleAntiguedad" style="color: var(--charcoal); margin: 0;"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer" style="border: none; padding: 1rem 2rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 50px; padding: 0.75rem 2rem;">
-                    <i class="fas fa-times"></i> Cerrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Eliminar -->
-<div class="modal fade" id="modalEliminarSolicitud" tabindex="-1" aria-labelledby="modalEliminarSolicitudLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 20px; border: none; overflow: hidden;">
-            <div class="modal-header" style="background: #e74c3c; color: var(--white); border: none;">
-                <h5 class="modal-title" id="modalEliminarSolicitudLabel">
-                    <i class="fas fa-exclamation-triangle"></i> Confirmar Eliminación
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="formEliminarSolicitud" method="post">
-                @Html.AntiForgeryToken()
-                <div class="modal-body" style="padding: 2rem;">
-                    <p style="font-size: 1.1rem; color: var(--charcoal); margin-bottom: 1.5rem;">
-                        ¿Está seguro que desea eliminar la siguiente solicitud?
-                    </p>
-                    <div style="background: var(--cream); padding: 1.5rem; border-radius: 15px; border-left: 4px solid #e74c3c;">
-                        <p style="margin: 0 0 0.5rem 0; color: var(--dark-green);"><strong>Empleado:</strong> <span id="eliminarEmpleado"></span></p>
-                        <p style="margin: 0; color: var(--dark-green);"><strong>Período:</strong> <span id="eliminarPeriodo"></span></p>
-                    </div>
-                    <p style="margin-top: 1.5rem; color: #e74c3c; font-weight: 600;">
-                        <i class="fas fa-exclamation-circle"></i> Esta acción no se puede deshacer
-                    </p>
-                </div>
-                <div class="modal-footer" style="border: none; padding: 1rem 2rem;">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 50px; padding: 0.75rem 2rem;">
-                        <i class="fas fa-times"></i> Cancelar
-                    </button>
-                    <button type="submit" class="btn btn-danger" style="border-radius: 50px; padding: 0.75rem 2rem; background: #e74c3c; border: none;">
-                        <i class="fas fa-trash"></i> Eliminar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<partial name="_ModalDetallesSolicitud" />
+<partial name="_ModalAprobarSolicitud" />
+<partial name="_ModalRechazarSolicitud" />
 
 @section Scripts {
-    <script>
-        // Modal de detalles
-        document.querySelectorAll('.btn-detalles-solicitud').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.getElementById('detalleEmpleado').textContent = this.dataset.empleado;
-                document.getElementById('detalleIdentificacion').textContent = this.dataset.identificacion;
-                document.getElementById('detalleCargo').textContent = this.dataset.cargo;
-                document.getElementById('detalleFechaSolicitud').textContent = this.dataset.fechaSolicitud;
-                document.getElementById('detalleFechaInicio').textContent = this.dataset.fechaInicio;
-                document.getElementById('detalleFechaFin').textContent = this.dataset.fechaFin;
-                document.getElementById('detalleDiasSolicitados').textContent = this.dataset.diasSolicitados;
-                document.getElementById('detalleAntiguedad').textContent = this.dataset.antiguedad;
-                
-                const diasDisponibles = parseFloat(this.dataset.diasDisponibles);
-                const diasSolicitados = parseFloat(this.dataset.diasSolicitados);
-                const color = diasDisponibles >= diasSolicitados ? '#27ae60' : '#e74c3c';
-                document.getElementById('detalleDiasDisponibles').textContent = this.dataset.diasDisponibles;
-                document.getElementById('detalleDiasDisponibles').style.color = color;
-                
-                const estado = this.dataset.estado;
-                let estadoColor = '#95a5a6';
-                if (estado === 'Aprobada') estadoColor = '#27ae60';
-                else if (estado === 'Rechazada') estadoColor = '#e74c3c';
-                else if (estado === 'Pendiente') estadoColor = '#f39c12';
-                
-                const estadoHtml = `<span style="background: ${estadoColor}; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">${estado}</span>`;
-                document.getElementById('detalleEstado').innerHTML = estadoHtml;
-            });
-        });
-
-        // Modal de eliminar
-        document.querySelectorAll('.btn-eliminar-solicitud').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.dataset.id;
-                const empleado = this.dataset.empleado;
-                const periodo = this.dataset.periodo;
-                
-                document.getElementById('eliminarEmpleado').textContent = empleado;
-                document.getElementById('eliminarPeriodo').textContent = periodo;
-                document.getElementById('formEliminarSolicitud').action = '@Url.Action("EliminarSolicitud", "SolicitudVacaciones")'.replace('0', id) + '?id=' + id;
-            });
-        });
-    </script>
+    <script src="~/js/solicitudvacaciones.js"></script>
 }

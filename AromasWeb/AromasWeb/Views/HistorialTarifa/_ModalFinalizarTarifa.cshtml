@@ -1,0 +1,86 @@
+﻿<div class="modal fade" id="modalFinalizarTarifa" tabindex="-1" aria-labelledby="modalFinalizarTarifaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+
+            <!-- Header -->
+            <div class="modal-header" style="background: var(--gold); color: var(--white); border: none; padding: 2rem;">
+                <h5 class="modal-title" id="modalFinalizarTarifaLabel"
+                    style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
+                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-stop-circle"></i>
+                    </div>
+                    Finalizar Tarifa
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body" style="padding: 2.5rem; background: var(--light-cream);">
+
+                <!-- Aviso -->
+                <div style="background: rgba(243,156,18,0.12); padding: 1.5rem 2rem; border-radius: 15px; border-left: 5px solid var(--gold); margin-bottom: 2rem; display: flex; align-items: start; gap: 1rem;">
+                    <div style="width: 44px; height: 44px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 1.3rem; color: white;"></i>
+                    </div>
+                    <div>
+                        <h6 style="color: var(--dark-green); margin: 0 0 0.4rem; font-weight: 700; font-size: 1rem;">Confirmar Finalización</h6>
+                        <p style="margin: 0; color: var(--dark-green); font-size: 0.95rem; line-height: 1.6;">
+                            Al finalizar esta tarifa se establecerá su fecha de fin. Asegúrese de tener <strong>lista la nueva tarifa</strong> antes de proceder, ya que esta acción no puede deshacerse fácilmente.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Detalles -->
+                <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
+                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
+                        <i class="fas fa-money-bill-wave" style="color: var(--olive-green);"></i> Datos de la Tarifa
+                    </h6>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 15px;">
+                            <p style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+                                <i class="fas fa-user-tie" style="color: var(--olive-green);"></i> Empleado
+                            </p>
+                            <p id="finalizar-empleado" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
+                        </div>
+
+                        <div style="background: rgba(243,156,18,0.1); padding: 1.2rem; border-radius: 15px; border-left: 5px solid var(--gold);">
+                            <p style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+                                <i class="fas fa-dollar-sign" style="color: var(--gold);"></i> Tarifa Actual
+                            </p>
+                            <p id="finalizar-tarifa" style="color: var(--gold); font-size: 2rem; font-weight: 700; margin: 0; font-family: var(--font-primary);"></p>
+                        </div>
+
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 15px; grid-column: 1 / -1;">
+                            <p style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+                                <i class="fas fa-calendar-times" style="color: var(--gold);"></i> Fecha de Finalización
+                            </p>
+                            <input type="date"
+                                   id="finalizar-fecha-fin"
+                                   name="fechaFin"
+                                   required
+                                   style="width: 100%; padding: 0.8rem 1.2rem; border: 2px solid rgba(243,156,18,0.3); border-radius: 12px; font-size: 1rem; background: var(--white); outline: none;" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; gap: 1rem;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <span><i class="fas fa-times"></i> Cancelar</span>
+                </button>
+                <form id="formFinalizarTarifa" method="post" action="" style="display: inline;">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="finalizar-id-tarifa" name="id" />
+                    <button type="submit" class="btn btn-primary btn-3d" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+                        <span><i class="fas fa-stop-circle"></i> Finalizar Tarifa</span>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

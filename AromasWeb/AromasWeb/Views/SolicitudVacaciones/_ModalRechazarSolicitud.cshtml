@@ -1,8 +1,9 @@
 ﻿<div class="modal fade" id="modalRechazarSolicitud" tabindex="-1" aria-labelledby="modalRechazarSolicitudLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); color: var(--white); border: none; padding: 2rem;">
+            <div class="modal-header" style="background: var(--gold-bright); color: var(--white); border: none; padding: 2rem;">
                 <h5 class="modal-title" id="modalRechazarSolicitudLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-times-circle"></i>
@@ -14,37 +15,50 @@
 
             <!-- Body -->
             <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
-                <!-- Información -->
-                <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm); margin-bottom: 1.5rem;">
-                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
-                        <i class="fas fa-user-tie" style="color: var(--olive-green);"></i> Información de la Solicitud
-                    </h6>
 
-                    <div style="display: grid; gap: 1rem;">
-                        <!-- Empleado -->
-                        <div class="feature-card" style="padding: 1rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
-                            </label>
-                            <p id="rechazar-nombre-empleado" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
-                        </div>
-
-                        <!-- Período -->
-                        <div class="feature-card" style="padding: 1rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Período de Vacaciones
-                            </label>
-                            <p id="rechazar-periodo" style="color: var(--dark-green); font-size: 1rem; font-weight: 600; margin: 0;"></p>
-                        </div>
+                <!-- Aviso -->
+                <div style="background: rgba(197,179,88,0.12); padding: 1.5rem 2rem; border-radius: 15px; border-left: 5px solid var(--gold-bright); margin-bottom: 2rem; display: flex; align-items: start; gap: 1rem;">
+                    <div style="width: 44px; height: 44px; background: var(--gold-bright); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 1.3rem; color: white;"></i>
+                    </div>
+                    <div>
+                        <h6 style="color: var(--dark-green); margin: 0 0 0.4rem; font-weight: 700; font-size: 1rem;">Confirmar Rechazo</h6>
+                        <p style="margin: 0; color: var(--dark-green); font-size: 0.95rem; line-height: 1.6;">
+                            Al rechazar esta solicitud, el empleado será <strong>notificado</strong>. Los días <strong>no serán descontados</strong> de su saldo disponible.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Mensaje de advertencia -->
-                <div style="background: linear-gradient(135deg, rgba(184, 167, 106, 0.1) 0%, rgba(197, 179, 88, 0.1) 100%); padding: 1.5rem; border-radius: 15px; border-left: 5px solid var(--gold-bright);">
-                    <p style="margin: 0; color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: start; gap: 0.7rem;">
-                        <i class="fas fa-exclamation-circle" style="font-size: 1.2rem; margin-top: 0.2rem; color: var(--gold-bright);"></i>
-                        <span>Al rechazar esta solicitud, el empleado será <strong>notificado</strong> de la decisión. Los días no serán descontados de su saldo disponible.</span>
-                    </p>
+                <!-- Detalles -->
+                <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
+                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
+                        <i class="fas fa-umbrella-beach" style="color: var(--olive-green);"></i> Detalles de la Solicitud
+                    </h6>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 15px;">
+                            <p style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
+                            </p>
+                            <p id="rechazar-nombre-empleado" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
+                        </div>
+
+                        <div style="background: rgba(197,179,88,0.1); padding: 1.2rem; border-radius: 15px; border-left: 5px solid var(--gold-bright);">
+                            <p style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+                                <i class="fas fa-clock" style="color: var(--gold-bright);"></i> Días Solicitados
+                            </p>
+                            <p id="rechazar-diassolicitados" style="color: var(--gold-bright); font-size: 2rem; font-weight: 700; margin: 0; font-family: var(--font-primary);"></p>
+                        </div>
+
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 15px; grid-column: 1 / -1;">
+                            <p style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+                                <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Período de Vacaciones
+                            </p>
+                            <p id="rechazar-periodo" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 

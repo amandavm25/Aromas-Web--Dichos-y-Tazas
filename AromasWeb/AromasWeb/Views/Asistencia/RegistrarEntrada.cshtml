@@ -38,49 +38,49 @@
             @Html.AntiForgeryToken()
 
             <div class="admin-form-wrapper" data-aos="fade-up">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información del Registro -->
+                <!-- Información del Registro -->
                 <div class="admin-form-header">
                     <i class="fas fa-box"></i>
                     <h5>Información del Registro</h5>
                 </div>
 
-                    <!-- Empleado -->
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-user"></i>
-                            Empleado
-                        </label>
-                        @Html.DropDownListFor(model => model.IdEmpleado,
-                        new SelectList(ViewBag.Empleados, "IdEmpleado", "NombreCompleto"),
-                                        "Seleccione un empleado",
-                                        new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdEmpleado, "", new { @class = "text-danger" })
+                <!-- Empleado -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-user"></i>
+                        Empleado
+                    </label>
+                    @Html.DropDownListFor(model => model.IdEmpleado,
+                    new SelectList(ViewBag.Empleados, "IdEmpleado", "NombreCompleto"),
+                                "Seleccione un empleado",
+                                new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdEmpleado, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Fecha y Hora de Entrada -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-calendar-day"></i>
+                        Fecha
+                    </label>
+                    @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                    @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
                 </div>
 
-                <!-- Fecha y Hora de Entrada -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-calendar-day"></i>
-                            Fecha
-                        </label>
-                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                        @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-clock"></i>
-                            Hora de Entrada
-                        </label>
-                        <input type="time" name="HoraEntrada" value="@Model.HoraEntrada.ToString(@"hh\:mm")" class="form-control" required />
-                        @Html.ValidationMessageFor(model => model.HoraEntrada, "", new { @class = "text-danger" })
-                    </div>
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-clock"></i>
+                        Hora de Entrada
+                    </label>
+                    <input type="time" name="HoraEntrada" value="@Model.HoraEntrada.ToString(@"hh\:mm")" class="form-control" required />
+                    @Html.ValidationMessageFor(model => model.HoraEntrada, "", new { @class = "text-danger" })
                 </div>
+            </div>
 
-                <!-- Información adicional -->
+            <!-- Información adicional -->
             <div class="admin-form-info-box">
                 <i class="fas fa-info-circle"></i>
                 <div>
@@ -88,18 +88,18 @@
                     <p>Este registro marca el inicio de la jornada laboral del empleado. Asegúrese de verificar la hora antes de guardar.</p>
                 </div>
             </div>
-         
-                <!-- Botones -->
+
+            <!-- Botones -->
             <div class="admin-form-footer">
-                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoAsistencias", "Asistencia")'">
-                        <i class="fas fa-times"></i>
-                        <span> Cancelar </span>
-                    </button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoAsistencias", "Asistencia")'">
+                    <i class="fas fa-times"></i>
+                    <span> Cancelar </span>
+                </button>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i>
-                        <span> Registrar Entrada</span>
-                    </button>
-                </div>
+                    <span> Registrar Entrada</span>
+                </button>
+            </div>
         </div>
                 }
     </div>

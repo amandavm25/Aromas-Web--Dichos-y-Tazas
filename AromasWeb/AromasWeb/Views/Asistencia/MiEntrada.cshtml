@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Mi Entrada";
-	var empleado = ViewBag.Empleado as AromasWeb.Abstracciones.ModeloUI.Empleado;
+    var empleado = ViewBag.Empleado as AromasWeb.Abstracciones.ModeloUI.Empleado;
 }
 
 <!-- Hero Section -->
@@ -19,16 +19,6 @@
                 Registrar Mi
                 <span class="hero-title-accent">Entrada</span>
             </h1>
-            <p class="hero-subtitle">
-                @if (empleado != null)
-                {
-                    <text>Hola, @empleado.Nombre @empleado.Apellidos</text>
-                }
-                else
-                {
-                    <text>Hola</text>
-                }
-            </p>
         </div>
     </div>
     <div class="scroll-indicator">
@@ -39,110 +29,98 @@
 </section>
 
 <!-- Formulario Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 900px;">
+<section class="admin-form-section">
+    <div class="container" style="max-width: 80%;">
         @using (Html.BeginForm("MiEntrada", "Asistencia", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.IdEmpleado)
 
-            <div class="contact-form-wrapper contact-form" data-aos="fade-up">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+            <div class="admin-form-wrapper" data-aos="fade-up">
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información del Empleado -->
-                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-user"></i> Tu Información
-                        </h5>
-                    </div>
+                <!-- Información del Empleado -->
+                <div class="admin-form-header" style="margin-left: 0; margin-right: 0;">
+                    <i class="fas fa-user"></i>
+                    <h5>Tu Información</h5>
+                </div>
 
-                    <!-- Datos del Empleado -->
-                    <div class="feature-card" style="margin-bottom: 2rem; padding: 2rem;">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-user" style="color: var(--olive-green);"></i> Nombre Completo
-                                </label>
-                                <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@empleado.Nombre @empleado.Apellidos</p>
-                            </div>
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-briefcase" style="color: var(--olive-green);"></i> Cargo
-                                </label>
-                                <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@empleado.Cargo</p>
-                            </div>
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-id-card" style="color: var(--olive-green);"></i> Identificación
-                                </label>
-                                <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@empleado.Identificacion</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Información del Registro -->
-                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-clock"></i> Hora de Entrada
-                        </h5>
-                    </div>
-
-                    <!-- Fecha y Hora de Entrada -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-calendar-day"></i>
-                                Fecha
+                <!-- Datos del Empleado -->
+                <div class="feature-card" style="margin: 2rem 2.5rem; padding: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Nombre Completo
                             </label>
-                            @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                            @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                            <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@empleado.Nombre @empleado.Apellidos</p>
                         </div>
-
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-clock"></i>
-                                Hora de Entrada
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-briefcase" style="color: var(--olive-green);"></i> Cargo
                             </label>
-                            <input type="time" name="HoraEntrada" value="@Model.HoraEntrada.ToString(@"hh\:mm")" class="form-control" required />
-                            @Html.ValidationMessageFor(model => model.HoraEntrada, "", new { @class = "text-danger" })
+                            <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@empleado.Cargo</p>
+                        </div>
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-id-card" style="color: var(--olive-green);"></i> Identificación
+                            </label>
+                            <p style="margin: 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@empleado.Identificacion</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Card de Tiempo Actual -->
-                    <div class="feature-card" style="margin: 2rem 0; padding: 2rem; text-align: center; background: linear-gradient(135deg, var(--cream) 0%, white 100%);">
-                        <div style="display: inline-block; padding: 2rem; border-radius: 20px; background: white; box-shadow: var(--shadow-md);">
-                            <i class="fas fa-clock" style="color: var(--olive-green); font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                            <div id="horaActual" style="font-size: 3rem; font-weight: 700; color: var(--dark-green); font-family: var(--font-primary); margin-bottom: 0.5rem;">
-                                --:--:--
-                            </div>
-                            <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 1rem;">Hora Actual</p>
+                <!-- Fecha y Hora de Entrada -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-calendar-day"></i>
+                            Fecha
+                        </label>
+                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-clock"></i>
+                            Hora de Entrada
+                        </label>
+                        <input type="time" name="HoraEntrada" value="@Model.HoraEntrada.ToString(@"hh\:mm")" class="form-control" required />
+                        @Html.ValidationMessageFor(model => model.HoraEntrada, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- Card de Tiempo Actual -->
+                <div class="feature-card" style="margin: 2rem 2.5rem; padding: 2rem; text-align: center; background: linear-gradient(135deg, var(--cream) 0%, white 100%);">
+                    <div style="display: inline-block; padding: 2rem; border-radius: 20px; background: white; box-shadow: var(--shadow-md);">
+                        <i class="fas fa-clock" style="color: var(--olive-green); font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                        <div id="horaActual" style="font-size: 3rem; font-weight: 700; color: var(--dark-green); font-family: var(--font-primary); margin-bottom: 0.5rem;">
+                            --:--:--
                         </div>
+                        <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 1rem;">Hora Actual</p>
                     </div>
+                </div>
 
-                    <!-- Información adicional -->
-                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem; border-left: 4px solid var(--olive-green);">
-                        <div style="display: flex; align-items: start; gap: 1rem;">
-                            <i class="fas fa-info-circle" style="color: var(--olive-green); font-size: 2rem;"></i>
-                            <div>
-                                <strong style="color: var(--dark-green); display: block; margin-bottom: 0.3rem;">¡Bienvenido/a a tu jornada laboral!</strong>
-                                <p style="margin: 0; color: var(--charcoal); opacity: 0.85; font-size: 0.95rem; line-height: 1.6;">
-                                    Al registrar tu entrada, estás marcando el inicio de tu día de trabajo.
-                                    Asegúrate de que la hora sea correcta antes de continuar.
-                                    No olvides registrar tu salida al finalizar la jornada.
-                                </p>
-                            </div>
-                        </div>
+                <!-- Información adicional -->
+                <div class="admin-form-info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>¡Bienvenido/a a tu jornada laboral!</strong>
+                        <p>Al registrar tu entrada, estás marcando el inicio de tu día de trabajo. Asegúrate de que la hora sea correcta antes de continuar. No olvides registrar tu salida al finalizar la jornada.</p>
                     </div>
+                </div>
 
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("MiHistorialAsistencias", "Asistencia")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
-                            <span><i class="fas fa-check"></i> Registrar Mi Entrada</span>
-                        </button>
-                    </div>
+                <!-- Botones -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("MiHistorialAsistencias", "Asistencia")'">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check"></i>
+                        <span>Registrar Mi Entrada</span>
+                    </button>
+                </div>
             </div>
         }
     </div>
