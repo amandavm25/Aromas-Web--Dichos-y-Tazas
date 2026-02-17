@@ -114,7 +114,7 @@
             <a href="@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")" class="btn btn-secondary">
                 <span><i class="fas fa-arrow-left"></i> Volver al Listado</span>
             </a>
-            <button onclick="window.print()" class="btn" style="background: #27ae60; color: white; border: none; margin-left: auto;">
+            <button onclick="window.print()" class="btn" style="background: var(--green); color: white; border: none; margin-left: auto;">
                 <span><i class="fas fa-print"></i> Imprimir Historial</span>
             </button>
         </div>
@@ -133,8 +133,8 @@
                     {
                         var estadoColor = solicitud.Estado switch
                         {
-                            "Aprobada" => "#27ae60",
-                            "Rechazada" => "#e74c3c",
+                            "Aprobada" => "var(--green)",
+                            "Rechazada" => "var(--red)",
                             "Pendiente" => "#f39c12",
                             _ => "var(--charcoal)"
                         };

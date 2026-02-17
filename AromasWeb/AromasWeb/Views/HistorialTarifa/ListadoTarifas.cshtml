@@ -145,8 +145,8 @@
                             {
                                 var estadoColor = tarifa.EstadoVigencia switch
                                 {
-                                    "Vigente" => "#27ae60",
-                                    "Vencida" => "#e74c3c",
+                                    "Vigente" => "var(--green)",
+                                    "Vencida" => "var(--red)",
                                     "Futura" => "#3498db",
                                     _ => "#95a5a6"
                                 };
@@ -177,11 +177,11 @@
                                     <td>
                                         <div style="display: flex; flex-direction: column; gap: 0.25rem;">
                                             <span>
-                                                <i class="fas fa-play" style="color: #27ae60; margin-right: 0.3rem;"></i>
+                                                <i class="fas fa-play" style="color: var(--green); margin-right: 0.3rem;"></i>
                                                 @tarifa.FechaInicioFormateada
                                             </span>
                                             <span>
-                                                <i class="fas fa-stop" style="color: #e74c3c; margin-right: 0.3rem;"></i>
+                                                <i class="fas fa-stop" style="color: var(--red); margin-right: 0.3rem;"></i>
                                                 @tarifa.FechaFinFormateada
                                             </span>
                                         </div>

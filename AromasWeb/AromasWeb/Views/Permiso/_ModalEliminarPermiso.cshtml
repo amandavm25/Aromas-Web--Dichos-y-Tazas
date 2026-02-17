@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: var(--white); border: none; padding: 2rem;">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--red) 0%, #c0392b 100%); color: var(--white); border: none; padding: 2rem;">
                 <h5 class="modal-title" id="modalEliminarPermisoLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-exclamation-triangle"></i>
@@ -15,9 +15,9 @@
             <!-- Body -->
             <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
                 <!-- Alerta de advertencia -->
-                <div class="feature-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(192, 57, 43, 0.1) 100%); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid #e74c3c;">
+                <div class="feature-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(192, 57, 43, 0.1) 100%); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid var(--red);">
                     <div style="display: flex; align-items: start; gap: 1rem;">
-                        <div style="width: 50px; height: 50px; background: #e74c3c; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <div style="width: 50px; height: 50px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                             <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; color: white;"></i>
                         </div>
                         <div>
@@ -63,7 +63,7 @@
                 </div>
 
                 <!-- Advertencia adicional -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin-top: 1.5rem; border: 2px dashed #e74c3c;">
+                <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin-top: 1.5rem; border: 2px dashed var(--red);">
                     <p style="margin: 0; color: #c0392b; font-size: 0.95rem; display: flex; align-items: start; gap: 0.7rem;">
                         <i class="fas fa-info-circle" style="font-size: 1.2rem; margin-top: 0.2rem;"></i>
                         <span><strong>Nota importante:</strong> Se eliminarán permanentemente todas las asignaciones de este permiso a los roles del sistema.</span>
@@ -80,7 +80,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
                         <span><i class="fas fa-times"></i> Cancelar</span>
                     </button>
-                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, #e74c3c, #c0392b); padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, var(--red), #c0392b); padding: 0.9rem 2.5rem; border-radius: 50px;">
                         <span><i class="fas fa-trash"></i> Eliminar Permiso</span>
                     </button>
                 </form>

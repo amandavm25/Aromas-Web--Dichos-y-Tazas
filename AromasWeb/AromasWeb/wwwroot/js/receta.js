@@ -226,7 +226,7 @@ function validarDisponibilidad(item) {
         if (alertaStock && mensajeAlerta) {
             alertaStock.style.display = 'block';
             mensajeAlerta.textContent = `Stock insuficiente. Disponible: ${disponible} ${unidad}`;
-            item.style.borderLeft = '4px solid #e74c3c';
+            item.style.borderLeft = '4px solid var(--red)';
         }
     } else if (cantidad > 0) {
         if (alertaStock) {
@@ -310,11 +310,11 @@ function calcularResumenCostos() {
 
                 // Cambiar color según rentabilidad
                 if (margen >= 50) {
-                    gananciaNetaElement.style.color = '#27ae60';
+                    gananciaNetaElement.style.color = 'var(--green)';
                 } else if (margen >= 30) {
                     gananciaNetaElement.style.color = '#f39c12';
                 } else {
-                    gananciaNetaElement.style.color = '#e74c3c';
+                    gananciaNetaElement.style.color = 'var(--red)';
                 }
             }
 
@@ -405,8 +405,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (!selectInsumo.value || !inputCantidad.value || parseFloat(inputCantidad.value) <= 0) {
                     todosCompletos = false;
-                    selectInsumo.style.borderColor = '#e74c3c';
-                    inputCantidad.style.borderColor = '#e74c3c';
+                    selectInsumo.style.borderColor = 'var(--red)';
+                    inputCantidad.style.borderColor = 'var(--red)';
                 } else {
                     selectInsumo.style.borderColor = '';
                     inputCantidad.style.borderColor = '';
@@ -470,8 +470,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };
@@ -536,4 +536,4 @@ notifStyle.innerHTML = `
 `;
 document.head.appendChild(notifStyle);
 
-console.log('%c✓ Script de recetas cargado correctamente', 'color: #27ae60; font-weight: bold;');
+console.log('%c✓ Script de recetas cargado correctamente', 'color: var(--green); font-weight: bold;');

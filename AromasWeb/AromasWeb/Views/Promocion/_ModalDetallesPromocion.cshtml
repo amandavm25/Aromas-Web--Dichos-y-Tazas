@@ -160,17 +160,17 @@
                 // Estado badge
                 const estadoBadge = document.getElementById('detalles-estado-badge-promocion');
                 estadoBadge.textContent = estado;
-                estadoBadge.style.background = estado === 'Activa' ? '#27ae60' : '#e74c3c';
+                estadoBadge.style.background = estado === 'Activa' ? 'var(--green)' : 'var(--red)';
 
                 // Vigencia badge
                 const vigenciaBadge = document.getElementById('detalles-vigencia-badge-promocion');
                 vigenciaBadge.textContent = vigencia;
                 if (vigencia === 'Vigente') {
-                    vigenciaBadge.style.background = '#27ae60';
+                    vigenciaBadge.style.background = 'var(--green)';
                 } else if (vigencia === 'Próximamente') {
                     vigenciaBadge.style.background = '#3498db';
                 } else {
-                    vigenciaBadge.style.background = '#e74c3c';
+                    vigenciaBadge.style.background = 'var(--red)';
                 }
 
                 // Calcular duración
@@ -205,7 +205,7 @@
                                 </div>
                                 <div>
                                     <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.75rem; font-weight: 600; display: block; margin-bottom: 0.3rem;">Precio Final</label>
-                                    <strong style="color: #27ae60; font-size: 1.1rem;">₡${rec.precioFinal.toLocaleString('es-CR', { minimumFractionDigits: 2 })}</strong>
+                                    <strong style="color: var(--green); font-size: 1.1rem;">₡${rec.precioFinal.toLocaleString('es-CR', { minimumFractionDigits: 2 })}</strong>
                                 </div>
                                 <div>
                                     <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.75rem; font-weight: 600; display: block; margin-bottom: 0.3rem;">Ahorro</label>

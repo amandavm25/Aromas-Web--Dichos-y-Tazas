@@ -142,23 +142,39 @@ function initializeModals() {
             set('detalles-diassolicitados', this.dataset.diasSolicitados);
             set('detalles-antiguedad', this.dataset.antiguedad);
 
-            // Días disponibles con color
+            // Días disponibles con color via clase CSS
             const elDias = document.getElementById('detalles-diasdisponibles');
             if (elDias) {
                 const disponibles = parseFloat(this.dataset.diasDisponibles);
                 const solicitados = parseFloat(this.dataset.diasSolicitados);
                 elDias.textContent = this.dataset.diasDisponibles;
-                elDias.style.color = disponibles >= solicitados ? '#27ae60' : '#e74c3c';
+                elDias.className = 'modal-summary-value ' + (disponibles >= solicitados ? 'summary-total' : 'summary-extra');
+                elDias.style.color = disponibles >= solicitados ? 'var(--green)' : 'var(--red)';
             }
 
             // Badge de estado
             const estadoBadge = document.getElementById('detalles-estado-badge');
             if (estadoBadge) {
                 const estado = this.dataset.estado;
-                const colores = { 'Aprobada': '#27ae60', 'Rechazada': '#e74c3c', 'Pendiente': '#f39c12' };
-                estadoBadge.textContent = estado;
-                estadoBadge.style.background = colores[estado] || '#95a5a6';
-                estadoBadge.style.color = 'white';
+                const config = {
+                    'Aprobada': { icon: 'fa-check-circle', bg: 'var(--green)' },
+                    'Rechazada': { icon: 'fa-times-circle', bg: 'var(--red)' },
+                    'Pendiente': { icon: 'fa-clock', bg: '#f39c12' }
+                };
+                const c = config[estado] || { icon: 'fa-question-circle', bg: '#95a5a6' };
+                estadoBadge.innerHTML = `<i class="fas ${c.icon}"></i> ${estado}`;
+                estadoBadge.className = 'badge';
+                estadoBadge.style.cssText = `
+                    background: ${c.bg};
+                    color: white;
+                    font-size: 1rem;
+                    padding: 0.6rem 1.5rem;
+                    border-radius: 50px;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    font-weight: 600;
+                `;
             }
         });
     });
@@ -257,7 +273,7 @@ function initializeDaysCalculation() {
 // ============================================
 function mostrarNotificacion(mensaje, tipo) {
     const iconos = { success: 'fa-check-circle', error: 'fa-exclamation-triangle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
-    const colores = { success: '#27ae60', error: '#e74c3c', warning: '#f39c12', info: '#3498db' };
+    const colores = { success: 'var(--green)', error: 'var(--red)', warning: '#f39c12', info: '#3498db' };
 
     const notification = document.createElement('div');
     notification.style.cssText = `

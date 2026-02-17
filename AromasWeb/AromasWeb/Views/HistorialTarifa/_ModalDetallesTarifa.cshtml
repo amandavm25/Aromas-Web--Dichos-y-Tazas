@@ -1,130 +1,120 @@
-﻿<div class="modal fade" id="modalDetallesTarifa" tabindex="-1" aria-labelledby="modalDetallesTarifaLabel" aria-hidden="true">
+﻿<div class="modal fade admin-modal" id="modalDetallesTarifa">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+        <div class="modal-content">
 
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalDetallesTarifaLabel"
-                    style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem; margin: 0;">
-                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetallesTarifaLabel">
+                    <div class="modal-icon">
                         <i class="fas fa-money-bill-wave"></i>
                     </div>
                     Detalles de la Tarifa
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--white);">
+            <div class="modal-body">
 
                 <!-- Cabecera del empleado -->
-                <div style="background: var(--cream); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; border-left: 5px solid var(--olive-green); display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+                <div class="modal-entity-header">
                     <div>
-                        <h5 id="detalles-empleado-tarifa"
-                            style="color: var(--dark-green); margin: 0 0 0.3rem; font-size: 1.4rem; font-family: var(--font-primary); font-weight: 700;"></h5>
-                        <p id="detalles-cargo-tarifa"
-                           style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 1rem;"></p>
-                        <small style="color: var(--charcoal); opacity: 0.5;">
-                            ID Registro: <strong id="detalles-id-tarifa"></strong>
+                        <h5 id="detalles-empleado-tarifa" class="modal-entity-name"></h5>
+                        <p id="detalles-cargo-tarifa" class="modal-entity-sub"></p>
+                        <small id="detalles-id-tarifa" class="modal-entity-id">
+                            ID Registro: <strong id="detalles-id-tarifa-value"></strong>
                         </small>
                     </div>
-                    <div style="width: 65px; height: 65px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); border: 3px solid var(--gold); flex-shrink: 0;">
-                        <i class="fas fa-user-tie" style="font-size: 1.8rem; color: white;"></i>
+                    <div class="modal-entity-avatar">
+                        <i class="fas fa-user-tie"></i>
                     </div>
                 </div>
 
                 <!-- Grid de datos principales -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="modal-data-grid-2">
 
                     <!-- Tarifa por hora -->
-                    <div class="feature-card" style="padding: 1.5rem; margin: 0; background: linear-gradient(135deg, var(--cream) 0%, #f5ede4 100%);">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
-                            <i class="fas fa-dollar-sign" style="color: var(--gold);"></i> Tarifa por Hora
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-dollar-sign"></i> Tarifa por Hora
                         </label>
-                        <p id="detalles-tarifa-hora"
-                           style="color: var(--gold); font-size: 2rem; font-weight: 700; margin: 0; font-family: var(--font-primary);"></p>
+                        <p id="detalles-tarifa-hora" class="modal-data-value value-large"></p>
                     </div>
 
                     <!-- Salario mensual -->
-                    <div style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); padding: 1.5rem; border-radius: 20px; color: white; box-shadow: var(--shadow-md);">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.6rem; opacity: 0.9;">
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
                             <i class="fas fa-wallet"></i> Salario Mensual
                         </label>
-                        <p id="detalles-salario-mensual"
-                           style="font-size: 1.6rem; font-weight: 700; margin: 0; font-family: var(--font-primary);"></p>
-                        <small style="opacity: 0.8; font-size: 0.8rem; display: block; margin-top: 0.4rem;">
+                        <p id="detalles-salario-mensual" class="modal-data-value"></p>
+                        <small class="modal-entity-id" style="margin-top:0.4rem;display:block;">
                             Basado en 207.84 horas/mes
                         </small>
                     </div>
 
                     <!-- Estado de vigencia -->
-                    <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
-                            <i class="fas fa-info-circle" style="color: var(--olive-green);"></i> Estado de Vigencia
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-info-circle"></i> Estado de Vigencia
                         </label>
                         <span id="detalles-estado-badge-tarifa"
                               class="badge"
-                              style="font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
+                              style="font-size:1rem;padding:0.6rem 1.5rem;border-radius:50px;display:inline-block;font-weight:600;"></span>
                     </div>
 
                     <!-- Cumple salario mínimo -->
-                    <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
-                            <i class="fas fa-shield-alt" style="color: var(--olive-green);"></i> Salario Mínimo
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-shield-alt"></i> Salario Mínimo
                         </label>
                         <span id="detalles-cumple-minimo"
                               class="badge"
-                              style="font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
+                              style="font-size:1rem;padding:0.6rem 1.5rem;border-radius:50px;display:inline-block;font-weight:600;"></span>
                     </div>
                 </div>
 
                 <!-- Grid de fechas -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-                    <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
-                            <i class="fas fa-play" style="color: #27ae60;"></i> Fecha Inicio
+                <div class="modal-data-grid-3">
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-play"></i> Fecha Inicio
                         </label>
-                        <p id="detalles-fecha-inicio"
-                           style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                        <p id="detalles-fecha-inicio" class="modal-data-value"></p>
                     </div>
-                    <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
-                            <i class="fas fa-stop" style="color: #e74c3c;"></i> Fecha Fin
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-stop"></i> Fecha Fin
                         </label>
-                        <p id="detalles-fecha-fin"
-                           style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                        <p id="detalles-fecha-fin" class="modal-data-value"></p>
                     </div>
-                    <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
-                            <i class="fas fa-hourglass-half" style="color: var(--olive-green);"></i> Días de Vigencia
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-hourglass-half"></i> Días de Vigencia
                         </label>
-                        <p id="detalles-dias-vigencia"
-                           style="color: var(--dark-green); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
+                        <p id="detalles-dias-vigencia" class="modal-data-value"></p>
                     </div>
                 </div>
 
                 <!-- Fecha de registro -->
-                <div class="feature-card" style="padding: 1.5rem; margin: 0 0 1.5rem 0;">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 0.5px;">
-                        <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Registro
+                <div class="modal-data-cell" style="margin-bottom:1.5rem;">
+                    <label class="modal-data-label">
+                        <i class="fas fa-calendar-plus"></i> Fecha de Registro
                     </label>
-                    <p id="detalles-fecha-registro"
-                       style="color: var(--dark-green); font-size: 1rem; font-weight: 600; margin: 0;"></p>
+                    <p id="detalles-fecha-registro" class="modal-data-value"></p>
                 </div>
 
                 <!-- Motivo -->
-                <div style="background: var(--cream); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--gold);">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                        <i class="fas fa-comment" style="color: var(--gold);"></i> Motivo del Cambio
+                <div class="modal-data-cell">
+                    <label class="modal-data-label">
+                        <i class="fas fa-comment"></i> Motivo del Cambio
                     </label>
-                    <p id="detalles-motivo-tarifa"
-                       style="color: var(--dark-green); margin: 0; line-height: 1.7; font-size: 1rem;"></p>
+                    <p id="detalles-motivo-tarifa" class="modal-data-value"></p>
                 </div>
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <span><i class="fas fa-times"></i> Cerrar</span>
                 </button>
             </div>

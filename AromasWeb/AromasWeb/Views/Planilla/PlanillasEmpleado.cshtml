@@ -107,7 +107,7 @@
             <a href="@Url.Action("ListadoPlanillas", "Planilla")" class="btn btn-secondary">
                 <span><i class="fas fa-arrow-left"></i> Volver al Listado</span>
             </a>
-            <button onclick="window.print()" class="btn btn-primary" style="background: #27ae60; margin-left: auto;">
+            <button onclick="window.print()" class="btn btn-primary" style="background: var(--green); margin-left: auto;">
                 <span><i class="fas fa-print"></i> Imprimir Historial</span>
             </button>
         </div>
@@ -154,7 +154,7 @@
                             {
                                 "Pagado" => "var(--olive-green)",
                                 "Calculado" => "var(--gold-bright)",
-                                "Anulado" => "#e74c3c",
+                                "Anulado" => "var(--red)",
                                 _ => "var(--charcoal)"
                             };
 

@@ -266,8 +266,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };
@@ -351,4 +351,4 @@ notifStyle.innerHTML = `
 `;
 document.head.appendChild(notifStyle);
 
-console.log('%c✓ Script de bitácora cargado correctamente', 'color: #27ae60; font-weight: bold;');
+console.log('%c✓ Script de bitácora cargado correctamente', 'color: var(--green); font-weight: bold;');

@@ -190,7 +190,7 @@ function initializeModals() {
             if (estadoBadge) {
                 if (estado === 'Completo') {
                     estadoBadge.textContent = 'Completo';
-                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.background = 'var(--green)';
                     estadoBadge.style.color = 'white';
                 } else {
                     estadoBadge.textContent = 'En curso';
@@ -223,8 +223,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };

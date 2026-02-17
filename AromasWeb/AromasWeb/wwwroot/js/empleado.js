@@ -225,13 +225,14 @@ function initializeModals() {
             const esAntiguo = this.getAttribute('data-esantiguo') === 'True';
 
             // Llenar información general
-            document.getElementById('detalles-id-empleado').textContent = id;
-            document.getElementById('detalles-nombre-empleado').textContent = nombre + ' ' + apellidos;
-            document.getElementById('detalles-identificacion-empleado').textContent = identificacion;
-            document.getElementById('detalles-correo-empleado').textContent = correo;
-            document.getElementById('detalles-telefono-empleado').textContent = telefono;
-            document.getElementById('detalles-fechacontratacion-empleado').textContent = fechaContratacion;
-            document.getElementById('detalles-antiguedad-empleado').textContent = antiguedad;
+            const set = (id2, val) => { const el = document.getElementById(id2); if (el) el.textContent = val; };
+            set('detalles-id-empleado', id);
+            set('detalles-nombre-empleado', nombre + ' ' + apellidos);
+            set('detalles-identificacion-empleado', identificacion);
+            set('detalles-correo-empleado', correo);
+            set('detalles-telefono-empleado', telefono);
+            set('detalles-fechacontratacion-empleado', fechaContratacion);
+            set('detalles-antiguedad-empleado', antiguedad);
 
             // Cargo
             const cargoEl = document.querySelector('#detalles-cargo-empleado span');
@@ -265,15 +266,22 @@ function initializeModals() {
             // Badge de estado
             const estadoBadge = document.getElementById('detalles-estado-badge-empleado');
             if (estadoBadge) {
-                if (estado === 'Activo') {
-                    estadoBadge.textContent = 'Activo';
-                    estadoBadge.style.background = '#27ae60';
-                    estadoBadge.style.color = 'white';
-                } else {
-                    estadoBadge.textContent = 'Inactivo';
-                    estadoBadge.style.background = '#e74c3c';
-                    estadoBadge.style.color = 'white';
-                }
+                const esActivo = estado === 'Activo';
+                estadoBadge.innerHTML = esActivo
+                    ? '<i class="fas fa-check-circle"></i> Activo'
+                    : '<i class="fas fa-times-circle"></i> Inactivo';
+                estadoBadge.className = 'badge';
+                estadoBadge.style.cssText = `
+                    background: ${esActivo ? 'var(--green)' : 'var(--red)'};
+                    color: white;
+                    font-size: 1rem;
+                    padding: 0.6rem 1.5rem;
+                    border-radius: 50px;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    font-weight: 600;
+                `;
             }
         });
     });
@@ -302,15 +310,22 @@ function initializeModals() {
 
             const estadoBadge = document.getElementById('eliminar-estado-badge-empleado');
             if (estadoBadge) {
-                if (estado === 'Activo') {
-                    estadoBadge.textContent = 'Activo';
-                    estadoBadge.style.background = '#27ae60';
-                    estadoBadge.style.color = 'white';
-                } else {
-                    estadoBadge.textContent = 'Inactivo';
-                    estadoBadge.style.background = '#e74c3c';
-                    estadoBadge.style.color = 'white';
-                }
+                const esActivo = estado === 'Activo';
+                estadoBadge.innerHTML = esActivo
+                    ? '<i class="fas fa-check-circle"></i> Activo'
+                    : '<i class="fas fa-times-circle"></i> Inactivo';
+                estadoBadge.className = 'badge';
+                estadoBadge.style.cssText = `
+                    background: ${esActivo ? 'var(--green)' : 'var(--red)'};
+                    color: white;
+                    font-size: 1rem;
+                    padding: 0.6rem 1.5rem;
+                    border-radius: 50px;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    font-weight: 600;
+                `;
             }
 
             const form = document.getElementById('formEliminarEmpleado');
@@ -339,15 +354,22 @@ function initializeModals() {
 
             const estadoBadge = document.getElementById('estado-actual-badge');
             if (estadoBadge) {
-                if (estado === 'Activo') {
-                    estadoBadge.textContent = 'Activo';
-                    estadoBadge.style.background = '#27ae60';
-                    estadoBadge.style.color = 'white';
-                } else {
-                    estadoBadge.textContent = 'Inactivo';
-                    estadoBadge.style.background = '#e74c3c';
-                    estadoBadge.style.color = 'white';
-                }
+                const esActivo = estado === 'Activo';
+                estadoBadge.innerHTML = esActivo
+                    ? '<i class="fas fa-check-circle"></i> Activo'
+                    : '<i class="fas fa-times-circle"></i> Inactivo';
+                estadoBadge.className = 'badge';
+                estadoBadge.style.cssText = `
+                    background: ${esActivo ? 'var(--green)' : 'var(--red)'};
+                    color: white;
+                    font-size: 1rem;
+                    padding: 0.6rem 1.5rem;
+                    border-radius: 50px;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    font-weight: 600;
+                `;
             }
 
             const form = document.getElementById('formCambiarEstado');
@@ -375,15 +397,15 @@ function validarContrasenas() {
                 if (contrasena.value !== confirmarContrasena.value) {
                     e.preventDefault();
                     mostrarNotificacion('Las contraseñas no coinciden', 'error');
-                    contrasena.style.borderColor = '#e74c3c';
-                    confirmarContrasena.style.borderColor = '#e74c3c';
+                    contrasena.style.borderColor = 'var(--red)';
+                    confirmarContrasena.style.borderColor = 'var(--red)';
                     return;
                 }
 
                 if (contrasena.value.length < 8 && contrasena.value.length > 0) {
                     e.preventDefault();
                     mostrarNotificacion('La contraseña debe tener al menos 8 caracteres', 'error');
-                    contrasena.style.borderColor = '#e74c3c';
+                    contrasena.style.borderColor = 'var(--red)';
                     return;
                 }
             }
@@ -392,15 +414,15 @@ function validarContrasenas() {
                 if (contrasenaNueva.value !== confirmarContrasenaNueva.value) {
                     e.preventDefault();
                     mostrarNotificacion('Las contraseñas nuevas no coinciden', 'error');
-                    contrasenaNueva.style.borderColor = '#e74c3c';
-                    confirmarContrasenaNueva.style.borderColor = '#e74c3c';
+                    contrasenaNueva.style.borderColor = 'var(--red)';
+                    confirmarContrasenaNueva.style.borderColor = 'var(--red)';
                     return;
                 }
 
                 if (contrasenaNueva.value.length > 0 && contrasenaNueva.value.length < 8) {
                     e.preventDefault();
                     mostrarNotificacion('La contraseña nueva debe tener al menos 8 caracteres', 'error');
-                    contrasenaNueva.style.borderColor = '#e74c3c';
+                    contrasenaNueva.style.borderColor = 'var(--red)';
                     return;
                 }
             }
@@ -427,8 +449,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };
@@ -514,5 +536,3 @@ notifStyle.innerHTML = `
     }
 `;
 document.head.appendChild(notifStyle);
-
-console.log('%c✓ Script de empleados cargado correctamente', 'color: #27ae60; font-weight: bold;');

@@ -80,7 +80,7 @@
                             <label class="feature-card card-3d" style="padding: 2rem; cursor: pointer; border: 3px solid var(--cream); margin: 0;" id="entradaLabel">
                                 <input type="radio" name="TipoMovimiento" value="Entrada" style="width: 24px; height: 24px; cursor: pointer; margin-bottom: 1rem;" checked>
                                 <div style="text-align: center;">
-                                    <div class="feature-icon" style="background: linear-gradient(135deg, #27ae60, #229954); margin: 0 auto 1rem;">
+                                    <div class="feature-icon" style="background: linear-gradient(135deg, var(--green), #229954); margin: 0 auto 1rem;">
                                         <i class="fas fa-arrow-down" style="color: white;"></i>
                                     </div>
                                     <strong style="color: var(--dark-green); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Entrada</strong>
@@ -91,7 +91,7 @@
                             <label class="feature-card card-3d" style="padding: 2rem; cursor: pointer; border: 3px solid var(--cream); margin: 0;" id="salidaLabel">
                                 <input type="radio" name="TipoMovimiento" value="Salida" style="width: 24px; height: 24px; cursor: pointer; margin-bottom: 1rem;">
                                 <div style="text-align: center;">
-                                    <div class="feature-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b); margin: 0 auto 1rem;">
+                                    <div class="feature-icon" style="background: linear-gradient(135deg, var(--red), #c0392b); margin: 0 auto 1rem;">
                                         <i class="fas fa-arrow-up" style="color: white;"></i>
                                     </div>
                                     <strong style="color: var(--dark-green); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Salida</strong>
@@ -111,7 +111,7 @@
                         @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
 
                         <!-- Alerta de stock insuficiente -->
-                        <div id="alertaStockInsuficiente" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                        <div id="alertaStockInsuficiente" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--red); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
                             <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
                                 <i class="fas fa-exclamation-triangle"></i>
                                 <span>No se puede realizar la salida: stock insuficiente</span>
@@ -138,7 +138,7 @@
                     </div>
 
                     <!-- Resumen del costo (solo para entradas) -->
-                    <div id="resumenCosto" class="testimonial-card" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white; padding: 2rem;">
+                    <div id="resumenCosto" class="testimonial-card" style="background: linear-gradient(135deg, var(--green) 0%, #229954 100%); color: white; padding: 2rem;">
                         <h5 style="margin: 0 0 1rem; color: white; font-weight: 600;">
                             <i class="fas fa-calculator"></i> Resumen del Costo
                         </h5>
@@ -210,13 +210,13 @@
 
         function actualizarEstilosRadio() {
             if (radioEntrada.checked) {
-                entradaLabel.style.borderColor = '#27ae60';
+                entradaLabel.style.borderColor = 'var(--green)';
                 entradaLabel.style.background = 'rgba(39, 174, 96, 0.05)';
                 salidaLabel.style.borderColor = 'var(--cream)';
                 salidaLabel.style.background = '';
                 resumenCosto.style.display = 'block';
             } else {
-                salidaLabel.style.borderColor = '#e74c3c';
+                salidaLabel.style.borderColor = 'var(--red)';
                 salidaLabel.style.background = 'rgba(231, 76, 60, 0.05)';
                 entradaLabel.style.borderColor = 'var(--cream)';
                 entradaLabel.style.background = '';

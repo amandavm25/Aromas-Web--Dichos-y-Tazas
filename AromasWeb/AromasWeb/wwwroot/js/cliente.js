@@ -254,11 +254,11 @@ function initializeModals() {
             const estadoBadge = document.getElementById('detalles-estado-badge-cliente');
             if (estado === 'Activo') {
                 estadoBadge.textContent = 'Activo';
-                estadoBadge.style.background = '#27ae60';
+                estadoBadge.style.background = 'var(--green)';
                 estadoBadge.style.color = 'white';
             } else {
                 estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#e74c3c';
+                estadoBadge.style.background = 'var(--red)';
                 estadoBadge.style.color = 'white';
             }
         });
@@ -288,10 +288,10 @@ function initializeModals() {
             const estadoBadge = document.getElementById('eliminar-estado-badge-cliente');
             if (estado === 'Activo') {
                 estadoBadge.textContent = 'Activo';
-                estadoBadge.style.background = '#27ae60';
+                estadoBadge.style.background = 'var(--green)';
             } else {
                 estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#e74c3c';
+                estadoBadge.style.background = 'var(--red)';
             }
 
             // Actualizar acción del formulario
@@ -319,15 +319,15 @@ function validarContrasenas() {
                 if (contrasena.value !== confirmarContrasena.value) {
                     e.preventDefault();
                     mostrarNotificacion('Las contraseñas no coinciden', 'error');
-                    contrasena.style.borderColor = '#e74c3c';
-                    confirmarContrasena.style.borderColor = '#e74c3c';
+                    contrasena.style.borderColor = 'var(--red)';
+                    confirmarContrasena.style.borderColor = 'var(--red)';
                     return;
                 }
 
                 if (contrasena.value.length < 8 && contrasena.value.length > 0) {
                     e.preventDefault();
                     mostrarNotificacion('La contraseña debe tener al menos 8 caracteres', 'error');
-                    contrasena.style.borderColor = '#e74c3c';
+                    contrasena.style.borderColor = 'var(--red)';
                     return;
                 }
             }
@@ -337,15 +337,15 @@ function validarContrasenas() {
                 if (contrasenaNueva.value !== confirmarContrasenaNueva.value) {
                     e.preventDefault();
                     mostrarNotificacion('Las contraseñas nuevas no coinciden', 'error');
-                    contrasenaNueva.style.borderColor = '#e74c3c';
-                    confirmarContrasenaNueva.style.borderColor = '#e74c3c';
+                    contrasenaNueva.style.borderColor = 'var(--red)';
+                    confirmarContrasenaNueva.style.borderColor = 'var(--red)';
                     return;
                 }
 
                 if (contrasenaNueva.value.length > 0 && contrasenaNueva.value.length < 8) {
                     e.preventDefault();
                     mostrarNotificacion('La contraseña nueva debe tener al menos 8 caracteres', 'error');
-                    contrasenaNueva.style.borderColor = '#e74c3c';
+                    contrasenaNueva.style.borderColor = 'var(--red)';
                     return;
                 }
             }
@@ -373,8 +373,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };
@@ -459,4 +459,4 @@ notifStyle.innerHTML = `
 `;
 document.head.appendChild(notifStyle);
 
-console.log('%c✓ Script de clientes cargado correctamente', 'color: #27ae60; font-weight: bold;');
+console.log('%c✓ Script de clientes cargado correctamente', 'color: var(--green); font-weight: bold;');

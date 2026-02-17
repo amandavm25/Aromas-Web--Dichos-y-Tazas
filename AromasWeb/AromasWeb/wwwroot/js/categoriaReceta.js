@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const badgeEstado = document.getElementById('detalles-estado-badge-categoria');
             if (estado === 'Activa') {
                 badgeEstado.textContent = 'Activa';
-                badgeEstado.style.background = '#27ae60';
+                badgeEstado.style.background = 'var(--green)';
                 badgeEstado.style.color = 'white';
             } else {
                 badgeEstado.textContent = 'Inactiva';
-                badgeEstado.style.background = '#e74c3c';
+                badgeEstado.style.background = 'var(--red)';
                 badgeEstado.style.color = 'white';
             }
         });
@@ -52,11 +52,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const badgeEstado = document.getElementById('eliminar-estado-badge-categoria');
             if (estado === 'Activa') {
                 badgeEstado.textContent = 'Activa';
-                badgeEstado.style.background = '#27ae60';
+                badgeEstado.style.background = 'var(--green)';
                 badgeEstado.style.color = 'white';
             } else {
                 badgeEstado.textContent = 'Inactiva';
-                badgeEstado.style.background = '#e74c3c';
+                badgeEstado.style.background = 'var(--red)';
                 badgeEstado.style.color = 'white';
             }
 
@@ -252,11 +252,11 @@ document.addEventListener('DOMContentLoaded', function () {
         notificacion.style.fontWeight = '600';
 
         if (tipo === 'success') {
-            notificacion.style.background = '#27ae60';
+            notificacion.style.background = '#var(--green)';
             notificacion.style.color = 'white';
             notificacion.innerHTML = '<i class="fas fa-check-circle"></i> ' + mensaje;
         } else {
-            notificacion.style.background = '#e74c3c';
+            notificacion.style.background = 'var(--red)';
             notificacion.style.color = 'white';
             notificacion.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + mensaje;
         }

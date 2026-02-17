@@ -199,7 +199,7 @@ function calcularDuracion() {
             divDuracion.style.display = 'block';
             divDuracion.style.background = 'linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.1))';
             textoDuracion.textContent = 'La fecha de fin no puede ser anterior a la fecha de inicio';
-            textoDuracion.style.color = '#e74c3c';
+            textoDuracion.style.color = 'var(--red)';
             return;
         }
 
@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (fechaFin < fechaInicio) {
                     e.preventDefault();
                     mostrarNotificacion('La fecha de fin no puede ser anterior a la fecha de inicio', 'error');
-                    inputFechaFin.style.borderColor = '#e74c3c';
+                    inputFechaFin.style.borderColor = 'var(--red)';
                     return false;
                 }
             }
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (!selectReceta.value) {
                     todasCompletas = false;
-                    selectReceta.style.borderColor = '#e74c3c';
+                    selectReceta.style.borderColor = 'var(--red)';
                 } else {
                     selectReceta.style.borderColor = '';
                 }
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (descuento <= 0 || descuento > 100) {
                 e.preventDefault();
                 mostrarNotificacion('El descuento debe estar entre 0 y 100', 'error');
-                inputDescuento.style.borderColor = '#e74c3c';
+                inputDescuento.style.borderColor = 'var(--red)';
                 return false;
             }
         });
@@ -376,8 +376,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };
@@ -445,4 +445,4 @@ document.head.appendChild(notifStyle);
 // Ejecutar animaciones al cargar
 document.addEventListener('DOMContentLoaded', animateOnLoadPromocion);
 
-console.log('%c✓ Script de promociones cargado correctamente', 'color: #27ae60; font-weight: bold;');
+console.log('%c✓ Script de promociones cargado correctamente', 'color: var(--green); font-weight: bold;');

@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         iconoEstado.classList.add('fa-clock');
                         break;
                     case 'confirmada':
-                        badgeEstado.style.background = '#27ae60';
+                        badgeEstado.style.background = 'var(--green)';
                         iconoEstado.classList.add('fa-check-circle');
                         break;
                     case 'completada':
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         iconoEstado.classList.add('fa-check-double');
                         break;
                     case 'cancelada':
-                        badgeEstado.style.background = '#e74c3c';
+                        badgeEstado.style.background = 'var(--red)';
                         iconoEstado.classList.add('fa-times-circle');
                         break;
                     default:
@@ -146,11 +146,11 @@ document.addEventListener('DOMContentLoaded', function () {
         switch (tipo) {
             case 'success':
                 icono = 'fa-check-circle';
-                color = '#27ae60';
+                color = 'var(--green)';
                 break;
             case 'error':
                 icono = 'fa-times-circle';
-                color = '#e74c3c';
+                color = 'var(--red)';
                 break;
             case 'warning':
                 icono = 'fa-exclamation-triangle';
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
             camposRequeridos.forEach(campo => {
                 if (!campo.value.trim()) {
                     formularioValido = false;
-                    campo.style.borderColor = '#e74c3c';
+                    campo.style.borderColor = 'var(--red)';
                 } else {
                     campo.style.borderColor = '';
                 }

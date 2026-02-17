@@ -188,8 +188,8 @@
                                     </td>
                                     <td>
                                         <div style="display: flex; flex-direction: column; gap: 0.2rem;">
-                                            <span><i class="fas fa-play" style="color: #27ae60; margin-right: 0.3rem;"></i>@solicitud.FechaInicioFormateada</span>
-                                            <span><i class="fas fa-stop" style="color: #e74c3c; margin-right: 0.3rem;"></i>@solicitud.FechaFinFormateada</span>
+                                            <span><i class="fas fa-play" style="color: var(--green); margin-right: 0.3rem;"></i>@solicitud.FechaInicioFormateada</span>
+                                            <span><i class="fas fa-stop" style="color: var(--red); margin-right: 0.3rem;"></i>@solicitud.FechaFinFormateada</span>
                                         </div>
                                     </td>
                                     <td style="text-align: center;">
@@ -198,7 +198,7 @@
                                         </span>
                                     </td>
                                     <td style="text-align: center;">
-                                        <span style="color: @(solicitud.DiasDisponibles >= solicitud.DiasSolicitados ? "#27ae60" : "#e74c3c"); font-weight: 600; font-size: 1.05rem;">
+                                        <span style="color: @(solicitud.DiasDisponibles >= solicitud.DiasSolicitados ? "var(--green)" : "var(--red)"); font-weight: 600; font-size: 1.05rem;">
                                             @solicitud.DiasDisponibles.ToString("F0")
                                         </span>
                                     </td>
@@ -216,7 +216,7 @@
                                                     data-empleado="@solicitud.NombreEmpleado"
                                                     data-periodo="@solicitud.PeriodoVacaciones"
                                                     data-dias-solicitados="@solicitud.DiasSolicitados"
-                                                    style="background: #27ae60; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: var(--green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalAprobarSolicitud"
                                                     title="Aprobar">
@@ -227,7 +227,7 @@
                                                     data-id="@solicitud.IdSolicitud"
                                                     data-empleado="@solicitud.NombreEmpleado"
                                                     data-periodo="@solicitud.PeriodoVacaciones"
-                                                    style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: var(--red); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalRechazarSolicitud"
                                                     title="Rechazar">

@@ -243,7 +243,7 @@ function initializeFormValidation() {
             inputs.forEach(input => {
                 if (!input.value.trim()) {
                     isValid = false;
-                    input.style.borderColor = '#e74c3c';
+                    input.style.borderColor = 'var(--red)';
                 } else {
                     input.style.borderColor = '';
                 }
@@ -260,8 +260,8 @@ function initializeFormValidation() {
                 if (inicio >= fin) {
                     e.preventDefault();
                     mostrarNotificacion('La fecha de inicio debe ser anterior a la fecha de fin', 'error');
-                    periodoInicio.style.borderColor = '#e74c3c';
-                    periodoFin.style.borderColor = '#e74c3c';
+                    periodoInicio.style.borderColor = 'var(--red)';
+                    periodoFin.style.borderColor = 'var(--red)';
                     return;
                 }
             }
@@ -286,8 +286,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };

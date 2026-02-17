@@ -132,8 +132,8 @@
                     {
                         var estadoColor = solicitud.Estado switch
                         {
-                            "Aprobada" => "#27ae60",
-                            "Rechazada" => "#e74c3c",
+                            "Aprobada" => "var(--green)",
+                            "Rechazada" => "var(--red)",
                             "Pendiente" => "#f39c12",
                             _ => "var(--charcoal)"
                         };
@@ -220,18 +220,18 @@
                                 }
                                 else if (solicitud.Estado == "Aprobada")
                                 {
-                                    <div style="background: rgba(39, 174, 96, 0.08); padding: 1.5rem; border-radius: 15px; border-left: 4px solid #27ae60;">
+                                    <div style="background: rgba(39, 174, 96, 0.08); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--green);">
                                         <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.7rem;">
-                                            <i class="fas fa-check-circle" style="color: #27ae60; font-size: 1.2rem;"></i>
+                                            <i class="fas fa-check-circle" style="color: var(--green); font-size: 1.2rem;"></i>
                                             <span><strong>¡Aprobada!</strong> Disfruta tus vacaciones del @solicitud.FechaInicioFormateada al @solicitud.FechaFinFormateada</span>
                                         </p>
                                     </div>
                                 }
                                 else if (solicitud.Estado == "Rechazada")
                                 {
-                                    <div style="background: rgba(231, 76, 60, 0.08); padding: 1.5rem; border-radius: 15px; border-left: 4px solid #e74c3c;">
+                                    <div style="background: rgba(231, 76, 60, 0.08); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--red);">
                                         <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.7rem;">
-                                            <i class="fas fa-times-circle" style="color: #e74c3c; font-size: 1.2rem;"></i>
+                                            <i class="fas fa-times-circle" style="color: var(--red); font-size: 1.2rem;"></i>
                                             <span>Tu solicitud fue rechazada. Consulta con Recursos Humanos para más información.</span>
                                         </p>
                                     </div>

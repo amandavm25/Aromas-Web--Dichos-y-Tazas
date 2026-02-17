@@ -200,14 +200,14 @@
                                 <div class="timeline-details-grid">
                                     <div class="timeline-detail-item">
                                         <label class="timeline-detail-label">
-                                            <i class="fas fa-play" style="color: #27ae60;"></i> Inicio
+                                            <i class="fas fa-play" style="color: var(--green);"></i> Inicio
                                         </label>
                                         <p class="timeline-detail-value">@tarifa.FechaInicioFormateada</p>
                                     </div>
 
                                     <div class="timeline-detail-item">
                                         <label class="timeline-detail-label">
-                                            <i class="fas fa-stop" style="color: #e74c3c;"></i> Fin
+                                            <i class="fas fa-stop" style="color: var(--red);"></i> Fin
                                         </label>
                                         <p class="timeline-detail-value @(tarifa.FechaFin.HasValue ? "" : "pending")">
                                             @(tarifa.FechaFin.HasValue? tarifa.FechaFinFormateada: "Indefinido")

@@ -1,118 +1,113 @@
-﻿<div class="modal fade" id="modalDetallesAsistencia" tabindex="-1" aria-labelledby="modalDetallesAsistenciaLabel" aria-hidden="true">
+﻿<div class="modal fade admin-modal modal-olive" id="modalDetallesAsistencia">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+        <div class="modal-content">
             <!-- Header -->
-            <div class="modal-header" style="background: var(--olive-green); color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalDetallesAsistenciaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
-                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <div class="modal-icon">
                         <i class="fas fa-clock"></i>
                     </div>
                     Detalles de Asistencia
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--light-cream);">
+            <div class="modal-body">
+
                 <!-- Información del Empleado -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green);">
-                    <h5 id="detalleNombre" style="color: var(--dark-green); margin: 0 0 0.5rem; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
-                    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
-                        <div>
-                            <small style="color: var(--charcoal); opacity: 0.7;">Identificación:</small>
-                            <p id="detalleIdentificacion" style="margin: 0; color: var(--dark-green); font-weight: 600;"></p>
+                <div class="modal-entity-header entity-block">
+                    <h5 id="detalleNombre" class="modal-entity-name"></h5>
+                    <div class="modal-entity-meta">
+                        <div class="modal-entity-meta-item">
+                            <small>Identificación:</small>
+                            <p id="detalleIdentificacion"></p>
                         </div>
-                        <div>
-                            <small style="color: var(--charcoal); opacity: 0.7;">Cargo:</small>
-                            <p id="detalleCargo" style="margin: 0; color: var(--dark-green); font-weight: 600;"></p>
+                        <div class="modal-entity-meta-item">
+                            <small>Cargo:</small>
+                            <p id="detalleCargo"></p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Información de Fecha -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                            <i class="fas fa-calendar-day" style="color: var(--olive-green);"></i> Fecha
+                <div class="modal-data-grid-3">
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-calendar-day"></i> Fecha
                         </label>
-                        <p id="detalleFecha" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                        <p id="detalleFecha" class="modal-data-value"></p>
                     </div>
-
-                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                            <i class="fas fa-calendar-week" style="color: var(--olive-green);"></i> Día
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-calendar-week"></i> Día
                         </label>
-                        <p id="detalleDia" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                        <p id="detalleDia" class="modal-data-value"></p>
                     </div>
-
-                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                            <i class="fas fa-toggle-on" style="color: var(--olive-green);"></i> Estado
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-toggle-on"></i> Estado
                         </label>
                         <div id="detalleEstado"></div>
                     </div>
                 </div>
 
                 <!-- Horario -->
-                <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                    <i class="fas fa-clock" style="color: var(--gold);"></i> Horario
+                <h6 class="modal-subsection-title">
+                    <i class="fas fa-clock"></i> Horario
                 </h6>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                            <i class="fas fa-sign-in-alt" style="color: var(--olive-green);"></i> Entrada
+                <div class="modal-data-grid-3">
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-sign-in-alt"></i> Entrada
                         </label>
-                        <p id="detalleEntrada" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                        <p id="detalleEntrada" class="modal-data-value"></p>
                     </div>
-
-                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                            <i class="fas fa-sign-out-alt" style="color: var(--olive-green);"></i> Salida
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-sign-out-alt"></i> Salida
                         </label>
-                        <p id="detalleSalida" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                        <p id="detalleSalida" class="modal-data-value"></p>
                     </div>
-
-                    <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                            <i class="fas fa-utensils" style="color: var(--olive-green);"></i> Almuerzo
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-utensils"></i> Almuerzo
                         </label>
-                        <p id="detalleAlmuerzo" style="color: var(--dark-green); font-weight: 600; margin: 0;"></p>
+                        <p id="detalleAlmuerzo" class="modal-data-value"></p>
                     </div>
                 </div>
 
                 <!-- Resumen de Horas -->
-                <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                    <i class="fas fa-hourglass-half" style="color: var(--gold);"></i> Horas Trabajadas
+                <h6 class="modal-subsection-title">
+                    <i class="fas fa-hourglass-half"></i> Horas Trabajadas
                 </h6>
-                <div style="background: linear-gradient(135deg, var(--cream) 0%, rgba(240, 234, 214, 0.5) 100%); padding: 1.5rem; border-radius: 20px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+                <div class="modal-summary">
+                    <div class="modal-summary-grid">
                         <div>
-                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                <i class="fas fa-clock" style="color: var(--olive-green);"></i> Horas Totales
+                            <label class="modal-summary-label">
+                                <i class="fas fa-clock"></i> Horas Totales
                             </label>
-                            <p id="detalleHorasTotales" style="color: var(--gold-bright); font-size: 1.5rem; font-weight: 700; margin: 0;"></p>
+                            <p id="detalleHorasTotales" class="modal-summary-value summary-extra"></p>
                         </div>
-
                         <div>
-                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                <i class="fas fa-business-time" style="color: var(--olive-green);"></i> Regulares
+                            <label class="modal-summary-label">
+                                <i class="fas fa-business-time"></i> Regulares
                             </label>
-                            <p id="detalleHorasRegulares" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                            <p id="detalleHorasRegulares" class="modal-summary-value summary-total"></p>
                         </div>
-
                         <div>
-                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
-                                <i class="fas fa-star" style="color: var(--gold);"></i> Extras
+                            <label class="modal-summary-label">
+                                <i class="fas fa-star"></i> Extras
                             </label>
-                            <p id="detalleHorasExtras" style="font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+                            <p id="detalleHorasExtras" class="modal-summary-value"></p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <span><i class="fas fa-times"></i> Cerrar</span>
                 </button>
             </div>
@@ -126,7 +121,6 @@
 
         botonesDetalles.forEach(boton => {
             boton.addEventListener('click', function () {
-                // Obtener datos del botón
                 const nombre = this.getAttribute('data-nombre');
                 const identificacion = this.getAttribute('data-identificacion');
                 const cargo = this.getAttribute('data-cargo');
@@ -140,7 +134,6 @@
                 const horasExtras = this.getAttribute('data-horasextras');
                 const estado = this.getAttribute('data-estado');
 
-                // Llenar el modal con los datos
                 document.getElementById('detalleNombre').textContent = nombre;
                 document.getElementById('detalleIdentificacion').textContent = identificacion;
                 document.getElementById('detalleCargo').textContent = cargo;
@@ -152,16 +145,16 @@
                 document.getElementById('detalleHorasTotales').textContent = horasTotales;
                 document.getElementById('detalleHorasRegulares').textContent = horasRegulares + ' h';
 
-                // Configurar horas extras con color
+                // Horas extras: color dorado si positivo, gris si 0
+                const horasExtrasEl = document.getElementById('detalleHorasExtras');
                 const horasExtrasNum = parseFloat(horasExtras);
-                const colorExtras = horasExtrasNum > 0 ? 'var(--gold-bright)' : 'var(--charcoal)';
-                document.getElementById('detalleHorasExtras').textContent = horasExtras + ' h';
-                document.getElementById('detalleHorasExtras').style.color = colorExtras;
+                horasExtrasEl.textContent = horasExtras + ' h';
+                horasExtrasEl.className = 'modal-summary-value' + (horasExtrasNum > 0 ? ' summary-extra' : '');
 
-                // Configurar badge de estado
-                const estadoColor = estado === 'Completo' ? '#27ae60' : 'var(--gold-bright)';
-                const estadoHtml = `<span style="background: ${estadoColor}; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">${estado}</span>`;
-                document.getElementById('detalleEstado').innerHTML = estadoHtml;
+                // Badge de estado
+                const estadoColor = estado === 'Completo' ? 'var(--green)' : 'var(--gold-bright)';
+                document.getElementById('detalleEstado').innerHTML =
+                    `<span style="background:${estadoColor};color:var(--white);padding:0.4rem 1rem;border-radius:20px;font-size:0.85rem;font-weight:600;display:inline-block;">${estado}</span>`;
             });
         });
     });

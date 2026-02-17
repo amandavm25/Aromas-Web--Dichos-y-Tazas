@@ -42,9 +42,9 @@
                     <!-- Mensaje de éxito -->
                     @if (TempData["Mensaje"] != null)
                     {
-                        <div style="background: linear-gradient(135deg, rgba(98, 170, 118, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; border-left: 4px solid #27ae60;">
+                        <div style="background: linear-gradient(135deg, rgba(98, 170, 118, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; border-left: 4px solid var(--green);">
                             <div style="display: flex; align-items: start; gap: 1rem;">
-                                <i class="fas fa-check-circle" style="color: #27ae60; font-size: 1.5rem; margin-top: 0.2rem;"></i>
+                                <i class="fas fa-check-circle" style="color: var(--green); font-size: 1.5rem; margin-top: 0.2rem;"></i>
                                 <div>
                                     <h6 style="color: #229954; margin: 0 0 0.5rem; font-weight: 700;">¡Correo enviado!</h6>
                                     <p style="margin: 0; color: #229954; line-height: 1.6;">@TempData["Mensaje"]</p>
@@ -138,7 +138,7 @@
 
                             <!-- Paso 4 -->
                             <div style="display: flex; gap: 1rem; align-items: start;">
-                                <div style="width: 35px; height: 35px; background: linear-gradient(135deg, #27ae60, #229954); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">
+                                <div style="width: 35px; height: 35px; background: linear-gradient(135deg, var(--green), #229954); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">
                                     <i class="fas fa-check"></i>
                                 </div>
                                 <div style="flex: 1;">
@@ -249,7 +249,7 @@
 
                     if (!emailRegex.test(email)) {
                         mostrarNotificacion('Por favor ingresa un correo electrónico válido', 'error');
-                        emailInput.style.borderColor = '#e74c3c';
+                        emailInput.style.borderColor = 'var(--red)';
                         emailInput.focus();
                         return;
                     }
@@ -283,8 +283,8 @@
             };
 
             var colores = {
-                'success': '#27ae60',
-                'error': '#e74c3c',
+                'success': 'var(--green)',
+                'error': 'var(--red)',
                 'warning': 'var(--gold-bright)',
                 'info': 'var(--olive-green)'
             };

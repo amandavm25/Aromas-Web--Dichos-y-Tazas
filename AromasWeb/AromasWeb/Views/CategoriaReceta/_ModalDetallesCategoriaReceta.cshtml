@@ -83,11 +83,11 @@
                 const estadoBadge = document.getElementById('detalles-estado-badge-categoria');
                 if (estado === 'Activa') {
                     estadoBadge.textContent = 'Activa';
-                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.background = 'var(--green)';
                     estadoBadge.style.color = 'white';
                 } else {
                     estadoBadge.textContent = 'Inactiva';
-                    estadoBadge.style.background = '#e74c3c';
+                    estadoBadge.style.background = 'var(--red)';
                     estadoBadge.style.color = 'white';
                 }
             });

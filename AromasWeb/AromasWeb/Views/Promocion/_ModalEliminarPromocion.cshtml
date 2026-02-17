@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: var(--white); border: none; padding: 2rem;">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--red) 0%, #c0392b 100%); color: var(--white); border: none; padding: 2rem;">
                 <h5 class="modal-title" id="modalEliminarPromocionLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
                     <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-exclamation-triangle"></i>
@@ -15,9 +15,9 @@
             <!-- Body -->
             <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
                 <!-- Alerta de advertencia -->
-                <div class="feature-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(192, 57, 43, 0.1) 100%); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid #e74c3c;">
+                <div class="feature-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(192, 57, 43, 0.1) 100%); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid var(--red);">
                     <div style="display: flex; align-items: start; gap: 1rem;">
-                        <div style="width: 50px; height: 50px; background: #e74c3c; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <div style="width: 50px; height: 50px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                             <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; color: white;"></i>
                         </div>
                         <div>
@@ -96,7 +96,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
                         <span><i class="fas fa-times"></i> Cancelar</span>
                     </button>
-                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, #e74c3c, #c0392b); padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, var(--red), #c0392b); padding: 0.9rem 2.5rem; border-radius: 50px;">
                         <span><i class="fas fa-trash"></i> Eliminar</span>
                     </button>
                 </form>
@@ -128,20 +128,20 @@
                 const vigenciaBadge = document.getElementById('eliminar-vigencia-badge-promocion');
                 vigenciaBadge.textContent = vigencia;
                 if (vigencia === 'Vigente') {
-                    vigenciaBadge.style.background = '#27ae60';
+                    vigenciaBadge.style.background = 'var(--green)';
                 } else if (vigencia === 'Próximamente') {
                     vigenciaBadge.style.background = '#3498db';
                 } else {
-                    vigenciaBadge.style.background = '#e74c3c';
+                    vigenciaBadge.style.background = 'var(--red)';
                 }
 
                 // Estado badge
                 const estadoBadge = document.getElementById('eliminar-estado-badge-promocion');
                 estadoBadge.textContent = estado;
                 if (estado === 'Activa') {
-                    estadoBadge.style.background = '#27ae60';
+                    estadoBadge.style.background = 'var(--green)';
                 } else {
-                    estadoBadge.style.background = '#e74c3c';
+                    estadoBadge.style.background = 'var(--red)';
                 }
 
                 const form = document.getElementById('formEliminarPromocion');

@@ -222,11 +222,11 @@ function initializeModals() {
             const estadoBadge = document.getElementById('detalles-estado-badge-modulo');
             if (estado === 'Activo') {
                 estadoBadge.textContent = 'Activo';
-                estadoBadge.style.background = '#27ae60';
+                estadoBadge.style.background = 'var(--green)';
                 estadoBadge.style.color = 'white';
             } else {
                 estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#e74c3c';
+                estadoBadge.style.background = 'var(--red)';
                 estadoBadge.style.color = 'white';
             }
         });
@@ -252,10 +252,10 @@ function initializeModals() {
             const estadoBadge = document.getElementById('eliminar-estado-badge-modulo');
             if (estado === 'Activo') {
                 estadoBadge.textContent = 'Activo';
-                estadoBadge.style.background = '#27ae60';
+                estadoBadge.style.background = 'var(--green)';
             } else {
                 estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#e74c3c';
+                estadoBadge.style.background = 'var(--red)';
             }
 
             const form = document.getElementById('formEliminarModulo');
@@ -276,8 +276,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };
@@ -361,4 +361,4 @@ notifStyle.innerHTML = `
 `;
 document.head.appendChild(notifStyle);
 
-console.log('%c✓ Script de módulos cargado correctamente', 'color: #27ae60; font-weight: bold;');
+console.log('%c✓ Script de módulos cargado correctamente', 'color: var(--green); font-weight: bold;');

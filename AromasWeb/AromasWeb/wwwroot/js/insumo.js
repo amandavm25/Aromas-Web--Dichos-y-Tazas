@@ -107,7 +107,7 @@ function initializeTableHoverEffects() {
             });
 
             row.addEventListener('mouseleave', function () {
-                if (!this.style.borderLeft.includes('4px solid #e74c3c')) {
+                if (!this.style.borderLeft.includes('4px solid var(--red)')) {
                     this.style.background = '';
                     this.style.transform = '';
                     this.style.boxShadow = '';
@@ -347,7 +347,7 @@ document.head.appendChild(stylePaginacion);
             const estadoBadge = document.getElementById('detalles-estado-badge-insumo');
             if (estado === 'Activo') {
                 estadoBadge.textContent = 'Activo';
-                estadoBadge.style.background = '#27ae60';
+                estadoBadge.style.background = 'var(--green)';
                 estadoBadge.style.color = 'white';
             } else {
                 estadoBadge.textContent = 'Inactivo';
@@ -398,7 +398,7 @@ document.head.appendChild(stylePaginacion);
             const estadoBadge = document.getElementById('eliminar-estado-badge-insumo');
             if (estado === 'Activo') {
                 estadoBadge.textContent = 'Activo';
-                estadoBadge.style.background = '#27ae60';
+                estadoBadge.style.background = 'var(--green)';
                 estadoBadge.style.color = 'white';
             } else {
                 estadoBadge.textContent = 'Inactivo';
@@ -652,8 +652,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12'
     };
 
@@ -731,7 +731,7 @@ document.addEventListener('DOMContentLoaded', function () {
             inputs.forEach(input => {
                 if (!input.value.trim()) {
                     isValid = false;
-                    input.style.borderColor = '#e74c3c';
+                    input.style.borderColor = 'var(--red)';
                 } else {
                     input.style.borderColor = 'var(--secondary-color)';
                 }
@@ -759,13 +759,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     filas.forEach(fila => {
         fila.addEventListener('mouseenter', function () {
-            if (!this.style.borderLeft.includes('4px solid #e74c3c')) {
+            if (!this.style.borderLeft.includes('4px solid var(--red)')) {
                 this.style.background = 'var(--light-color)';
             }
         });
 
         fila.addEventListener('mouseleave', function () {
-            if (!this.style.borderLeft.includes('4px solid #e74c3c')) {
+            if (!this.style.borderLeft.includes('4px solid var(--red)')) {
                 this.style.background = '';
             }
         });
@@ -784,8 +784,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };
@@ -850,4 +850,4 @@ notifStyle.innerHTML = `
 `;
 document.head.appendChild(notifStyle);
 
-console.log('%c✓ Script de insumos cargado correctamente', 'color: #27ae60; font-weight: bold;');
+console.log('%c✓ Script de insumos cargado correctamente', 'color: var(--green); font-weight: bold;');

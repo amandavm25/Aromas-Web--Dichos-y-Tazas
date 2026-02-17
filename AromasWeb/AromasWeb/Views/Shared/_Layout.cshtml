@@ -492,7 +492,7 @@
         @if (TempData["Mensaje"] != null)
         {
             <div style="position: fixed; top: 100px; right: 20px; z-index: 10000; animation: slideInRight 0.5s ease;">
-                <div style="background: linear-gradient(135deg, #27ae60, #229954); color: white; padding: 1.5rem 2rem; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 1rem; min-width: 300px;">
+                <div style="background: linear-gradient(135deg, var(--green), #229954); color: white; padding: 1.5rem 2rem; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 1rem; min-width: 300px;">
                     <i class="fas fa-check-circle" style="font-size: 1.5rem;"></i>
                     <span style="font-weight: 600;">@TempData["Mensaje"]</span>
                 </div>
@@ -511,7 +511,7 @@
         @if (TempData["Error"] != null)
         {
             <div style="position: fixed; top: 100px; right: 20px; z-index: 10000; animation: slideInRight 0.5s ease;">
-                <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 1.5rem 2rem; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 1rem; min-width: 300px;">
+                <div style="background: linear-gradient(135deg, var(--red), #c0392b); color: white; padding: 1.5rem 2rem; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 1rem; min-width: 300px;">
                     <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem;"></i>
                     <span style="font-weight: 600;">@TempData["Error"]</span>
                 </div>

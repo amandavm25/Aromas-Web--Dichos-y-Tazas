@@ -153,9 +153,9 @@
                                 var colorEstado = reserva.Estado switch
                                 {
                                     "Pendiente" => "#f39c12",
-                                    "Confirmada" => "#27ae60",
+                                    "Confirmada" => "var(--green)",
                                     "Completada" => "#3498db",
-                                    "Cancelada" => "#e74c3c",
+                                    "Cancelada" => "var(--red)",
                                     _ => "#95a5a6"
                                 };
 
@@ -219,7 +219,7 @@
                                                     data-fecha="@reserva.FechaFormateada"
                                                     data-hora="@reserva.HoraFormateada"
                                                     data-personas="@reserva.CantidadPersonas"
-                                                    style="background: #e74c3c; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: var(--red); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalCancelarReserva"
                                                     title="Cancelar">

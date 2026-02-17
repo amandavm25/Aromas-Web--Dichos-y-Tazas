@@ -82,9 +82,9 @@ function initPasswordStrength() {
         if (strength === 0) {
             strengthText.textContent = '';
         } else if (strength === 1) {
-            strength1.style.background = '#e74c3c';
+            strength1.style.background = 'var(--red)';
             strengthText.textContent = 'Muy débil';
-            strengthText.style.color = '#e74c3c';
+            strengthText.style.color = 'var(--red)';
         } else if (strength === 2) {
             strength1.style.background = '#f39c12';
             strength2.style.background = '#f39c12';
@@ -97,12 +97,12 @@ function initPasswordStrength() {
             strengthText.textContent = 'Aceptable';
             strengthText.style.color = '#f39c12';
         } else if (strength === 4) {
-            strength1.style.background = '#27ae60';
-            strength2.style.background = '#27ae60';
-            strength3.style.background = '#27ae60';
-            strength4.style.background = '#27ae60';
+            strength1.style.background = 'var(--green)';
+            strength2.style.background = 'var(--green)';
+            strength3.style.background = 'var(--green)';
+            strength4.style.background = 'var(--green)';
             strengthText.textContent = 'Fuerte';
-            strengthText.style.color = '#27ae60';
+            strengthText.style.color = 'var(--green)';
         }
     });
 }
@@ -150,20 +150,20 @@ function initPasswordMatch() {
 
         if (password === confirmPassword) {
             matchMessage.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: #27ae60; font-size: 0.9rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--green); font-size: 0.9rem;">
                     <i class="fas fa-check-circle"></i>
                     <span>Las contraseñas coinciden</span>
                 </div>
             `;
-            confirmPasswordInput.style.borderColor = '#27ae60';
+            confirmPasswordInput.style.borderColor = 'var(--green)';
         } else {
             matchMessage.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: #e74c3c; font-size: 0.9rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--red); font-size: 0.9rem;">
                     <i class="fas fa-times-circle"></i>
                     <span>Las contraseñas no coinciden</span>
                 </div>
             `;
-            confirmPasswordInput.style.borderColor = '#e74c3c';
+            confirmPasswordInput.style.borderColor = 'var(--red)';
         }
     }
 
@@ -206,9 +206,9 @@ function initPasswordRequirements() {
         if (isValid) {
             icon.classList.remove('fa-circle');
             icon.classList.add('fa-check-circle');
-            icon.style.color = '#27ae60';
+            icon.style.color = 'var(--green)';
             icon.style.fontSize = '1rem';
-            span.style.color = '#27ae60';
+            span.style.color = 'var(--green)';
             span.style.fontWeight = '600';
         } else {
             icon.classList.remove('fa-check-circle');
@@ -248,7 +248,7 @@ function initFormSubmit() {
         if (password.length < 8) {
             mostrarNotificacion('La contraseña debe tener al menos 8 caracteres', 'error');
             passwordInput.focus();
-            passwordInput.style.borderColor = '#e74c3c';
+            passwordInput.style.borderColor = 'var(--red)';
             return;
         }
 
@@ -256,7 +256,7 @@ function initFormSubmit() {
         if (!/[A-Z]/.test(password)) {
             mostrarNotificacion('La contraseña debe incluir al menos una letra mayúscula', 'error');
             passwordInput.focus();
-            passwordInput.style.borderColor = '#e74c3c';
+            passwordInput.style.borderColor = 'var(--red)';
             return;
         }
 
@@ -264,7 +264,7 @@ function initFormSubmit() {
         if (!/[a-z]/.test(password)) {
             mostrarNotificacion('La contraseña debe incluir al menos una letra minúscula', 'error');
             passwordInput.focus();
-            passwordInput.style.borderColor = '#e74c3c';
+            passwordInput.style.borderColor = 'var(--red)';
             return;
         }
 
@@ -272,7 +272,7 @@ function initFormSubmit() {
         if (!/\d/.test(password)) {
             mostrarNotificacion('La contraseña debe incluir al menos un número', 'error');
             passwordInput.focus();
-            passwordInput.style.borderColor = '#e74c3c';
+            passwordInput.style.borderColor = 'var(--red)';
             return;
         }
 
@@ -280,7 +280,7 @@ function initFormSubmit() {
         if (password !== confirmPassword) {
             mostrarNotificacion('Las contraseñas no coinciden', 'error');
             confirmPasswordInput.focus();
-            confirmPasswordInput.style.borderColor = '#e74c3c';
+            confirmPasswordInput.style.borderColor = 'var(--red)';
             return;
         }
 
@@ -338,8 +338,8 @@ function mostrarNotificacion(mensaje, tipo) {
     };
 
     const colores = {
-        'success': '#27ae60',
-        'error': '#e74c3c',
+        'success': 'var(--green)',
+        'error': 'var(--red)',
         'warning': '#f39c12',
         'info': '#3498db'
     };
@@ -404,4 +404,4 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-console.log('%c✓ Script de restablecer contraseña cargado correctamente', 'color: #27ae60; font-weight: bold;');
+console.log('%c✓ Script de restablecer contraseña cargado correctamente', 'color: var(--green); font-weight: bold;');

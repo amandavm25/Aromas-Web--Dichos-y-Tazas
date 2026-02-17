@@ -146,7 +146,7 @@ function initializeModals() {
             const estadoBadge = document.getElementById('detalles-estado-badge-tarifa');
             if (estadoBadge) {
                 const estado = this.dataset.estado;
-                const colores = { 'Vigente': '#27ae60', 'Vencida': '#e74c3c', 'Futura': '#3498db' };
+                const colores = { 'Vigente': 'var(--green)', 'Vencida': 'var(--red)', 'Futura': '#3498db' };
                 const iconos = { 'Vigente': 'fa-check-circle', 'Vencida': 'fa-times-circle', 'Futura': 'fa-calendar' };
                 estadoBadge.innerHTML = `<i class="fas ${iconos[estado] || 'fa-question-circle'}"></i> ${estado}`;
                 estadoBadge.style.background = colores[estado] || '#95a5a6';
@@ -160,7 +160,7 @@ function initializeModals() {
                 minimoBadge.innerHTML = cumple === 'Sí'
                     ? '<i class="fas fa-shield-alt"></i> Cumple mínimo'
                     : '<i class="fas fa-exclamation-triangle"></i> Bajo mínimo';
-                minimoBadge.style.background = cumple === 'Sí' ? '#27ae60' : '#e74c3c';
+                minimoBadge.style.background = cumple === 'Sí' ? 'var(--green)' : 'var(--red)';
                 minimoBadge.style.color = 'white';
             }
         });
@@ -186,7 +186,7 @@ function initializeModals() {
 // ============================================
 function mostrarNotificacion(mensaje, tipo) {
     const iconos = { success: 'fa-check-circle', error: 'fa-exclamation-triangle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
-    const colores = { success: '#27ae60', error: '#e74c3c', warning: '#f39c12', info: '#3498db' };
+    const colores = { success: 'var(--green)', error: 'var(--red)', warning: '#f39c12', info: '#3498db' };
 
     const notification = document.createElement('div');
     notification.style.cssText = `

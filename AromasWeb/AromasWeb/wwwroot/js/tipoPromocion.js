@@ -3,7 +3,7 @@
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('%c✓ Script de tipos de promociones cargado', 'color: #27ae60; font-weight: bold;');
+    console.log('%c✓ Script de tipos de promociones cargado', 'color: var(--green); font-weight: bold;');
 
     // Inicializar eventos de detalles
     inicializarModales();
@@ -28,7 +28,7 @@ function inicializarModales() {
 
             const estadoBadge = document.getElementById('detalles-estado-badge-tipo');
             estadoBadge.textContent = estado;
-            estadoBadge.style.background = estado === 'Activo' ? '#27ae60' : '#e74c3c';
+            estadoBadge.style.background = estado === 'Activo' ? 'var(--green)' : 'var(--red)';
         });
     });
 
@@ -48,7 +48,7 @@ function inicializarModales() {
 
             const estadoBadge = document.getElementById('eliminar-estado-badge-tipo');
             estadoBadge.textContent = estado;
-            estadoBadge.style.background = estado === 'Activo' ? '#27ae60' : '#e74c3c';
+            estadoBadge.style.background = estado === 'Activo' ? 'var(--green)' : 'var(--red)';
 
             const form = document.getElementById('formEliminarTipo');
             form.action = '/TipoPromocion/EliminarTipoPromocion/' + id;

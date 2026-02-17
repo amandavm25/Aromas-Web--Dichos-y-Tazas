@@ -41,7 +41,7 @@
 
                 @if (TempData["Error"] != null)
                 {
-                    <div style="background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                    <div style="background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--red); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
                         <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
                             <i class="fas fa-exclamation-triangle"></i>
                             <span>@TempData["Error"]</span>
@@ -128,7 +128,7 @@
                             <strong id="salarioMensualCalc" style="font-size: 1.3rem; color: var(--gold); font-family: var(--font-primary);">₡0.00</strong>
                         </div>
                     </div>
-                    <div id="alertaSalarioMinimo" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <div id="alertaSalarioMinimo" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--red); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
                         <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
                             <i class="fas fa-exclamation-triangle"></i>
                             <span>Esta tarifa es menor al salario mínimo legal (₡1,768.98/hora)</span>

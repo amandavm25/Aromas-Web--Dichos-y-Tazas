@@ -159,7 +159,7 @@
                             {
                                 var diaSemana = asistencia.Fecha.ToString("dddd", new System.Globalization.CultureInfo("es-ES"));
                                 var estado = asistencia.HoraSalida.HasValue ? "Completo" : "En curso";
-                                var estadoColor = asistencia.HoraSalida.HasValue ? "#27ae60" : "var(--amber)";
+                                var estadoColor = asistencia.HoraSalida.HasValue ? "var(--green)" : "var(--amber)";
 
                                 <tr>
                                     <td style="padding: 1.2rem; text-align: center;">

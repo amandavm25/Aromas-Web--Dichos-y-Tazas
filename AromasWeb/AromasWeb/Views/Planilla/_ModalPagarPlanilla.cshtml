@@ -1,87 +1,86 @@
-﻿<div class="modal fade" id="modalPagarPlanilla" tabindex="-1" aria-labelledby="modalPagarPlanillaLabel" aria-hidden="true">
+﻿<div class="modal fade admin-modal modal-olive" id="modalPagarPlanilla">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+        <div class="modal-content">
 
             <!-- Header -->
-            <div class="modal-header" style="background: var(--olive-green); color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalPagarPlanillaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
-                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalPagarPlanillaLabel">
+                    <div class="modal-icon">
                         <i class="fas fa-check-circle"></i>
                     </div>
                     Marcar Planilla como Pagada
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+            <div class="modal-body">
 
                 <!-- Aviso de confirmación -->
-                <div class="feature-card" style="background: rgba(39, 174, 96, 0.08); padding: 2rem; margin: 0 0 2rem; border-left: 5px solid var(--olive-green);">
-                    <div style="display: flex; align-items: start; gap: 1rem;">
-                        <div style="width: 50px; height: 50px; background: var(--olive-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i class="fas fa-info-circle" style="font-size: 1.5rem; color: white;"></i>
-                        </div>
-                        <div>
-                            <h6 style="color: var(--dark-green); margin: 0 0 0.5rem; font-weight: 700; font-size: 1.1rem;">Confirmación de Pago</h6>
-                            <p style="margin: 0; color: var(--dark-green); font-weight: 500; line-height: 1.6;">
-                                ¿Está seguro que desea marcar esta planilla como <strong>PAGADA</strong>? Esta acción indica que el pago ha sido procesado correctamente.
-                            </p>
-                        </div>
+                <div class="modal-alert alert-success">
+                    <div class="modal-alert-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div>
+                        <h6>Confirmación de Pago</h6>
+                        <p>
+                            ¿Está seguro que desea marcar esta planilla como <strong>PAGADA</strong>?
+                            Esta acción indica que el pago ha sido procesado correctamente.
+                        </p>
                     </div>
                 </div>
 
                 <!-- Detalles de la planilla -->
-                <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
-                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
-                        <i class="fas fa-file-invoice-dollar" style="color: var(--olive-green);"></i> Detalles de la Planilla
+                <div class="modal-section">
+                    <h6 class="modal-section-title">
+                        <i class="fas fa-file-invoice-dollar"></i> Detalles de la Planilla
                     </h6>
 
-                    <div style="display: grid; gap: 1rem;">
+                    <div class="modal-data-grid-1">
+
                         <!-- Empleado -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
+                        <div class="modal-data-cell">
+                            <label class="modal-data-label">
+                                <i class="fas fa-user"></i> Empleado
                             </label>
-                            <p id="pagar-empleado" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
+                            <p id="pagar-empleado" class="modal-data-value"></p>
                         </div>
 
                         <!-- Período -->
-                        <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Período
+                        <div class="modal-data-cell">
+                            <label class="modal-data-label">
+                                <i class="fas fa-calendar-alt"></i> Período
                             </label>
-                            <p id="pagar-periodo" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            <p id="pagar-periodo" class="modal-data-value"></p>
                         </div>
 
                         <!-- Monto -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0; background: rgba(39, 174, 96, 0.08); border-left: 5px solid var(--olive-green);">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-dollar-sign" style="color: var(--olive-green);"></i> Monto a Pagar
+                        <div class="modal-data-cell cell-accent cell-green">
+                            <label class="modal-data-label">
+                                <i class="fas fa-dollar-sign"></i> Monto a Pagar
                             </label>
-                            <p id="pagar-neto" style="color: var(--olive-green); font-size: 2rem; font-weight: 700; margin: 0; font-family: var(--font-primary);"></p>
+                            <p id="pagar-neto" class="modal-data-value"></p>
                         </div>
+
                     </div>
                 </div>
 
                 <!-- Nota -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 15px; margin-top: 1.5rem; border: 2px dashed var(--olive-green);">
-                    <p style="margin: 0; color: var(--dark-green); font-size: 0.95rem; display: flex; align-items: start; gap: 0.7rem;">
-                        <i class="fas fa-check-circle" style="font-size: 1.2rem; margin-top: 0.2rem; color: var(--olive-green);"></i>
-                        <span><strong>Nota:</strong> Al marcar como pagada, se registrará la fecha y hora del pago. Esta acción no se puede deshacer.</span>
-                    </p>
+                <div class="modal-note">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>Nota:</strong> Al marcar como pagada, se registrará la fecha y hora del pago. Esta acción no se puede deshacer.</span>
                 </div>
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem;">
-                <form id="formPagarPlanilla" method="post" action="" style="display: flex; gap: 1rem; width: 100%; justify-content: flex-end;">
+            <div class="modal-footer">
+                <form id="formPagarPlanilla" method="post" action="" style="display:flex;gap:1rem;width:100%;justify-content:flex-end;">
                     @Html.AntiForgeryToken()
                     <input type="hidden" id="pagar-id" name="IdPlanilla" />
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         <span><i class="fas fa-times"></i> Cancelar</span>
                     </button>
-                    <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, var(--olive-green), #229954); padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <button type="submit" class="btn btn-primary">
                         <span><i class="fas fa-check"></i> Confirmar Pago</span>
                     </button>
                 </form>

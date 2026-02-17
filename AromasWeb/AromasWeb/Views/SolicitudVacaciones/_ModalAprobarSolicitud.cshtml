@@ -1,61 +1,62 @@
-﻿<div class="modal fade" id="modalAprobarSolicitud" tabindex="-1" aria-labelledby="modalAprobarSolicitudLabel" aria-hidden="true">
+﻿<div class="modal fade admin-modal modal-success" id="modalAprobarSolicitud">
     <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+        <div class="modal-content">
 
             <!-- Header -->
-            <div class="modal-header" style="background: #27ae60; color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalAprobarSolicitudLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
-                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAprobarSolicitudLabel">
+                    <div class="modal-icon">
                         <i class="fas fa-check-circle"></i>
                     </div>
                     Aprobar Solicitud
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+            <div class="modal-body">
 
                 <!-- Aviso -->
-                <div style="background: rgba(39,174,96,0.1); padding: 1.5rem 2rem; border-radius: 15px; border-left: 5px solid #27ae60; margin-bottom: 2rem; display: flex; align-items: start; gap: 1rem;">
-                    <div style="width: 44px; height: 44px; background: #27ae60; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <i class="fas fa-check-circle" style="font-size: 1.3rem; color: white;"></i>
+                <div class="modal-alert alert-success">
+                    <div class="modal-alert-icon">
+                        <i class="fas fa-check-circle"></i>
                     </div>
                     <div>
-                        <h6 style="color: var(--dark-green); margin: 0 0 0.4rem; font-weight: 700; font-size: 1rem;">Confirmación de Aprobación</h6>
-                        <p style="margin: 0; color: var(--dark-green); font-size: 0.95rem; line-height: 1.6;">
-                            Al aprobar esta solicitud, los días serán <strong>descontados automáticamente</strong> del saldo disponible del empleado.
+                        <h6>Confirmación de Aprobación</h6>
+                        <p>
+                            Al aprobar esta solicitud, los días serán
+                            <strong>descontados automáticamente</strong> del saldo disponible del empleado.
                         </p>
                     </div>
                 </div>
 
                 <!-- Detalles -->
-                <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
-                    <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-primary); font-size: 1.2rem;">
-                        <i class="fas fa-umbrella-beach" style="color: var(--olive-green);"></i> Detalles de la Solicitud
+                <div class="modal-section">
+                    <h6 class="modal-section-title">
+                        <i class="fas fa-umbrella-beach"></i> Detalles de la Solicitud
                     </h6>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="modal-data-grid-2">
 
-                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 15px;">
-                            <p style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
-                                <i class="fas fa-user" style="color: var(--olive-green);"></i> Empleado
-                            </p>
-                            <p id="aprobar-nombre-empleado" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
+                        <div class="modal-data-cell">
+                            <label class="modal-data-label">
+                                <i class="fas fa-user"></i> Empleado
+                            </label>
+                            <p id="aprobar-nombre-empleado" class="modal-data-value"></p>
                         </div>
 
-                        <div style="background: rgba(39,174,96,0.08); padding: 1.2rem; border-radius: 15px; border-left: 5px solid #27ae60;">
-                            <p style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
-                                <i class="fas fa-clock" style="color: #27ae60;"></i> Días Solicitados
-                            </p>
-                            <p id="aprobar-diassolicitados" style="color: #27ae60; font-size: 2rem; font-weight: 700; margin: 0; font-family: var(--font-primary);"></p>
+                        <div class="modal-data-cell cell-green">
+                            <label class="modal-data-label">
+                                <i class="fas fa-clock"></i> Días Solicitados
+                            </label>
+                            <p id="aprobar-diassolicitados" class="modal-data-value value-green"></p>
                         </div>
 
-                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 15px; grid-column: 1 / -1;">
-                            <p style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
-                                <i class="fas fa-calendar-alt" style="color: var(--olive-green);"></i> Período de Vacaciones
-                            </p>
-                            <p id="aprobar-periodo" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                        <div class="modal-data-cell cell-span">
+                            <label class="modal-data-label">
+                                <i class="fas fa-calendar-alt"></i> Período de Vacaciones
+                            </label>
+                            <p id="aprobar-periodo" class="modal-data-value"></p>
                         </div>
 
                     </div>
@@ -63,14 +64,14 @@
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; gap: 1rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+            <div class="modal-footer footer-between">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <span><i class="fas fa-times"></i> Cancelar</span>
                 </button>
-                <form id="formAprobarSolicitud" method="post" action="" style="display: inline;">
+                <form id="formAprobarSolicitud" method="post" action="" style="display:inline;">
                     @Html.AntiForgeryToken()
                     <input type="hidden" id="aprobar-id-solicitud" name="id" />
-                    <button type="submit" class="btn btn-primary btn-3d" style="background: linear-gradient(135deg, #27ae60, #229954); padding: 0.9rem 2.5rem; border-radius: 50px;">
+                    <button type="submit" class="btn btn-primary btn-3d">
                         <span><i class="fas fa-check"></i> Aprobar Solicitud</span>
                     </button>
                 </form>

@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const estadoBadge = document.getElementById('detalles-estado-badge-categoria');
             if (estado === 'Activa') {
                 estadoBadge.textContent = 'Activa';
-                estadoBadge.style.background = '#27ae60';
+                estadoBadge.style.background = 'var(--green)';
                 estadoBadge.style.color = 'white';
             } else {
                 estadoBadge.textContent = 'Inactiva';
-                estadoBadge.style.background = '#e74c3c';
+                estadoBadge.style.background = 'var(--red)';
                 estadoBadge.style.color = 'white';
             }
         });
@@ -232,11 +232,11 @@ document.addEventListener('DOMContentLoaded', function () {
         notificacion.style.fontWeight = '600';
 
         if (tipo === 'success') {
-            notificacion.style.background = '#27ae60';
+            notificacion.style.background = 'var(--green)';
             notificacion.style.color = 'white';
             notificacion.innerHTML = '<i class="fas fa-check-circle"></i> ' + mensaje;
         } else {
-            notificacion.style.background = '#e74c3c';
+            notificacion.style.background = 'var(--red)';
             notificacion.style.color = 'white';
             notificacion.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + mensaje;
         }
