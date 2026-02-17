@@ -33,7 +33,7 @@ namespace AromasWeb.AccesoADatos.Empleados
                         Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
                     }
 
-                    throw; // Re-lanzar la excepción
+                    throw;
                 }
             }
         }

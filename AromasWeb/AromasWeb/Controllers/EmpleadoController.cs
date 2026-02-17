@@ -69,7 +69,7 @@ namespace AromasWeb.Controllers
         {
             try
             {
-                // ⭐ DIAGNÓSTICO: Ver qué validaciones están fallando
+                // ⭐ DIAGNÓSTICO
                 if (!ModelState.IsValid)
                 {
                     foreach (var modelState in ModelState.Values)
@@ -90,7 +90,7 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("EsEmpleadoAntiguo");
                 ModelState.Remove("TarifaActual");
 
-                // ⭐ VALIDACIÓN MANUAL DE CONTRASEÑA en creación (ya que quitamos [Required])
+                // ⭐ VALIDACIÓN MANUAL DE CONTRASEÑA 
                 if (string.IsNullOrWhiteSpace(empleado.Contrasena))
                 {
                     ModelState.AddModelError("Contrasena", "La contraseña es requerida");
@@ -172,7 +172,6 @@ namespace AromasWeb.Controllers
         {
             try
             {
-                // ⭐ PRIMERO removemos campos calculados Y los campos de contraseña
                 ModelState.Remove("NombreRol");
                 ModelState.Remove("EstadoTexto");
                 ModelState.Remove("FechaContratacionFormateada");
@@ -182,7 +181,6 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("Contrasena");
                 ModelState.Remove("TarifaActual");
 
-                // ⭐ REMOVER TAMBIÉN los parámetros de contraseña del ModelState
                 ModelState.Remove("ContrasenaActual");
                 ModelState.Remove("ContrasenaNueva");
                 ModelState.Remove("ConfirmarContrasenaNueva");
@@ -227,7 +225,7 @@ namespace AromasWeb.Controllers
                 }
                 else
                 {
-                    // No está cambiando contraseña, dejamos el campo en null para no actualizarlo
+                    // No está cambiando contraseña
                     empleado.Contrasena = null;
                 }
 
