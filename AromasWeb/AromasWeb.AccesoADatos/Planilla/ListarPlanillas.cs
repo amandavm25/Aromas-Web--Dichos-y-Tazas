@@ -139,8 +139,11 @@ namespace AromasWeb.AccesoADatos.Planillas
             {
                 try
                 {
+                    var inicioUtc= DateTime.SpecifyKind(fechaInicio.Date, DateTimeKind.Utc);
+                    var finUtc = DateTime.SpecifyKind(fechaFin.Date.AddDays(1),DateTimeKind.Utc);
+
                     var planillasAD = contexto.Planilla
-                        .Where(p => p.PeriodoInicio >= fechaInicio && p.PeriodoFin <= fechaFin)
+                        .Where(p => p.PeriodoInicio >= inicioUtc && p.PeriodoFin <= finUtc)
                         .OrderByDescending(p => p.PeriodoFin)
                         .ToList();
 

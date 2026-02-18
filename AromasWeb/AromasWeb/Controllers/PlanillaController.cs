@@ -142,9 +142,32 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult MarcarComoPagado(int id)
         {
+            using (var contexto = new Contexto())
+            {
+                try
+                {
+                    var planilla = contexto.Planilla.FirstOrDefault(p => p.IdPlanilla == id);
+                    if (planilla == null)
+                    {
+                        TempData["Error"] = "Planilla no encontrada";
+                        return RedirectToAction(nameof(ListadoPlanillas));
+                    }
+                    if (planilla.Estado != null && planilla.Estado.Equals("Pagado", StringComparison.OrdinalIgnoreCase)
+
+                      {
+                        TempData["Error"] = "La planilla ya está marcada como pagada";
+                        return RedirectToAction(nameof(ListadoPlanillas));
+                    }
+
+                    planilla.Estado = "Pagado";
+                    contexto.SaveChanges();
+
+
+                }
             TempData["Mensaje"] = "Planilla marcada como pagada correctamente";
             return RedirectToAction(nameof(ListadoPlanillas));
         }
+
 
         // POST: Planilla/AnularPlanilla/1
         [HttpPost]
