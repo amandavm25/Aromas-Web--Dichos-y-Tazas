@@ -11,10 +11,12 @@ namespace AromasWeb.Controllers
     public class PlanillaController : Controller
     {
         private IListarPlanillas _listarPlanillas;
+        private ICalcularPlanilla _calcularPlanilla;
 
         public PlanillaController()
         {
             _listarPlanillas = new LogicaDeNegocio.Planillas.ListarPlanillas();
+            _calcularPlanilla = new LogicaDeNegocio.Planillas.CalcularPlanilla();
         }
 
         // GET: Planilla/ListadoPlanillas
@@ -111,10 +113,19 @@ namespace AromasWeb.Controllers
                 CargarEmpleados();
                 return View();
             }
-
-            // Aquí iría la lógica para calcular la planilla y guardarla en la base de datos
             TempData["Mensaje"] = "Planilla calculada correctamente";
             return RedirectToAction(nameof(VerDetallePlanilla), new { id = 1 });
+            try
+            { int idPlanillaCreada = _calcularPlanilla.CalcularYGuardar(idEmpleado, periodoInicio, periodoFin);
+                TempData["Mensaje"] = "Planilla calculada correctamente";
+                return RedirectToAction(nameof(VerDetallePlanilla), new { id = idPlanillaCreada });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Error al calcular la planilla: " + ex.Message;
+                CargarEmpleados();
+                return View();
+            }
         }
 
         // GET: Planilla/VerDetallePlanilla/1
@@ -140,35 +151,25 @@ namespace AromasWeb.Controllers
         // POST: Planilla/MarcarComoPagado/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult MarcarComoPagado(int id)
+        public IActionResult MarcarComoPagado(int IdPlanilla)
         {
             using (var contexto = new Contexto())
             {
                 try
                 {
-                    var planilla = contexto.Planilla.FirstOrDefault(p => p.IdPlanilla == id);
-                    if (planilla == null)
-                    {
-                        TempData["Error"] = "Planilla no encontrada";
-                        return RedirectToAction(nameof(ListadoPlanillas));
-                    }
-                    if (planilla.Estado != null && planilla.Estado.Equals("Pagado", StringComparison.OrdinalIgnoreCase)
 
-                      {
-                        TempData["Error"] = "La planilla ya está marcada como pagada";
-                        return RedirectToAction(nameof(ListadoPlanillas));
-                    }
-
-                    planilla.Estado = "Pagado";
-                    contexto.SaveChanges();
-
-
+                    _listarPlanillas.MarcarComoPagado(IdPlanilla);
+                    TempData["Mensaje"] = "Planilla marcada como pagada correctamente";
                 }
-            TempData["Mensaje"] = "Planilla marcada como pagada correctamente";
-            return RedirectToAction(nameof(ListadoPlanillas));
+                catch (Exception ex)
+                {
+                    TempData["Error"] = "No se pudo marcar la planilla como pagada: " + ex.Message;
+                }
+
+                return RedirectToAction(nameof(ListadoPlanillas));
+            }
+
         }
-
-
         // POST: Planilla/AnularPlanilla/1
         [HttpPost]
         [ValidateAntiForgeryToken]

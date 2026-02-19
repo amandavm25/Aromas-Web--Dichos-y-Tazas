@@ -43,5 +43,23 @@ namespace AromasWeb.LogicaDeNegocio.Planillas
         {
             return _listarPlanillas.ObtenerDetallesPorPlanilla(idPlanilla);
         }
+
+        public void MarcarComoPagado(int idPlanilla)
+        {
+            _listarPlanillas.MarcarComoPagado(idPlanilla);
+        }
+    }
+    public class CalcularPlanilla : ICalcularPlanilla
+    {
+        private ICalcularPlanilla _ad;
+        public CalcularPlanilla()
+        {
+            _ad = new
+                AccesoADatos.Planilla.CalcularPlanilla();
+        }
+        public int CalcularYGuardar(int idEmpleado, DateTime periodoInicio, DateTime periodoFin)
+        {
+            return _ad.CalcularYGuardar(idEmpleado, periodoInicio, periodoFin);
+        }
     }
 }

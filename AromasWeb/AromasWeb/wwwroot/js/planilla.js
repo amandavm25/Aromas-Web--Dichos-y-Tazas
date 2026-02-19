@@ -209,7 +209,7 @@ function initializeModals() {
             const id = this.getAttribute('data-id');
             const empleado = this.getAttribute('data-empleado');
             const periodo = this.getAttribute('data-periodo');
-            const neto = this.getAttribute('data-neto');
+            const neto = this.getAttribute('data-monto');
 
             const elId = document.getElementById('pagar-id');
             const elEmpleado = document.getElementById('pagar-empleado');
@@ -219,7 +219,7 @@ function initializeModals() {
             if (elId) elId.value = id;
             if (elEmpleado) elEmpleado.textContent = empleado;
             if (elPeriodo) elPeriodo.textContent = periodo;
-            if (elNeto) elNeto.textContent = neto;
+            if (elNeto) elNeto.textContent = '₡' +  neto;
 
             const form = document.getElementById('formPagarPlanilla');
             if (form) {

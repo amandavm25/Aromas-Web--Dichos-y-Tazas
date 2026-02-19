@@ -1,4 +1,5 @@
-﻿using AromasWeb.Abstracciones.Logica.Planilla;
+﻿
+using AromasWeb.Abstracciones.Logica.Planilla;
 using AromasWeb.AccesoADatos.Modelos;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -139,8 +140,8 @@ namespace AromasWeb.AccesoADatos.Planillas
             {
                 try
                 {
-                    var inicioUtc= DateTime.SpecifyKind(fechaInicio.Date, DateTimeKind.Utc);
-                    var finUtc = DateTime.SpecifyKind(fechaFin.Date.AddDays(1),DateTimeKind.Utc);
+                    var inicioUtc = DateTime.SpecifyKind(fechaInicio.Date, DateTimeKind.Utc);
+                    var finUtc = DateTime.SpecifyKind(fechaFin.Date.AddDays(1), DateTimeKind.Utc);
 
                     var planillasAD = contexto.Planilla
                         .Where(p => p.PeriodoInicio >= inicioUtc && p.PeriodoFin <= finUtc)
@@ -297,5 +298,23 @@ namespace AromasWeb.AccesoADatos.Planillas
                 CargoEmpleado = planillaAD.Empleado?.Cargo ?? "N/A"
             };
         }
+
+        public void MarcarComoPagado(int idPlanilla)
+        {
+            using (var contexto = new Contexto())
+            {
+                    var planilla = contexto.Planilla.FirstOrDefault(p => p.IdPlanilla == idPlanilla);
+                    if (planilla != null) throw new Exception("La planilla ya ha sido marcada como pagada.");
+
+                    planilla.Estado = "Pagada";
+                    contexto.SaveChanges();
+
+                }
+
+
+             }
+
+        }
+
     }
-}
+

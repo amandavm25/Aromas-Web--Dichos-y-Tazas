@@ -13,5 +13,12 @@ namespace AromasWeb.Abstracciones.Logica.Planilla
         List<PlanillaUI> ObtenerPorPeriodo(DateTime fechaInicio, DateTime fechaFin);
         PlanillaUI ObtenerPorId(int id);
         List<DetallePlanillaUI> ObtenerDetallesPorPlanilla(int idPlanilla);
+
+        void MarcarComoPagado(int idPlanilla);
+    }
+
+    public interface ICalcularPlanilla
+    {
+        int CalcularYGuardar(int idEmpleado, DateTime periodoInicio, DateTime periodoFin);
     }
 }
