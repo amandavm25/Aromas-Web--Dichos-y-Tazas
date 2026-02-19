@@ -5,108 +5,172 @@ using AromasWeb.AccesoADatos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AromasWeb.Controllers
 {
     public class SolicitudVacacionesController : Controller
     {
         private IListarSolicitudesVacaciones _listarSolicitudesVacaciones;
+        private ICrearSolicitudVacaciones _crearSolicitudVacaciones;
+        private IActualizarSolicitudVacaciones _actualizarSolicitudVacaciones;
+        private IObtenerSolicitudVacaciones _obtenerSolicitudVacaciones;
 
         public SolicitudVacacionesController()
         {
             _listarSolicitudesVacaciones = new LogicaDeNegocio.SolicitudesVacaciones.ListarSolicitudesVacaciones();
+            _crearSolicitudVacaciones = new LogicaDeNegocio.SolicitudesVacaciones.CrearSolicitudVacaciones();
+            _actualizarSolicitudVacaciones = new LogicaDeNegocio.SolicitudesVacaciones.ActualizarSolicitudVacaciones();
+            _obtenerSolicitudVacaciones = new LogicaDeNegocio.SolicitudesVacaciones.ObtenerSolicitudVacaciones();
         }
+
+        // Empleado
 
         // GET: SolicitudVacaciones/MisSolicitudes
         public IActionResult MisSolicitudes()
         {
-            // Obtener el ID del empleado de la sesión
-            int idEmpleadoActual = HttpContext.Session.GetInt32("IdEmpleado") ?? 1;
-            ViewBag.IdEmpleado = idEmpleadoActual;
+            int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 1;
+            ViewBag.IdEmpleado = idEmpleado;
+            CargarDatosEmpleadoEnViewBag(idEmpleado);
 
-            // Obtener información del empleado desde la base de datos
-            var empleadoInfo = ObtenerDatosEmpleadoPorId(idEmpleadoActual);
-
-            if (empleadoInfo != null)
-            {
-                ViewBag.NombreEmpleado = $"{empleadoInfo.Nombre} {empleadoInfo.Apellidos}";
-                ViewBag.CargoEmpleado = empleadoInfo.Cargo;
-
-                // Calcular meses trabajados
-                var mesesTrabajados = (int)((DateTime.Now - empleadoInfo.FechaContratacion).TotalDays / 30);
-                ViewBag.MesesTrabajados = mesesTrabajados;
-
-                // Calcular días acumulados (1 día por mes trabajado)
-                var diasAcumulados = mesesTrabajados;
-                ViewBag.DiasAcumulados = diasAcumulados;
-
-                // Calcular días tomados (solicitudes aprobadas)
-                decimal diasTomados = 0;
-                using (var contexto = new Contexto())
-                {
-                    diasTomados = contexto.SolicitudVacaciones
-                        .Where(s => s.IdEmpleado == idEmpleadoActual && s.Estado == "Aprobada")
-                        .Sum(s => (decimal?)s.DiasSolicitados) ?? 0;
-                }
-                ViewBag.DiasTomados = diasTomados;
-
-                // Calcular días disponibles
-                var diasDisponibles = diasAcumulados - diasTomados;
-                ViewBag.DiasDisponibles = diasDisponibles;
-            }
-            else
-            {
-                ViewBag.NombreEmpleado = "Empleado";
-                ViewBag.CargoEmpleado = "N/A";
-                ViewBag.MesesTrabajados = 0;
-                ViewBag.DiasAcumulados = 0;
-                ViewBag.DiasTomados = 0;
-                ViewBag.DiasDisponibles = 0;
-            }
-
-            // Obtener mis solicitudes
-            var misSolicitudes = _listarSolicitudesVacaciones.BuscarPorEmpleado(idEmpleadoActual);
-
+            var misSolicitudes = _listarSolicitudesVacaciones.BuscarPorEmpleado(idEmpleado);
             return View(misSolicitudes);
         }
 
-        // GET: SolicitudVacaciones/VerSolicitudesEmpleado/1
+        // GET: SolicitudVacaciones/SolicitarVacacionesEmpleado
+        public IActionResult SolicitarVacacionesEmpleado()
+        {
+            int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 1;
+            CargarDatosEmpleadoEnViewBag(idEmpleado);
+
+            var model = new SolicitudVacaciones
+            {
+                IdEmpleado = idEmpleado,
+                FechaSolicitud = DateTime.Now.Date,
+                FechaInicio = DateTime.Now.AddDays(1).Date,
+                FechaFin = DateTime.Now.AddDays(1).Date,
+                Estado = "Pendiente"
+            };
+
+            return View("RegistrarSolicitud", model);
+        }
+
+        // POST: SolicitudVacaciones/SolicitarVacacionesEmpleado
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SolicitarVacacionesEmpleado(SolicitudVacaciones solicitud)
+        {
+            int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 1;
+
+            try
+            {
+                ModelState.Remove("NombreEmpleado");
+                ModelState.Remove("IdentificacionEmpleado");
+                ModelState.Remove("CargoEmpleado");
+                ModelState.Remove("FechaContratacionEmpleado");
+                ModelState.Remove("DiasDisponibles");
+                ModelState.Remove("DiasTomados");
+                ModelState.Remove("FechaRespuesta");
+
+                if (solicitud.FechaInicio > solicitud.FechaFin)
+                    ModelState.AddModelError("FechaFin", "La fecha de fin no puede ser menor a la fecha de inicio");
+
+                if (solicitud.DiasSolicitados <= 0)
+                    ModelState.AddModelError("DiasSolicitados", "Debe seleccionar al menos un día");
+
+                if (!ModelState.IsValid)
+                {
+                    CargarDatosEmpleadoEnViewBag(idEmpleado);
+                    return View("RegistrarSolicitud", solicitud);
+                }
+
+                // Forzar siempre el empleado de sesión — el empleado no puede solicitar por otro
+                solicitud.IdEmpleado = idEmpleado;
+                solicitud.FechaSolicitud = DateTime.Now.Date;
+                solicitud.Estado = "Pendiente";
+
+                int resultado = await _crearSolicitudVacaciones.Crear(solicitud);
+
+                if (resultado > 0)
+                {
+                    TempData["Mensaje"] = "Solicitud de vacaciones registrada correctamente";
+                    return RedirectToAction(nameof(MisSolicitudes));
+                }
+
+                ModelState.AddModelError("", "No se pudo registrar la solicitud en la base de datos");
+                CargarDatosEmpleadoEnViewBag(idEmpleado);
+                return View("RegistrarSolicitud", solicitud);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error al registrar la solicitud: {ex.Message}");
+                CargarDatosEmpleadoEnViewBag(idEmpleado);
+                return View("RegistrarSolicitud", solicitud);
+            }
+        }
+
+        // POST: SolicitudVacaciones/CancelarSolicitud/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CancelarSolicitud(int id)
+        {
+            try
+            {
+                var solicitud = _listarSolicitudesVacaciones.ObtenerPorId(id);
+
+                if (solicitud == null)
+                {
+                    TempData["Error"] = "Solicitud no encontrada";
+                    return RedirectToAction(nameof(MisSolicitudes));
+                }
+
+                if (solicitud.Estado != "Pendiente")
+                {
+                    TempData["Error"] = "Solo se pueden cancelar solicitudes en estado Pendiente";
+                    return RedirectToAction(nameof(MisSolicitudes));
+                }
+
+                int resultado = _actualizarSolicitudVacaciones.ActualizarEstado(id, "Cancelada");
+
+                TempData[resultado > 0 ? "Mensaje" : "Error"] =
+                    resultado > 0 ? "Solicitud cancelada correctamente" : "No se pudo cancelar la solicitud";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cancelar la solicitud: {ex.Message}";
+            }
+
+            return RedirectToAction(nameof(MisSolicitudes));
+        }
+
+        // Administrador
+
+        // GET: SolicitudVacaciones/VerSolicitudesEmpleado/5
         public IActionResult VerSolicitudesEmpleado(int id)
         {
             ViewBag.IdEmpleado = id;
 
-            // Obtener información del empleado
             var empleado = ObtenerDatosEmpleadoPorId(id);
             ViewBag.Empleado = empleado;
 
             if (empleado != null)
             {
-                // Calcular meses trabajados
-                var mesesTrabajados = (int)((DateTime.Now - empleado.FechaContratacion).TotalDays / 30);
-                ViewBag.MesesTrabajados = mesesTrabajados;
+                var meses = (int)((DateTime.Now - empleado.FechaContratacion).TotalDays / 30);
+                ViewBag.MesesTrabajados = meses;
+                ViewBag.DiasAcumulados = meses;
 
-                // Calcular días acumulados
-                var diasAcumulados = mesesTrabajados;
-                ViewBag.DiasAcumulados = diasAcumulados;
-
-                // Calcular días tomados
                 decimal diasTomados = 0;
-                using (var contexto = new Contexto())
+                using (var ctx = new Contexto())
                 {
-                    diasTomados = contexto.SolicitudVacaciones
+                    diasTomados = ctx.SolicitudVacaciones
                         .Where(s => s.IdEmpleado == id && s.Estado == "Aprobada")
                         .Sum(s => (decimal?)s.DiasSolicitados) ?? 0;
                 }
                 ViewBag.DiasTomados = diasTomados;
-
-                // Calcular días disponibles
-                var diasDisponibles = diasAcumulados - diasTomados;
-                ViewBag.DiasDisponibles = diasDisponibles;
+                ViewBag.DiasDisponibles = meses - diasTomados;
             }
 
-            // Obtener solicitudes del empleado
             var solicitudes = _listarSolicitudesVacaciones.BuscarPorEmpleado(id);
-
             return View(solicitudes);
         }
 
@@ -116,12 +180,10 @@ namespace AromasWeb.Controllers
             ViewBag.Buscar = buscar;
             ViewBag.FiltroEstado = filtroEstado;
 
-            // Obtener solicitudes según los filtros
             List<SolicitudVacaciones> solicitudes;
 
             if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(filtroEstado))
             {
-                // Buscar por estado y filtrar por nombre
                 solicitudes = _listarSolicitudesVacaciones.BuscarPorEstado(filtroEstado)
                     .Where(s => s.NombreEmpleado.Contains(buscar, StringComparison.OrdinalIgnoreCase) ||
                                 s.IdentificacionEmpleado.Contains(buscar, StringComparison.OrdinalIgnoreCase))
@@ -129,12 +191,10 @@ namespace AromasWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(filtroEstado))
             {
-                // Solo filtrar por estado
                 solicitudes = _listarSolicitudesVacaciones.BuscarPorEstado(filtroEstado);
             }
             else if (!string.IsNullOrEmpty(buscar))
             {
-                // Solo buscar por nombre
                 solicitudes = _listarSolicitudesVacaciones.Obtener()
                     .Where(s => s.NombreEmpleado.Contains(buscar, StringComparison.OrdinalIgnoreCase) ||
                                 s.IdentificacionEmpleado.Contains(buscar, StringComparison.OrdinalIgnoreCase))
@@ -142,7 +202,6 @@ namespace AromasWeb.Controllers
             }
             else
             {
-                // Obtener todas
                 solicitudes = _listarSolicitudesVacaciones.Obtener();
             }
 
@@ -157,7 +216,8 @@ namespace AromasWeb.Controllers
             var model = new SolicitudVacaciones
             {
                 FechaSolicitud = DateTime.Now.Date,
-                FechaInicio = DateTime.Now.AddDays(7).Date,
+                FechaInicio = DateTime.Now.AddDays(1).Date,
+                FechaFin = DateTime.Now.AddDays(1).Date,
                 Estado = "Pendiente"
             };
 
@@ -167,32 +227,74 @@ namespace AromasWeb.Controllers
         // POST: SolicitudVacaciones/CrearSolicitud
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CrearSolicitud(SolicitudVacaciones solicitud)
+        public async Task<IActionResult> CrearSolicitud(SolicitudVacaciones solicitud)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Aquí iría la lógica para guardar en la base de datos
-                TempData["Mensaje"] = "Solicitud de vacaciones registrada correctamente";
-                return RedirectToAction(nameof(ListadoSolicitudes));
-            }
+                ModelState.Remove("NombreEmpleado");
+                ModelState.Remove("IdentificacionEmpleado");
+                ModelState.Remove("CargoEmpleado");
+                ModelState.Remove("FechaContratacionEmpleado");
+                ModelState.Remove("DiasDisponibles");
+                ModelState.Remove("DiasTomados");
+                ModelState.Remove("FechaRespuesta");
 
-            CargarEmpleados();
-            return View(solicitud);
+                if (solicitud.FechaInicio > solicitud.FechaFin)
+                    ModelState.AddModelError("FechaFin", "La fecha de fin no puede ser menor a la fecha de inicio");
+
+                if (solicitud.DiasSolicitados <= 0)
+                    ModelState.AddModelError("DiasSolicitados", "Debe seleccionar al menos un día");
+
+                if (!ModelState.IsValid)
+                {
+                    CargarEmpleados();
+                    return View(solicitud);
+                }
+
+                solicitud.FechaSolicitud = DateTime.Now.Date;
+                solicitud.Estado = "Pendiente";
+
+                int resultado = await _crearSolicitudVacaciones.Crear(solicitud);
+
+                if (resultado > 0)
+                {
+                    TempData["Mensaje"] = "Solicitud de vacaciones registrada correctamente";
+                    return RedirectToAction(nameof(ListadoSolicitudes));
+                }
+
+                ModelState.AddModelError("", "No se pudo registrar la solicitud en la base de datos");
+                CargarEmpleados();
+                return View(solicitud);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error al registrar la solicitud: {ex.Message}");
+                CargarEmpleados();
+                return View(solicitud);
+            }
         }
 
         // GET: SolicitudVacaciones/EditarSolicitud/5
         public IActionResult EditarSolicitud(int id)
         {
-            var solicitud = _listarSolicitudesVacaciones.ObtenerPorId(id);
-
-            if (solicitud == null)
+            try
             {
-                TempData["Error"] = "Solicitud no encontrada";
+                var solicitud = _listarSolicitudesVacaciones.ObtenerPorId(id);
+
+                if (solicitud == null)
+                {
+                    TempData["Error"] = "Solicitud no encontrada";
+                    return RedirectToAction(nameof(ListadoSolicitudes));
+                }
+
+                CargarEmpleados();
+                return View(solicitud);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar la solicitud: {ex.Message}";
                 return RedirectToAction(nameof(ListadoSolicitudes));
             }
-
-            CargarEmpleados();
-            return View(solicitud);
         }
 
         // POST: SolicitudVacaciones/EditarSolicitud
@@ -200,25 +302,45 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditarSolicitud(SolicitudVacaciones solicitud)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Aquí iría la lógica para actualizar en la base de datos
-                TempData["Mensaje"] = "Solicitud actualizada correctamente";
-                return RedirectToAction(nameof(ListadoSolicitudes));
+                ModelState.Remove("NombreEmpleado");
+                ModelState.Remove("IdentificacionEmpleado");
+                ModelState.Remove("CargoEmpleado");
+                ModelState.Remove("FechaContratacionEmpleado");
+                ModelState.Remove("DiasDisponibles");
+                ModelState.Remove("DiasTomados");
+                ModelState.Remove("FechaRespuesta");
+
+                if (solicitud.FechaInicio > solicitud.FechaFin)
+                    ModelState.AddModelError("FechaFin", "La fecha de fin no puede ser menor a la fecha de inicio");
+
+                if (solicitud.DiasSolicitados <= 0)
+                    ModelState.AddModelError("DiasSolicitados", "Debe seleccionar al menos un día");
+
+                if (!ModelState.IsValid)
+                {
+                    CargarEmpleados();
+                    return View(solicitud);
+                }
+
+                int resultado = _actualizarSolicitudVacaciones.Actualizar(solicitud);
+
+                if (resultado > 0)
+                {
+                    return RedirectToAction(nameof(ListadoSolicitudes));
+                }
+
+                ModelState.AddModelError("", "No se pudo actualizar la solicitud en la base de datos");
+                CargarEmpleados();
+                return View(solicitud);
             }
-
-            CargarEmpleados();
-            return View(solicitud);
-        }
-
-        // POST: SolicitudVacaciones/EliminarSolicitud/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EliminarSolicitud(int id)
-        {
-            // Aquí iría la lógica para eliminar la solicitud
-            TempData["Mensaje"] = "Solicitud eliminada correctamente";
-            return RedirectToAction(nameof(ListadoSolicitudes));
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error al actualizar la solicitud: {ex.Message}");
+                CargarEmpleados();
+                return View(solicitud);
+            }
         }
 
         // POST: SolicitudVacaciones/AprobarSolicitud/5
@@ -226,8 +348,18 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AprobarSolicitud(int id)
         {
-            // Aquí iría la lógica para aprobar la solicitud
-            TempData["Mensaje"] = "Solicitud aprobada correctamente";
+            try
+            {
+                int resultado = _actualizarSolicitudVacaciones.ActualizarEstado(id, "Aprobada");
+
+                TempData[resultado > 0 ? "Mensaje" : "Error"] =
+                    resultado > 0 ? "Solicitud aprobada correctamente" : "No se pudo aprobar la solicitud";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al aprobar la solicitud: {ex.Message}";
+            }
+
             return RedirectToAction(nameof(ListadoSolicitudes));
         }
 
@@ -236,36 +368,77 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RechazarSolicitud(int id)
         {
-            // Aquí iría la lógica para rechazar la solicitud
-            TempData["Mensaje"] = "Solicitud rechazada correctamente";
+            try
+            {
+                int resultado = _actualizarSolicitudVacaciones.ActualizarEstado(id, "Rechazada");
+
+                TempData[resultado > 0 ? "Mensaje" : "Error"] =
+                    resultado > 0 ? "Solicitud rechazada correctamente" : "No se pudo rechazar la solicitud";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al rechazar la solicitud: {ex.Message}";
+            }
+
             return RedirectToAction(nameof(ListadoSolicitudes));
         }
 
-        // MÉTODO AUXILIAR: Obtener datos del empleado por ID
+        // Cargar datos del empleado
+        private void CargarDatosEmpleadoEnViewBag(int idEmpleado)
+        {
+            var empleado = ObtenerDatosEmpleadoPorId(idEmpleado);
+
+            if (empleado != null)
+            {
+                ViewBag.NombreEmpleado = $"{empleado.Nombre} {empleado.Apellidos}";
+                ViewBag.CargoEmpleado = empleado.Cargo;
+
+                var meses = (int)((DateTime.Now - empleado.FechaContratacion).TotalDays / 30);
+                ViewBag.MesesTrabajados = meses;
+                ViewBag.DiasAcumulados = meses;
+
+                decimal diasTomados = 0;
+                using (var ctx = new Contexto())
+                {
+                    diasTomados = ctx.SolicitudVacaciones
+                        .Where(s => s.IdEmpleado == idEmpleado && s.Estado == "Aprobada")
+                        .Sum(s => (decimal?)s.DiasSolicitados) ?? 0;
+                }
+                ViewBag.DiasTomados = diasTomados;
+                ViewBag.DiasDisponibles = meses - diasTomados;
+            }
+            else
+            {
+                ViewBag.NombreEmpleado = "Empleado";
+                ViewBag.CargoEmpleado = "N/A";
+                ViewBag.MesesTrabajados = 0;
+                ViewBag.DiasAcumulados = 0;
+                ViewBag.DiasTomados = 0;
+                ViewBag.DiasDisponibles = 0;
+            }
+        }
+
         private Empleado ObtenerDatosEmpleadoPorId(int id)
         {
-            using (var contexto = new Contexto())
+            using (var ctx = new Contexto())
             {
                 try
                 {
-                    var empleadoAD = contexto.Empleado.FirstOrDefault(e => e.IdEmpleado == id);
+                    var e = ctx.Empleado.FirstOrDefault(emp => emp.IdEmpleado == id);
+                    if (e == null) return null;
 
-                    if (empleadoAD == null)
-                        return null;
-
-                    // Convertir de AccesoADatos.Modelos.EmpleadoAD a ModeloUI.Empleado
                     return new Empleado
                     {
-                        IdEmpleado = empleadoAD.IdEmpleado,
-                        IdRol = empleadoAD.IdRol,
-                        Identificacion = empleadoAD.Identificacion,
-                        Nombre = empleadoAD.Nombre,
-                        Apellidos = empleadoAD.Apellidos,
-                        Correo = empleadoAD.Correo,
-                        Telefono = empleadoAD.Telefono,
-                        Cargo = empleadoAD.Cargo,
-                        FechaContratacion = empleadoAD.FechaContratacion,
-                        Estado = empleadoAD.Estado
+                        IdEmpleado = e.IdEmpleado,
+                        IdRol = e.IdRol,
+                        Identificacion = e.Identificacion,
+                        Nombre = e.Nombre,
+                        Apellidos = e.Apellidos,
+                        Correo = e.Correo,
+                        Telefono = e.Telefono,
+                        Cargo = e.Cargo,
+                        FechaContratacion = e.FechaContratacion,
+                        Estado = e.Estado
                     };
                 }
                 catch (Exception ex)
@@ -276,14 +449,14 @@ namespace AromasWeb.Controllers
             }
         }
 
-        // Método auxiliar para cargar empleados
         private void CargarEmpleados()
         {
-            using (var contexto = new Contexto())
+            using (var ctx = new Contexto())
             {
                 try
                 {
-                    var empleados = contexto.Empleado
+                    // Se incluye FechaContratacion y DiasDisponibles calculados
+                    ViewBag.Empleados = ctx.Empleado
                         .Where(e => e.Estado == true)
                         .OrderBy(e => e.Nombre)
                         .ThenBy(e => e.Apellidos)
@@ -291,11 +464,15 @@ namespace AromasWeb.Controllers
                         {
                             IdEmpleado = e.IdEmpleado,
                             NombreCompleto = e.Nombre + " " + e.Apellidos,
-                            Cargo = e.Cargo
+                            Cargo = e.Cargo,
+                            FechaContratacion = e.FechaContratacion,
+                            DiasDisponibles =
+                                (decimal)(int)((DateTime.Now - e.FechaContratacion).TotalDays / 30)
+                                - (ctx.SolicitudVacaciones
+                                    .Where(s => s.IdEmpleado == e.IdEmpleado && s.Estado == "Aprobada")
+                                    .Sum(s => (decimal?)s.DiasSolicitados) ?? 0)
                         })
                         .ToList();
-
-                    ViewBag.Empleados = empleados;
                 }
                 catch (Exception ex)
                 {

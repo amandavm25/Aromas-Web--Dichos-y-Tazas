@@ -140,7 +140,7 @@
                                             @Html.AntiForgeryToken()
                                             <button type="submit"
                                                     class="btn btn-sm"
-                                                    style="background: @(rol.Estado ? "#f39c12" : "var(--green)"); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: @(rol.Estado ? "var(--yellow)" : "var(--green)"); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     title="@(rol.Estado ? "Desactivar" : "Activar")">
                                                 <i class="fas fa-@(rol.Estado ? "toggle-off" : "toggle-on")"></i>
                                             </button>

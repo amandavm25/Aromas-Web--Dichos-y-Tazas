@@ -103,7 +103,6 @@ namespace AromasWeb.Abstracciones.ModeloUI
             }
         }
 
-        [DisplayName("Estado")]
         public string EstadoBadgeClass
         {
             get
@@ -113,22 +112,23 @@ namespace AromasWeb.Abstracciones.ModeloUI
                     "Aprobada" => "success",
                     "Rechazada" => "danger",
                     "Pendiente" => "warning",
+                    "Cancelada" => "secondary",
                     _ => "secondary"
                 };
             }
         }
 
-        [DisplayName("Estado")]
         public string EstadoBadgeColor
         {
             get
             {
                 return Estado switch
                 {
-                    "Aprobada" => "#27ae60",
-                    "Rechazada" => "#e74c3c",
-                    "Pendiente" => "#f39c12",
-                    _ => "#95a5a6"
+                    "Aprobada" => "var(--green)",
+                    "Rechazada" => "var(--red)",
+                    "Pendiente" => "var(--yellow)",
+                    "Cancelada" => "var(--gray)",
+                    _ => "var(--gray)"
                 };
             }
         }

@@ -86,16 +86,16 @@ function initPasswordStrength() {
             strengthText.textContent = 'Muy débil';
             strengthText.style.color = 'var(--red)';
         } else if (strength === 2) {
-            strength1.style.background = '#f39c12';
-            strength2.style.background = '#f39c12';
+            strength1.style.background = 'var(--yellow)';
+            strength2.style.background = 'var(--yellow)';
             strengthText.textContent = 'Débil';
-            strengthText.style.color = '#f39c12';
+            strengthText.style.color = 'var(--yellow)';
         } else if (strength === 3) {
-            strength1.style.background = '#f39c12';
-            strength2.style.background = '#f39c12';
-            strength3.style.background = '#f39c12';
+            strength1.style.background = 'var(--yellow)';
+            strength2.style.background = 'var(--yellow)';
+            strength3.style.background = 'var(--yellow)';
             strengthText.textContent = 'Aceptable';
-            strengthText.style.color = '#f39c12';
+            strengthText.style.color = 'var(--yellow)';
         } else if (strength === 4) {
             strength1.style.background = 'var(--green)';
             strength2.style.background = 'var(--green)';
@@ -301,7 +301,7 @@ function mostrarNotificacion(mensaje, tipo) {
     const colores = {
         'success': 'var(--green)',
         'error': 'var(--red)',
-        'warning': '#f39c12',
+        'warning': 'var(--yellow)',
         'info': '#3498db'
     };
 

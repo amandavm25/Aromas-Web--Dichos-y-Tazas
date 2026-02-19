@@ -63,6 +63,7 @@ namespace AromasWeb.AccesoADatos.SolicitudesVacaciones
                     List<SolicitudVacacionesAD> solicitudesAD = contexto.SolicitudVacaciones
                         .Where(s => s.Estado == estado)
                         .OrderByDescending(s => s.FechaSolicitud)
+                        .ThenBy(s => s.IdSolicitud)
                         .ToList();
                     return solicitudesAD.Select(s => ConvertirObjetoParaUI(s, contexto)).ToList();
                 }
@@ -100,31 +101,22 @@ namespace AromasWeb.AccesoADatos.SolicitudesVacaciones
             decimal diasDisponibles = 0;
             decimal diasTomados = 0;
 
-            try
+            var empleado = contexto.Empleado.FirstOrDefault(e => e.IdEmpleado == solicitudAD.IdEmpleado);
+            if (empleado != null)
             {
-                var empleado = contexto.Empleado.FirstOrDefault(e => e.IdEmpleado == solicitudAD.IdEmpleado);
-                if (empleado != null)
-                {
-                    nombreEmpleado = $"{empleado.Nombre} {empleado.Apellidos}";
-                    identificacionEmpleado = empleado.Identificacion;
-                    cargoEmpleado = empleado.Cargo;
-                    fechaContratacionEmpleado = empleado.FechaContratacion;
+                nombreEmpleado = $"{empleado.Nombre} {empleado.Apellidos}";
+                identificacionEmpleado = empleado.Identificacion;
+                cargoEmpleado = empleado.Cargo;
+                fechaContratacionEmpleado = empleado.FechaContratacion;
 
-                    // Calcular días disponibles
-                    var mesesTrabajados = (int)((DateTime.Now - empleado.FechaContratacion).TotalDays / 30);
-                    var diasAcumulados = mesesTrabajados;
+                var mesesTrabajados = (int)((DateTime.Now - empleado.FechaContratacion).TotalDays / 30);
 
-                    // Calcular días tomados (solicitudes aprobadas)
-                    diasTomados = contexto.SolicitudVacaciones
-                        .Where(s => s.IdEmpleado == solicitudAD.IdEmpleado && s.Estado == "Aprobada")
-                        .Sum(s => s.DiasSolicitados);
+                // Cast explícito a decimal? para evitar excepciones en Sum vacío
+                diasTomados = contexto.SolicitudVacaciones
+                    .Where(s => s.IdEmpleado == solicitudAD.IdEmpleado && s.Estado == "Aprobada")
+                    .Sum(s => (decimal?)s.DiasSolicitados) ?? 0;
 
-                    diasDisponibles = diasAcumulados - diasTomados;
-                }
-            }
-            catch
-            {
-                // Si hay error, usar valores por defecto
+                diasDisponibles = mesesTrabajados - diasTomados;
             }
 
             return new Abstracciones.ModeloUI.SolicitudVacaciones

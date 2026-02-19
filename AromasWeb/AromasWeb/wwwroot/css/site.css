@@ -18,6 +18,8 @@
     --light-cream: #F7F6F0;
     --green: #2F9E31;
     --red: #E6210B;
+    --yellow: #F39C12;
+    --gray: #95A5A6;
     /* Tipografía */
     --font-primary: 'Playfair Display', serif;
     --font-secondary: 'Lato', sans-serif;
@@ -2405,7 +2407,7 @@ admin-table-footer
     }
 
     .badge-stock.medio {
-        background: #f39c12;
+        background: var(--yellow);
         color: var(--white);
     }
 
@@ -2428,7 +2430,7 @@ admin-table-footer
     }
 
     .badge-estado.inactivo {
-        background: #95a5a6;
+        background: var(--gray);
         color: var(--white);
     }
 
@@ -2864,7 +2866,7 @@ admin-table-footer
     }
 
     .timeline-status-badge.pending {
-        background: #f39c12;
+        background: var(--yellow);
     }
 
     .timeline-status-badge.approved {
@@ -2876,7 +2878,7 @@ admin-table-footer
     }
 
     .timeline-status-badge.warning {
-        background: #f39c12;
+        background: var(--yellow);
     }
 
 /* Grid de detalles */
@@ -2981,7 +2983,7 @@ admin-table-footer
     }
 
     .timeline-stat-value.warning {
-        color: #f39c12;
+        color: var(--yellow);
     }
 
 /* Mensaje informativo */

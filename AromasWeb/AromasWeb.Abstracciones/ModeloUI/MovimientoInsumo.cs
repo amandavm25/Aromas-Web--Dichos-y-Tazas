@@ -115,7 +115,7 @@ namespace AromasWeb.Abstracciones.ModeloUI
         {
             get
             {
-                return TipoMovimiento == "E" ? "#27ae60" : "#e74c3c";
+                return TipoMovimiento == "E" ? "var(--green)" : "var(--red)";
             }
         }
 

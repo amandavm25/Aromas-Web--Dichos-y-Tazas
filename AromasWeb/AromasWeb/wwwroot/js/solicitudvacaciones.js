@@ -159,9 +159,10 @@ function initializeModals() {
                 const config = {
                     'Aprobada': { icon: 'fa-check-circle', bg: 'var(--green)' },
                     'Rechazada': { icon: 'fa-times-circle', bg: 'var(--red)' },
-                    'Pendiente': { icon: 'fa-clock', bg: '#f39c12' }
+                    'Pendiente': { icon: 'fa-clock', bg: 'var(--yellow)' },
+                    'Cancelada': { icon: 'fa-ban', bg: 'var(--charcoal)' }
                 };
-                const c = config[estado] || { icon: 'fa-question-circle', bg: '#95a5a6' };
+                const c = config[estado] || { icon: 'fa-question-circle', bg: 'var(--gray)' };
                 estadoBadge.innerHTML = `<i class="fas ${c.icon}"></i> ${estado}`;
                 estadoBadge.className = 'badge';
                 estadoBadge.style.cssText = `
@@ -187,7 +188,7 @@ function initializeModals() {
 
             set('aprobar-nombre-empleado', this.dataset.empleado);
             set('aprobar-periodo', this.dataset.periodo);
-            set('aprobar-diassolicitados', this.dataset.diasSolicitados + ' días laborables');
+            set('aprobar-diassolicitados', this.dataset.diasSolicitados + ' días solicitados');
 
             const inputId = document.getElementById('aprobar-id-solicitud');
             if (inputId) inputId.value = id;
@@ -205,6 +206,7 @@ function initializeModals() {
 
             set('rechazar-nombre-empleado', this.dataset.empleado);
             set('rechazar-periodo', this.dataset.periodo);
+            set('rechazar-diassolicitados', this.dataset.diasSolicitados + ' días solicitados');
 
             const inputId = document.getElementById('rechazar-id-solicitud');
             if (inputId) inputId.value = id;
@@ -214,23 +216,24 @@ function initializeModals() {
         });
     });
 
-    // Modal de eliminar
-    document.querySelectorAll('.btn-eliminar-solicitud').forEach(btn => {
-        btn.addEventListener('click', function () {
+    // Modal de cancelar
+    document.querySelectorAll(".btn-cancelar-solicitud").forEach(btn => {
+        btn.addEventListener("click", function () {
             const id = this.dataset.id;
             const set = (id2, val) => { const el = document.getElementById(id2); if (el) el.textContent = val; };
-
-            set('eliminar-nombre-empleado', this.dataset.empleado);
-            set('eliminar-periodo', this.dataset.periodo);
-
-            const form = document.getElementById('formEliminarSolicitud');
-            if (form) form.action = '/SolicitudVacaciones/EliminarSolicitud?id=' + id;
+            set("cancelar-nombre-empleado", this.dataset.empleado);
+            set("cancelar-periodo", this.dataset.periodo);
+            set("cancelar-diassolicitados", this.dataset.diasSolicitados + " días solicitados");
+            const inputId = document.getElementById("cancelar-id-solicitud");
+            if (inputId) inputId.value = id;
+            const form = document.getElementById("formCancelarSolicitud");
+            if (form) form.action = "/SolicitudVacaciones/CancelarSolicitud/" + id;
         });
     });
 }
 
 // ============================================
-// CÁLCULO DE DÍAS LABORABLES
+// CÁLCULO DE DÍAS
 // ============================================
 function initializeDaysCalculation() {
     const fechaInicio = document.getElementById('FechaInicio');
@@ -241,22 +244,20 @@ function initializeDaysCalculation() {
     if (!fechaInicio || !fechaFin || !diasCalculadosEl) return;
 
     function calcularDias() {
-        const inicio = new Date(fechaInicio.value);
-        const fin = new Date(fechaFin.value);
-
-        if (!fechaInicio.value || !fechaFin.value || inicio > fin) {
+        if (!fechaInicio.value || !fechaFin.value) {
             diasCalculadosEl.textContent = '0';
             if (hiddenDias) hiddenDias.value = '0';
             return;
         }
-
-        let dias = 0;
-        const current = new Date(inicio);
-        while (current <= fin) {
-            if (current.getDay() !== 0) dias++; // excluye domingos
-            current.setDate(current.getDate() + 1);
+        const inicio = new Date(fechaInicio.value);
+        const fin = new Date(fechaFin.value);
+        if (inicio > fin) {
+            diasCalculadosEl.textContent = '0';
+            if (hiddenDias) hiddenDias.value = '0';
+            return;
         }
-
+        const diffTime = fin - inicio;
+        const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
         diasCalculadosEl.textContent = dias;
         if (hiddenDias) hiddenDias.value = dias;
     }
@@ -264,16 +265,15 @@ function initializeDaysCalculation() {
     fechaInicio.addEventListener('change', calcularDias);
     fechaFin.addEventListener('change', calcularDias);
 
-    // Ejecutar al cargar si ya hay valores
     if (fechaInicio.value && fechaFin.value) calcularDias();
-}
+} 
 
 // ============================================
 // NOTIFICACIONES
 // ============================================
 function mostrarNotificacion(mensaje, tipo) {
     const iconos = { success: 'fa-check-circle', error: 'fa-exclamation-triangle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
-    const colores = { success: 'var(--green)', error: 'var(--red)', warning: '#f39c12', info: '#3498db' };
+    const colores = { success: 'var(--green)', error: 'var(--red)', warning: 'var(--yellow)', info: '#3498db' };
 
     const notification = document.createElement('div');
     notification.style.cssText = `

@@ -148,7 +148,7 @@
                                     "Vigente" => "var(--green)",
                                     "Vencida" => "var(--red)",
                                     "Futura" => "#3498db",
-                                    _ => "#95a5a6"
+                                    _ => "var(--gray)"
                                 };
 
                                 <tr>
@@ -199,7 +199,7 @@
                                                     data-id="@tarifa.IdHistorialTarifa"
                                                     data-empleado="Empleado #@tarifa.IdEmpleado"
                                                     data-tarifa="₡@tarifa.TarifaHora.ToString("N2")"
-                                                    style="background: #f39c12; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: var(--yellow); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalFinalizarTarifa"
                                                     title="Finalizar tarifa">

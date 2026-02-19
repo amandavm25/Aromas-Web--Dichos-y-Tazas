@@ -268,7 +268,7 @@ function mostrarNotificacion(mensaje, tipo) {
     const colores = {
         'success': 'var(--green)',
         'error': 'var(--red)',
-        'warning': '#f39c12',
+        'warning': 'var(--yellow)',
         'info': '#3498db'
     };
 

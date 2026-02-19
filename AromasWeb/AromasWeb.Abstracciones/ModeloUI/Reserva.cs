@@ -121,11 +121,11 @@ namespace AromasWeb.Abstracciones.ModeloUI
             {
                 return Estado switch
                 {
-                    "Pendiente" => "#f39c12",
-                    "Confirmada" => "#27ae60",
+                    "Pendiente" => "var(--yellow)",
+                    "Confirmada" => "var(--green)",
                     "Completada" => "#3498db",
-                    "Cancelada" => "#e74c3c",
-                    _ => "#95a5a6"
+                    "Cancelada" => "var(--red)",
+                    _ => "var(--gray)"
                 };
             }
         }

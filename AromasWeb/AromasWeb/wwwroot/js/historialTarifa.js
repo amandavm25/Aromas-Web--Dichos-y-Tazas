@@ -149,7 +149,7 @@ function initializeModals() {
                 const colores = { 'Vigente': 'var(--green)', 'Vencida': 'var(--red)', 'Futura': '#3498db' };
                 const iconos = { 'Vigente': 'fa-check-circle', 'Vencida': 'fa-times-circle', 'Futura': 'fa-calendar' };
                 estadoBadge.innerHTML = `<i class="fas ${iconos[estado] || 'fa-question-circle'}"></i> ${estado}`;
-                estadoBadge.style.background = colores[estado] || '#95a5a6';
+                estadoBadge.style.background = colores[estado] || 'var(--gray)';
                 estadoBadge.style.color = 'white';
             }
 
@@ -186,7 +186,7 @@ function initializeModals() {
 // ============================================
 function mostrarNotificacion(mensaje, tipo) {
     const iconos = { success: 'fa-check-circle', error: 'fa-exclamation-triangle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
-    const colores = { success: 'var(--green)', error: 'var(--red)', warning: '#f39c12', info: '#3498db' };
+    const colores = { success: 'var(--green)', error: 'var(--red)', warning: 'var(--yellow)', info: '#3498db' };
 
     const notification = document.createElement('div');
     notification.style.cssText = `

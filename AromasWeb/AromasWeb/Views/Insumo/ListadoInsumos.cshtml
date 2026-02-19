@@ -283,7 +283,7 @@
                             @foreach (var insumo in Model.Where(i => i.RequiereAlerta))
                             {
                                 var porcentaje = insumo.StockMinimo > 0 ? (int)((insumo.CantidadDisponible / insumo.StockMinimo) * 100) : 0;
-                                var colorBarra = porcentaje <= 50 ? "var(--red)" : "#f39c12";
+                                var colorBarra = porcentaje <= 50 ? "var(--red)" : "var(--yellow)";
 
                                 <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--red);">
                                     <div style="margin-bottom: 0.5rem;">

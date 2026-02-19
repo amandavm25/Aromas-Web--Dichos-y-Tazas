@@ -49,6 +49,7 @@ namespace AromasWeb.AccesoADatos.Modelos
         // Propiedades de navegación
         public virtual RolAD Rol { get; set; }
 
+        [NotMapped]
         public decimal TarifaHora { get; set; }
     }
 }

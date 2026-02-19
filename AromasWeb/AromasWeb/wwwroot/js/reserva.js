@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 switch (estado.toLowerCase()) {
                     case 'pendiente':
-                        badgeEstado.style.background = '#f39c12';
+                        badgeEstado.style.background = 'var(--yellow)';
                         iconoEstado.classList.add('fa-clock');
                         break;
                     case 'confirmada':
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         iconoEstado.classList.add('fa-times-circle');
                         break;
                     default:
-                        badgeEstado.style.background = '#95a5a6';
+                        badgeEstado.style.background = 'var(--gray)';
                         iconoEstado.classList.add('fa-question-circle');
                 }
 
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             case 'warning':
                 icono = 'fa-exclamation-triangle';
-                color = '#f39c12';
+                color = 'var(--yellow)';
                 break;
             default:
                 icono = 'fa-info-circle';
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
         notificacion.innerHTML = `
             <i class="fas ${icono}" style="color: ${color}; font-size: 1.5rem;"></i>
             <span style="flex: 1; color: #2c3e50; font-weight: 500;">${mensaje}</span>
-            <button onclick="this.parentElement.remove()" style="background: none; border: none; color: #95a5a6; cursor: pointer; font-size: 1.2rem;">
+            <button onclick="this.parentElement.remove()" style="background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.2rem;">
                 <i class="fas fa-times"></i>
             </button>
         `;

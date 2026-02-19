@@ -312,7 +312,7 @@ function calcularResumenCostos() {
                 if (margen >= 50) {
                     gananciaNetaElement.style.color = 'var(--green)';
                 } else if (margen >= 30) {
-                    gananciaNetaElement.style.color = '#f39c12';
+                    gananciaNetaElement.style.color = 'var(--yellow)';
                 } else {
                     gananciaNetaElement.style.color = 'var(--red)';
                 }
@@ -472,7 +472,7 @@ function mostrarNotificacion(mensaje, tipo) {
     const colores = {
         'success': 'var(--green)',
         'error': 'var(--red)',
-        'warning': '#f39c12',
+        'warning': 'var(--yellow)',
         'info': '#3498db'
     };
 

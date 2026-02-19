@@ -1,0 +1,81 @@
+﻿<div class="modal fade admin-modal modal-warning" id="modalCancelarSolicitud">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCancelarSolicitudLabel">
+                    <div class="modal-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    Cancelar Solicitud
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <!-- Aviso -->
+                <div class="modal-alert">
+                    <div class="modal-alert-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div>
+                        <h6>Confirmar Cancelación</h6>
+                        <p>
+                            Al cancelar esta solicitud, quedará registrada como <strong>Cancelada</strong>.
+                            Los días <strong>no serán descontados</strong> de tu saldo disponible.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Detalles -->
+                <div class="modal-section">
+                    <h6 class="modal-section-title">
+                        <i class="fas fa-umbrella-beach"></i> Detalles de la Solicitud
+                    </h6>
+
+                    <div class="modal-data-grid-2">
+
+                        <div class="modal-data-cell">
+                            <label class="modal-data-label">
+                                <i class="fas fa-user"></i> Empleado
+                            </label>
+                            <p id="cancelar-nombre-empleado" class="modal-data-value"></p>
+                        </div>
+
+                        <div class="modal-data-cell cell-gold">
+                            <label class="modal-data-label">
+                                <i class="fas fa-clock"></i> Días Solicitados
+                            </label>
+                            <p id="cancelar-diassolicitados" class="modal-data-value value-large"></p>
+                        </div>
+
+                        <div class="modal-data-cell cell-span">
+                            <label class="modal-data-label">
+                                <i class="fas fa-calendar-alt"></i> Período de Vacaciones
+                            </label>
+                            <p id="cancelar-periodo" class="modal-data-value"></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer footer-between">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <span><i class="fas fa-arrow-left"></i> Volver</span>
+                </button>
+                <form id="formCancelarSolicitud" method="post" action="" style="display:inline;">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="cancelar-id-solicitud" name="id" />
+                    <button type="submit" class="btn btn-primary btn-3d">
+                        <span><i class="fas fa-ban"></i> Cancelar Solicitud</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -49,6 +49,22 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1200px;">
 
+        <!-- Mensajes TempData -->
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 2rem; border-radius: 15px;">
+                <i class="fas fa-check-circle"></i> @TempData["Mensaje"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 2rem; border-radius: 15px;">
+                <i class="fas fa-exclamation-triangle"></i> @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
         <!-- Saldo de Vacaciones -->
         <div class="feature-card" style="background: white; padding: 3rem; margin-bottom: 3rem; position: relative; overflow: hidden; border-left: 5px solid var(--gold);" data-aos="zoom-in">
             <div style="position: relative; z-index: 1;">
@@ -113,7 +129,7 @@
 
         <!-- Botón Nueva Solicitud -->
         <div style="display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;" data-aos="fade-up">
-            <a href="@Url.Action("CrearSolicitud", "SolicitudVacaciones")" class="btn btn-primary btn-3d">
+            <a href="@Url.Action("SolicitarVacacionesEmpleado", "SolicitudVacaciones")" class="btn btn-primary btn-3d">
                 <span><i class="fas fa-plus"></i> Nueva Solicitud de Vacaciones</span>
             </a>
         </div>
@@ -128,13 +144,18 @@
             @if (Model.Any())
             {
                 <div id="historial-solicitudes-timeline">
+                    @{
+                        int numeroSolicitud = Model.Count;
+                    }
+
                     @foreach (var solicitud in Model)
                     {
                         var estadoColor = solicitud.Estado switch
                         {
                             "Aprobada" => "var(--green)",
                             "Rechazada" => "var(--red)",
-                            "Pendiente" => "#f39c12",
+                            "Pendiente" => "var(--yellow)",
+                            "Cancelada" => "var(--charcoal)",
                             _ => "var(--charcoal)"
                         };
                         var iconoEstado = solicitud.Estado switch
@@ -142,6 +163,7 @@
                             "Aprobada" => "fa-check-circle",
                             "Rechazada" => "fa-times-circle",
                             "Pendiente" => "fa-clock",
+                            "Cancelada" => "fa-ban",
                             _ => "fa-question-circle"
                         };
                         var badgeClass = solicitud.Estado switch
@@ -149,6 +171,7 @@
                             "Aprobada" => "approved",
                             "Rechazada" => "rejected",
                             "Pendiente" => "warning",
+                            "Cancelada" => "",
                             _ => ""
                         };
                         var esActual = solicitud.Estado == "Pendiente" && solicitud == Model.FirstOrDefault(s => s.Estado == "Pendiente");
@@ -162,7 +185,7 @@
                                             <span class="timeline-date-month">@solicitud.FechaInicio.ToString("MMM")</span>
                                         </div>
                                         <div class="timeline-date-info">
-                                            <h3>Solicitud #@solicitud.IdSolicitud</h3>
+                                            <h3>Solicitud #@numeroSolicitud</h3>
                                             <p>@solicitud.PeriodoVacaciones</p>
                                         </div>
                                     </div>
@@ -182,7 +205,7 @@
                                 <div class="timeline-details-grid">
                                     <div class="timeline-detail-item">
                                         <p class="timeline-detail-label">
-                                            <i class="fas fa-clock" style="color: var(--gold-bright);"></i> Días laborables
+                                            <i class="fas fa-clock" style="color: var(--gold-bright);"></i> Días Solicitados
                                         </p>
                                         <p class="timeline-detail-value">@solicitud.DiasSolicitados días</p>
                                     </div>
@@ -236,12 +259,45 @@
                                         </p>
                                     </div>
                                 }
+                                else if (solicitud.Estado == "Cancelada")
+                                {
+                                    <div style="background: rgba(43,43,43,0.05); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--charcoal);">
+                                        <p style="margin: 0; color: var(--charcoal); display: flex; align-items: center; gap: 0.7rem; opacity: 0.7;">
+                                            <i class="fas fa-ban" style="font-size: 1.2rem;"></i>
+                                            <span>Esta solicitud fue cancelada.</span>
+                                        </p>
+                                    </div>
+                                }
 
-                                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--cream); font-size: 0.85rem; color: var(--charcoal); opacity: 0.7;">
+                                @if (solicitud.Estado == "Pendiente")
+                                {
+                                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--cream); display: flex; justify-content: flex-end; gap: 0.5rem;">
+                                        <a href="@Url.Action("EditarSolicitud", "SolicitudVacaciones", new { id = solicitud.IdSolicitud })"
+                                           class="btn btn-secondary"
+                                           style="font-size: 0.85rem; padding: 0.4rem 1.2rem; background: var(--olive-green); color: white; border: none;">
+                                            <span><i class="fas fa-edit"></i> Editar Solicitud</span>
+                                        </a>
+
+                                        <button type="button"
+                                                class="btn btn-secondary btn-cancelar-solicitud"
+                                                style="font-size: 0.85rem; padding: 0.4rem 1.2rem;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalCancelarSolicitud"
+                                                data-id="@solicitud.IdSolicitud"
+                                                data-empleado="@solicitud.NombreEmpleado"
+                                                data-periodo="@solicitud.PeriodoVacaciones"
+                                                data-dias-solicitados="@solicitud.DiasSolicitados">
+                                            <span><i class="fas fa-ban"></i> Cancelar Solicitud</span>
+                                        </button>
+                                    </div>
+                                }
+
+                                <div style="margin-top: 1rem; ...">
                                     <i class="fas fa-calendar-plus"></i> Registrado el @solicitud.FechaSolicitudFormateada
                                 </div>
                             </div>
                         </div>
+                        numeroSolicitud--;
                     }
                 </div>
 
@@ -266,7 +322,7 @@
                     <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
                     <p style="margin: 0; font-size: 1.1rem; font-weight: 600;">No tienes solicitudes registradas</p>
                     <p style="margin: 0.5rem 0 1.5rem; font-size: 0.95rem;">Aún no has solicitado vacaciones</p>
-                    <a href="@Url.Action("CrearSolicitud", "SolicitudVacaciones")" class="btn btn-primary">
+                    <a href="@Url.Action("SolicitarVacacionesEmpleado", "SolicitudVacaciones")" class="btn btn-primary">
                         <span><i class="fas fa-plus"></i> Hacer mi Primera Solicitud</span>
                     </a>
                 </div>
@@ -274,6 +330,8 @@
         </div>
     </div>
 </section>
+
+<partial name="_ModalCancelarSolicitud" />
 
 @section Scripts {
     <script src="~/js/solicitudvacaciones.js"></script>

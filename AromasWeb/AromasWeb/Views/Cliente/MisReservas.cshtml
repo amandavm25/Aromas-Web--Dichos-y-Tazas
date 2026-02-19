@@ -110,11 +110,11 @@
             {
                 var colorEstado = reserva.Estado switch
                 {
-                    "Pendiente" => "#f39c12",
+                    "Pendiente" => "var(--yellow)",
                     "Confirmada" => "var(--green)",
                     "Completada" => "#3498db",
                     "Cancelada" => "var(--red)",
-                    _ => "#95a5a6"
+                    _ => "var(--gray)"
                 };
 
                 var iconoEstado = reserva.Estado switch

@@ -351,7 +351,7 @@ document.head.appendChild(stylePaginacion);
                 estadoBadge.style.color = 'white';
             } else {
                 estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#95a5a6';
+                estadoBadge.style.background = 'var(--gray)';
                 estadoBadge.style.color = 'white';
             }
 
@@ -402,7 +402,7 @@ document.head.appendChild(stylePaginacion);
                 estadoBadge.style.color = 'white';
             } else {
                 estadoBadge.textContent = 'Inactivo';
-                estadoBadge.style.background = '#95a5a6';
+                estadoBadge.style.background = 'var(--gray)';
                 estadoBadge.style.color = 'white';
             }
 
@@ -654,7 +654,7 @@ function mostrarNotificacion(mensaje, tipo) {
     const colores = {
         'success': 'var(--green)',
         'error': 'var(--red)',
-        'warning': '#f39c12'
+        'warning': 'var(--yellow)'
     };
 
     const notification = document.createElement('div');
@@ -786,7 +786,7 @@ function mostrarNotificacion(mensaje, tipo) {
     const colores = {
         'success': 'var(--green)',
         'error': 'var(--red)',
-        'warning': '#f39c12',
+        'warning': 'var(--yellow)',
         'info': '#3498db'
     };
 
