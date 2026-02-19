@@ -113,8 +113,6 @@ namespace AromasWeb.Controllers
                 CargarEmpleados();
                 return View();
             }
-            TempData["Mensaje"] = "Planilla calculada correctamente";
-            return RedirectToAction(nameof(VerDetallePlanilla), new { id = 1 });
             try
             { int idPlanillaCreada = _calcularPlanilla.CalcularYGuardar(idEmpleado, periodoInicio, periodoFin);
                 TempData["Mensaje"] = "Planilla calculada correctamente";
