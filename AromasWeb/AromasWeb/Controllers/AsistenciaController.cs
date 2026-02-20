@@ -140,8 +140,6 @@ namespace AromasWeb.Controllers
             TempData["Mensaje"] = "Entrada registrada correctamente.";
             return RedirectToAction("MiHistorialAsistencias");
         }
-        
-
 
         //EMPLEADO MI SALIDA GET
 
@@ -186,23 +184,63 @@ namespace AromasWeb.Controllers
             if (!asistencia.HoraSalida.HasValue)
             { 
                 ModelState.AddModelError("", "La hora de salida es obligatoria.");
-        }
+            }
 
-                if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                    return View(asistencia);
+                return View(asistencia);
+            }
 
-                }
+            asistencia.CalcularHoras();
 
-                asistencia.CalcularHoras();
+            _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value);
 
-                _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value);
-
-                TempData["Mensaje"] = "Salida registrada correctamente.";
+            TempData["Mensaje"] = "Salida registrada correctamente.";
 
             return RedirectToAction("MiHistorialAsistencias");
 
+        }
+
+        // ADMIN - HISTORIAL DE UN EMPLEADO ESPECÍFICO
+
+        // GET: Asistencia/HistorialEmpleado/5
+        public IActionResult HistorialEmpleado(int idEmpleado, DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            var empleado = _listarEmpleados.ObtenerPorId(idEmpleado);
+
+            if (empleado == null)
+            {
+                TempData["Error"] = "Empleado no encontrado";
+                return RedirectToAction(nameof(ListadoAsistencias));
             }
+
+            ViewBag.IdEmpleado = idEmpleado;
+            ViewBag.NombreEmpleado = $"{empleado.Nombre} {empleado.Apellidos}";
+            ViewBag.CargoEmpleado = empleado.Cargo;
+            ViewBag.Empleado = empleado;
+            ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd");
+            ViewBag.FechaFin = fechaFin?.ToString("yyyy-MM-dd");
+
+            List<Asistencia> asistencias;
+
+            if (fechaInicio.HasValue && fechaFin.HasValue)
+            {
+                asistencias = _listarAsistencias.BuscarPorRangoFechas(fechaInicio.Value, fechaFin.Value)
+                    .Where(a => a.IdEmpleado == idEmpleado)
+                    .ToList();
+            }
+            else
+            {
+                asistencias = _listarAsistencias.BuscarPorEmpleado(idEmpleado);
+            }
+
+            foreach (var asistencia in asistencias)
+            {
+                asistencia.CalcularHoras();
+            }
+
+            return View(asistencias);
+        }
 
         //ADMIN - REGISTRAR ENTRADA 
 

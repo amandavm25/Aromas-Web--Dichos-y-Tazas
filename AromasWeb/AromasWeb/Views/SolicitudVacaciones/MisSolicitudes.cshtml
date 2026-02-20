@@ -49,22 +49,6 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1200px;">
 
-        <!-- Mensajes TempData -->
-        @if (TempData["Mensaje"] != null)
-        {
-            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 2rem; border-radius: 15px;">
-                <i class="fas fa-check-circle"></i> @TempData["Mensaje"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        }
-        @if (TempData["Error"] != null)
-        {
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 2rem; border-radius: 15px;">
-                <i class="fas fa-exclamation-triangle"></i> @TempData["Error"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        }
-
         <!-- Saldo de Vacaciones -->
         <div class="feature-card" style="background: white; padding: 3rem; margin-bottom: 3rem; position: relative; overflow: hidden; border-left: 5px solid var(--gold);" data-aos="zoom-in">
             <div style="position: relative; z-index: 1;">
@@ -302,15 +286,15 @@
                 </div>
 
                 <!-- Footer de paginación -->
-                <div class="admin-table-footer" style="border-radius: 0 0 15px 15px; margin-top: 1rem;">
-                    <div class="admin-table-footer-text">
+                <div class="timeline-pagination-footer">
+                    <div class="timeline-pagination-info">
                         Mostrando <strong id="startCard">0</strong> - <strong id="endCard">0</strong> de <strong id="totalCards">0</strong> registros
                     </div>
-                    <div class="pagination-buttons">
-                        <button id="btnAnteriorCards" class="pagination-btn">
+                    <div class="timeline-pagination-buttons">
+                        <button id="btnAnteriorCards" class="timeline-pagination-btn">
                             <i class="fas fa-chevron-left"></i> Anterior
                         </button>
-                        <button id="btnSiguienteCards" class="pagination-btn">
+                        <button id="btnSiguienteCards" class="timeline-pagination-btn">
                             Siguiente <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>

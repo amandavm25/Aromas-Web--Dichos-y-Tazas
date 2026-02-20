@@ -44,10 +44,13 @@
                     <h5>Información del Empleado</h5>
                 </div>
 
-                <div class="form-group">
-                    <label><i class="fas fa-user"></i> Empleado</label>
-                    @Html.DropDownListFor(model => model.IdEmpleado,
-                    new SelectList(ViewBag.Empleados, "IdEmpleado", "NombreCompleto"),
+            <div class="form-group">
+                <label>
+                    <i class="fas fa-user"></i>
+                    Empleado
+                </label>
+                @Html.DropDownListFor(model => model.IdEmpleado,
+                                new SelectList(ViewBag.Empleados, "IdEmpleado", "NombreCompleto"),
                                 "Seleccione un empleado",
                                 new { @class = "form-control", id = "selectEmpleado" })
                 @Html.ValidationMessageFor(model => model.IdEmpleado, "", new { @class = "text-danger" })
@@ -64,7 +67,7 @@
                     </div>
                     <div>
                         <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
-                            <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Contratación
+                            <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Antigüedad
                         </small>
                         <strong id="empleadoFechaContratacion" style="color: var(--dark-green);"></strong>
                     </div>
@@ -138,7 +141,7 @@
                 </button>
             </div>
         </div>
-                }
+        }
     </div>
 </section>
 
@@ -158,13 +161,14 @@
             selectEmpleado.addEventListener('change', function () {
                 const empleadoId = parseInt(this.value);
                 if (!empleadoId) { infoEmpleado.style.display = 'none'; return; }
-                const empleado = empleados.find(e => e.IdEmpleado === empleadoId);
+                const empleado = empleados.find(e => e.idEmpleado === empleadoId);
                 if (empleado) {
-                    empleadoCargo.textContent = empleado.Cargo;
-                    const fecha = new Date(empleado.FechaContratacion);
-                    empleadoFechaContratacion.textContent = fecha.toLocaleDateString('es-CR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-                    empleadoDiasDisponibles.textContent = empleado.DiasDisponibles + ' días';
-                    hiddenDiasDisponibles.value = empleado.DiasDisponibles;
+                    empleadoCargo.textContent = empleado.cargo;
+                    const contratacion = new Date(empleado.fechaContratacion);
+                    const meses = Math.floor((new Date() - contratacion) / (1000 * 60 * 60 * 24 * 30));
+                    empleadoFechaContratacion.textContent = meses + ' meses';
+                    empleadoDiasDisponibles.textContent = empleado.diasDisponibles + ' días';
+                    hiddenDiasDisponibles.value = empleado.diasDisponibles;
                     infoEmpleado.style.display = 'block';
                     validarDias();
                 }

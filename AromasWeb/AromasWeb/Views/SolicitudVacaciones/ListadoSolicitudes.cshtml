@@ -234,14 +234,14 @@
                                                     title="Rechazar">
                                                 <i class="fas fa-times"></i>
                                             </button>
+                                            <button type="button"
+                                                    class="btn btn-sm"
+                                                    onclick="window.location.href='@Url.Action("EditarSolicitud", "SolicitudVacaciones", new { id = solicitud.IdSolicitud })'"
+                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
                                         }
-                                        <button type="button"
-                                                class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarSolicitud", "SolicitudVacaciones", new { id = solicitud.IdSolicitud })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
                                         <button type="button"
                                                 class="btn btn-sm btn-detalles-solicitud"
                                                 data-id="@solicitud.IdSolicitud"

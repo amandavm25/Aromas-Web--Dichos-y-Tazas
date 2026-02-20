@@ -216,15 +216,18 @@
                                             <i class="fas fa-eye"></i>
                                         </button>
                                         <button type="button"
-                                                class="btn btn-sm btn-estado"
-                                                data-id="@empleado.IdEmpleado"
-                                                data-nombre="@empleado.Nombre @empleado.Apellidos"
-                                                data-estado="@(empleado.Estado ? "Activo" : "Inactivo")"
+                                                class="btn btn-sm"
+                                                onclick="window.location.href='@Url.Action("HistorialEmpleado", "Asistencia", new { idEmpleado = empleado.IdEmpleado })'"
                                                 style="background: var(--yellow); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalCambiarEstado"
-                                                title="Cambiar estado">
-                                            <i class="fas fa-toggle-on"></i>
+                                                title="Historial de asistencia">
+                                            <i class="fas fa-history"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm"
+                                                onclick="window.location.href='@Url.Action("VerSolicitudesEmpleado", "SolicitudVacaciones", new { id = empleado.IdEmpleado })'"
+                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Ver solicitudes de vacaciones">
+                                            <i class="fas fa-umbrella-beach"></i>
                                         </button>
                                     </td>
                                 </tr>

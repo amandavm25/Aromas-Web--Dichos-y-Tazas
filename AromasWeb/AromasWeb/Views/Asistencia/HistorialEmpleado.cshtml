@@ -1,0 +1,295 @@
+﻿@model List<AromasWeb.Abstracciones.ModeloUI.Asistencia>
+
+@{
+    ViewBag.Title = "Historial de Asistencia";
+    var totalRegistros = Model?.Count ?? 0;
+    var completos = Model?.Count(a => a.HoraSalida.HasValue) ?? 0;
+    var enCurso = Model?.Count(a => !a.HoraSalida.HasValue) ?? 0;
+    var totalHoras = Model?.Sum(a => a.HorasTotales) ?? 0;
+    var totalExtras = Model?.Sum(a => a.HorasExtras) ?? 0;
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-leaves"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-history"></i>
+                Asistencia
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Historial de Asistencias del Empleado
+            </h1>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse"><div class="wheel"></div></div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1600px;">
+
+        <!-- Información del Empleado -->
+        @{
+            var empleadoInfo = (AromasWeb.Abstracciones.ModeloUI.Empleado)ViewBag.Empleado;
+        }
+        @if (empleadoInfo != null)
+        {
+            <div class="feature-card" style="background: white; margin-bottom: 3rem; padding: 2.5rem; border-left: 5px solid var(--olive-green);" data-aos="fade-up">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                    <div>
+                        <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <i class="fas fa-user" style="font-size: 1.5rem; color: white;"></i>
+                        </div>
+                        <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Nombre Completo</p>
+                        <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleadoInfo.Nombre @empleadoInfo.Apellidos</h4>
+                    </div>
+                    <div>
+                        <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <i class="fas fa-id-card" style="font-size: 1.5rem; color: white;"></i>
+                        </div>
+                        <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Identificación</p>
+                        <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleadoInfo.Identificacion</h4>
+                    </div>
+                    <div>
+                        <div style="width: 60px; height: 60px; background: var(--olive-green); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <i class="fas fa-briefcase" style="font-size: 1.5rem; color: white;"></i>
+                        </div>
+                        <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Cargo</p>
+                        <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleadoInfo.Cargo</h4>
+                    </div>
+                    <div>
+                        <div style="width: 60px; height: 60px; background: var(--gold); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <i class="fas fa-calendar" style="font-size: 1.5rem; color: white;"></i>
+                        </div>
+                        <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Fecha de Contratación</p>
+                        <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleadoInfo.FechaContratacion.ToString("dd/MM/yyyy")</h4>
+                    </div>
+                    <div>
+                        <div style="width: 60px; height: 60px; background: var(--gold); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <i class="fas fa-hourglass-half" style="font-size: 1.5rem; color: white;"></i>
+                        </div>
+                        <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Antigüedad</p>
+                        <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: var(--dark-green);">@empleadoInfo.AnosTrabajados</h4>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Tarjetas de resumen -->
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalRegistros</h3>
+                <p style="margin: 0.5rem 0;">Total Registros</p>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@completos</h3>
+                <p style="margin: 0.5rem 0;">Jornadas Completas</p>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon"><i class="fas fa-spinner"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@enCurso</h3>
+                <p style="margin: 0.5rem 0;">En Curso</p>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--olive-green);">@totalHoras.ToString("F2")h</h3>
+                <p style="margin: 0.5rem 0;">Horas Totales</p>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--gold-bright);">@totalExtras.ToString("F2")h</h3>
+                <p style="margin: 0.5rem 0;">Horas Extras</p>
+            </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;" data-aos="fade-up">
+            <a href="@Url.Action("ListadoEmpleados", "Empleado")" class="btn btn-secondary">
+                <span><i class="fas fa-arrow-left"></i> Volver a Empleados</span>
+            </a>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="@Url.Action("RegistrarEntrada", "Asistencia", new { idEmpleado = ViewBag.IdEmpleado })" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                    <span><i class="fas fa-sign-in-alt"></i> Registrar Entrada</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Filtros de fecha -->
+        <div style="margin-bottom: 2rem;" data-aos="fade-up">
+            <form method="get" action="@Url.Action("HistorialEmpleado", "Asistencia")" style="display: contents;">
+                <input type="hidden" name="idEmpleado" value="@ViewBag.IdEmpleado" />
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                    <span style="color: var(--dark-green); font-weight: 600; font-family: var(--font-primary);">
+                        <i class="fas fa-calendar-alt" style="color: var(--gold);"></i> Rango de fechas:
+                    </span>
+
+                    <div style="position: relative; flex: 1; min-width: 200px; max-width: 300px;">
+                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
+                        <input type="date"
+                               name="fechaInicio"
+                               value="@ViewBag.FechaInicio"
+                               style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white);">
+                    </div>
+
+                    <span style="color: var(--dark-green);">→</span>
+
+                    <div style="position: relative; flex: 1; min-width: 200px; max-width: 300px;">
+                        <i class="fas fa-calendar-alt" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
+                        <input type="date"
+                               name="fechaFin"
+                               value="@ViewBag.FechaFin"
+                               style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white);">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0.75rem 2rem;">
+                        <span><i class="fas fa-filter"></i> Filtrar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tabla Principal -->
+        <div class="admin-table-container" data-aos="fade-up">
+            <div class="table-responsive">
+                <table id="laTablaDeAsistencias" class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fecha</th>
+                            <th>Día</th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            <th>Almuerzo</th>
+                            <th>H. Totales</th>
+                            <th>H. Regulares</th>
+                            <th>H. Extras</th>
+                            <th style="text-align: center;">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            int contador = 1;
+                            foreach (var asistencia in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
+                                    </td>
+                                    <td>
+                                        <span style="color: var(--dark-green); font-weight: 600;">
+                                            <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--olive-green);"></i>
+                                            @asistencia.FechaFormateada
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span style="color: var(--charcoal); opacity: 0.7;">@asistencia.DiaSemana</span>
+                                    </td>
+                                    <td>
+                                        <span style="color: var(--charcoal); font-weight: 600;">
+                                            <i class="fas fa-sign-in-alt" style="color: var(--green); margin-right: 0.3rem;"></i>
+                                            @asistencia.HoraEntradaFormateada
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if (asistencia.HoraSalida.HasValue)
+                                        {
+                                            <span style="color: var(--charcoal); font-weight: 600;">
+                                                <i class="fas fa-sign-out-alt" style="color: var(--red); margin-right: 0.3rem;"></i>
+                                                @asistencia.HoraSalidaFormateada
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: var(--gold); font-style: italic;">Pendiente</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">@asistencia.TiempoAlmuerzoFormateado</span>
+                                    </td>
+                                    <td>
+                                        <span style="color: var(--olive-green); font-weight: 700;">@asistencia.HorasTotales.ToString("F2")h</span>
+                                    </td>
+                                    <td>
+                                        <span style="color: var(--dark-green); font-weight: 600;">@asistencia.HorasRegulares.ToString("F2")h</span>
+                                    </td>
+                                    <td>
+                                        @if (asistencia.TieneHorasExtras)
+                                        {
+                                            <span style="color: var(--gold-bright); font-weight: 700; display: flex; align-items: center; gap: 0.3rem;">
+                                                <i class="fas fa-star"></i> @asistencia.HorasExtras.ToString("F2")h
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: var(--charcoal); opacity: 0.7;">0.00h</span>
+                                        }
+                                    </td>
+                                    <td style="text-align: center;">
+                                        @if (asistencia.HoraSalida.HasValue)
+                                        {
+                                            <span class="badge" style="background: var(--green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Completo</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge" style="background: var(--gold); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">En curso</span>
+                                        }
+                                    </td>
+                                </tr>
+                                contador++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="10" class="admin-table-empty">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>No se encontraron registros de asistencia para el período seleccionado</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        <tfoot style="background: var(--cream);">
+                            <tr>
+                                <td colspan="6" style="padding: 1rem 1.2rem; text-align: right; font-weight: 700; color: var(--dark-green);">TOTALES:</td>
+                                <td style="padding: 1rem 1.2rem; font-weight: 700; color: var(--olive-green);">@totalHoras.ToString("F2")h</td>
+                                <td style="padding: 1rem 1.2rem; font-weight: 700; color: var(--dark-green);">@Model.Sum(a => a.HorasRegulares).ToString("F2")h</td>
+                                <td style="padding: 1rem 1.2rem; font-weight: 700; color: var(--gold-bright);">@totalExtras.ToString("F2")h</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    }
+                </table>
+            </div>
+
+            <!-- Footer de paginación -->
+            <div class="admin-table-footer">
+                <div class="admin-table-footer-text">
+                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                </div>
+                <div class="pagination-buttons">
+                    <button id="btnAnterior" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btnSiguiente" class="pagination-btn">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/asistencia.js"></script>
+}

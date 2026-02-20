@@ -155,6 +155,11 @@ namespace AromasWeb.Controllers
 
             if (empleado != null)
             {
+                ViewBag.NombreEmpleado = $"{empleado.Nombre} {empleado.Apellidos}";
+                ViewBag.IdentificacionEmpleado = empleado.Identificacion;
+                ViewBag.CargoEmpleado = empleado.Cargo;
+                ViewBag.FechaContratacion = empleado.FechaContratacion;
+
                 var meses = (int)((DateTime.Now - empleado.FechaContratacion).TotalDays / 30);
                 ViewBag.MesesTrabajados = meses;
                 ViewBag.DiasAcumulados = meses;
@@ -275,7 +280,7 @@ namespace AromasWeb.Controllers
         }
 
         // GET: SolicitudVacaciones/EditarSolicitud/5
-        public IActionResult EditarSolicitud(int id)
+        public IActionResult EditarSolicitud(int id, string returnUrl = null)
         {
             try
             {
@@ -287,6 +292,16 @@ namespace AromasWeb.Controllers
                     return RedirectToAction(nameof(ListadoSolicitudes));
                 }
 
+                // Determinar la URL de retorno según el tipo de usuario si no se especificó
+                if (string.IsNullOrEmpty(returnUrl))
+                {
+                    var tipoUsuario = HttpContext.Session.GetString("UsuarioTipo");
+                    returnUrl = tipoUsuario == "empleado"
+                        ? Url.Action(nameof(MisSolicitudes), "SolicitudVacaciones")
+                        : Url.Action(nameof(ListadoSolicitudes), "SolicitudVacaciones");
+                }
+
+                ViewBag.ReturnUrl = returnUrl;
                 CargarEmpleados();
                 return View(solicitud);
             }
@@ -300,8 +315,17 @@ namespace AromasWeb.Controllers
         // POST: SolicitudVacaciones/EditarSolicitud
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarSolicitud(SolicitudVacaciones solicitud)
+        public IActionResult EditarSolicitud(SolicitudVacaciones solicitud, string returnUrl = null)
         {
+            // URL de retorno por defecto según tipo de usuario
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                var tipoUsuario = HttpContext.Session.GetString("UsuarioTipo");
+                returnUrl = tipoUsuario == "empleado"
+                    ? Url.Action(nameof(MisSolicitudes), "SolicitudVacaciones")
+                    : Url.Action(nameof(ListadoSolicitudes), "SolicitudVacaciones");
+            }
+
             try
             {
                 ModelState.Remove("NombreEmpleado");
@@ -320,6 +344,7 @@ namespace AromasWeb.Controllers
 
                 if (!ModelState.IsValid)
                 {
+                    ViewBag.ReturnUrl = returnUrl;
                     CargarEmpleados();
                     return View(solicitud);
                 }
@@ -328,16 +353,19 @@ namespace AromasWeb.Controllers
 
                 if (resultado > 0)
                 {
-                    return RedirectToAction(nameof(ListadoSolicitudes));
+                    TempData["Mensaje"] = "Solicitud actualizada correctamente";
+                    return Redirect(returnUrl);
                 }
 
                 ModelState.AddModelError("", "No se pudo actualizar la solicitud en la base de datos");
+                ViewBag.ReturnUrl = returnUrl;
                 CargarEmpleados();
                 return View(solicitud);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"Error al actualizar la solicitud: {ex.Message}");
+                ViewBag.ReturnUrl = returnUrl;
                 CargarEmpleados();
                 return View(solicitud);
             }
@@ -455,24 +483,38 @@ namespace AromasWeb.Controllers
             {
                 try
                 {
-                    // Se incluye FechaContratacion y DiasDisponibles calculados
-                    ViewBag.Empleados = ctx.Empleado
+                    // Traer solo los datos de BD
+                    var empleadosDB = ctx.Empleado
                         .Where(e => e.Estado == true)
                         .OrderBy(e => e.Nombre)
                         .ThenBy(e => e.Apellidos)
                         .Select(e => new
                         {
-                            IdEmpleado = e.IdEmpleado,
+                            e.IdEmpleado,
                             NombreCompleto = e.Nombre + " " + e.Apellidos,
-                            Cargo = e.Cargo,
-                            FechaContratacion = e.FechaContratacion,
-                            DiasDisponibles =
-                                (decimal)(int)((DateTime.Now - e.FechaContratacion).TotalDays / 30)
-                                - (ctx.SolicitudVacaciones
-                                    .Where(s => s.IdEmpleado == e.IdEmpleado && s.Estado == "Aprobada")
-                                    .Sum(s => (decimal?)s.DiasSolicitados) ?? 0)
+                            e.Cargo,
+                            e.FechaContratacion
                         })
                         .ToList();
+
+                    // Calcular DiasDisponibles en memoria
+                    ViewBag.Empleados = empleadosDB.Select(e =>
+                    {
+                        var diasTomados = ctx.SolicitudVacaciones
+                            .Where(s => s.IdEmpleado == e.IdEmpleado && s.Estado == "Aprobada")
+                            .Sum(s => (decimal?)s.DiasSolicitados) ?? 0;
+
+                        var meses = (int)((DateTime.Now - e.FechaContratacion).TotalDays / 30);
+
+                        return new
+                        {
+                            e.IdEmpleado,
+                            e.NombreCompleto,
+                            e.Cargo,
+                            e.FechaContratacion,
+                            DiasDisponibles = (decimal)meses - diasTomados
+                        };
+                    }).ToList();
                 }
                 catch (Exception ex)
                 {

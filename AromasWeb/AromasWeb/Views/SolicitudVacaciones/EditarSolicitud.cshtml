@@ -37,6 +37,7 @@
             @Html.HiddenFor(model => model.IdSolicitud)
             @Html.HiddenFor(model => model.IdEmpleado)
             @Html.HiddenFor(model => model.Estado)
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
 
             <div class="admin-form-wrapper" data-aos="fade-up">
                 @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
@@ -59,7 +60,7 @@
                             <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
                                 <i class="fas fa-briefcase" style="color: var(--olive-green);"></i> Cargo
                             </small>
-                            <strong style="color: var(--dark-green);">@ViewBag.CargoEmpleado</strong>
+                            <strong style="color: var(--dark-green);">@Model.CargoEmpleado</strong>
                         </div>
                         <div>
                             <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
@@ -118,28 +119,9 @@
                     </p>
                 </div>
 
-                <div style="margin: 0 0 1.5rem; padding: 1.5rem; background: var(--cream); border-radius: 20px;">
-                    <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
-                        <div>
-                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
-                                <i class="fas fa-hashtag" style="color: var(--olive-green);"></i> ID Solicitud
-                            </small>
-                            <strong style="color: var(--dark-green);">#@Model.IdSolicitud</strong>
-                        </div>
-                        <div>
-                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 0.3rem;">
-                                <i class="fas fa-info-circle" style="color: var(--olive-green);"></i> Estado Actual
-                            </small>
-                            <span style="background: @Model.EstadoBadgeColor; color: white; padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
-                                @Model.Estado
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Botones -->
                 <div class="admin-form-footer">
-                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoSolicitudes", "SolicitudVacaciones")'">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@ViewBag.ReturnUrl'">
                         <span><i class="fas fa-times"></i> Cancelar</span>
                     </button>
                     <button type="submit" class="btn btn-primary btn-3d" id="btnGuardar">
