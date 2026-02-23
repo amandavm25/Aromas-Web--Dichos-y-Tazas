@@ -69,7 +69,7 @@
         <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
                 <div class="feature-icon">
-                    <i class="fas fa-dollar-sign"></i>
+                    <i class="fas fa-coins-sign"></i>
                 </div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
                     @if (tarifaActual != null)
@@ -227,7 +227,7 @@
                                     <div class="timeline-stats-grid">
                                         <div class="timeline-stat-item">
                                             <p class="timeline-stat-label">
-                                                <i class="fas fa-dollar-sign"></i> Tarifa por Hora
+                                                <i class="fas fa-coins-sign"></i> Tarifa por Hora
                                             </p>
                                             <strong class="timeline-stat-value">
                                                 ₡@tarifa.TarifaHora.ToString("N2")
@@ -282,7 +282,7 @@
             else
             {
                 <div class="feature-card timeline-empty">
-                    <i class="fas fa-file-invoice-dollar"></i>
+                    <i class="fas fa-file-invoice-coins"></i>
                     <h5>No hay registros de tarifas</h5>
                     <p>Este empleado aún no tiene tarifas registradas.</p>
                     <a href="@Url.Action("CrearTarifa", "HistorialTarifa", new { idEmpleado = empleado.IdEmpleado })" class="btn btn-primary">
