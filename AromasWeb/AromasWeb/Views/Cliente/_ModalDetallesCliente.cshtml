@@ -13,15 +13,11 @@
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+            <div class="modal-body" style="padding: 2.5rem; background: var(--white);">
                 <!-- Título del Cliente -->
                 <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green); display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <h5 id="detalles-nombre-cliente" style="color: var(--dark-green); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
-                        <p id="detalles-tipo-cliente" style="margin: 0.5rem 0 0; color: var(--gold); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-star"></i>
-                            <span></span>
-                        </p>
                     </div>
                     <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
                         <i class="fas fa-user" style="font-size: 2rem; color: white;"></i>
@@ -66,12 +62,12 @@
 
                     <!-- Columna Derecha -->
                     <div style="display: grid; gap: 1.5rem;">
-                        <!-- Última Reserva -->
+                        <!-- Fecha de Registro -->
                         <div class="feature-card" style="padding: 1.5rem; margin: 0;">
                             <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calendar-check" style="color: var(--olive-green); font-size: 1.1rem;"></i> Última Reserva
+                                <i class="fas fa-calendar-plus" style="color: var(--olive-green); font-size: 1.1rem;"></i> Fecha de Registro
                             </label>
-                            <p id="detalles-ultimareserva-cliente" style="color: var(--dark-green); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
+                            <p id="detalles-fecha-cliente" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
                         </div>
 
                         <!-- Estado -->
@@ -94,3 +90,44 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botonesDetalles = document.querySelectorAll('.btn-detalles-cliente');
+
+        botonesDetalles.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const nombre = this.getAttribute('data-nombre');
+                const apellidos = this.getAttribute('data-apellidos');
+                const identificacion = this.getAttribute('data-identificacion');
+                const correo = this.getAttribute('data-correo');
+                const telefono = this.getAttribute('data-telefono');
+                const estado = this.getAttribute('data-estado');
+                const fecha = this.getAttribute('data-fecha');
+
+                // Llenar información general
+                document.getElementById('detalles-id-cliente').textContent = id;
+                document.getElementById('detalles-nombre-cliente').textContent = nombre + ' ' + apellidos;
+                document.getElementById('detalles-identificacion-cliente').textContent = identificacion;
+                document.getElementById('detalles-correo-cliente').textContent = correo;
+                document.getElementById('detalles-telefono-cliente').textContent = telefono;
+                document.getElementById('detalles-fecha-cliente').textContent = fecha;
+
+                // Badge de estado
+                const estadoBadge = document.getElementById('detalles-estado-badge-cliente');
+                if (estadoBadge) {
+                    if (estado === 'Activo') {
+                        estadoBadge.textContent = 'Activo';
+                        estadoBadge.style.background = '#27ae60';
+                        estadoBadge.style.color = 'white';
+                    } else {
+                        estadoBadge.textContent = 'Inactivo';
+                        estadoBadge.style.background = '#e74c3c';
+                        estadoBadge.style.color = 'white';
+                    }
+                }
+            });
+        });
+    });
+</script>

@@ -31,151 +31,192 @@
 </section>
 
 <!-- Formulario Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 900px;">
+<section class="admin-form-section">
+    <div class="container" style="max-width: 80%;">
         @using (Html.BeginForm("EditarCliente", "Cliente", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.IdCliente)
 
-            <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+            <div class="admin-form-wrapper" data-aos="fade-up">
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información Personal -->
-                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-user"></i> Información Personal
-                        </h5>
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger" style="margin-bottom: 2rem;">
+                        <i class="fas fa-exclamation-triangle"></i> @ViewBag.ErrorMessage
                     </div>
+                }
 
-                    <!-- Nombre Completo -->
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-warning" style="margin-bottom: 2rem;">
+                        <strong>Errores encontrados:</strong>
+                        <ul style="margin: 0.5rem 0 0 0;">
+                            @foreach (var modelState in ViewData.ModelState.Values)
+                            {
+                                foreach (var error in modelState.Errors)
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <!-- Información Personal -->
+                <div class="admin-form-header">
+                    <i class="fas fa-box"></i>
+                    <h5>Información Personal</h5>
+                </div>
+
+                <!-- Nombre -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-user"></i>
+                        Nombre
+                    </label>
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Juan" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Apellidos -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-user"></i>
+                        Apellidos
+                    </label>
+                    @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Pérez Rodríguez" } })
+                    @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Identificación y Teléfono -->
+                <div class="form-row">
                     <div class="form-group">
                         <label>
-                            <i class="fas fa-user"></i>
-                            Nombre Completo
+                            <i class="fas fa-id-card"></i>
+                            Identificación
                         </label>
-                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Juan Pérez Rodríguez" } })
-                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", placeholder = "1-1234-5678" } })
+                        @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
                     </div>
 
-                    <!-- Identificación y Teléfono -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-id-card"></i>
-                                Identificación
-                            </label>
-                            @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", placeholder = "1-1234-5678" } })
-                            @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-phone"></i>
-                                Teléfono
-                            </label>
-                            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", placeholder = "8888-1234" } })
-                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <!-- Correo Electrónico -->
                     <div class="form-group">
                         <label>
-                            <i class="fas fa-envelope"></i>
-                            Correo Electrónico
+                            <i class="fas fa-phone"></i>
+                            Teléfono
                         </label>
-                        @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", type = "email", placeholder = "correo@ejemplo.com" } })
-                        @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", placeholder = "8888-1234" } })
+                        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                     </div>
+                </div>
 
-                    <!-- Cambiar Contraseña -->
-                    <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-lock"></i> Cambiar Contraseña (Opcional)
-                        </h5>
-                    </div>
+                <!-- Correo Electrónico -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-envelope"></i>
+                        Correo Electrónico
+                    </label>
+                    @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", type = "email", placeholder = "correo@ejemplo.com" } })
+                    @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                </div>
 
-                    <!-- Contraseña Actual -->
+                <!-- Cambiar Contraseña -->
+                <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
+                    <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
+                        <i class="fas fa-lock"></i> Cambiar Contraseña (Opcional)
+                    </h5>
+                </div>
+
+                <!-- Contraseña Actual -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-key"></i>
+                        Contraseña Actual
+                    </label>
+                    <input type="password" name="ContrasenaActual" class="form-control" placeholder="Ingresa la contraseña actual" />
+                    @if (ViewData.ModelState.ContainsKey("ContrasenaActual"))
+                    {
+                        <span class="text-danger">@ViewData.ModelState["ContrasenaActual"].Errors.FirstOrDefault()?.ErrorMessage</span>
+                    }
+                    <small class="admin-form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Solo completar si desea cambiar la contraseña
+                    </small>
+                </div>
+
+                <!-- Nueva Contraseña y Confirmar -->
+                <div class="form-row">
                     <div class="form-group">
                         <label>
                             <i class="fas fa-key"></i>
-                            Contraseña Actual
+                            Nueva Contraseña
                         </label>
-                        <input type="password" name="ContrasenaActual" class="form-control" placeholder="Ingresa la contraseña actual" />
-                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                            Solo completa si deseas cambiar la contraseña
-                        </small>
+                        <input type="password" name="ContrasenaNueva" class="form-control" placeholder="Nueva contraseña (mínimo 8 caracteres)" />
+                        @if (ViewData.ModelState.ContainsKey("ContrasenaNueva"))
+                        {
+                            <span class="text-danger">@ViewData.ModelState["ContrasenaNueva"].Errors.FirstOrDefault()?.ErrorMessage</span>
+                        }
                     </div>
 
-                    <!-- Nueva Contraseña y Confirmar -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-key"></i>
-                                Nueva Contraseña
-                            </label>
-                            <input type="password" name="ContrasenaNueva" class="form-control" placeholder="Nueva contraseña" />
-                        </div>
-
-                        <div class="form-group">
-                            <label>
-                                <i class="fas fa-key"></i>
-                                Confirmar Nueva Contraseña
-                            </label>
-                            <input type="password" name="ConfirmarContrasenaNueva" class="form-control" placeholder="Confirmar contraseña" />
-                        </div>
-                    </div>
-
-                    <!-- Información de Registro -->
-                    <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Registro
-                                </label>
-                                <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.FechaRegistroFormateada</p>
-                            </div>
-                            <div>
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-calendar-check" style="color: var(--olive-green);"></i> Última Reserva
-                                </label>
-                                <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.UltimaReservaFormateada</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Estado del Cliente -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
-                            @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
-                            <span style="flex: 1;">
-                                <i class="fas fa-toggle-on"></i>
-                                Estado del Cliente (Activo/Inactivo)
-                            </span>
+                        <label>
+                            <i class="fas fa-key"></i>
+                            Confirmar Nueva Contraseña
                         </label>
-                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                            <i class="fas fa-toggle-on" style="color: var(--gold-bright);"></i>
-                            Activa o desactiva el acceso del cliente
-                        </small>
+                        <input type="password" name="ConfirmarContrasenaNueva" class="form-control" placeholder="Confirmar contraseña" />
+                        @if (ViewData.ModelState.ContainsKey("ConfirmarContrasenaNueva"))
+                        {
+                            <span class="text-danger">@ViewData.ModelState["ConfirmarContrasenaNueva"].Errors.FirstOrDefault()?.ErrorMessage</span>
+                        }
                     </div>
+                </div>
 
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoClientes", "Cliente")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="button" class="btn" onclick="window.location.href='@Url.Action("HistorialReservas", "Cliente", new { id = Model.IdCliente })'" style="flex: 1; background: var(--gold); color: white;">
-                            <span><i class="fas fa-history"></i> Ver Historial</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
-                            <span><i class="fas fa-check"></i> Guardar Cambios</span>
-                        </button>
+                <!-- Información de Registro -->
+                <div class="feature-card" style="margin: 2rem 0; padding: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Registro
+                            </label>
+                            <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.FechaRegistroFormateada</p>
+                        </div>
+                        <div>
+                            <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-calendar-check" style="color: var(--olive-green);"></i> Última Reserva
+                            </label>
+                            <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.UltimaReservaFormateada</p>
+                        </div>
                     </div>
-                </form>
+                </div>
+
+                <!-- Estado del Cliente -->
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
+                        @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
+                        <span style="flex: 1;">
+                            <i class="fas fa-toggle-on"></i>
+                            Estado del Cliente (Activo/Inactivo)
+                        </span>
+                    </label>
+                    @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                    <small class="admin-form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Activa/Desactiva acceso al cliente.
+                    </small>
+                </div>
+
+                <!-- Botones -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoClientes", "Cliente")'">
+                        <i class="fas fa-times"></i>
+                        <span> Cancelar </span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span> Guardar Cambios </span>
+                    </button>
+                </div>
             </div>
         }
     </div>

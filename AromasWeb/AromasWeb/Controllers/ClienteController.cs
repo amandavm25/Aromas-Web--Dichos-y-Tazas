@@ -1,21 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Cliente;
-using AromasWeb.Abstracciones.Logica.Reserva;
-using System.Collections.Generic;
-using System.Linq;
+using System;
+using System.Threading.Tasks;
 
 namespace AromasWeb.Controllers
 {
     public class ClienteController : Controller
     {
         private IListarClientes _listarClientes;
-        private IListarReservas _listarReservas;
+        private ICrearCliente _crearCliente;
+        private IActualizarCliente _actualizarCliente;
+        private IObtenerCliente _obtenerCliente;
 
         public ClienteController()
         {
             _listarClientes = new LogicaDeNegocio.Clientes.ListarClientes();
-            _listarReservas = new LogicaDeNegocio.Reservas.ListarReservas();
+            _crearCliente = new LogicaDeNegocio.Clientes.CrearCliente();
+            _actualizarCliente = new LogicaDeNegocio.Clientes.ActualizarCliente();
+            _obtenerCliente = new LogicaDeNegocio.Clientes.ObtenerCliente();
         }
 
         // GET: Cliente/ListadoClientes
@@ -24,30 +27,25 @@ namespace AromasWeb.Controllers
             ViewBag.Buscar = buscar;
             ViewBag.FiltroEstado = filtroEstado;
 
-            // Obtener clientes según los filtros
             List<Cliente> clientes;
 
             if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(filtroEstado))
             {
-                // Buscar por nombre y filtrar por estado
                 bool estado = filtroEstado == "activo";
                 clientes = _listarClientes.BuscarPorNombre(buscar)
                     .FindAll(c => c.Estado == estado);
             }
             else if (!string.IsNullOrEmpty(buscar))
             {
-                // Solo buscar por nombre (también busca en identificación y teléfono)
                 clientes = _listarClientes.BuscarPorNombre(buscar);
             }
             else if (!string.IsNullOrEmpty(filtroEstado))
             {
-                // Solo filtrar por estado
                 bool estado = filtroEstado == "activo";
                 clientes = _listarClientes.BuscarPorEstado(estado);
             }
             else
             {
-                // Obtener todos
                 clientes = _listarClientes.Obtener();
             }
 
@@ -63,298 +61,202 @@ namespace AromasWeb.Controllers
         // POST: Cliente/CrearCliente
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CrearCliente(Cliente cliente)
+        public async Task<IActionResult> CrearCliente(Cliente cliente, string ConfirmarContrasena)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Aquí iría la lógica para guardar en la base de datos
-                TempData["Mensaje"] = "Cliente registrado correctamente";
-                return RedirectToAction(nameof(ListadoClientes));
-            }
+                // Remover validación de campos calculados
+                ModelState.Remove("EstadoTexto");
+                ModelState.Remove("FechaRegistroFormateada");
+                ModelState.Remove("UltimaReservaFormateada");
+                ModelState.Remove("DiasDesdeUltimaReserva");
+                ModelState.Remove("EsClienteFrecuente");
+                ModelState.Remove("UltimaReserva");
 
-            return View(cliente);
+                // Validación manual de contraseña
+                if (string.IsNullOrWhiteSpace(cliente.Contrasena))
+                {
+                    ModelState.AddModelError("Contrasena", "La contraseña es requerida");
+                }
+                else if (cliente.Contrasena.Length < 8)
+                {
+                    ModelState.AddModelError("Contrasena", "La contraseña debe tener al menos 8 caracteres");
+                }
+
+                if (!string.IsNullOrEmpty(cliente.Contrasena) && cliente.Contrasena != ConfirmarContrasena)
+                {
+                    ModelState.AddModelError("ConfirmarContrasena", "Las contraseñas no coinciden");
+                }
+
+                if (string.IsNullOrWhiteSpace(ConfirmarContrasena))
+                {
+                    ModelState.AddModelError("ConfirmarContrasena", "Debes confirmar la contraseña");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
+                    return View(cliente);
+                }
+
+                // Establecer fecha de registro
+                cliente.FechaRegistro = DateTime.Now;
+
+                int resultado = await _crearCliente.Crear(cliente);
+
+                if (resultado > 0)
+                {
+                    TempData["Mensaje"] = "Cliente registrado correctamente";
+                    return RedirectToAction(nameof(ListadoClientes));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "No se pudo registrar el cliente en la base de datos");
+                    return View(cliente);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
+                ModelState.AddModelError("", $"Error al registrar el cliente: {ex.Message}");
+                return View(cliente);
+            }
         }
 
         // GET: Cliente/EditarCliente/5
         public IActionResult EditarCliente(int id)
         {
-            var cliente = _listarClientes.ObtenerPorId(id);
-
-            if (cliente == null)
+            try
             {
-                TempData["Error"] = "Cliente no encontrado";
+                var cliente = _obtenerCliente.Obtener(id);
+
+                if (cliente == null)
+                {
+                    TempData["Error"] = "Cliente no encontrado";
+                    return RedirectToAction(nameof(ListadoClientes));
+                }
+
+                return View(cliente);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar el cliente: {ex.Message}";
                 return RedirectToAction(nameof(ListadoClientes));
             }
-
-            return View(cliente);
         }
 
         // POST: Cliente/EditarCliente
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarCliente(Cliente cliente)
+        public IActionResult EditarCliente(Cliente cliente, string ContrasenaActual, string ContrasenaNueva, string ConfirmarContrasenaNueva)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Aquí iría la lógica para actualizar en la base de datos
-                TempData["Mensaje"] = "Cliente actualizado correctamente";
-                return RedirectToAction(nameof(ListadoClientes));
-            }
+                // Remover validación de campos calculados
+                ModelState.Remove("EstadoTexto");
+                ModelState.Remove("FechaRegistroFormateada");
+                ModelState.Remove("UltimaReservaFormateada");
+                ModelState.Remove("DiasDesdeUltimaReserva");
+                ModelState.Remove("EsClienteFrecuente");
+                ModelState.Remove("Contrasena");
+                ModelState.Remove("UltimaReserva");
+                ModelState.Remove("ContrasenaActual");
+                ModelState.Remove("ContrasenaNueva");
+                ModelState.Remove("ConfirmarContrasenaNueva");
 
-            return View(cliente);
-        }
+                // Validación de contraseña: Solo si algún campo de contraseña tiene valor
+                bool intentaCambiarContrasena = !string.IsNullOrWhiteSpace(ContrasenaNueva) ||
+                                                 !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva) ||
+                                                 !string.IsNullOrWhiteSpace(ContrasenaActual);
 
-        // POST: Cliente/EliminarCliente/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EliminarCliente(int id)
-        {
-            // Aquí iría la lógica para eliminar el cliente
-            TempData["Mensaje"] = "Cliente eliminado correctamente";
-            return RedirectToAction(nameof(ListadoClientes));
-        }
-
-        // GET: Cliente/HistorialReservas/5 (Para empleados)
-        public IActionResult HistorialReservas(int id)
-        {
-            var cliente = _listarClientes.ObtenerPorId(id);
-
-            if (cliente == null)
-            {
-                TempData["Error"] = "Cliente no encontrado";
-                return RedirectToAction(nameof(ListadoClientes));
-            }
-
-            ViewBag.Cliente = cliente;
-
-            // Obtener las reservas del cliente desde la base de datos
-            var reservas = _listarReservas.ObtenerPorCliente(id);
-            ViewBag.Reservas = reservas;
-
-            return View();
-        }
-
-        // ============================================
-        // MÉTODOS PARA CLIENTES (MIS RESERVAS)
-        // ============================================
-
-        // GET: Cliente/MisReservas
-        public IActionResult MisReservas(string filtro)
-        {
-            // Obtener el ID del cliente desde la sesión
-            // Por ahora usamos un ID de ejemplo, pero deberías obtenerlo de:
-            // HttpContext.Session.GetInt32("IdCliente")
-            int idClienteActual = 1; // CAMBIAR: Obtener de la sesión
-
-            ViewBag.IdCliente = idClienteActual;
-            ViewBag.Filtro = filtro;
-
-            // Obtener todas las reservas del cliente
-            var misReservas = _listarReservas.ObtenerPorCliente(idClienteActual);
-
-            // Aplicar filtros si se especifican
-            if (!string.IsNullOrEmpty(filtro))
-            {
-                switch (filtro.ToLower())
+                if (intentaCambiarContrasena)
                 {
-                    case "activas":
-                        // Reservas futuras o de hoy (Pendiente o Confirmada)
-                        misReservas = misReservas
-                            .Where(r => (r.EsFutura || r.EsHoy) &&
-                                       (r.Estado == "Pendiente" || r.Estado == "Confirmada"))
-                            .ToList();
-                        break;
-                    case "pasadas":
-                        // Reservas pasadas o completadas/canceladas
-                        misReservas = misReservas
-                            .Where(r => r.EsPasada || r.Estado == "Completada" || r.Estado == "Cancelada")
-                            .ToList();
-                        break;
-                    default:
-                        // Sin filtro - todas las reservas
-                        break;
-                }
-            }
+                    // ⭐ Obtener el cliente actual de la base de datos para validar contraseña
+                    var clienteActual = _obtenerCliente.Obtener(cliente.IdCliente);
 
-            // Ordenar: próximas primero, luego pasadas
-            misReservas = misReservas
-                .OrderByDescending(r => r.EsFutura)
-                .ThenBy(r => r.Fecha)
-                .ThenBy(r => r.Hora)
-                .ToList();
+                    if (clienteActual == null)
+                    {
+                        ModelState.AddModelError("", "No se pudo cargar la información del cliente");
+                        return View(cliente);
+                    }
 
-            return View(misReservas);
-        }
+                    // Validar todos los campos de contraseña
+                    if (string.IsNullOrWhiteSpace(ContrasenaActual))
+                    {
+                        ModelState.AddModelError("ContrasenaActual", "Debes ingresar la contraseña actual");
+                    }
+                    else
+                    {
+                        // ⭐ Validar que la contraseña actual sea correcta
+                        if (clienteActual.Contrasena != ContrasenaActual)
+                        {
+                            ModelState.AddModelError("ContrasenaActual", "La contraseña actual es incorrecta");
+                        }
+                    }
 
-        // GET: Cliente/EditarMiReserva/5
-        public IActionResult EditarMiReserva(int id)
-        {
-            // Obtener el ID del cliente desde la sesión
-            int idClienteActual = 1; // CAMBIAR: Obtener de la sesión
+                    if (string.IsNullOrWhiteSpace(ContrasenaNueva))
+                    {
+                        ModelState.AddModelError("ContrasenaNueva", "Debes ingresar la nueva contraseña");
+                    }
+                    else if (ContrasenaNueva.Length < 8)
+                    {
+                        ModelState.AddModelError("ContrasenaNueva", "La nueva contraseña debe tener al menos 8 caracteres");
+                    }
 
-            ViewBag.IdCliente = idClienteActual;
+                    if (string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
+                    {
+                        ModelState.AddModelError("ConfirmarContrasenaNueva", "Debes confirmar la nueva contraseña");
+                    }
 
-            var reserva = _listarReservas.ObtenerPorId(id);
+                    if (!string.IsNullOrWhiteSpace(ContrasenaNueva) && !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
+                    {
+                        if (ContrasenaNueva != ConfirmarContrasenaNueva)
+                        {
+                            ModelState.AddModelError("ConfirmarContrasenaNueva", "Las contraseñas nuevas no coinciden");
+                        }
+                    }
 
-            if (reserva == null)
-            {
-                TempData["Error"] = "Reserva no encontrada";
-                return RedirectToAction(nameof(MisReservas));
-            }
+                    // Si hay errores de validación, regresar a la vista
+                    if (!ModelState.IsValid)
+                    {
+                        ViewBag.ErrorMessage = "Por favor, corrige los errores en el cambio de contraseña";
+                        return View(cliente);
+                    }
 
-            // Verificar que la reserva pertenece al cliente actual
-            if (reserva.IdCliente != idClienteActual)
-            {
-                TempData["Error"] = "No tienes permiso para editar esta reserva";
-                return RedirectToAction(nameof(MisReservas));
-            }
-
-            // Verificar que la reserva puede ser editada
-            if (!reserva.PuedeModificar)
-            {
-                TempData["Error"] = "Esta reserva no puede ser modificada";
-                return RedirectToAction(nameof(MisReservas));
-            }
-
-            return View(reserva);
-        }
-
-        // POST: Cliente/EditarMiReserva
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EditarMiReserva(Reserva reserva)
-        {
-            if (ModelState.IsValid)
-            {
-                // Aquí iría la lógica para actualizar la reserva en la base de datos
-                TempData["Mensaje"] = "Tu reserva ha sido actualizada correctamente";
-                return RedirectToAction(nameof(MisReservas));
-            }
-
-            return View(reserva);
-        }
-
-        // POST: Cliente/CancelarMiReserva/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CancelarMiReserva(int id)
-        {
-            // Obtener el ID del cliente desde la sesión
-            int idClienteActual = 1; // CAMBIAR: Obtener de la sesión
-
-            var reserva = _listarReservas.ObtenerPorId(id);
-
-            if (reserva == null)
-            {
-                TempData["Error"] = "Reserva no encontrada";
-                return RedirectToAction(nameof(MisReservas));
-            }
-
-            // Verificar que la reserva pertenece al cliente actual
-            if (reserva.IdCliente != idClienteActual)
-            {
-                TempData["Error"] = "No tienes permiso para cancelar esta reserva";
-                return RedirectToAction(nameof(MisReservas));
-            }
-
-            // Verificar que la reserva puede ser cancelada
-            if (!reserva.PuedeCancelar)
-            {
-                TempData["Error"] = "Esta reserva no puede ser cancelada";
-                return RedirectToAction(nameof(MisReservas));
-            }
-
-            // Aquí iría la lógica para cambiar el estado a "Cancelada" en la base de datos
-            TempData["Mensaje"] = "Tu reserva ha sido cancelada correctamente";
-            return RedirectToAction(nameof(MisReservas));
-        }
-
-        // GET: Cliente/MiPerfil
-        public IActionResult MiPerfil()
-        {
-            // Obtener el ID del cliente desde la sesión
-            int idClienteActual = 1; // CAMBIAR: Obtener de la sesión
-
-            var cliente = _listarClientes.ObtenerPorId(idClienteActual);
-
-            if (cliente == null)
-            {
-                TempData["Error"] = "No se pudo cargar tu perfil";
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View(cliente);
-        }
-
-        // GET: Cliente/EditarPerfil
-        public IActionResult EditarPerfil()
-        {
-            // Obtener el ID del cliente desde la sesión
-            int idClienteActual = 1; // CAMBIAR: Obtener de la sesión
-
-            var cliente = _listarClientes.ObtenerPorId(idClienteActual);
-
-            if (cliente == null)
-            {
-                TempData["Error"] = "No se pudo cargar tu perfil";
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View(cliente);
-        }
-
-        // POST: Cliente/EditarPerfil
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EditarPerfil(Cliente cliente, string ContrasenaActual, string ContrasenaNueva, string ConfirmarContrasenaNueva)
-        {
-            // Obtener el ID del cliente desde la sesión
-            int idClienteActual = 1; // CAMBIAR: Obtener de la sesión
-
-            // Verificar que el cliente está editando su propio perfil
-            if (cliente.IdCliente != idClienteActual)
-            {
-                TempData["Error"] = "No tienes permiso para editar este perfil";
-                return RedirectToAction(nameof(MiPerfil));
-            }
-
-            // Validar cambio de contraseña si se proporcionó
-            if (!string.IsNullOrEmpty(ContrasenaNueva) || !string.IsNullOrEmpty(ConfirmarContrasenaNueva))
-            {
-                // Validar que se proporcionó la contraseña actual
-                if (string.IsNullOrEmpty(ContrasenaActual))
-                {
-                    ModelState.AddModelError("", "Debes ingresar tu contraseña actual para cambiarla");
-                }
-                // Validar que las nuevas contraseñas coinciden
-                else if (ContrasenaNueva != ConfirmarContrasenaNueva)
-                {
-                    ModelState.AddModelError("", "Las contraseñas nuevas no coinciden");
-                }
-                // Validar longitud mínima
-                else if (ContrasenaNueva.Length < 8)
-                {
-                    ModelState.AddModelError("", "La nueva contraseña debe tener al menos 8 caracteres");
+                    // Asignar la nueva contraseña
+                    cliente.Contrasena = ContrasenaNueva;
                 }
                 else
                 {
-                    // Aquí deberías verificar que ContrasenaActual sea correcta
-                    // comparándola con la contraseña en la base de datos
-                    // Por ahora solo establecemos la nueva contraseña
-                    cliente.Contrasena = ContrasenaNueva;
+                    // No está cambiando contraseña, dejamos el campo en null para no actualizarlo
+                    cliente.Contrasena = null;
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
+                    return View(cliente);
+                }
+
+                int resultado = _actualizarCliente.Actualizar(cliente);
+
+                if (resultado > 0)
+                {
+                    TempData["Mensaje"] = "Cliente actualizado correctamente";
+                    return RedirectToAction(nameof(ListadoClientes));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "No se pudo actualizar el cliente en la base de datos");
+                    return View(cliente);
                 }
             }
-
-            if (ModelState.IsValid)
+            catch (Exception ex)
             {
-                // Aquí iría la lógica para actualizar el cliente en la base de datos
-                // usando AccesoADatos para guardar los cambios
-
-                TempData["Mensaje"] = "Tu perfil ha sido actualizado correctamente";
-                return RedirectToAction(nameof(MiPerfil));
+                System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
+                ModelState.AddModelError("", $"Error al actualizar el cliente: {ex.Message}");
+                return View(cliente);
             }
-
-            return View(cliente);
         }
     }
 }
