@@ -128,7 +128,7 @@
                         <tbody>
                             @if (Model != null && Model.Any())
                             {
-                                @foreach (var reserva in Model)
+                                foreach (var reserva in Model)
                                 {
                                     <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
                                         <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@reserva.IdReserva</td>
@@ -298,5 +298,6 @@
 <partial name="_ModalCancelarReserva" />
 
 @section Scripts {
+    <script src="~/js/site.js"></script>
     <script src="~/js/reserva.js"></script>
 }

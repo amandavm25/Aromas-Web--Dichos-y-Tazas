@@ -16,7 +16,7 @@
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
-                <i class="fas fa-tags"></i>
+                <i class="fas fa-book-open"></i>
                 Gestión de Recetas
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
@@ -39,7 +39,7 @@
     <div class="container" style="max-width: 1600px;">
 
         <!-- Resumen de Recetas -->
-        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" data-aos="fade-up">
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
                 <div class="feature-icon">
                     <i class="fas fa-book-open"></i>
@@ -74,7 +74,7 @@
         </div>
 
         <!-- Barra de búsqueda y botones -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoRecetas", "Receta")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
                     <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
@@ -101,18 +101,18 @@
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
                 <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-info-circle" style="color: var(--gold);"></i>
-                    Mostrando resultados para <strong style="color: var(--gold);">"@ViewBag.Buscar"</strong>
+                    <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                    Mostrando resultados para <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong>
                     - <strong>@(Model?.Count ?? 0)</strong> receta(s) encontrada(s)
                 </p>
             </div>
         }
 
         <!-- Filtro por categoría -->
-        <div style="margin-bottom: 3rem;" data-aos="fade-up">
+        <div style="margin-bottom: 2rem;" data-aos="fade-up">
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
                 <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
-                    <i class="fas fa-filter" style="color: var(--gold);"></i> Filtrar por categoría:
+                    <i class="fas fa-filter" style="color: var(--gold-bright);"></i> Filtrar por categoría:
                 </span>
                 <a href="@Url.Action("ListadoRecetas", "Receta")"
                    class="btn @(ViewBag.Categoria == null && string.IsNullOrWhiteSpace(ViewBag.Disponibilidad as string) ? "btn-primary" : "btn-secondary")"
@@ -135,7 +135,7 @@
         <div style="margin-bottom: 3rem;" data-aos="fade-up">
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
                 <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
-                    <i class="fas fa-toggle-on" style="color: var(--gold);"></i> Disponibilidad:
+                    <i class="fas fa-toggle-on" style="color: var(--gold-bright);"></i> Disponibilidad:
                 </span>
                 <a href="@Url.Action("ListadoRecetas", "Receta", new { categoria = ViewBag.Categoria })"
                    class="btn @(string.IsNullOrWhiteSpace(ViewBag.Disponibilidad as string) ? "btn-primary" : "btn-secondary")"
@@ -156,21 +156,21 @@
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;">
-            <!-- Tabla de Recetas (Izquierda) -->
+            <!-- Tabla de Recetas -->
             <div class="admin-table-container">
                 <div class="table-responsive">
-                    <table class="admin-table">
+                    <table class="admin-table" id="laTablaDeRecetas">
                         <thead>
                             <tr>
-                                <th style="padding: 1.2rem; text-align: left; font-weight: 600; white-space: nowrap;">Nombre</th>
-                                <th style="padding: 1.2rem; text-align: left; font-weight: 600; white-space: nowrap;">Categoría</th>
-                                <th style="padding: 1.2rem; text-align: center; font-weight: 600; white-space: nowrap;">Porciones</th>
-                                <th style="padding: 1.2rem; text-align: right; font-weight: 600; white-space: nowrap;">Costo Total</th>
-                                <th style="padding: 1.2rem; text-align: right; font-weight: 600; white-space: nowrap;">Precio Venta</th>
-                                <th style="padding: 1.2rem; text-align: right; font-weight: 600; white-space: nowrap;">Ganancia</th>
-                                <th style="padding: 1.2rem; text-align: right; font-weight: 600; white-space: nowrap;">Margen %</th>
-                                <th style="padding: 1.2rem; text-align: center; font-weight: 600; white-space: nowrap;">Disponibilidad</th>
-                                <th style="padding: 1.2rem; text-align: center; font-weight: 600; white-space: nowrap;">Acciones</th>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th style="text-align: center;">Porciones</th>
+                                <th style="text-align: right;">Costo Total</th>
+                                <th style="text-align: right;">Precio Venta</th>
+                                <th style="text-align: right;">Margen %</th>
+                                <th style="text-align: center;">Disponibilidad</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -179,60 +179,46 @@
                                 int contador = 1;
                                 foreach (var receta in Model)
                                 {
-                                    <tr style="border-bottom: 1px solid var(--cream); transition: background 0.3s;">
-                                        <td style="padding: 1.2rem; text-align: center;">
-                                            <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
+                                    <tr>
+                                        <td class="td-id">@contador</td>
+                                        <td class="td-nombre">
+                                            @receta.Nombre
                                         </td>
-                                        <td style="padding: 1.2rem;">
-                                            <strong style="color: var(--dark-green); font-size: 1rem;">@receta.Nombre</strong>
+                                        <td>
+                                            <span class="badge-cantidad">@receta.NombreCategoria</span>
                                         </td>
-                                        <td style="padding: 1.2rem;">
-                                            <span style="background: var(--cream); color: var(--dark-green); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
-                                                @receta.NombreCategoria
-                                            </span>
-                                        </td>
-                                        <td style="padding: 1.2rem; text-align: center;">
-                                            <span style="color: var(--charcoal);">@receta.CantidadPorciones</span>
-                                        </td>
-                                        <td style="padding: 1.2rem; text-align: right;">
-                                            <span style="color: var(--gold); font-weight: 600;">@receta.CostoTotal</span>
-                                        </td>
-                                        <td style="padding: 1.2rem; text-align: right;">
-                                            <span style="color: #28a745; font-weight: 600;">@receta.PrecioVenta</span>
-                                        </td>
-                                        <td style="padding: 1.2rem; text-align: right;">
-                                            <span style="color: var(--olive-green); font-weight: 600;">@receta.GananciaNeta.ToString("C2")</span>
-                                        </td>
-                                        <td style="padding: 1.2rem; text-align: right;">
+                                        <td style="text-align: center;">@receta.CantidadPorciones</td>
+                                        <td style="text-align: right; font-weight: 600; color: var(--gold);">@receta.CostoTotal</td>
+                                        <td style="text-align: right; font-weight: 600; color: var(--green);">@receta.PrecioVenta</td>
+                                        <td style="text-align: right;">
                                             @{
-                                                var colorMargen = receta.PorcentajeMargen >= 50 ? "#28a745" : (receta.PorcentajeMargen >= 30 ? "#ffc107" : "#dc3545");
+                                                var colorMargen = receta.PorcentajeMargen >= 50 ? "var(--green)" : (receta.PorcentajeMargen >= 30 ? "var(--yellow)" : "var(--red)");
                                             }
-                                            <span style="color: @colorMargen; font-weight: 700; font-size: 1.1rem;">@receta.PorcentajeMargen.ToString("N2")%</span>
+                                            <span style="color: @colorMargen; font-weight: 700; font-size: 1.05rem;">@receta.PorcentajeMargen.ToString("N2")%</span>
                                         </td>
-                                        <td style="padding: 1.2rem; text-align: center;">
+                                        <td style="text-align: center;">
                                             @if (receta.Disponibilidad)
                                             {
-                                                <span class="badge" style="background: #28a745; color: white; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
-                                                    <i class="fas fa-check-circle"></i> Disponible
+                                                <span class="badge-estado activo">
+                                                    Disponible
                                                 </span>
                                             }
                                             else
                                             {
-                                                <span class="badge" style="background: #dc3545; color: white; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
-                                                    <i class="fas fa-times-circle"></i> No disponible
+                                                <span class="badge-estado inactivo">
+                                                    No disponible
                                                 </span>
                                             }
                                         </td>
-                                        <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        <td style="text-align: center; white-space: nowrap;">
                                             <button type="button"
-                                                    class="btn btn-sm"
+                                                    class="btn-table-action btn-table-edit"
                                                     onclick="window.location.href='@Url.Action("EditarReceta", "Receta", new { id = receta.IdReceta })'"
-                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                             <button type="button"
-                                                    class="btn btn-sm btn-detalles-receta"
+                                                    class="btn-table-action btn-table-view btn-detalles-receta"
                                                     data-id="@receta.IdReceta"
                                                     data-nombre="@receta.Nombre"
                                                     data-categoria="@receta.NombreCategoria"
@@ -241,7 +227,7 @@
                                                     data-precio="@receta.PrecioVenta"
                                                     data-ganancia="@receta.GananciaNeta.ToString("N2")"
                                                     data-margen="@receta.PorcentajeMargen"
-                                                    style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-disponibilidad="@(receta.Disponibilidad ? "Disponible" : "No disponible")"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalDetallesReceta"
                                                     title="Ver detalles">
@@ -255,12 +241,12 @@
                             else
                             {
                                 <tr>
-                                    <td colspan="9" style="padding: 3rem; text-align: center; color: var(--charcoal);">
-                                        <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
-                                        <p style="margin: 0; font-size: 1.1rem;">No se encontraron recetas</p>
+                                    <td colspan="9" class="admin-table-empty">
+                                        <i class="fas fa-inbox"></i>
+                                        <p>No se encontraron recetas</p>
                                         @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || ViewBag.Categoria != null || !string.IsNullOrWhiteSpace(ViewBag.Disponibilidad as string))
                                         {
-                                            <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros filtros o términos de búsqueda</p>
+                                            <p class="empty-subtitle">Intenta con otros filtros o términos de búsqueda</p>
                                         }
                                     </td>
                                 </tr>
@@ -382,7 +368,6 @@
 </section>
 
 <partial name="_ModalDetallesReceta" />
-<partial name="_ModalEliminarReceta" />
 
 @section Scripts {
     <script src="~/js/receta.js"></script>

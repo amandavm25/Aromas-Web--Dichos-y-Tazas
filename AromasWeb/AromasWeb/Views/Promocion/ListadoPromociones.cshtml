@@ -182,7 +182,7 @@
                         <tbody>
                             @if (Model != null && Model.Any())
                             {
-                                @foreach (var promo in Model)
+                                foreach (var promo in Model)
                                 {
                                     var colorVigencia = promo.VigenciaTexto == "Vigente" ? "var(--green)" :
                                     promo.VigenciaTexto == "Próximamente" ? "var(--yellow)" : "var(--gray)";
@@ -244,7 +244,7 @@
                                                     data-vigencia="@promo.VigenciaTexto"
                                                     data-recetas="@promo.CantidadRecetas"
                                                     data-estado="@promo.EstadoTexto"
-                                                    style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalDetallesPromocion"
                                                     title="Ver detalles">

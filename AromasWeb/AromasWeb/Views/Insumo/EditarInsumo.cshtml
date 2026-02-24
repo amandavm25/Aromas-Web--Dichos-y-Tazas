@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Editar Insumo";
+    var categoriasInsumo = ViewBag.TodasCategorias as List<AromasWeb.Abstracciones.ModeloUI.CategoriaInsumo>
+                           ?? new List<AromasWeb.Abstracciones.ModeloUI.CategoriaInsumo>();
 }
 
 <!-- Hero Section -->
@@ -41,146 +43,139 @@
             <div class="admin-form-wrapper" data-aos="fade-up">
                 @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                <!-- Información del Insumo -->
+                <!-- Encabezado -->
                 <div class="admin-form-header">
                     <i class="fas fa-box"></i>
-                    <h5> Información del Insumo </h5>
+                    <h5>Información del Insumo</h5>
                 </div>
 
-                <!-- Nombre del Insumo -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-box"></i>
-                        Nombre del Insumo
-                    </label>
-                    @Html.EditorFor(model => model.NombreInsumo, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Harina de Trigo" } })
-                    @Html.ValidationMessageFor(model => model.NombreInsumo, "", new { @class = "text-danger" })
-                </div>
+                <div class="admin-form-body">
 
-                <!-- Categoría y Unidad -->
-                <div class="form-row">
+                    <!-- Nombre del Insumo -->
                     <div class="form-group">
                         <label>
-                            <i class="fas fa-tag"></i>
-                            Categoría
+                            <i class="fas fa-box"></i>
+                            Nombre del Insumo
                         </label>
-                        @{
-                            var categoriasInsumo = new List<dynamic>
-                                        {
-                                        new { Id = 1, Nombre = "Harinas" },
-                                        new { Id = 2, Nombre = "Endulzantes" },
-                                        new { Id = 3, Nombre = "Lácteos" },
-                                        new { Id = 4, Nombre = "Ingredientes Frescos" },
-                                        new { Id = 5, Nombre = "Chocolates" },
-                                        new { Id = 6, Nombre = "Esencias" },
-                                        new { Id = 7, Nombre = "Leudantes" }
-                                        };
-                        }
-                        <select name="IdCategoria" class="form-control">
-                            <option value="">-- Selecciona una categoría --</option>
-                            @foreach (var cat in categoriasInsumo)
-                            {
-                                <option value="@cat.Id"
-                                        selected="@(Model.IdCategoria == cat.Id ? "selected" : null)">
-
-                                    @cat.Nombre
-                                </option>
-                            }
-                        </select>
-                        @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.NombreInsumo, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Harina de Trigo" } })
+                        @Html.ValidationMessageFor(model => model.NombreInsumo, "", new { @class = "text-danger" })
                     </div>
 
+                    <!-- Categoría y Unidad -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-tag"></i>
+                                Categoría
+                            </label>
+                            <select name="IdCategoria" class="form-control">
+                                <option value="">-- Selecciona una categoría --</option>
+                                @foreach (var cat in categoriasInsumo)
+                                {
+                                    <option value="@cat.IdCategoria" selected="@(Model.IdCategoria == cat.IdCategoria ? "selected" : null)">
+                                        @cat.NombreCategoria
+                                    </option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-balance-scale"></i>
+                                Unidad de Medida
+                            </label>
+                            <select name="UnidadMedida" class="form-control">
+                                <option value="">-- Selecciona una unidad --</option>
+                                <option value="Kilogramos" selected="@(Model.UnidadMedida == "Kilogramos" ? "selected" : null)">Kilogramos (kg)</option>
+                                <option value="Gramos" selected="@(Model.UnidadMedida == "Gramos" ? "selected" : null)">Gramos (g)</option>
+                                <option value="Litros" selected="@(Model.UnidadMedida == "Litros" ? "selected" : null)">Litros (L)</option>
+                                <option value="Mililitros" selected="@(Model.UnidadMedida == "Mililitros" ? "selected" : null)">Mililitros (mL)</option>
+                                <option value="Unidades" selected="@(Model.UnidadMedida == "Unidades" ? "selected" : null)">Unidades</option>
+                                <option value="Libras" selected="@(Model.UnidadMedida == "Libras" ? "selected" : null)">Libras (lb)</option>
+                                <option value="Onzas" selected="@(Model.UnidadMedida == "Onzas" ? "selected" : null)">Onzas (oz)</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.UnidadMedida, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Costo Unitario -->
                     <div class="form-group">
                         <label>
-                            <i class="fas fa-balance-scale"></i>
-                            Unidad de Medida
+                            <i class="fas fa-coins"></i>
+                            Costo Unitario (₡)
                         </label>
-                        <select name="UnidadMedida" class="form-control">
-                            <option value="">-- Selecciona una unidad --</option>
-
-                            <option value="Kilogramos" selected="@(Model.UnidadMedida == "Kilogramos" ? "selected" : null)">Kilogramos (kg)</option>
-                            <option value="Gramos" selected="@(Model.UnidadMedida == "Gramos" ? "selected" : null)">Gramos (g)</option>
-                            <option value="Litros" selected="@(Model.UnidadMedida == "Litros" ? "selected" : null)">Litros (L)</option>
-                            <option value="Mililitros" selected="@(Model.UnidadMedida == "Mililitros" ? "selected" : null)">Mililitros (mL)</option>
-                            <option value="Unidades" selected="@(Model.UnidadMedida == "Unidades" ? "selected" : null)">Unidades</option>
-                            <option value="Libras" selected="@(Model.UnidadMedida == "Libras" ? "selected" : null)">Libras (lb)</option>
-                            <option value="Onzas" selected="@(Model.UnidadMedida == "Onzas" ? "selected" : null)">Onzas (oz)</option>
-                        </select>
-                        @Html.ValidationMessageFor(model => model.UnidadMedida, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.CostoUnitario, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" } })
+                        @Html.ValidationMessageFor(model => model.CostoUnitario, "", new { @class = "text-danger" })
                     </div>
-                </div>
 
-                <!-- Costo Unitario -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-colon-sign"></i>
-                        Costo Unitario
-                    </label>
-                    @Html.EditorFor(model => model.CostoUnitario, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" } })
-                    @Html.ValidationMessageFor(model => model.CostoUnitario, "", new { @class = "text-danger" })
-                </div>
+                    <!-- Cantidad Disponible (Solo lectura) -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-boxes"></i>
+                            Cantidad Disponible (Solo Lectura)
+                        </label>
+                        @Html.EditorFor(model => model.CantidadDisponible, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", disabled = "disabled", style = "background: var(--cream); cursor: not-allowed;" } })
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Para modificar la cantidad, registra una entrada o salida
+                        </small>
+                    </div>
 
-                <!-- Cantidad Disponible (Solo lectura) -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-boxes"></i>
-                        Cantidad Disponible (Solo Lectura)
-                    </label>
-                    @Html.EditorFor(model => model.CantidadDisponible, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", disabled = "disabled", style = "background: #F5EDD8; cursor: not-allowed;" } })
-                    <small class="admin-form-hint">
+                    <!-- Stock Mínimo -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-chart-line"></i>
+                            Stock Mínimo
+                        </label>
+                        @Html.EditorFor(model => model.StockMinimo, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0" } })
+                        @Html.ValidationMessageFor(model => model.StockMinimo, "", new { @class = "text-danger" })
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Se mostrará una alerta cuando la cantidad sea igual o menor a este valor
+                        </small>
+                    </div>
+
+
+                    <!-- Información adicional -->
+                    <div class="admin-form-info-box">
                         <i class="fas fa-info-circle"></i>
-                        Para modificar la cantidad, registra una entrada o salida
-                    </small>
-                </div>
+                        <div>
+                            <strong>Actualización de Insumo</strong>
+                            <p>Los cambios se guardarán inmediatamente en el sistema de inventario.</p>
+                        </div>
+                    </div>
 
-                <!-- Stock Mínimo -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-chart-line"></i>
-                        Stock Mínimo
-                    </label>
-                    @Html.EditorFor(model => model.StockMinimo, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0" } })
-                    @Html.ValidationMessageFor(model => model.StockMinimo, "", new { @class = "text-danger" })
-                    <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                        <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                        Se mostrará una alerta cuando la cantidad sea igual o menor a este valor
-                    </small>
                 </div>
 
                 <!-- Estado del Insumo -->
                 <div class="form-group">
-                    <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: #F5EDD8; border-radius: 15px; cursor: pointer;">
-                        @Html.CheckBoxFor(model => model.Estado, new { @class = "form-check-input", id = "estadoCheckbox" })
+                    <label for="estadoCheckbox" style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
+                        <input type="checkbox" name="Estado" id="estadoCheckbox" value="true" class="form-check-input" style="width:20px;height:20px;flex-shrink:0;cursor:pointer;"
+                               @(Model.Estado ? "checked" : "") />
                         <span style="flex: 1;">
                             <i class="fas fa-toggle-on"></i>
                             Estado del Insumo (Activo/Inactivo)
                         </span>
                     </label>
+                    @* Hidden para enviar false cuando el checkbox no está marcado (comportamiento equivalente a CheckBoxFor) *@
+                    <input type="hidden" name="Estado" value="false" />
                     @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                    <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                        <i class="fas fa-toggle-on" style="color: var(--gold-bright);"></i>
-                        Activa o desactiva la disponibilidad del insumo
+                    <small class="admin-form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Al desactivar un insumo, no podrá ser utilizado en nuevas recetas
                     </small>
-                </div>
-
-                <!-- Información adicional -->
-                <div class="admin-form-info-box">
-                    <i class="fas fa-info-circle"></i>
-                    <div>
-                        <strong>Actualización de Insumo</strong>
-                        <p>Los cambios se guardarán inmediatamente en el sistema de inventario.</p>
-                    </div>
                 </div>
 
                 <!-- Botones -->
                 <div class="admin-form-footer">
                     <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoInsumos", "Insumo")'">
                         <i class="fas fa-times"></i>
-                        <span> Cancelar </span>
+                        <span>Cancelar</span>
                     </button>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i>
-                        <span> Guardar Cambios </span>
+                        <span>Guardar Cambios</span>
                     </button>
                 </div>
             </div>
@@ -189,5 +184,6 @@
 </section>
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/js/insumo.js"></script>
 }

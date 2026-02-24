@@ -33,20 +33,20 @@
 <!-- Formulario Section -->
 <section class="admin-form-section">
     <div class="container" style="max-width: 80%;">
-        @using (Html.BeginForm("CrearCategoriaInsumo", "CategoriaInsumo", FormMethod.Post, new { @class = "contact-form" }))
+        @using (Html.BeginForm("CrearCategoriaInsumo", "CategoriaInsumo", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
             <div class="admin-form-wrapper" data-aos="fade-up">
                 @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                <!-- Información del Registro -->
+                <!-- Encabezado -->
                 <div class="admin-form-header">
                     <i class="fas fa-box"></i>
                     <h5>Información de la Categoría</h5>
                 </div>
 
-                <!-- Nombre de la Categoría -->
+                <!-- Nombre -->
                 <div class="form-group">
                     <label>
                         <i class="fas fa-tag"></i>
@@ -70,12 +70,12 @@
                     </small>
                 </div>
 
-                <!-- Información adicional -->
+                <!-- Info box -->
                 <div class="admin-form-info-box">
                     <i class="fas fa-info-circle"></i>
                     <div>
-                       <strong>Organización del Inventario</strong>
-                         <p> Esta categoría te ayudará a clasificar y organizar mejor tus insumos en el sistema.</p>
+                        <strong>Organización del Inventario</strong>
+                        <p>Esta categoría te ayudará a clasificar y organizar mejor tus insumos en el sistema.</p>
                     </div>
                 </div>
 

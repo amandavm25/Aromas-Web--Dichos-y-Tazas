@@ -15,24 +15,27 @@ const cursor = document.querySelector('.custom-cursor');
 const cursorFollower = document.querySelector('.custom-cursor-follower');
 
 document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
+    if (cursor) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    }
 
-    setTimeout(() => {
-        cursorFollower.style.left = e.clientX + 'px';
-        cursorFollower.style.top = e.clientY + 'px';
-    }, 100);
+    if (cursorFollower) {
+        setTimeout(() => {
+            cursorFollower.style.left = e.clientX + 'px';
+            cursorFollower.style.top = e.clientY + 'px';
+        }, 100);
+    }
 });
 
 // Efecto hover en elementos interactivos
 const interactiveElements = document.querySelectorAll('a, button, .menu-card, .gallery-item');
 interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
-        cursorFollower.classList.add('active');
+        if (cursorFollower) cursorFollower.classList.add('active');
     });
-
     el.addEventListener('mouseleave', () => {
-        cursorFollower.classList.remove('active');
+        if (cursorFollower) cursorFollower.classList.remove('active');
     });
 });
 
@@ -46,18 +49,22 @@ const navLinks = document.querySelectorAll('.nav-link');
 
 // Scroll effect
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+    if (navbar) {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
     }
 });
 
 // Menu mobile toggle
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+if (hamburger) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+}
 
 // Cerrar menu al hacer click en link
 navLinks.forEach(link => {
@@ -83,7 +90,8 @@ window.addEventListener('scroll', () => {
 
     navLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href').includes(current)) {
+        const href = link.getAttribute('href');
+        if (href && href.includes(current)) {
             link.classList.add('active');
         }
     });
@@ -147,7 +155,9 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-createParticles();
+if (document.getElementById('heroParticles')) {
+    createParticles();
+}
 
 // ============================================
 // STATS COUNTER
@@ -272,8 +282,8 @@ function showNotification(message) {
 }
 
 // Animaciones para notificaciones
-const notifStyle = document.createElement('style');
-notifStyle.innerHTML = `
+const siteNotifStyle = document.createElement('style');
+siteNotifStyle.innerHTML = `
     @keyframes slideIn {
         from {
             transform: translateX(400px);
@@ -295,27 +305,29 @@ notifStyle.innerHTML = `
         }
     }
 `;
-document.head.appendChild(notifStyle);
+document.head.appendChild(siteNotifStyle);
 
 // ============================================
 // SCROLL TO TOP BUTTON
 // ============================================
 const scrollTopBtn = document.getElementById('scrollToTop');
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-        scrollTopBtn.classList.add('visible');
-    } else {
-        scrollTopBtn.classList.remove('visible');
-    }
-});
-
-scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+if (scrollTopBtn) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            scrollTopBtn.classList.add('visible');
+        } else {
+            scrollTopBtn.classList.remove('visible');
+        }
     });
-});
+
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
 
 // ============================================
 // FORM VALIDATION
@@ -572,15 +584,22 @@ function initTablePagination(config = {}) {
         const tbody = table ? table.querySelector('tbody') : null;
         if (!tbody) return;
 
-        const allRows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.querySelector('td[colspan]'));
+        const allRows = Array.from(tbody.children).filter(row => row.tagName === 'TR' && !row.querySelector('td[colspan]'));
         const totalRecords = allRows.length;
 
         const start = (currentPage - 1) * settings.recordsPerPage;
         const end = start + settings.recordsPerPage;
 
-        allRows.forEach((row, index) => {
-            row.style.display = (index >= start && index < end) ? '' : 'none';
-        });
+        // Primero ocultar todos los TR del tbody
+        Array.from(tbody.children).forEach(row => { if (row.tagName === 'TR') row.style.display = 'none'; });
+        // Mostrar solo los de la página actual
+        allRows.forEach((row, index) => { if (index >= start && index < end) row.style.display = ''; });
+        // Si no hay datos, mostrar la fila de empty state
+        if (totalRecords === 0) {
+            Array.from(tbody.children).forEach(row => {
+                if (row.tagName === 'TR' && row.querySelector('td[colspan]')) row.style.display = '';
+            });
+        }
 
         const totalPages = Math.ceil(totalRecords / settings.recordsPerPage);
 
@@ -620,7 +639,7 @@ function initTablePagination(config = {}) {
         const tbody = table ? table.querySelector('tbody') : null;
         if (!tbody) return;
 
-        const allRows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.querySelector('td[colspan]'));
+        const allRows = Array.from(tbody.children).filter(row => row.tagName === 'TR' && !row.querySelector('td[colspan]'));
         const totalPages = Math.ceil(allRows.length / settings.recordsPerPage);
 
         if (currentPage < totalPages) {

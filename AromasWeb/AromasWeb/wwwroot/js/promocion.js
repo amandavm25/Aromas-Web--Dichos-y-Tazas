@@ -379,7 +379,7 @@ function mostrarNotificacion(mensaje, tipo) {
         'success': 'var(--green)',
         'error': 'var(--red)',
         'warning': 'var(--yellow)',
-        'info': '#3498db'
+        'info': 'var(--gold)'
     };
 
     const notification = document.createElement('div');

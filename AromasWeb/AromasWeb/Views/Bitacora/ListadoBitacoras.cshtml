@@ -153,7 +153,7 @@
                         <tbody>
                             @if (Model != null && Model.Any())
                             {
-                                @foreach (var bitacora in Model)
+                                foreach (var bitacora in Model)
                                 {
                                     <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
                                         <td style="padding: 1.2rem; color: var(--dark-green);">
@@ -186,7 +186,7 @@
                                                     data-datos-anteriores="@(bitacora.DatosAnteriores ?? "")"
                                                     data-datos-nuevos="@(bitacora.DatosNuevos ?? "")"
                                                     data-fecha="@bitacora.FechaFormateada"
-                                                    style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalDetallesBitacora"
                                                     title="Ver detalles">

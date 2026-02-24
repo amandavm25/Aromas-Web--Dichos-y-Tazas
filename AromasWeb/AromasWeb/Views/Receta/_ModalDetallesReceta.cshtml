@@ -1,101 +1,108 @@
-﻿<div class="modal fade" id="modalDetallesReceta" tabindex="-1" aria-labelledby="modalDetallesRecetaLabel" aria-hidden="true">
+﻿<div class="modal fade admin-modal modal-olive" id="modalDetallesReceta" tabindex="-1" aria-labelledby="modalDetallesRecetaLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+        <div class="modal-content">
+
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalDetallesRecetaLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
-                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetallesRecetaLabel">
+                    <div class="modal-icon">
                         <i class="fas fa-book-open"></i>
                     </div>
                     Detalles de la Receta
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
-                <!-- Título de la Receta -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green);">
-                    <h5 id="detalles-nombre-receta" style="color: var(--dark-green); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
-                </div>
+            <div class="modal-body">
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                    <!-- Columna Izquierda: Información General -->
-                    <div>
-                        <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-info-circle" style="color: var(--gold);"></i> Información General
-                        </h6>
-
-                        <div style="display: grid; gap: 1rem;">
-                            <!-- Categoría -->
-                            <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-tag" style="color: var(--olive-green);"></i> Categoría
-                                </label>
-                                <p id="detalles-categoria-receta" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
-                            </div>
-
-                            <!-- Porciones -->
-                            <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-cookie-bite" style="color: var(--olive-green);"></i> Cantidad de Porciones
-                                </label>
-                                <p id="detalles-porciones-receta" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
-                            </div>
+                <!-- Nombre + Categoría y Porciones como meta -->
+                <div class="modal-entity-header entity-block">
+                    <h5 id="detalles-nombre-receta" class="modal-entity-name"></h5>
+                    <div class="modal-entity-meta">
+                        <div class="modal-entity-meta-item">
+                            <small>Categoría:</small>
+                            <p id="detalles-categoria-receta"></p>
                         </div>
-
-                        <!-- Análisis Financiero -->
-                        <h6 style="color: var(--dark-green); margin: 2rem 0 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-chart-line" style="color: var(--gold);"></i> Análisis Financiero
-                        </h6>
-
-                        <div style="background: linear-gradient(135deg, var(--cream) 0%, rgba(240, 234, 214, 0.5) 100%); padding: 1.5rem; border-radius: 20px;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--white);">
-                                <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Costo Total:</span>
-                                <strong id="detalles-costo-receta" style="color: var(--gold); font-size: 1.2rem;">₡0.00</strong>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--white);">
-                                <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Precio de Venta:</span>
-                                <strong id="detalles-precio-receta" style="color: #28a745; font-size: 1.2rem;">₡0.00</strong>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--white);">
-                                <span style="color: var(--charcoal); opacity: 0.7; font-weight: 600;">Ganancia Neta:</span>
-                                <strong id="detalles-ganancia-receta" style="color: var(--olive-green); font-size: 1.2rem;">₡0.00</strong>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: var(--dark-green); font-weight: 700; font-size: 1.1rem;">Margen:</span>
-                                <div style="display: flex; align-items: center; gap: 1rem;">
-                                    <div style="flex: 1; background: var(--white); height: 10px; border-radius: 5px; overflow: hidden; min-width: 100px;">
-                                        <div id="barra-margen" style="height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); width: 0%; transition: width 0.5s ease;"></div>
-                                    </div>
-                                    <strong id="detalles-margen-receta" style="color: var(--gold-bright); font-size: 1.5rem; font-family: var(--font-primary);">0%</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Columna Derecha: Ingredientes -->
-                    <div>
-                        <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-shopping-basket" style="color: var(--gold);"></i> Ingredientes
-                        </h6>
-
-                        <!-- Loader -->
-                        <div id="ingredientes-loader" style="text-align: center; padding: 3rem; display: none;">
-                            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--olive-green);"></i>
-                            <p style="margin-top: 1rem; color: var(--charcoal);">Cargando ingredientes...</p>
-                        </div>
-
-                        <div id="lista-ingredientes" style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
-                            <!-- Los ingredientes se cargarán dinámicamente aquí -->
+                        <div class="modal-entity-meta-item">
+                            <small>Porciones:</small>
+                            <p id="detalles-porciones-receta"></p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Disponibilidad, Margen -->
+                <div class="modal-data-grid-2">
+                    <div class="modal-data-cell" style="grid-column: span 2;">
+                        <label class="modal-data-label">
+                            <i class="fas fa-toggle-on"></i> Disponibilidad
+                        </label>
+                        <span id="detalles-disponibilidad-badge-receta"
+                              class="badge"
+                              style="font-size:1rem;padding:0.6rem 1.5rem;border-radius:50px;display:inline-flex;align-items:center;gap:0.5rem;font-weight:600;"></span>
+                    </div>
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-percent"></i> Margen
+                        </label>
+                        <p id="detalles-margen-receta" class="modal-data-value"></p>
+                    </div>
+                </div>
+
+                <!-- Análisis Financiero -->
+                <h6 class="modal-subsection-title">
+                    <i class="fas fa-chart-line"></i> Análisis Financiero
+                </h6>
+                <div class="modal-summary">
+                    <div class="modal-summary-grid">
+                        <div>
+                            <label class="modal-summary-label">
+                                <i class="fas fa-coins"></i> Costo Total
+                            </label>
+                            <p id="detalles-costo-receta" class="modal-summary-value"></p>
+                        </div>
+                        <div>
+                            <label class="modal-summary-label">
+                                <i class="fas fa-tag"></i> Precio de Venta
+                            </label>
+                            <p id="detalles-precio-receta" class="modal-summary-value"></p>
+                        </div>
+                        <div>
+                            <label class="modal-summary-label">
+                                <i class="fas fa-coins"></i> Ganancia Neta
+                            </label>
+                            <p id="detalles-ganancia-receta" class="modal-summary-value summary-extra"></p>
+                        </div>
+                        <div>
+                            <label class="modal-summary-label">
+                                <i class="fas fa-percent"></i> Progreso del Margen
+                            </label>
+                            <div style="background: var(--cream-dark); height: 10px; border-radius: 5px; overflow: hidden; margin-top: 0.6rem;">
+                                <div id="barra-margen" style="height: 100%; width: 0%; transition: width 0.5s ease; border-radius: 5px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ingredientes -->
+                <h6 class="modal-subsection-title">
+                    <i class="fas fa-shopping-basket"></i> Ingredientes
+                </h6>
+                <div class="modal-summary">
+                    <div id="ingredientes-loader" style="text-align: center; padding: 2rem; display: none;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--olive-green);"></i>
+                        <p style="margin-top: 1rem; color: var(--charcoal);">Cargando ingredientes...</p>
+                    </div>
+                    <div id="lista-ingredientes" style="max-height: 350px; overflow-y: auto;">
+                        <!-- Los ingredientes se cargarán dinámicamente aquí -->
+                    </div>
+                </div>
+
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <span><i class="fas fa-times"></i> Cerrar</span>
                 </button>
             </div>
@@ -109,38 +116,50 @@
 
         botonesDetalles.forEach(boton => {
             boton.addEventListener('click', function () {
-                const id = parseInt(this.getAttribute('data-id'));
-                const nombre = this.getAttribute('data-nombre');
-                const categoria = this.getAttribute('data-categoria');
-                const porciones = this.getAttribute('data-porciones');
-                const costo = this.getAttribute('data-costo');
-                const precio = this.getAttribute('data-precio');
-                const ganancia = this.getAttribute('data-ganancia');
-                const margen = parseFloat(this.getAttribute('data-margen'));
+                const id           = parseInt(this.getAttribute('data-id'));
+                const nombre       = this.getAttribute('data-nombre');
+                const categoria    = this.getAttribute('data-categoria');
+                const porciones    = this.getAttribute('data-porciones');
+                const costo        = this.getAttribute('data-costo');
+                const precio       = this.getAttribute('data-precio');
+                const ganancia     = this.getAttribute('data-ganancia');
+                const margen       = parseFloat(this.getAttribute('data-margen'));
+                const disponibilidad = this.getAttribute('data-disponibilidad');
 
-                // Llenar información general
-                document.getElementById('detalles-nombre-receta').textContent = nombre;
+                document.getElementById('detalles-nombre-receta').textContent    = nombre;
                 document.getElementById('detalles-categoria-receta').textContent = categoria;
                 document.getElementById('detalles-porciones-receta').textContent = porciones + ' porciones';
-                document.getElementById('detalles-costo-receta').textContent = '₡' + parseFloat(costo).toLocaleString('es-CR', { minimumFractionDigits: 2 });
-                document.getElementById('detalles-precio-receta').textContent = '₡' + parseFloat(precio).toLocaleString('es-CR', { minimumFractionDigits: 2 });
-                document.getElementById('detalles-ganancia-receta').textContent = '₡' + parseFloat(ganancia).toLocaleString('es-CR', { minimumFractionDigits: 2 });
-                document.getElementById('detalles-margen-receta').textContent = margen.toFixed(2) + '%';
+                document.getElementById('detalles-margen-receta').textContent    = margen.toFixed(2) + '%';
 
-                // Actualizar barra de margen
+                document.getElementById('detalles-costo-receta').textContent =
+                    '₡' + parseFloat(costo).toLocaleString('es-CR', { minimumFractionDigits: 2 });
+                document.getElementById('detalles-precio-receta').textContent =
+                    '₡' + parseFloat(precio).toLocaleString('es-CR', { minimumFractionDigits: 2 });
+                document.getElementById('detalles-ganancia-receta').textContent =
+                    '₡' + parseFloat(ganancia).toLocaleString('es-CR', { minimumFractionDigits: 2 });
+
+                // Badge de disponibilidad
+                const dispBadge = document.getElementById('detalles-disponibilidad-badge-receta');
+                if (disponibilidad === 'Disponible') {
+                    dispBadge.innerHTML = '<i class="fas fa-check-circle"></i> Disponible';
+                    dispBadge.style.background = 'var(--green)';
+                } else {
+                    dispBadge.innerHTML = '<i class="fas fa-times-circle"></i> No disponible';
+                    dispBadge.style.background = 'var(--red)';
+                }
+                dispBadge.style.color = 'white';
+
+                // Barra de margen con variables CSS
                 const barraMargen = document.getElementById('barra-margen');
                 barraMargen.style.width = Math.min(margen, 100) + '%';
-
-                // Cambiar color según rentabilidad
                 if (margen >= 50) {
-                    barraMargen.style.background = 'linear-gradient(90deg, #28a745, #34ce57)';
+                    barraMargen.style.background = 'linear-gradient(90deg, var(--green), #34ce57)';
                 } else if (margen >= 30) {
-                    barraMargen.style.background = 'linear-gradient(90deg, #ffc107, #ffca2c)';
+                    barraMargen.style.background = 'linear-gradient(90deg, var(--yellow), #ffca2c)';
                 } else {
-                    barraMargen.style.background = 'linear-gradient(90deg, #dc3545, #e4606d)';
+                    barraMargen.style.background = 'linear-gradient(90deg, var(--red), #e4606d)';
                 }
 
-                // Cargar ingredientes desde el servidor
                 cargarIngredientes(id);
             });
         });
@@ -149,40 +168,37 @@
             const listaIngredientes = document.getElementById('lista-ingredientes');
             const loader = document.getElementById('ingredientes-loader');
 
-            // Mostrar loader
             loader.style.display = 'block';
             listaIngredientes.innerHTML = '';
 
-            // Hacer petición AJAX para obtener los ingredientes
             fetch(`/Receta/ObtenerIngredientes/${idReceta}`)
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error al cargar ingredientes');
-                    }
+                    if (!response.ok) throw new Error('Error al cargar ingredientes');
                     return response.json();
                 })
                 .then(ingredientes => {
                     loader.style.display = 'none';
 
                     if (!ingredientes || ingredientes.length === 0) {
-                        listaIngredientes.innerHTML = '<p style="text-align: center; color: var(--charcoal); opacity: 0.7; padding: 2rem;">No hay ingredientes registrados</p>';
+                        listaIngredientes.innerHTML =
+                            '<p style="text-align:center;color:var(--charcoal);opacity:0.7;padding:2rem;">No hay ingredientes registrados</p>';
                         return;
                     }
 
                     ingredientes.forEach(ing => {
                         const div = document.createElement('div');
-                        div.className = 'feature-card';
-                        div.style.cssText = 'padding: 1rem; margin-bottom: 0.7rem;';
+                        div.className = 'modal-data-cell';
+                        div.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;';
                         div.innerHTML = `
-                            <div style="display: flex; justify-content: space-between; align-items: start;">
-                                <div style="flex: 1;">
-                                    <strong style="color: var(--dark-green); font-size: 1rem;">${ing.nombreInsumo}</strong>
-                                    <div style="color: var(--charcoal); opacity: 0.7; font-size: 0.9rem; margin-top: 0.3rem;">
-                                        ${ing.cantidadUtilizada.toLocaleString('es-CR', { minimumFractionDigits: 2 })} ${ing.unidadMedida}
-                                    </div>
-                                </div>
-                                <strong style="color: var(--gold); font-size: 1.1rem; white-space: nowrap;">₡${ing.costoTotalIngrediente.toLocaleString('es-CR', { minimumFractionDigits: 2 })}</strong>
+                            <div>
+                                <p class="modal-data-value" style="margin:0;">${ing.nombreInsumo}</p>
+                                <small style="color:var(--charcoal);opacity:0.7;">
+                                    ${ing.cantidadUtilizada.toLocaleString('es-CR', { minimumFractionDigits: 2 })} ${ing.unidadMedida}
+                                </small>
                             </div>
+                            <p class="modal-summary-value" style="margin:0;white-space:nowrap;">
+                                ₡${ing.costoTotalIngrediente.toLocaleString('es-CR', { minimumFractionDigits: 2 })}
+                            </p>
                         `;
                         listaIngredientes.appendChild(div);
                     });
@@ -190,7 +206,8 @@
                 .catch(error => {
                     loader.style.display = 'none';
                     console.error('Error:', error);
-                    listaIngredientes.innerHTML = '<p style="text-align: center; color: #dc3545; padding: 2rem;"><i class="fas fa-exclamation-triangle"></i><br/>Error al cargar ingredientes</p>';
+                    listaIngredientes.innerHTML =
+                        '<p style="text-align:center;color:var(--red);padding:2rem;"><i class="fas fa-exclamation-triangle"></i><br/>Error al cargar ingredientes</p>';
                 });
         }
     });

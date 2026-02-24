@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Categorías de Recetas";
+    var totalCategorias = Model?.Count ?? 0;
+    var totalActivas = Model?.Count(c => c.Estado) ?? 0;
+    var totalInactivas = Model?.Count(c => !c.Estado) ?? 0;
 }
 
 <!-- Hero Section -->
@@ -39,7 +42,7 @@
                 <div class="feature-icon">
                     <i class="fas fa-tags"></i>
                 </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@(Model?.Count ?? 0)</h3>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalCategorias</h3>
                 <p style="margin: 0.5rem 0;">Total de Categorías</p>
             </div>
 
@@ -47,7 +50,7 @@
                 <div class="feature-icon">
                     <i class="fas fa-check-circle"></i>
                 </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@(Model?.Count(c => c.Estado) ?? 0)</h3>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalActivas</h3>
                 <p style="margin: 0.5rem 0;">Categorías Activas</p>
             </div>
 
@@ -55,13 +58,13 @@
                 <div class="feature-icon">
                     <i class="fas fa-times-circle"></i>
                 </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@(Model?.Count(c => !c.Estado) ?? 0)</h3>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalInactivas</h3>
                 <p style="margin: 0.5rem 0;">Categorías Inactivas</p>
             </div>
         </div>
 
         <!-- Barra de búsqueda y botones -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoCategoriasRecetas", "CategoriaReceta")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
                     <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
@@ -98,7 +101,7 @@
         <!-- Tabla Principal -->
         <div class="admin-table-container">
             <div class="table-responsive">
-                <table class="admin-table">
+                <table class="admin-table" id="laTablaDeCategoriaReceta">
                     <thead>
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
@@ -112,9 +115,9 @@
                         @if (Model != null && Model.Any())
                         {
                             int contador = 1;
-                            @foreach (var cat in Model)
+                            foreach (var cat in Model)
                             {
-                                <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: background 0.3s;">
+                                <tr>
                                     <td style="padding: 1.2rem; text-align: center;">
                                         <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
                                     </td>
@@ -122,7 +125,7 @@
                                         <i class="fas fa-book" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
                                         @cat.Nombre
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); max-width: 400px;">@cat.Descripcion</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); max-width: 400px;">@(cat.Descripcion ?? "Sin descripción")</td>
                                     <td style="padding: 1.2rem;">
                                         @if (cat.Estado)
                                         {
@@ -149,9 +152,9 @@
                                                 class="btn btn-sm btn-detalles-categoria"
                                                 data-id="@cat.IdCategoriaReceta"
                                                 data-nombre="@cat.Nombre"
-                                                data-descripcion="@cat.Descripcion"
+                                                data-descripcion="@(cat.Descripcion ?? "Sin descripción")"
                                                 data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
-                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesCategoria"
                                                 title="Ver detalles">
@@ -165,21 +168,12 @@
                         else
                         {
                             <tr>
-                                <td colspan="5" style="padding: 3rem; text-align: center; color: var(--charcoal);">
-                                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
-                                    <p style="margin: 0; font-size: 1.1rem;">
-                                        @if (!string.IsNullOrEmpty(ViewBag.Buscar as string))
-                                        {
-                                            <span>No se encontraron categorías que coincidan con "<strong>@ViewBag.Buscar</strong>"</span>
-                                        }
-                                        else
-                                        {
-                                            <span>No hay categorías de recetas registradas</span>
-                                        }
-                                    </p>
+                                <td colspan="5" class="admin-table-empty">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>No se encontraron categorías</p>
                                     @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
                                     {
-                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
+                                        <p class="empty-subtitle">Intenta con otros términos de búsqueda</p>
                                     }
                                 </td>
                             </tr>

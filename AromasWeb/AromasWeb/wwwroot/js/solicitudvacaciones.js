@@ -273,7 +273,7 @@ function initializeDaysCalculation() {
 // ============================================
 function mostrarNotificacion(mensaje, tipo) {
     const iconos = { success: 'fa-check-circle', error: 'fa-exclamation-triangle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
-    const colores = { success: 'var(--green)', error: 'var(--red)', warning: 'var(--yellow)', info: '#3498db' };
+    const colores = { success: 'var(--green)', error: 'var(--red)', warning: 'var(--yellow)', info: 'var(--gold)' };
 
     const notification = document.createElement('div');
     notification.style.cssText = `

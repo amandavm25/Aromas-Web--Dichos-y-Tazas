@@ -123,7 +123,7 @@ namespace AromasWeb.Abstracciones.ModeloUI
                 {
                     "Pendiente" => "var(--yellow)",
                     "Confirmada" => "var(--green)",
-                    "Completada" => "#3498db",
+                    "Completada" => "var(--gold)",
                     "Cancelada" => "var(--red)",
                     _ => "var(--gray)"
                 };

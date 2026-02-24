@@ -85,7 +85,7 @@
                     <tbody>
                         @if (Model != null && Model.Any())
                         {
-                            @foreach (var tipo in Model)
+                            foreach (var tipo in Model)
                             {
                                 <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
                                     <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@tipo.IdTipoPromocion</td>
@@ -122,7 +122,7 @@
                                                 data-descripcion="@(tipo.Descripcion ?? "")"
                                                 data-estado="@tipo.EstadoTexto"
                                                 data-cantidad="@tipo.CantidadPromociones"
-                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesTipo"
                                                 title="Ver detalles">

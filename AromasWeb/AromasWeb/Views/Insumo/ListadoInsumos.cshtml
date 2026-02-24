@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = "Inventario de Insumos";
     var categorias = ViewBag.TodasCategorias as List<AromasWeb.Abstracciones.ModeloUI.CategoriaInsumo> ?? new List<AromasWeb.Abstracciones.ModeloUI.CategoriaInsumo>();
+    var totalInsumos = Model?.Count ?? 0;
+    var totalActivos = Model?.Count(i => i.Estado) ?? 0;
+    var totalAlertas = Model?.Count(i => i.RequiereAlerta) ?? 0;
 }
 
 <!-- Hero Section -->
@@ -35,8 +38,32 @@
     <div class="container" style="max-width: 1600px;">
 
         <!-- Resumen del Inventario -->
-        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" data-aos="fade-up">
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalInsumos</h3>
+                <p style="margin: 0.5rem 0;">Total de Insumos</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalActivos</h3>
+                <p style="margin: 0.5rem 0;">Insumos Activos</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 id="stockBajoCount" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalAlertas</h3>
+                <p style="margin: 0.5rem 0;">Alertas de Stock Bajo</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
                 <div class="feature-icon">
                     <i class="fas fa-coins-sign"></i>
                 </div>
@@ -52,28 +79,10 @@
                 </h3>
                 <p style="margin: 0.5rem 0;">Valor Total del Inventario</p>
             </div>
-
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-icon">
-                    <i class="fas fa-boxes"></i>
-                </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@(Model?.Count ?? 0)</h3>
-                <p style="margin: 0.5rem 0;">Total de Insumos</p>
-            </div>
-
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <h3 id="stockBajoCount" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                    @(Model?.Count(i => i.RequiereAlerta) ?? 0)
-                </h3>
-                <p style="margin: 0.5rem 0;">Alertas de Stock Bajo</p>
-            </div>
         </div>
 
         <!-- Barra de búsqueda y botones -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoInsumos", "Insumo")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
                     <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
@@ -134,7 +143,7 @@
         </div>
 
         <!-- Layout Principal: Tabla + Alertas -->
-        <div style="display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start;" data-aos="fade-up">
+        <div style="display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start;">
 
             <!-- Tabla Principal -->
             <div class="admin-table-container">
@@ -156,51 +165,51 @@
                             @if (Model != null && Model.Any())
                             {
                                 int contador = 1;
-                                @foreach (var insumo in Model)
+                                foreach (var insumo in Model)
                                 {
                                     <tr>
-                                        <td style="padding: 1.2rem; text-align: center;">
-                                            <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
-                                        </td>
+                                        <td class="td-id">@contador</td>
                                         <td class="td-nombre">
                                             <i class="fas fa-box"></i>
                                             @insumo.NombreInsumo
                                         </td>
                                         <td>@insumo.UnidadMedida</td>
-                                        <td style="font-weight: 600;">@insumo.CostoUnitario.ToString("C2")</td>
+                                        <td>@insumo.CostoUnitario.ToString("C2")</td>
                                         <td>
-                                            <span class="badge-cantidad">
-                                                @insumo.CantidadDisponible.ToString("N2")
-                                            </span>
+                                            <span class="badge-cantidad">@insumo.CantidadDisponible.ToString("N2")</span>
                                         </td>
                                         <td>
                                             @if (insumo.EstadoStock == "Bajo")
                                             {
                                                 <span class="badge-stock bajo">
-                                                    <i class="fas fa-exclamation-triangle"></i> Bajo
+                                                    Bajo
                                                 </span>
                                             }
                                             else if (insumo.EstadoStock == "Medio")
                                             {
                                                 <span class="badge-stock medio">
-                                                    <i class="fas fa-exclamation-circle"></i> Medio
+                                                    Medio
                                                 </span>
                                             }
                                             else
                                             {
                                                 <span class="badge-stock normal">
-                                                    <i class="fas fa-check-circle"></i> Normal
+                                                    Normal
                                                 </span>
                                             }
                                         </td>
                                         <td>
                                             @if (insumo.Estado)
                                             {
-                                                <span class="badge-estado activo">Activo</span>
+                                                <span class="badge-estado activo">
+                                                    Activo
+                                                </span>
                                             }
                                             else
                                             {
-                                                <span class="badge-estado inactivo">Inactivo</span>
+                                                <span class="badge-estado inactivo">
+                                                    Inactivo
+                                                </span>
                                             }
                                         </td>
                                         <td style="text-align: center; white-space: nowrap;">
@@ -266,7 +275,6 @@
 
             <!-- Panel de Alertas (Derecha) -->
             <div style="position: sticky; top: 100px;">
-                <!-- Alertas de Stock Bajo -->
                 <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
                     <div style="background: linear-gradient(135deg, var(--red) 0%, #c0392b 100%); color: white; padding: 1.5rem;">
                         <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">

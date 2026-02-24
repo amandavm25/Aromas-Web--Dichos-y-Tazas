@@ -147,7 +147,7 @@
                                 {
                                     "Vigente" => "var(--green)",
                                     "Vencida" => "var(--red)",
-                                    "Futura" => "#3498db",
+                                    "Futura" => "var(--gold)",
                                     _ => "var(--gray)"
                                 };
 
@@ -220,7 +220,7 @@
                                                 data-estado="@tarifa.EstadoVigencia"
                                                 data-cumple-minimo="@(tarifa.CumpleSalarioMinimo ? "Sí" : "No")"
                                                 data-dias-vigencia="@tarifa.DiasVigencia"
-                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesTarifa"
                                                 title="Ver detalles">

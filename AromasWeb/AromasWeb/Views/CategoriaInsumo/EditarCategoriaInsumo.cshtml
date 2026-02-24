@@ -33,7 +33,7 @@
 <!-- Formulario Section -->
 <section class="admin-form-section">
     <div class="container" style="max-width: 80%;">
-        @using (Html.BeginForm("EditarCategoriaInsumo", "CategoriaInsumo", FormMethod.Post, new { @class = "contact-form" }))
+        @using (Html.BeginForm("EditarCategoriaInsumo", "CategoriaInsumo", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.IdCategoria)
@@ -41,13 +41,13 @@
             <div class="admin-form-wrapper" data-aos="fade-up">
                 @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                <!-- Información del Registro -->
+                <!-- Encabezado -->
                 <div class="admin-form-header">
                     <i class="fas fa-box"></i>
-                    <h5> Información de la Categoría</h5>
+                    <h5>Información de la Categoría</h5>
                 </div>
 
-                <!-- Nombre de la Categoría -->
+                <!-- Nombre -->
                 <div class="form-group">
                     <label>
                         <i class="fas fa-tag"></i>
@@ -71,7 +71,7 @@
                     </small>
                 </div>
 
-                <!-- Estado de la Categoría -->
+                <!-- Estado -->
                 <div class="form-group">
                     <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
                         @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
@@ -91,11 +91,11 @@
                 <div class="admin-form-footer">
                     <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoCategoriasInsumos", "CategoriaInsumo")'">
                         <i class="fas fa-times"></i>
-                        <span> Cancelar</span>
+                        <span>Cancelar</span>
                     </button>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i>
-                        <span> Guardar Cambios</span>
+                        <span>Guardar Cambios</span>
                     </button>
                 </div>
             </div>

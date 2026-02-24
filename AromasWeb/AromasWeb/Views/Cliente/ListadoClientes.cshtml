@@ -113,7 +113,7 @@
                         @if (Model != null && Model.Any())
                         {
                             int contador = 1;
-                            @foreach (var cliente in Model)
+                            foreach (var cliente in Model)
                                                     {
                                 <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
                                 <td style="padding: 1.2rem; text-align: center;">
@@ -156,7 +156,7 @@
                                         <button type="button"
                                                 class="btn btn-sm"
                                                 onclick="window.location.href='@Url.Action("HistorialReservas", "Cliente", new { id = cliente.IdCliente })'"
-                                                style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 title="Ver historial">
                                             <i class="fas fa-history"></i>
                                         </button>

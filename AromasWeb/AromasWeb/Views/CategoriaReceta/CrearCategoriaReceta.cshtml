@@ -40,57 +40,62 @@
             <div class="admin-form-wrapper" data-aos="fade-up">
                 @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                <!-- Información del Registro -->
+                <!-- Encabezado -->
                 <div class="admin-form-header">
-                    <i class="fas fa-box"></i>
-                    <h5>Información del la Categoría</h5>
+                    <i class="fas fa-book"></i>
+                    <h5>Información de la Categoría</h5>
                 </div>
 
-                <!-- Nombre de la Categoría -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-book"></i>
-                        Nombre de la Categoría
-                    </label>
-                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Postres" } })
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-                </div>
+                <!-- Cuerpo del formulario -->
+                <div class="admin-form-body">
 
-                <!-- Descripción -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-align-left"></i>
-                        Descripción
-                    </label>
-                    @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4", placeholder = "Describe el tipo de recetas que incluirá esta categoría..." })
-                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-                    <small class="admin-form-hint">
-                        <i class="fas fa-info-circle"></i>
-                        Máximo 500 caracteres.
-                    </small>
-                </div>
-
-                <!-- Información adicional -->
-                <div class="admin-form-info-box">
-                    <i class="fas fa-info-circle"></i>
-                    <div>
-                        <strong>Organización de Recetas</strong>
-                        <p>Esta categoría te ayudará a clasificar y organizar mejor tus recetas en el sistema.</p>
+                    <!-- Nombre de la Categoría -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-book"></i>
+                            Nombre de la Categoría
+                        </label>
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Postres" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                     </div>
+
+                    <!-- Descripción -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-align-left"></i>
+                            Descripción
+                        </label>
+                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4", placeholder = "Describe el tipo de recetas que incluirá esta categoría..." })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Máximo 500 caracteres
+                        </small>
+                    </div>
+
+                    <!-- Caja informativa -->
+                    <div class="admin-form-info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Organización de Recetas</strong>
+                            <p>Esta categoría te ayudará a clasificar y organizar mejor tus recetas en el sistema.</p>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Botones -->
                 <div class="admin-form-footer">
                     <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoCategoriasRecetas", "CategoriaReceta")'">
                         <i class="fas fa-times"></i>
-                        <span> Cancelar</span>
+                        <span>Cancelar</span>
                     </button>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i>
-                        <span> Guardar Cambios </span>
+                        <span>Guardar Cambios</span>
                     </button>
                 </div>
-               </div>
+            </div>
         }
     </div>
 </section>

@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         iconoEstado.classList.add('fa-check-circle');
                         break;
                     case 'completada':
-                        badgeEstado.style.background = '#3498db';
+                        badgeEstado.style.background = 'var(--gold)';
                         iconoEstado.classList.add('fa-check-double');
                         break;
                     case 'cancelada':
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             default:
                 icono = 'fa-info-circle';
-                color = '#3498db';
+                color = 'var(--gold)';
         }
 
         notificacion.innerHTML = `

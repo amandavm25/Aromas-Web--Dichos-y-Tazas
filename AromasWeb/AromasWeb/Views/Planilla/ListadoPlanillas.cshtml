@@ -173,7 +173,7 @@
                         @if (Model != null && Model.Any())
                         {
                             int contador = 1;
-                            @foreach (var planilla in Model)
+                            foreach (var planilla in Model)
                             {
                                 <tr>
                                     <td style="padding: 1.2rem;">
@@ -279,5 +279,6 @@
 <partial name="_ModalPagarPlanilla" />
 
 @section Scripts {
+    <script src="~/js/site.js"></script>
     <script src="~/js/planilla.js"></script>
 }

@@ -2460,7 +2460,7 @@ admin-table-footer
     }
 
 .btn-table-view {
-    background: #3498db;
+    background: var(--gold);
     color: var(--white);
 }
 

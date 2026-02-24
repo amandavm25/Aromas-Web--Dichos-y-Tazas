@@ -146,7 +146,7 @@ function initializeModals() {
             const estadoBadge = document.getElementById('detalles-estado-badge-tarifa');
             if (estadoBadge) {
                 const estado = this.dataset.estado;
-                const colores = { 'Vigente': 'var(--green)', 'Vencida': 'var(--red)', 'Futura': '#3498db' };
+                const colores = { 'Vigente': 'var(--green)', 'Vencida': 'var(--red)', 'Futura': 'var(--gold)' };
                 const iconos = { 'Vigente': 'fa-check-circle', 'Vencida': 'fa-times-circle', 'Futura': 'fa-calendar' };
                 estadoBadge.innerHTML = `<i class="fas ${iconos[estado] || 'fa-question-circle'}"></i> ${estado}`;
                 estadoBadge.style.background = colores[estado] || 'var(--gray)';
@@ -186,7 +186,7 @@ function initializeModals() {
 // ============================================
 function mostrarNotificacion(mensaje, tipo) {
     const iconos = { success: 'fa-check-circle', error: 'fa-exclamation-triangle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
-    const colores = { success: 'var(--green)', error: 'var(--red)', warning: 'var(--yellow)', info: '#3498db' };
+    const colores = { success: 'var(--green)', error: 'var(--red)', warning: 'var(--yellow)', info: 'var(--gold)' };
 
     const notification = document.createElement('div');
     notification.style.cssText = `

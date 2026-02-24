@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Agregar Insumo";
+    var categoriasInsumo = ViewBag.TodasCategorias as List<AromasWeb.Abstracciones.ModeloUI.CategoriaInsumo>
+                           ?? new List<AromasWeb.Abstracciones.ModeloUI.CategoriaInsumo>();
 }
 
 <!-- Hero Section -->
@@ -38,18 +40,18 @@
             @Html.AntiForgeryToken()
 
             <div class="admin-form-wrapper" data-aos="fade-up">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información del Insumo -->
+                <!-- Encabezado -->
                 <div class="admin-form-header">
                     <i class="fas fa-box"></i>
-                        <h5>
-                            Información del Insumo
-                        </h5>
-                    </div>
+                    <h5>Información del Insumo</h5>
+                </div>
+
+                <div class="admin-form-body">
 
                     <!-- Nombre del Insumo -->
-                <div class="form-group">
+                    <div class="form-group">
                         <label>
                             <i class="fas fa-box"></i>
                             Nombre del Insumo
@@ -65,23 +67,11 @@
                                 <i class="fas fa-tag"></i>
                                 Categoría
                             </label>
-                            @{
-                                var categoriasInsumo = new List<dynamic>
-                                                {
-                                                new { Id = 1, Nombre = "Harinas" },
-                                                new { Id = 2, Nombre = "Endulzantes" },
-                                                new { Id = 3, Nombre = "Lácteos" },
-                                                new { Id = 4, Nombre = "Ingredientes Frescos" },
-                                                new { Id = 5, Nombre = "Chocolates" },
-                                                new { Id = 6, Nombre = "Esencias" },
-                                                new { Id = 7, Nombre = "Leudantes" }
-                                                };
-                            }
                             <select name="IdCategoria" class="form-control">
                                 <option value="">-- Selecciona una categoría --</option>
                                 @foreach (var cat in categoriasInsumo)
                                 {
-                                    <option value="@cat.Id">@cat.Nombre</option>
+                                    <option value="@cat.IdCategoria">@cat.NombreCategoria</option>
                                 }
                             </select>
                             @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
@@ -110,8 +100,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>
-                                <i class="fas fa-coins-sign"></i>
-                            Costo Unitario (₡)
+                                <i class="fas fa-coins"></i>
+                                Costo Unitario (₡)
                             </label>
                             @Html.EditorFor(model => model.CostoUnitario, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" } })
                             @Html.ValidationMessageFor(model => model.CostoUnitario, "", new { @class = "text-danger" })
@@ -136,32 +126,34 @@
                         @Html.EditorFor(model => model.StockMinimo, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0" } })
                         @Html.ValidationMessageFor(model => model.StockMinimo, "", new { @class = "text-danger" })
                         <small class="admin-form-hint">
-                          <i class="fas fa-info-circle"></i>
+                            <i class="fas fa-info-circle"></i>
                             Se mostrará una alerta cuando la cantidad sea igual o menor a este valor
                         </small>
                     </div>
 
                     <!-- Información adicional -->
                     <div class="admin-form-info-box">
-                    <i class="fas fa-info-circle"></i>
-                            <div>
-                                <strong>Registro de Nuevo Insumo</strong>
-                                <p>Este insumo será agregado al inventario con la cantidad inicial especificada.</p>
-                            </div>
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Registro de Nuevo Insumo</strong>
+                            <p>Este insumo será agregado al inventario con la cantidad inicial especificada.</p>
+                        </div>
                     </div>
 
-                    <!-- Botones -->
-                    <div class="admin-form-footer">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoInsumos", "Insumo")'">
-                        <i class="fas fa-times"></i>
-                            <span>Cancelar</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i>
-                            <span>Agregar Insumo</span>
-                        </button>
-                    </div>
                 </div>
+
+                <!-- Botones -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoInsumos", "Insumo")'">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>Agregar Insumo</span>
+                    </button>
+                </div>
+            </div>
         }
     </div>
 </section>
