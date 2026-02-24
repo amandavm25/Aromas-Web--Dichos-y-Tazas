@@ -124,10 +124,9 @@
                 </div>
 
                 <!-- Información Laboral -->
-                <div style="background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
-                    <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                        <i class="fas fa-briefcase"></i> Información Laboral
-                    </h5>
+                <div class="admin-form-header">
+                    <i class="fas fa-box"></i>
+                    <h5>Información Laboral</h5>
                 </div>
 
                 <!-- Cargo -->
@@ -163,11 +162,58 @@
                 @Html.ValidationMessageFor(model => model.FechaContratacion, "", new { @class = "text-danger" })
             </div>
 
+            <!-- Información Médica y de Emergencia (Opcional) -->
+            <div class="admin-form-header">
+                <i class="fas fa-box"></i>
+                <h5>Información Médica y de Emergencia</h5>
+            </div>
+
+            <!-- Contacto de Emergencia -->
+            <div class="form-group">
+                <label>
+                    <i class="fas fa-phone-square"></i>
+                    Contacto de Emergencia
+                </label>
+                @Html.EditorFor(model => model.ContactoEmergencia, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: María Pérez - 8888-1234" } })
+                @Html.ValidationMessageFor(model => model.ContactoEmergencia, "", new { @class = "text-danger" })
+                <small class="admin-form-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Nombre y teléfono de la(s) persona(s) a contactar en caso de emergencia.
+                </small>
+            </div>
+
+            <!-- Alergias -->
+            <div class="form-group">
+                <label>
+                    <i class="fas fa-allergies"></i>
+                    Alergias
+                </label>
+                @Html.TextAreaFor(model => model.Alergias, new { @class = "form-control", placeholder = "Ej: Polen, mariscos, penicilina", rows = 3 })
+                @Html.ValidationMessageFor(model => model.Alergias, "", new { @class = "text-danger" })
+                <small class="admin-form-hint">
+                    <i class="fas fa-info-circle"></i>
+					Lista de alergias conocidas del empleado, si las hay. (Alimenticia, medicamentos, etc.)
+                </small>
+            </div>
+
+            <!-- Medicamentos -->
+            <div class="form-group">
+                <label>
+                    <i class="fas fa-pills"></i>
+                    Medicamentos
+                </label>
+                @Html.TextAreaFor(model => model.Medicamentos, new { @class = "form-control", placeholder = "Ej: Ibuprofeno 400mg, Losartán 50mg", rows = 3 })
+                @Html.ValidationMessageFor(model => model.Medicamentos, "", new { @class = "text-danger" })
+                <small class="admin-form-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Medicamentos de uso díario o en caso de emergencias.
+                </small>
+            </div>
+
             <!-- Cambiar Contraseña -->
-            <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin: 2rem 0;">
-                <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                    <i class="fas fa-lock"></i> Cambiar Contraseña (Opcional)
-                </h5>
+            <div class="admin-form-header">
+                <i class="fas fa-box"></i>
+                <h5>Cambiar Contraseña</h5>
             </div>
 
             <!-- Contraseña Actual -->
@@ -199,6 +245,10 @@
                         {
                             <span class="text-danger">@ViewData.ModelState["ContrasenaNueva"].Errors.FirstOrDefault()?.ErrorMessage</span>
                         }
+                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
+                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                            La contraseña debe de tener al menos 8 caracteres incluyendo, 1 mayúscula, 1 minúscula, 1 caracter especial y 1 número.
+                        </small>
                     </div>
 
                     <div class="form-group">

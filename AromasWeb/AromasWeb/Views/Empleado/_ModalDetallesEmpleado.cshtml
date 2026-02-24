@@ -1,110 +1,150 @@
-﻿<div class="modal fade admin-modal" id="modalDetallesEmpleado">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-
+﻿<div class="modal fade" id="modalDetallesEmpleado" tabindex="-1" aria-labelledby="modalDetallesEmpleadoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
             <!-- Header -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalDetallesEmpleadoLabel">
-                    <div class="modal-icon">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none; padding: 2rem;">
+                <h5 class="modal-title" id="modalDetallesEmpleadoLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
+                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-user-tie"></i>
                     </div>
                     Detalles del Empleado
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body">
-
-                <!-- Cabecera del Empleado -->
-                <div class="modal-entity-header">
+            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
+                <!-- Título del Empleado -->
+                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green); display: flex; align-items: center; justify-content: space-between;">
                     <div>
-                        <h5 id="detalles-nombre-empleado" class="modal-entity-name"></h5>
-                        <p id="detalles-cargo-empleado" class="modal-entity-sub" style="color:var(--gold-bright);font-weight:600;">
+                        <h5 id="detalles-nombre-empleado" style="color: var(--dark-green); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
+                        <p id="detalles-cargo-empleado" style="margin: 0.5rem 0 0; color: var(--gold-bright); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
                             <i class="fas fa-briefcase"></i>
                             <span></span>
                         </p>
-                        <p id="detalles-empleado-antiguo" class="modal-entity-sub" style="color:var(--gold);font-weight:600;display:none;align-items:center;gap:0.5rem;">
+                        <p id="detalles-empleado-antiguo" style="margin: 0.5rem 0 0; color: var(--gold); font-weight: 600; display: none; align-items: center; gap: 0.5rem;">
                             <i class="fas fa-award"></i>
                             <span>Empleado Antiguo</span>
                         </p>
                     </div>
-                    <div class="modal-entity-avatar">
-                        <i class="fas fa-user-tie"></i>
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); border: 4px solid var(--gold);">
+                        <i class="fas fa-user-tie" style="font-size: 2.5rem; color: white;"></i>
                     </div>
                 </div>
 
-                <!-- Grid de datos -->
-                <div class="modal-data-grid-2">
-
+                <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem;">
                     <!-- Columna Izquierda -->
-                    <div style="display:grid;gap:1.5rem;">
+                    <div>
+                        <!-- Información Personal -->
+                        <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.1rem;">
+                            <i class="fas fa-user" style="color: var(--gold);"></i> Información Personal
+                        </h6>
 
-                        <div class="modal-data-cell">
-                            <label class="modal-data-label">
-                                <i class="fas fa-id-card"></i> Identificación
-                            </label>
-                            <p id="detalles-identificacion-empleado" class="modal-data-value"></p>
+                        <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+                            <!-- Identificación -->
+                            <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--white);">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-id-card" style="color: var(--olive-green);"></i> Identificación
+                                </label>
+                                <p id="detalles-identificacion-empleado" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            </div>
+
+                            <!-- Correo -->
+                            <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--white);">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-envelope" style="color: var(--olive-green);"></i> Correo Electrónico
+                                </label>
+                                <p id="detalles-correo-empleado" style="color: var(--dark-green); font-size: 1rem; font-weight: 600; margin: 0; word-break: break-all;"></p>
+                            </div>
+
+                            <!-- Teléfono -->
+                            <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--white);">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-phone" style="color: var(--olive-green);"></i> Teléfono
+                                </label>
+                                <p id="detalles-telefono-empleado" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
+                            </div>
                         </div>
 
-                        <div class="modal-data-cell">
-                            <label class="modal-data-label">
-                                <i class="fas fa-envelope"></i> Correo Electrónico
-                            </label>
-                            <p id="detalles-correo-empleado" class="modal-data-value"></p>
-                        </div>
+                        <!-- Información Médica y de Emergencia -->
+                        <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.1rem;">
+                            <i class="fas fa-notes-medical" style="color: #3498db;"></i> Información de Emergencia
+                        </h6>
 
-                        <div class="modal-data-cell">
-                            <label class="modal-data-label">
-                                <i class="fas fa-phone"></i> Teléfono
-                            </label>
-                            <p id="detalles-telefono-empleado" class="modal-data-value"></p>
-                        </div>
+                        <div style="display: grid; gap: 1rem;">
+                            <!-- Contacto de Emergencia -->
+                            <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--white); border-left: 3px solid #3498db;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-phone-square" style="color: #3498db;"></i> Contacto de Emergencia
+                                </label>
+                                <p id="detalles-contactoemergencia-empleado" style="color: var(--dark-green); font-size: 1rem; font-weight: 600; margin: 0;"></p>
+                            </div>
 
+                            <!-- Alergias -->
+                            <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--white); border-left: 3px solid #e74c3c;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-allergies" style="color: #e74c3c;"></i> Alergias
+                                </label>
+                                <p id="detalles-alergias-empleado" style="color: var(--dark-green); font-size: 0.95rem; margin: 0; line-height: 1.6;"></p>
+                            </div>
+
+                            <!-- Medicamentos -->
+                            <div class="feature-card" style="padding: 1.2rem; margin: 0; background: var(--white); border-left: 3px solid #9b59b6;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-pills" style="color: #9b59b6;"></i> Medicamentos
+                                </label>
+                                <p id="detalles-medicamentos-empleado" style="color: var(--dark-green); font-size: 0.95rem; margin: 0; line-height: 1.6;"></p>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Columna Derecha -->
-                    <div style="display:grid;gap:1.5rem;">
-
-                        <div class="modal-data-cell">
-                            <label class="modal-data-label">
-                                <i class="fas fa-user-tag"></i> Rol
+                    <div style="display: grid; gap: 1.5rem; align-content: start;">
+                        <!-- Rol -->
+                        <div class="feature-card" style="padding: 1.5rem; margin: 0; background: var(--white);">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem;">
+                                <i class="fas fa-user-tag" style="color: var(--olive-green);"></i> Rol
                             </label>
-                            <span id="detalles-rol-empleado"
-                                  class="badge"
-                                  style="font-size:1rem;padding:0.6rem 1.5rem;border-radius:50px;display:inline-block;font-weight:600;"></span>
+                            <span id="detalles-rol-empleado" class="badge" style="font-size: 1.1rem; padding: 0.7rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
                         </div>
 
-                        <div class="modal-data-cell">
-                            <label class="modal-data-label">
-                                <i class="fas fa-calendar-plus"></i> Fecha de Contratación
-                            </label>
-                            <p id="detalles-fechacontratacion-empleado" class="modal-data-value"></p>
+                        <!-- Información de Contratación -->
+                        <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
+                            <h6 style="color: var(--dark-green); margin: 0 0 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem;">
+                                <i class="fas fa-calendar-alt" style="color: var(--gold);"></i> Información de Contratación
+                            </h6>
+
+                            <!-- Fecha de Contratación -->
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: block; color: var(--charcoal); opacity: 0.7; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.3rem;">
+                                    Fecha de Contratación
+                                </label>
+                                <p id="detalles-fechacontratacion-empleado" style="color: var(--dark-green); font-size: 1.05rem; font-weight: 700; margin: 0;"></p>
+                            </div>
+
+                            <!-- Antigüedad -->
+                            <div>
+                                <label style="display: block; color: var(--charcoal); opacity: 0.7; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.3rem;">
+                                    Antigüedad
+                                </label>
+                                <p id="detalles-antiguedad-empleado" style="color: var(--olive-green); font-size: 1.05rem; font-weight: 700; margin: 0;"></p>
+                            </div>
                         </div>
 
-                        <div class="modal-data-cell">
-                            <label class="modal-data-label">
-                                <i class="fas fa-briefcase"></i> Antigüedad
+                        <!-- Estado -->
+                        <div class="feature-card" style="padding: 1.5rem; margin: 0; background: var(--white); text-align: center;">
+                            <label style="display: block; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem;">
+                                <i class="fas fa-toggle-on" style="color: var(--olive-green);"></i> Estado
                             </label>
-                            <p id="detalles-antiguedad-empleado" class="modal-data-value"></p>
+                            <span id="detalles-estado-badge-empleado" class="badge" style="font-size: 1.1rem; padding: 0.7rem 2rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
                         </div>
-
-                        <div class="modal-data-cell">
-                            <label class="modal-data-label">
-                                <i class="fas fa-toggle-on"></i> Estado
-                            </label>
-                            <span id="detalles-estado-badge-empleado"
-                                  class="badge"
-                                  style="font-size:1rem;padding:0.6rem 1.5rem;border-radius:50px;display:inline-flex;align-items:center;gap:0.5rem;font-weight:600;"></span>
-                        </div>
-
                     </div>
                 </div>
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
                     <span><i class="fas fa-times"></i> Cerrar</span>
                 </button>
             </div>
@@ -114,54 +154,94 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.btn-detalles').forEach(boton => {
+        const botonesDetalles = document.querySelectorAll('.btn-detalles');
+
+        botonesDetalles.forEach(boton => {
             boton.addEventListener('click', function () {
-                const nombre          = this.getAttribute('data-nombre');
-                const apellidos       = this.getAttribute('data-apellidos');
-                const identificacion  = this.getAttribute('data-identificacion');
-                const correo          = this.getAttribute('data-correo');
-                const telefono        = this.getAttribute('data-telefono');
-                const cargo           = this.getAttribute('data-cargo');
-                const rol             = this.getAttribute('data-rol');
+                const id = this.getAttribute('data-id');
+                const nombre = this.getAttribute('data-nombre');
+                const apellidos = this.getAttribute('data-apellidos');
+                const identificacion = this.getAttribute('data-identificacion');
+                const correo = this.getAttribute('data-correo');
+                const telefono = this.getAttribute('data-telefono');
+                const cargo = this.getAttribute('data-cargo');
+                const rol = this.getAttribute('data-rol');
                 const fechaContratacion = this.getAttribute('data-fechacontratacion');
-                const antiguedad      = this.getAttribute('data-antiguedad');
-                const estado          = this.getAttribute('data-estado');
-                const esAntiguo       = this.getAttribute('data-esantiguo') === 'True';
+                const antiguedad = this.getAttribute('data-antiguedad');
+                const estado = this.getAttribute('data-estado');
+                const esAntiguo = this.getAttribute('data-esantiguo') === 'True';
+                const contactoEmergencia = this.getAttribute('data-contactoemergencia');
+                const alergias = this.getAttribute('data-alergias');
+                const medicamentos = this.getAttribute('data-medicamentos');
 
-                const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+                // Llenar información general
+                document.getElementById('detalles-nombre-empleado').textContent = nombre + ' ' + apellidos;
+                document.getElementById('detalles-identificacion-empleado').textContent = identificacion;
+                document.getElementById('detalles-correo-empleado').textContent = correo;
+                document.getElementById('detalles-telefono-empleado').textContent = telefono;
+                document.getElementById('detalles-fechacontratacion-empleado').textContent = fechaContratacion;
+                document.getElementById('detalles-antiguedad-empleado').textContent = antiguedad;
 
-                set('detalles-nombre-empleado',           nombre + ' ' + apellidos);
-                set('detalles-identificacion-empleado',   identificacion);
-                set('detalles-correo-empleado',           correo);
-                set('detalles-telefono-empleado',         telefono);
-                set('detalles-fechacontratacion-empleado', fechaContratacion);
-                set('detalles-antiguedad-empleado',       antiguedad);
-
-                // Cargo (está dentro de un <span>)
+                // Cargo
                 const cargoEl = document.querySelector('#detalles-cargo-empleado span');
-                if (cargoEl) cargoEl.textContent = cargo;
+                if (cargoEl) {
+                    cargoEl.textContent = cargo;
+                }
 
-                // Badge empleado antiguo
+                // Badge de empleado antiguo
                 const antiguoEl = document.getElementById('detalles-empleado-antiguo');
-                if (antiguoEl) antiguoEl.style.display = esAntiguo ? 'flex' : 'none';
+                if (antiguoEl) {
+                    if (esAntiguo) {
+                        antiguoEl.style.display = 'flex';
+                    } else {
+                        antiguoEl.style.display = 'none';
+                    }
+                }
+
+                // Información médica y de emergencia
+                const contactoEmergenciaEl = document.getElementById('detalles-contactoemergencia-empleado');
+                if (contactoEmergenciaEl) {
+                    contactoEmergenciaEl.textContent = contactoEmergencia || 'No especificado';
+                    contactoEmergenciaEl.style.opacity = contactoEmergencia ? '1' : '0.5';
+                }
+
+                const alergiasEl = document.getElementById('detalles-alergias-empleado');
+                if (alergiasEl) {
+                    alergiasEl.textContent = alergias || 'Ninguna alergia registrada';
+                    alergiasEl.style.opacity = alergias ? '1' : '0.5';
+                }
+
+                const medicamentosEl = document.getElementById('detalles-medicamentos-empleado');
+                if (medicamentosEl) {
+                    medicamentosEl.textContent = medicamentos || 'Ningún medicamento registrado';
+                    medicamentosEl.style.opacity = medicamentos ? '1' : '0.5';
+                }
 
                 // Badge de rol
                 const rolBadge = document.getElementById('detalles-rol-empleado');
                 if (rolBadge) {
                     rolBadge.textContent = rol;
-                    rolBadge.style.background = rol === 'Administrador' ? 'var(--gold)' : 'var(--olive-green)';
-                    rolBadge.style.color = 'white';
+                    if (rol === 'Administrador') {
+                        rolBadge.style.background = 'var(--gold)';
+                        rolBadge.style.color = 'white';
+                    } else {
+                        rolBadge.style.background = 'var(--olive-green)';
+                        rolBadge.style.color = 'white';
+                    }
                 }
 
                 // Badge de estado
                 const estadoBadge = document.getElementById('detalles-estado-badge-empleado');
                 if (estadoBadge) {
-                    const esActivo = estado === 'Activo';
-                    estadoBadge.innerHTML = esActivo
-                        ? '<i class="fas fa-check-circle"></i> Activo'
-                        : '<i class="fas fa-times-circle"></i> Inactivo';
-                    estadoBadge.style.background = esActivo ? 'var(--green)' : 'var(--red)';
-                    estadoBadge.style.color = 'white';
+                    if (estado === 'Activo') {
+                        estadoBadge.textContent = 'Activo';
+                        estadoBadge.style.background = '#27ae60';
+                        estadoBadge.style.color = 'white';
+                    } else {
+                        estadoBadge.textContent = 'Inactivo';
+                        estadoBadge.style.background = '#e74c3c';
+                        estadoBadge.style.color = 'white';
+                    }
                 }
             });
         });

@@ -59,6 +59,18 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal TarifaActual { get; set; }
 
+        [DisplayName("Contacto de Emergencia")]
+        [StringLength(200, ErrorMessage = "El contacto de emergencia no puede exceder 200 caracteres")]
+        public string ContactoEmergencia { get; set; }
+
+        [DisplayName("Alergias")]
+        [StringLength(500, ErrorMessage = "Las alergias no pueden exceder 500 caracteres")]
+        public string Alergias { get; set; }
+
+        [DisplayName("Medicamentos")]
+        [StringLength(500, ErrorMessage = "Los medicamentos no pueden exceder 500 caracteres")]
+        public string Medicamentos { get; set; }
+
         // Propiedades de navegación
         [DisplayName("Rol")]
         public string NombreRol { get; set; }

@@ -2605,6 +2605,7 @@ admin-table-footer
     display: flex;
     align-items: center;
     gap: 0.8rem;
+    border-radius: 0; 
 }
 
     .admin-form-header h5 {

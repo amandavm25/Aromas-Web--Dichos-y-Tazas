@@ -98,15 +98,13 @@
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Identificación</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Celular</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Correo</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Cargo</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Rol</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Antigüedad</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">#</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;text-align: center;">Nombre</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;text-align: center;">Identificación</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;text-align: center;">Celular</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;text-align: center;">Cargo</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;text-align: center;">Rol</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;text-align: center;">Estado</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
                         </tr>
                     </thead>
@@ -123,27 +121,23 @@
                                     </td>
 
                                     <!-- Nombre completo -->
-                                    <td style="padding: 1.2rem;">
+                                    <td style="padding: 1.2rem; text-align: center;">
                                         <strong style="color: var(--dark-green); font-size: 1rem;">@empleado.Nombre @empleado.Apellidos</strong>
                                     </td>
 
                                     <!-- Identificación -->
-                                    <td style="padding: 1.2rem;">
+                                    <td style="padding: 1.2rem; text-align: center;">
                                         <span style="color: var(--charcoal);">@empleado.Identificacion</span>
                                     </td>
 
                                     <!-- ⭐ Celular/Teléfono -->
-                                    <td style="padding: 1.2rem;">
+                                    <td style="padding: 1.2rem; text-align: center;">
                                         <span style="color: var(--charcoal);">@empleado.Telefono</span>
                                     </td>
 
-                                    <!-- Correo -->
-                                    <td style="padding: 1.2rem;">
-                                        <span style="color: var(--charcoal);">@empleado.Correo</span>
-                                    </td>
 
                                     <!-- Cargo -->
-                                    <td style="padding: 1.2rem;">
+                                    <td style="padding: 1.2rem; text-align: center;">
                                         <span style="background: var(--cream); color: var(--dark-green); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
                                             @empleado.Cargo
                                         </span>
@@ -163,11 +157,6 @@
                                                 <i class="fas fa-user"></i> @empleado.NombreRol
                                             </span>
                                         }
-                                    </td>
-
-                                    <!-- ⭐ Antigüedad -->
-                                    <td style="padding: 1.2rem; text-align: center;">
-                                        <span style="color: var(--charcoal); font-weight: 600;">@empleado.AnosTrabajados</span>
                                     </td>
 
                                     <!-- Estado -->
@@ -209,6 +198,9 @@
                                                 data-antiguedad="@empleado.AnosTrabajados"
                                                 data-estado="@(empleado.Estado ? "Activo" : "Inactivo")"
                                                 data-esantiguo="@empleado.EsEmpleadoAntiguo"
+                                                data-contactoemergencia="@(empleado.ContactoEmergencia ?? "")"
+                                                data-alergias="@(empleado.Alergias ?? "")"
+                                                data-medicamentos="@(empleado.Medicamentos ?? "")"
                                                 style="background: #3498db; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesEmpleado"

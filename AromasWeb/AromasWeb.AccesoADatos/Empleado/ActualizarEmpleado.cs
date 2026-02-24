@@ -66,6 +66,9 @@ namespace AromasWeb.AccesoADatos.Empleados
                 empleadoExistente.Cargo = empleado.Cargo?.Trim();
                 empleadoExistente.FechaContratacion = fechaContratacionUtc; // ⭐ Usar la fecha convertida a UTC
                 empleadoExistente.Estado = empleado.Estado;
+                empleadoExistente.ContactoEmergencia = empleado.ContactoEmergencia?.Trim();
+                empleadoExistente.Alergias = empleado.Alergias?.Trim();
+                empleadoExistente.Medicamentos = empleado.Medicamentos?.Trim();
 
                 // Solo actualizar contraseña si se proporcionó una nueva
                 if (!string.IsNullOrWhiteSpace(empleado.Contrasena))

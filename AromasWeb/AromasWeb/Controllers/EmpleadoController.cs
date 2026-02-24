@@ -89,6 +89,9 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("AnosTrabajados");
                 ModelState.Remove("EsEmpleadoAntiguo");
                 ModelState.Remove("TarifaActual");
+                ModelState.Remove("ContactoEmergencia");
+                ModelState.Remove("Alergias");
+                ModelState.Remove("Medicamentos");
 
                 // ⭐ VALIDACIÓN MANUAL DE CONTRASEÑA 
                 if (string.IsNullOrWhiteSpace(empleado.Contrasena))
@@ -184,6 +187,9 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("ContrasenaActual");
                 ModelState.Remove("ContrasenaNueva");
                 ModelState.Remove("ConfirmarContrasenaNueva");
+                ModelState.Remove("ContactoEmergencia");
+                ModelState.Remove("Alergias");
+                ModelState.Remove("Medicamentos");
 
                 bool intentaCambiarContrasena = !string.IsNullOrWhiteSpace(ContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva) ||
