@@ -324,7 +324,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 400px; overflow-y: auto;">
+
+                            <!-- Lista de margen bajo -->
+                            <div id="margenBajoLista" style="padding: 1rem; display: grid; gap: 0.7rem;">
                                 @{
                                     var margenBajo = Model.Where(r => r.PorcentajeMargen < 45).OrderBy(r => r.PorcentajeMargen).ToList();
                                     if (margenBajo.Any())
@@ -359,6 +361,24 @@
                                     }
                                 }
                             </div>
+
+                            <!-- Paginación Margen Bajo -->
+                            @if (Model.Count(r => r.PorcentajeMargen < 45) > 2)
+                            {
+                                <div style="padding: 0.6rem 1rem; border-top: 1px solid var(--cream); display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 0.8rem; color: var(--charcoal);">
+                                        <strong id="margenStart">1</strong>-<strong id="margenEnd">4</strong> de <strong id="margenTotal">0</strong>
+                                    </span>
+                                    <div style="display: flex; gap: 0.3rem;">
+                                        <button id="btnMargenAnterior" class="pagination-btn" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.85rem;">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                        <button id="btnMargenSiguiente" class="pagination-btn" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.85rem;">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -370,5 +390,5 @@
 <partial name="_ModalDetallesReceta" />
 
 @section Scripts {
-    <script src="~/js/receta.js"></script>
+    <script src="~/js/receta.js" asp-append-version="true"></script>
 }

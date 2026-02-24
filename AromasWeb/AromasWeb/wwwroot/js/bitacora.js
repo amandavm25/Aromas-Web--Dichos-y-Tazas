@@ -350,5 +350,3 @@ notifStyle.innerHTML = `
     }
 `;
 document.head.appendChild(notifStyle);
-
-console.log('%c✓ Script de bitácora cargado correctamente', 'color: var(--green); font-weight: bold;');

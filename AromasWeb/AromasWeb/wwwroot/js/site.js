@@ -464,14 +464,6 @@ cards3D.forEach(card => {
     });
 });
 
-// ============================================
-// CONSOLE MESSAGE
-// ============================================
-console.log('%c¡Bienvenido a Entre Dichos y Tazas! ☕',
-    'color: #207476; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);');
-console.log('%cDesarrollado con ❤️ por AromasWeb',
-    'color: #E06E49; font-size: 14px;');
-
 // ===================================
 // DROPDOWN MENU MOBILE
 // ===================================
@@ -568,7 +560,7 @@ function initTablePagination(config = {}) {
     // Configuración por defecto
     const settings = {
         tableId: config.tableId,
-        recordsPerPage: config.recordsPerPage || 5,
+        recordsPerPage: config.recordsPerPage || 10,
         prevButtonId: config.prevButtonId || 'btnAnterior',
         nextButtonId: config.nextButtonId || 'btnSiguiente',
         startRecordId: config.startRecordId || 'startRecord',

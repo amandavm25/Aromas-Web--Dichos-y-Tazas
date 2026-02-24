@@ -2,14 +2,13 @@
 
 @{
     ViewBag.Title = "Historial de Movimientos";
-    
-    // Calcular estadísticas
+
     var totalMovimientos = Model?.Count ?? 0;
     var totalEntradas = Model?.Count(m => m.TipoMovimiento == "E") ?? 0;
     var totalSalidas = Model?.Count(m => m.TipoMovimiento == "S") ?? 0;
     var valorEntradas = Model?.Where(m => m.TipoMovimiento == "E").Sum(m => m.ValorMovimiento) ?? 0;
-    var promedioDiario = totalMovimientos / (DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) > 0 ? 
-        DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) : 1);
+    var diasDelMes = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+    var promedioDiario = diasDelMes > 0 ? (double)totalMovimientos / diasDelMes : 0;
 }
 
 <!-- Hero Section -->
@@ -39,10 +38,10 @@
 
 <!-- Content Section -->
 <section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 1400px;">
+    <div class="container" style="max-width: 1600px;">
 
-        <!-- Estadísticas Rápidas -->
-        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+        <!-- Tarjetas de resumen -->
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" data-aos="fade-up">
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
                 <div class="feature-icon">
                     <i class="fas fa-exchange-alt"></i>
@@ -60,7 +59,7 @@
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalEntradas</h3>
                 <p style="margin: 0.5rem 0;">Entradas</p>
                 <small style="opacity: 0.7; display: block; margin-top: 0.5rem;">
-                    <i class="fas fa-coins-sign"></i> @valorEntradas.ToString("C2") invertido
+                    <i class="fas fa-coins"></i> @valorEntradas.ToString("C2") invertido
                 </small>
             </div>
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
@@ -85,73 +84,84 @@
             </div>
         </div>
 
-        <!-- Filtros y Búsqueda -->
-        <div class="contact-form-wrapper" style="margin-bottom: 3rem;" data-aos="fade-up">
-            <form method="get" action="@Url.Action("HistorialMovimientos", "MovimientoInsumo")">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-search"></i> Buscar por Insumo
-                        </label>
-                        <input type="text"
-                               name="buscar"
-                               value="@ViewBag.Buscar"
-                               placeholder="Nombre del insumo..."
-                               class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-filter"></i> Tipo de Movimiento
-                        </label>
-                        <select name="tipo" class="form-control">
-                            <option value="">Todos los movimientos</option>
-                            <option value="E" @@(ViewBag.Tipo == "E" ? "selected" : "")>Entradas</option>
-                            <option value="S" @@(ViewBag.Tipo == "S" ? "selected" : "")>Salidas</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-calendar"></i> Fecha Desde
-                        </label>
-                        <input type="date" 
-                               name="fechaDesde" 
-                               value="@ViewBag.FechaDesde" 
-                               class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-calendar"></i> Fecha Hasta
-                        </label>
-                        <input type="date" 
-                               name="fechaHasta" 
-                               value="@ViewBag.FechaHasta" 
-                               class="form-control">
-                    </div>
+        <!-- Barra de búsqueda y botones de acción -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
+            <form method="get" action="@Url.Action("HistorialMovimientos", "MovimientoInsumo")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
+                <div style="position: relative; flex: 1;">
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
+                    <input type="text"
+                           name="buscar"
+                           value="@ViewBag.Buscar"
+                           placeholder="Buscar por nombre de insumo..."
+                           style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
                 </div>
+                <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
+                    <span><i class="fas fa-search"></i> Buscar</span>
+                </button>
+            </form>
 
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <button type="submit" class="btn btn-primary btn-3d">
-                        <span><i class="fas fa-search"></i> Aplicar Filtros</span>
-                    </button>
-                    <a href="@Url.Action("HistorialMovimientos", "MovimientoInsumo")" class="btn btn-secondary">
-                        <span><i class="fas fa-times"></i> Limpiar</span>
-                    </a>
-                    <a href="@Url.Action("RegistrarEntrada", "MovimientoInsumo")" class="btn" style="background: var(--green); color: white; border: none;">
-                        <span><i class="fas fa-arrow-down"></i> Registrar Entrada</span>
-                    </a>
-                    <a href="@Url.Action("RegistrarSalida", "MovimientoInsumo")" class="btn" style="background: var(--red); color: white; border: none;">
-                        <span><i class="fas fa-arrow-up"></i> Registrar Salida</span>
-                    </a>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="@Url.Action("RegistrarMovimiento", "MovimientoInsumo")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                    <span><i class="fas fa-arrow-down"></i> Registrar Movimiento</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Filtros de tipo y fecha -->
+        <div style="margin-bottom: 2rem;" data-aos="fade-up">
+            <form method="get" action="@Url.Action("HistorialMovimientos", "MovimientoInsumo")">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
+                    <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                        <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                            <i class="fas fa-filter" style="color: var(--gold);"></i> Tipo:
+                        </span>
+                        <a href="@Url.Action("HistorialMovimientos", "MovimientoInsumo", new { fechaDesde = ViewBag.FechaDesde, fechaHasta = ViewBag.FechaHasta, buscar = ViewBag.Buscar })"
+                           class="btn @(string.IsNullOrEmpty(ViewBag.Tipo as string) ? "btn-primary" : "btn-secondary")"
+                           style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                            <span><i class="fas fa-th"></i> Todos</span>
+                        </a>
+                        <a href="@Url.Action("HistorialMovimientos", "MovimientoInsumo", new { tipo = "E", fechaDesde = ViewBag.FechaDesde, fechaHasta = ViewBag.FechaHasta, buscar = ViewBag.Buscar })"
+                           class="btn @(ViewBag.Tipo == "E" ? "btn-primary" : "btn-secondary")"
+                           style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                            <span><i class="fas fa-arrow-down"></i> Entradas</span>
+                        </a>
+                        <a href="@Url.Action("HistorialMovimientos", "MovimientoInsumo", new { tipo = "S", fechaDesde = ViewBag.FechaDesde, fechaHasta = ViewBag.FechaHasta, buscar = ViewBag.Buscar })"
+                           class="btn @(ViewBag.Tipo == "S" ? "btn-primary" : "btn-secondary")"
+                           style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                            <span><i class="fas fa-arrow-up"></i> Salidas</span>
+                        </a>
+                    </div>
+
+                    <!-- Filtros de fecha -->
+                    <div style="display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap; margin-left: auto;">
+                        <div class="form-group" style="margin: 0;">
+                            <label style="font-size: 0.85rem; margin-bottom: 0.3rem; display: block;">
+                                <i class="fas fa-calendar"></i> Desde
+                            </label>
+                            <input type="date" name="fechaDesde" value="@ViewBag.FechaDesde" class="form-control" style="border-radius: 50px; padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+                        </div>
+                        <div class="form-group" style="margin: 0;">
+                            <label style="font-size: 0.85rem; margin-bottom: 0.3rem; display: block;">
+                                <i class="fas fa-calendar"></i> Hasta
+                            </label>
+                            <input type="date" name="fechaHasta" value="@ViewBag.FechaHasta" class="form-control" style="border-radius: 50px; padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+                        </div>
+                        <input type="hidden" name="tipo" value="@ViewBag.Tipo">
+                        <input type="hidden" name="buscar" value="@ViewBag.Buscar">
+                        <button type="submit" class="btn btn-secondary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                            <span><i class="fas fa-filter"></i> Aplicar</span>
+                        </button>
+                        <a href="@Url.Action("HistorialMovimientos", "MovimientoInsumo")" class="btn btn-secondary" style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                            <span><i class="fas fa-times"></i> Limpiar</span>
+                        </a>
+                    </div>
                 </div>
             </form>
         </div>
 
-        <!-- Información de filtros activos -->
-        @if (!string.IsNullOrEmpty(ViewBag.Buscar as string) || !string.IsNullOrEmpty(ViewBag.Tipo as string) || 
-             !string.IsNullOrEmpty(ViewBag.FechaDesde as string) || !string.IsNullOrEmpty(ViewBag.FechaHasta as string))
+        <!-- Filtros activos -->
+        @if (!string.IsNullOrEmpty(ViewBag.Buscar as string) || !string.IsNullOrEmpty(ViewBag.Tipo as string) ||
+                !string.IsNullOrEmpty(ViewBag.FechaDesde as string) || !string.IsNullOrEmpty(ViewBag.FechaHasta as string))
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
                 <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
@@ -181,15 +191,15 @@
                             Hasta: <strong>@DateTime.Parse(ViewBag.FechaHasta).ToString("dd/MM/yyyy")</strong>
                         </span>
                     }
-                    - <strong>@totalMovimientos</strong> movimiento(s) encontrado(s)
+                    — <strong>@totalMovimientos</strong> movimiento(s) encontrado(s)
                 </p>
             </div>
         }
 
         <!-- Tabla de Historial -->
-        <div class="admin-table-container">
+        <div class="admin-table-container" data-aos="fade-up">
             <div class="table-responsive">
-                <table class="admin-table">
+                <table class="admin-table" id="laTablaDeMovimientos">
                     <thead>
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
@@ -205,19 +215,20 @@
                     <tbody>
                         @if (Model != null && Model.Any())
                         {
+                            var contador = 1;
                             @foreach (var mov in Model)
                             {
                                 <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
-                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@mov.IdMovimiento</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">
-                                        <div style="display: flex; flex-direction: column;">
+                                    <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@contador</td>
+                                    <td style="padding: 1.2rem;">
+                                        <div style="display: flex; flex-direction: column; gap: 0.2rem;">
                                             <span style="font-weight: 600; color: var(--dark-green);">@mov.SoloFecha</span>
                                             <span style="font-size: 0.85rem; color: var(--charcoal); opacity: 0.7;">@mov.SoloHora</span>
                                         </div>
                                     </td>
                                     <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 500;">@mov.NombreInsumo</td>
                                     <td style="padding: 1.2rem;">
-                                        <span style="background: @mov.ColorMovimiento; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
+                                        <span class="badge" style="background: @mov.ColorMovimiento; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
                                             <i class="fas @mov.IconoMovimiento"></i> @mov.TipoMovimientoTexto
                                         </span>
                                     </td>
@@ -232,28 +243,24 @@
                                         }
                                         else
                                         {
-                                            <span style="opacity: 0.5;">-</span>
+                                            <span style="opacity: 0.5;">—</span>
                                         }
                                     </td>
                                     <td style="padding: 1.2rem; color: var(--charcoal); max-width: 300px;">@mov.Motivo</td>
                                 </tr>
+                                contador++;
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="8" style="padding: 3rem; text-align: center; color: var(--charcoal); opacity: 0.7;">
-                                    <i class="fas fa-inbox" style="font-size: 3rem; display: block; margin-bottom: 1rem; color: var(--gold-bright);"></i>
-                                    <p style="font-size: 1.1rem; margin: 0;">
-                                        @if (!string.IsNullOrEmpty(ViewBag.Buscar as string) || !string.IsNullOrEmpty(ViewBag.Tipo as string))
-                                        {
-                                            <span>No se encontraron movimientos con los filtros aplicados</span>
-                                        }
-                                        else
-                                        {
-                                            <span>No hay movimientos registrados</span>
-                                        }
-                                    </p>
+                                <td colspan="8" class="admin-table-empty">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>No se encontraron movimientos</p>
+                                    @if (!string.IsNullOrEmpty(ViewBag.Buscar as string) || !string.IsNullOrEmpty(ViewBag.Tipo as string))
+                                    {
+                                        <p class="empty-subtitle">Intenta con otros filtros o términos de búsqueda</p>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -266,7 +273,6 @@
                 <div class="admin-table-footer-text">
                     Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
                 </div>
-
                 <div class="pagination-buttons">
                     <button id="btnAnterior" class="pagination-btn">
                         <i class="fas fa-chevron-left"></i> Anterior
@@ -281,5 +287,5 @@
 </section>
 
 @section Scripts {
-    <script src="~/js/insumo.js"></script>
+    <script src="~/js/movimiento.js"></script>
 }

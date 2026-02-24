@@ -14,12 +14,25 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('laTablaDeRecetas')) {
         initTablePagination({
             tableId: 'laTablaDeRecetas',
-            recordsPerPage: 5,
+            recordsPerPage: 10,
             prevButtonId: 'btnAnterior',
             nextButtonId: 'btnSiguiente',
             startRecordId: 'startRecord',
             endRecordId: 'endRecord',
             totalRecordsId: 'totalRecords'
+        });
+    }
+
+    // Paginación panel Margen Bajo
+    if (document.getElementById('margenBajoLista')) {
+        initCardsPagination({
+            containerId: 'margenBajoLista',
+            cardsPerPage: 2,
+            prevButtonId: 'btnMargenAnterior',
+            nextButtonId: 'btnMargenSiguiente',
+            startCardId: 'margenStart',
+            endCardId: 'margenEnd',
+            totalCardsId: 'margenTotal'
         });
     }
 

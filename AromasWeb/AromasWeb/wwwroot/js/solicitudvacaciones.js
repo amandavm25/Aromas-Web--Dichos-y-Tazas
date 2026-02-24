@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('laTablaDeSolicitudes')) {
         initTablePagination({
             tableId: 'laTablaDeSolicitudes',
-            recordsPerPage: 5,
+            recordsPerPage: 10,
             prevButtonId: 'btnAnterior',
             nextButtonId: 'btnSiguiente',
             startRecordId: 'startRecord',

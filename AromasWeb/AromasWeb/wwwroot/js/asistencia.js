@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('laTablaDeAsistencias')) {
         initTablePagination({
             tableId: 'laTablaDeAsistencias',
-            recordsPerPage: 5,
+            recordsPerPage: 10,
             prevButtonId: 'btnAnterior',
             nextButtonId: 'btnSiguiente',
             startRecordId: 'startRecord',

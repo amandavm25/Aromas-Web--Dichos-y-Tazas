@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('laTablaDeCategoriaReceta')) {
         initTablePagination({
             tableId: 'laTablaDeCategoriaReceta',
-            recordsPerPage: 5,
+            recordsPerPage: 10,
             prevButtonId: 'btnAnterior',
             nextButtonId: 'btnSiguiente',
             startRecordId: 'startRecord',

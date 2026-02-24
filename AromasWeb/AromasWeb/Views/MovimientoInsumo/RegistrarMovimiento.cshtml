@@ -2,7 +2,10 @@
 
 @{
     ViewBag.Title = "Registrar Movimiento";
-    var insumo = ViewBag.Insumo as dynamic;
+    var insumo = ViewBag.Insumo as AromasWeb.Abstracciones.ModeloUI.Insumo;
+    var todosInsumos = ViewBag.TodosInsumos as List<AromasWeb.Abstracciones.ModeloUI.Insumo>
+                       ?? new List<AromasWeb.Abstracciones.ModeloUI.Insumo>();
+    var esSalida = (bool)(ViewBag.EsSalida ?? false);
 }
 
 <!-- Hero Section -->
@@ -31,71 +34,120 @@
     </div>
 </section>
 
-<!-- Content Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 1000px;">
-
-        <!-- Información del Insumo -->
-        <div class="testimonial-card card-3d" style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); color: white; margin-bottom: 3rem; padding: 2.5rem;" data-aos="fade-up">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
-                <div>
-                    <i class="fas fa-box" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
-                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Insumo</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">Harina de Trigo</h4>
-                </div>
-                <div>
-                    <i class="fas fa-boxes" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
-                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Cantidad Actual</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">50.00 kg</h4>
-                </div>
-                <div>
-                    <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
-                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Stock Mínimo</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">10.00 kg</h4>
-                </div>
-                <div>
-                    <i class="fas fa-coins-sign" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.9;"></i>
-                    <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Costo Unitario</p>
-                    <h4 style="margin: 0.3rem 0 0; font-weight: 600; color: white;">₡2,500.00</h4>
-                </div>
-            </div>
-        </div>
-
-        @using (Html.BeginForm("RegistrarMovimiento", "Insumo", FormMethod.Post))
+<!-- Formulario Section -->
+<section class="admin-form-section">
+    <div class="container" style="max-width: 80%;">
+        @using (Html.BeginForm("RegistrarMovimiento", "MovimientoInsumo", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(model => model.IdInsumo)
 
-            <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+            <!-- Hidden que se actualiza con JS según el combobox -->
+            <input type="hidden" name="IdInsumo" id="hiddenIdInsumo" value="@Model?.IdInsumo" />
+
+            <div class="admin-form-wrapper" data-aos="fade-up">
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                <!-- Encabezado -->
+                <div class="admin-form-header">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h5>Información del Movimiento</h5>
+                </div>
+
+                <div class="admin-form-body">
+
+                    <!-- Combobox de insumo (siempre visible) -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-box"></i>
+                            Insumo
+                        </label>
+                        <select id="selectorInsumo" class="form-control" required>
+                            <option value="">-- Selecciona un insumo --</option>
+                            @foreach (var ins in todosInsumos)
+                            {
+                                <option value="@ins.IdInsumo"
+                                        data-nombre="@ins.NombreInsumo"
+                                        data-cantidad="@ins.CantidadDisponible.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                                        data-stock="@ins.StockMinimo.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                                        data-costo="@ins.CostoUnitario.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                                        data-unidad="@ins.UnidadMedida"
+                                        @@(insumo !=null && ins.IdInsumo= =insumo.IdInsumo ? "selected" : "" )>
+                                    @ins.NombreInsumo — @ins.CantidadDisponible.ToString("N2") @ins.UnidadMedida
+                                </option>
+                            }
+                        </select>
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Selecciona el insumo al que deseas registrarle un movimiento
+                        </small>
+                    </div>
+
+                    <!-- Panel de info del insumo seleccionado (se llena/actualiza con JS) -->
+                    <div id="panelInfoInsumo" style="display: @(insumo != null ? "block" : "none"); margin-bottom: 0.5rem;">
+                        <div class="admin-form-info-box" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-olive) 100%); border-color: transparent; color: white;">
+                            <i class="fas fa-box" style="color: var(--cream); font-size: 1.5rem;"></i>
+                            <div style="flex: 1;">
+                                <strong id="infoNombre" style="color: var(--cream); font-size: 1.1rem;">
+                                    @(insumo?.NombreInsumo ?? "")
+                                </strong>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 0.8rem;">
+                                    <div>
+                                        <span style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">Cantidad disponible</span>
+                                        <p id="infoCantidad" style="margin: 0; color: white; font-weight: 600;">
+                                            @(insumo != null ? $"{insumo.CantidadDisponible:N2} {insumo.UnidadMedida}" : "")
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <span style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">Stock mínimo</span>
+                                        <p id="infoStock" style="margin: 0; color: white; font-weight: 600;">
+                                            @(insumo != null ? $"{insumo.StockMinimo:N2} {insumo.UnidadMedida}" : "")
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <span style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">Costo unitario</span>
+                                        <p id="infoCosto" style="margin: 0; color: white; font-weight: 600;">
+                                            @(insumo != null ? insumo.CostoUnitario.ToString("C2") : "")
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Tipo de Movimiento -->
                     <div class="form-group">
-                        <label style="display: block; margin-bottom: 1rem; font-size: 1.1rem;">
+                        <label>
                             <i class="fas fa-exchange-alt"></i>
                             Tipo de Movimiento
                         </label>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <label class="feature-card card-3d" style="padding: 2rem; cursor: pointer; border: 3px solid var(--cream); margin: 0;" id="entradaLabel">
-                                <input type="radio" name="TipoMovimiento" value="Entrada" style="width: 24px; height: 24px; cursor: pointer; margin-bottom: 1rem;" checked>
+                        <div class="form-row">
+                            <label class="feature-card"
+                                   style="padding: 1.5rem; cursor: pointer; border: 3px solid var(--cream); margin: 0; transition: all 0.3s; flex: 1;"
+                                   id="entradaLabel">
+                                <input type="radio" name="TipoMovimiento" value="E"
+                                       style="width: 20px; height: 20px; cursor: pointer; margin-bottom: 0.8rem;"
+                                       @(!esSalida ? "checked" : "")>
                                 <div style="text-align: center;">
-                                    <div class="feature-icon" style="background: linear-gradient(135deg, var(--green), #229954); margin: 0 auto 1rem;">
+                                    <div class="feature-icon" style="background: linear-gradient(135deg, var(--green), #229954); margin: 0 auto 0.8rem; width: 50px; height: 50px;">
                                         <i class="fas fa-arrow-down" style="color: white;"></i>
                                     </div>
-                                    <strong style="color: var(--dark-green); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Entrada</strong>
-                                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Agregar insumo al inventario</p>
+                                    <strong style="color: var(--dark-green); font-size: 1.1rem; display: block; margin-bottom: 0.3rem;">Entrada</strong>
+                                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Agregar insumo al inventario</p>
                                 </div>
                             </label>
 
-                            <label class="feature-card card-3d" style="padding: 2rem; cursor: pointer; border: 3px solid var(--cream); margin: 0;" id="salidaLabel">
-                                <input type="radio" name="TipoMovimiento" value="Salida" style="width: 24px; height: 24px; cursor: pointer; margin-bottom: 1rem;">
+                            <label class="feature-card"
+                                   style="padding: 1.5rem; cursor: pointer; border: 3px solid var(--cream); margin: 0; transition: all 0.3s; flex: 1;"
+                                   id="salidaLabel">
+                                <input type="radio" name="TipoMovimiento" value="S"
+                                       style="width: 20px; height: 20px; cursor: pointer; margin-bottom: 0.8rem;"
+                                       @(esSalida ? "checked" : "")>
                                 <div style="text-align: center;">
-                                    <div class="feature-icon" style="background: linear-gradient(135deg, var(--red), #c0392b); margin: 0 auto 1rem;">
+                                    <div class="feature-icon" style="background: linear-gradient(135deg, var(--red), #c0392b); margin: 0 auto 0.8rem; width: 50px; height: 50px;">
                                         <i class="fas fa-arrow-up" style="color: white;"></i>
                                     </div>
-                                    <strong style="color: var(--dark-green); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Salida</strong>
-                                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">Retirar insumo del inventario</p>
+                                    <strong style="color: var(--dark-green); font-size: 1.1rem; display: block; margin-bottom: 0.3rem;">Salida</strong>
+                                    <p style="margin: 0; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">Retirar insumo del inventario</p>
                                 </div>
                             </label>
                         </div>
@@ -107,11 +159,12 @@
                             <i class="fas fa-boxes"></i>
                             Cantidad del Movimiento
                         </label>
-                        @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0.01", placeholder = "0.00", id = "cantidadMovimiento" } })
+                        @Html.TextBoxFor(model => model.Cantidad, new { @class = "form-control", type = "number", step = "0.01", min = "0.01", placeholder = "0.00", id = "cantidadMovimiento" })
                         @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
 
                         <!-- Alerta de stock insuficiente -->
-                        <div id="alertaStockInsuficiente" style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--red); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                        <div id="alertaStockInsuficiente"
+                             style="display: none; background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--red); padding: 1rem; border-radius: 10px; margin-top: 0.8rem;">
                             <p style="margin: 0; color: #c0392b; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
                                 <i class="fas fa-exclamation-triangle"></i>
                                 <span>No se puede realizar la salida: stock insuficiente</span>
@@ -119,10 +172,11 @@
                         </div>
 
                         <!-- Vista previa de nueva cantidad -->
-                        <div id="previsualizacion" class="feature-card" style="margin-top: 1rem; padding: 1.5rem;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: var(--dark-green); font-weight: 600;">Nueva cantidad después del movimiento:</span>
-                                <strong id="nuevaCantidad" style="color: var(--gold); font-size: 1.3rem;">50.00 kg</strong>
+                        <div id="previsualizacion" class="admin-form-info-box" style="margin-top: 0.8rem;">
+                            <i class="fas fa-calculator"></i>
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex: 1;">
+                                <span>Nueva cantidad después del movimiento:</span>
+                                <strong id="nuevaCantidad" style="color: var(--dark-green); font-size: 1.1rem;">—</strong>
                             </div>
                         </div>
                     </div>
@@ -138,132 +192,108 @@
                     </div>
 
                     <!-- Resumen del costo (solo para entradas) -->
-                    <div id="resumenCosto" class="testimonial-card" style="background: linear-gradient(135deg, var(--green) 0%, #229954 100%); color: white; padding: 2rem;">
-                        <h5 style="margin: 0 0 1rem; color: white; font-weight: 600;">
-                            <i class="fas fa-calculator"></i> Resumen del Costo
-                        </h5>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Costo unitario:</span>
-                            <strong>₡2,500.00</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                            <span>Cantidad:</span>
-                            <strong id="cantidadResumen">0.00 kg</strong>
-                        </div>
-                        <div style="border-top: 2px solid rgba(255,255,255,0.3); padding-top: 1rem;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-size: 1.1rem;">Costo total del movimiento:</span>
-                                <strong id="costoTotal" style="font-size: 1.8rem;">₡0.00</strong>
+                    <div id="resumenCosto" class="admin-form-info-box"
+                         style="background: linear-gradient(135deg, var(--green) 0%, #229954 100%); border-color: transparent; color: white; display: @(esSalida ? "none" : "flex");">
+                        <i class="fas fa-calculator" style="color: rgba(255,255,255,0.8);"></i>
+                        <div style="flex: 1;">
+                            <strong style="color: white;">Resumen del Costo</strong>
+                            <div style="display: flex; justify-content: space-between; margin-top: 0.8rem; font-size: 0.95rem;">
+                                <span style="color: rgba(255,255,255,0.85);">Costo unitario:</span>
+                                <strong id="costoUnitarioResumen" style="color: white;">₡0.00</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-top: 0.4rem; font-size: 0.95rem;">
+                                <span style="color: rgba(255,255,255,0.85);">Cantidad:</span>
+                                <strong id="cantidadResumen" style="color: white;">0.00</strong>
+                            </div>
+                            <div style="border-top: 1px solid rgba(255,255,255,0.3); margin-top: 0.8rem; padding-top: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: rgba(255,255,255,0.85); font-size: 1rem;">Costo total del movimiento:</span>
+                                <strong id="costoTotal" style="font-size: 1.5rem; color: white;">₡0.00</strong>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoInsumos", "Insumo")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="submit" id="btnRegistrar" class="btn btn-primary btn-3d" style="flex: 1;">
-                            <span><i class="fas fa-check"></i> Registrar Movimiento</span>
-                        </button>
+                    <!-- Info box -->
+                    <div class="admin-form-info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Registro de Movimiento</strong>
+                            <p>El movimiento quedará registrado en el historial y actualizará automáticamente el stock del insumo.</p>
+                        </div>
                     </div>
-                </form>
+
+                </div>
+
+                <!-- Botones -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="history.back()">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
+                    </button>
+                    <button type="submit" id="btnRegistrar" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>Registrar Movimiento</span>
+                    </button>
+                </div>
             </div>
         }
-
-        <!-- Enlace al Historial -->
-        <div class="specialty-card card-3d" style="margin-top: 3rem; text-align: center;" data-aos="zoom-in">
-            <div class="specialty-content" style="padding: 3rem;">
-                <div class="feature-icon" style="background: linear-gradient(135deg, var(--gold), var(--gold-bright)); margin: 0 auto 1.5rem;">
-                    <i class="fas fa-history" style="color: white;"></i>
-                </div>
-                <h4 style="margin: 0 0 1rem; font-weight: 600;">¿Necesitas ver el historial completo?</h4>
-                <p style="margin: 0 0 2rem; color: var(--charcoal); opacity: 0.7;">Consulta todos los movimientos de entradas y salidas con filtros avanzados</p>
-                <a href="@Url.Action("HistorialMovimientos", "Insumo")" class="btn btn-primary btn-3d">
-                    <span><i class="fas fa-chart-line"></i> Ver Historial Completo</span>
-                </a>
-            </div>
-        </div>
     </div>
 </section>
 
 @section Scripts {
-    <script src="~/js/insumo.js"></script>
-
+    <partial name="_ValidationScriptsPartial" />
     <script>
-        const cantidadActual = 50.00;
-        const costoUnitario = 2500.00;
-        const unidad = "kg";
+        // Variables globales que usa movimiento.js — se actualizan cuando cambia el combobox
+        let cantidadActual = @(insumo != null ? insumo.CantidadDisponible.ToString(System.Globalization.CultureInfo.InvariantCulture) : "0");
+        let costoUnitario  = @(insumo != null ? insumo.CostoUnitario.ToString(System.Globalization.CultureInfo.InvariantCulture) : "0");
+        let unidad         = "@Html.Raw(insumo?.UnidadMedida ?? "")";
 
-        const inputCantidad = document.getElementById('cantidadMovimiento');
-        const nuevaCantidadSpan = document.getElementById('nuevaCantidad');
-        const alertaStock = document.getElementById('alertaStockInsuficiente');
-        const btnRegistrar = document.getElementById('btnRegistrar');
-        const resumenCosto = document.getElementById('resumenCosto');
-        const cantidadResumen = document.getElementById('cantidadResumen');
-        const costoTotalSpan = document.getElementById('costoTotal');
+        document.getElementById('selectorInsumo').addEventListener('change', function () {
+            const opt = this.options[this.selectedIndex];
+            const panel = document.getElementById('panelInfoInsumo');
 
-        const radioEntrada = document.querySelector('input[value="Entrada"]');
-        const radioSalida = document.querySelector('input[value="Salida"]');
-        const entradaLabel = document.getElementById('entradaLabel');
-        const salidaLabel = document.getElementById('salidaLabel');
-
-        function actualizarEstilosRadio() {
-            if (radioEntrada.checked) {
-                entradaLabel.style.borderColor = 'var(--green)';
-                entradaLabel.style.background = 'rgba(39, 174, 96, 0.05)';
-                salidaLabel.style.borderColor = 'var(--cream)';
-                salidaLabel.style.background = '';
-                resumenCosto.style.display = 'block';
-            } else {
-                salidaLabel.style.borderColor = 'var(--red)';
-                salidaLabel.style.background = 'rgba(231, 76, 60, 0.05)';
-                entradaLabel.style.borderColor = 'var(--cream)';
-                entradaLabel.style.background = '';
-                resumenCosto.style.display = 'none';
-            }
-        }
-
-        radioEntrada.addEventListener('change', function() {
-            actualizarEstilosRadio();
-            calcularNuevaCantidad();
-        });
-
-        radioSalida.addEventListener('change', function() {
-            actualizarEstilosRadio();
-            calcularNuevaCantidad();
-        });
-
-        function calcularNuevaCantidad() {
-            const cantidad = parseFloat(inputCantidad.value) || 0;
-            let nuevaCantidad;
-
-            if (radioEntrada.checked) {
-                nuevaCantidad = cantidadActual + cantidad;
-                alertaStock.style.display = 'none';
-                btnRegistrar.disabled = false;
-
-                const costoTotal = costoUnitario * cantidad;
-                cantidadResumen.textContent = cantidad.toFixed(2) + ' ' + unidad;
-                costoTotalSpan.textContent = '₡' + costoTotal.toLocaleString('es-CR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            } else {
-                nuevaCantidad = cantidadActual - cantidad;
-
-                if (nuevaCantidad < 0) {
-                    alertaStock.style.display = 'block';
-                    btnRegistrar.disabled = true;
-                } else {
-                    alertaStock.style.display = 'none';
-                    btnRegistrar.disabled = false;
-                }
+            if (!this.value) {
+                panel.style.display = 'none';
+                cantidadActual = 0;
+                costoUnitario  = 0;
+                unidad         = '';
+                document.getElementById('hiddenIdInsumo').value = '';
+                document.getElementById('nuevaCantidad').textContent = '—';
+                document.getElementById('costoUnitarioResumen').textContent = '₡0.00';
+                return;
             }
 
-            nuevaCantidadSpan.textContent = nuevaCantidad.toFixed(2) + ' ' + unidad;
-        }
+            // Leer data-attributes de la opción seleccionada
+            cantidadActual = parseFloat(opt.dataset.cantidad) || 0;
+            costoUnitario  = parseFloat(opt.dataset.costo)    || 0;
+            unidad         = opt.dataset.unidad || '';
 
-        inputCantidad.addEventListener('input', calcularNuevaCantidad);
+            // Actualizar hidden field
+            document.getElementById('hiddenIdInsumo').value = this.value;
 
-        actualizarEstilosRadio();
-        calcularNuevaCantidad();
+            // Actualizar panel visual
+            document.getElementById('infoNombre').textContent   = opt.dataset.nombre;
+            document.getElementById('infoCantidad').textContent = cantidadActual.toFixed(2) + ' ' + unidad;
+            document.getElementById('infoStock').textContent    = parseFloat(opt.dataset.stock).toFixed(2) + ' ' + unidad;
+            document.getElementById('infoCosto').textContent    = '₡' + costoUnitario.toLocaleString('es-CR', { minimumFractionDigits: 2 });
+            document.getElementById('costoUnitarioResumen').textContent = '₡' + costoUnitario.toLocaleString('es-CR', { minimumFractionDigits: 2 });
+
+            panel.style.display = 'block';
+
+            // Recalcular nueva cantidad si ya hay algo en el input
+            const inputCantidad = document.getElementById('cantidadMovimiento');
+            if (inputCantidad) inputCantidad.dispatchEvent(new Event('input'));
+        });
+
+        // Si ya viene un insumo preseleccionado, mostrar su costo unitario en el resumen
+        (function () {
+            const sel = document.getElementById('selectorInsumo');
+            if (sel && sel.value) {
+                const opt = sel.options[sel.selectedIndex];
+                const cu = parseFloat(opt.dataset.costo) || 0;
+                document.getElementById('costoUnitarioResumen').textContent =
+                    '₡' + cu.toLocaleString('es-CR', { minimumFractionDigits: 2 });
+            }
+        })();
     </script>
+    <script src="~/js/movimiento.js"></script>
 }

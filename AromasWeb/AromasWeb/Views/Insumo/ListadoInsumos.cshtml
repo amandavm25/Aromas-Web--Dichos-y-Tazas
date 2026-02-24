@@ -234,6 +234,13 @@
                                                     title="Ver detalles">
                                                 <i class="fas fa-eye"></i>
                                             </button>
+                                            <button type="button"
+                                                    class="btn-table-action"
+                                                    style="background: var(--olive-green); color: white;"
+                                                    onclick="window.location.href='@Url.Action("RegistrarMovimiento", "MovimientoInsumo", new { idInsumo = insumo.IdInsumo })'"
+                                                    title="Registrar movimiento">
+                                                <i class="fas fa-exchange-alt"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     contador++;
@@ -261,7 +268,6 @@
                     <div class="admin-table-footer-text">
                         Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
                     </div>
-
                     <div class="pagination-buttons">
                         <button id="btnAnterior" class="pagination-btn">
                             <i class="fas fa-chevron-left"></i> Anterior
@@ -285,15 +291,17 @@
                             </div>
                         </div>
                     </div>
-                    <div style="padding: 1rem; display: grid; gap: 0.7rem; max-height: 600px; overflow-y: auto;">
+                    <!-- Lista de alertas -->
+                    <div id="stockBajoLista" style="padding: 1rem; display: grid; gap: 0.7rem;">
                         @if (Model != null && Model.Any(i => i.RequiereAlerta))
                         {
+                            int idxAlerta = 0;
                             @foreach (var insumo in Model.Where(i => i.RequiereAlerta))
                             {
                                 var porcentaje = insumo.StockMinimo > 0 ? (int)((insumo.CantidadDisponible / insumo.StockMinimo) * 100) : 0;
                                 var colorBarra = porcentaje <= 50 ? "var(--red)" : "var(--yellow)";
 
-                                <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--red);">
+                                <div class="stock-alerta-item" data-index="@idxAlerta" style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--red);">
                                     <div style="margin-bottom: 0.5rem;">
                                         <strong style="color: var(--dark-green); font-size: 0.95rem;">@insumo.NombreInsumo</strong>
                                     </div>
@@ -305,6 +313,7 @@
                                         <div style="width: @porcentaje%; height: 100%; background: @colorBarra; transition: width 0.3s;"></div>
                                     </div>
                                 </div>
+                                idxAlerta++;
                             }
                         }
                         else
@@ -315,6 +324,24 @@
                             </div>
                         }
                     </div>
+
+                    <!-- Paginación Stock Bajo -->
+                    @if (Model != null && Model.Count(i => i.RequiereAlerta) > 6)
+                    {
+                        <div style="padding: 0.6rem 1rem; border-top: 1px solid var(--cream); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.8rem; color: var(--charcoal);">
+                                <strong id="stockStart">1</strong>-<strong id="stockEnd">4</strong> de <strong id="stockTotal">0</strong>
+                            </span>
+                            <div style="display: flex; gap: 0.3rem;">
+                                <button id="btnStockAnterior" class="pagination-btn" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.85rem;">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button id="btnStockSiguiente" class="pagination-btn" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.85rem;">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -324,5 +351,5 @@
 <partial name="_ModalDetallesInsumo" />
 
 @section Scripts {
-    <script src="~/js/insumo.js"></script>
+    <script src="~/js/insumo.js" asp-append-version="true"></script>
 }

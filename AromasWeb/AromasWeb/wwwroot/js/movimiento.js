@@ -1,18 +1,15 @@
-﻿// insumo.js - Gestión de insumos
-
+﻿// ============================================
+// INICIALIZACIÓN Y ANIMACIONES
+// ============================================
 document.addEventListener('DOMContentLoaded', function () {
     animateOnLoad();
     initializeTooltips();
     initializeTableHoverEffects();
-    initializeModals();
-    initStockBajoPagination();
 
-    // ============================================
-    // PAGINACIÓN (usando función general de site.js)
-    // ============================================
-    if (document.getElementById('laTablaDeInsumos')) {
+    // Paginación de tabla (HistorialMovimientos)
+    if (document.getElementById('laTablaDeMovimientos')) {
         initTablePagination({
-            tableId: 'laTablaDeInsumos',
+            tableId: 'laTablaDeMovimientos',
             recordsPerPage: 10,
             prevButtonId: 'btnAnterior',
             nextButtonId: 'btnSiguiente',
@@ -22,44 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ============================================
-    // ANIMACIÓN DE ENTRADA (feature-cards)
-    // ============================================
-    const cards = document.querySelectorAll('.feature-card, .admin-form-wrapper');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    cards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'all 0.6s ease';
-        observer.observe(card);
-    });
-
-    // ============================================
-    // VALIDACIÓN DE FORMULARIOS
-    // ============================================
-    const formsInsumo = document.querySelectorAll('.contact-form');
-
-    formsInsumo.forEach(form => {
-        const nombreInput = form.querySelector('input[name="NombreInsumo"]');
-
-        if (nombreInput) {
-            nombreInput.addEventListener('input', function () {
-                if (this.value.length > 100) {
-                    this.value = this.value.substring(0, 100);
-                }
-            });
-        }
-    });
-
+    // Inicializar formulario de movimiento (RegistrarMovimiento)
+    if (document.getElementById('cantidadMovimiento')) {
+        initializeMovimientoForm();
+    }
 });
 
 // ============================================
@@ -104,8 +67,6 @@ function initializeTableHoverEffects() {
 // ============================================
 // TOOLTIPS PERSONALIZADOS
 // ============================================
-let tooltipElement = null;
-
 function initializeTooltips() {
     document.querySelectorAll('[title]').forEach(element => {
         const title = element.getAttribute('title');
@@ -115,6 +76,8 @@ function initializeTooltips() {
         element.addEventListener('mouseleave', hideTooltip);
     });
 }
+
+let tooltipElement = null;
 
 function showTooltip(event, text) {
     hideTooltip();
@@ -150,71 +113,90 @@ function hideTooltip() {
 }
 
 // ============================================
-// MODALES
+// FORMULARIO DE MOVIMIENTO
 // ============================================
-function initializeModals() {
-    // Modal de detalles de insumo
-    document.querySelectorAll('.btn-detalles-insumo').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+function initializeMovimientoForm() {
+    // cantidadActual, costoUnitario y unidad son inyectados por la vista en una etiqueta <script>
+    const inputCantidad = document.getElementById('cantidadMovimiento');
+    const nuevaCantidadSpan = document.getElementById('nuevaCantidad');
+    const alertaStock = document.getElementById('alertaStockInsuficiente');
+    const btnRegistrar = document.getElementById('btnRegistrar');
+    const resumenCosto = document.getElementById('resumenCosto');
+    const cantidadResumen = document.getElementById('cantidadResumen');
+    const costoTotalSpan = document.getElementById('costoTotal');
 
-            set('detalles-id-insumo', this.dataset.id);
-            set('detalles-nombre-insumo', this.dataset.nombre);
-            set('detalles-categoria-insumo', this.dataset.categoria);
+    const radioEntrada = document.querySelector('input[value="E"]');
+    const radioSalida = document.querySelector('input[value="S"]');
+    const entradaLabel = document.getElementById('entradaLabel');
+    const salidaLabel = document.getElementById('salidaLabel');
 
-            const estadoBadge = document.getElementById('detalles-estado-badge-insumo');
-            if (estadoBadge) {
-                const estado = this.dataset.estado;
-                const config = {
-                    'Activo': { bg: 'var(--green)' },
-                    'Inactivo': { bg: 'var(--red)' }
-                };
-                const c = config[estado] || { bg: 'var(--charcoal)' };
-                estadoBadge.textContent = estado;
-                estadoBadge.style.background = c.bg;
-                estadoBadge.style.color = 'white';
-            }
-        });
-    });
-}
+    if (!inputCantidad || !radioEntrada || !radioSalida) return;
 
-// ============================================
-// PAGINACIÓN PANEL STOCK BAJO
-// ============================================
-function initStockBajoPagination() {
-    const items = document.querySelectorAll('.stock-alerta-item');
-    if (!items.length) return;
+    // Valores del insumo definidos desde la vista
+    const stockActual = typeof cantidadActual !== 'undefined' ? cantidadActual : 0;
+    const costo = typeof costoUnitario !== 'undefined' ? costoUnitario : 0;
+    const ud = typeof unidad !== 'undefined' ? unidad : '';
 
-    const itemsPerPage = 6;
-    let currentPage = 0;
-    const totalPages = Math.ceil(items.length / itemsPerPage);
-
-    const btnAnterior = document.getElementById('btnStockAnterior');
-    const btnSiguiente = document.getElementById('btnStockSiguiente');
-    const elStart = document.getElementById('stockStart');
-    const elEnd = document.getElementById('stockEnd');
-    const elTotal = document.getElementById('stockTotal');
-
-    function render() {
-        const from = currentPage * itemsPerPage;
-        const to = Math.min(from + itemsPerPage, items.length);
-
-        items.forEach((item, i) => {
-            item.style.display = (i >= from && i < to) ? '' : 'none';
-        });
-
-        if (elStart) elStart.textContent = from + 1;
-        if (elEnd) elEnd.textContent = to;
-        if (elTotal) elTotal.textContent = items.length;
-
-        if (btnAnterior) btnAnterior.disabled = currentPage === 0;
-        if (btnSiguiente) btnSiguiente.disabled = currentPage >= totalPages - 1;
+    function actualizarEstilosRadio() {
+        if (radioEntrada.checked) {
+            entradaLabel.style.borderColor = 'var(--green)';
+            entradaLabel.style.background = 'rgba(39, 174, 96, 0.05)';
+            salidaLabel.style.borderColor = 'var(--cream)';
+            salidaLabel.style.background = '';
+            if (resumenCosto) resumenCosto.style.display = 'block';
+        } else {
+            salidaLabel.style.borderColor = 'var(--red)';
+            salidaLabel.style.background = 'rgba(231, 76, 60, 0.05)';
+            entradaLabel.style.borderColor = 'var(--cream)';
+            entradaLabel.style.background = '';
+            if (resumenCosto) resumenCosto.style.display = 'none';
+        }
     }
 
-    if (btnAnterior) btnAnterior.addEventListener('click', () => { if (currentPage > 0) { currentPage--; render(); } });
-    if (btnSiguiente) btnSiguiente.addEventListener('click', () => { if (currentPage < totalPages - 1) { currentPage++; render(); } });
+    function calcularNuevaCantidad() {
+        const cantidad = parseFloat(inputCantidad.value) || 0;
 
-    render();
+        if (radioEntrada.checked) {
+            const nueva = stockActual + cantidad;
+            if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toFixed(2) + ' ' + ud;
+            if (alertaStock) alertaStock.style.display = 'none';
+            if (btnRegistrar) btnRegistrar.disabled = false;
+
+            // Resumen de costo
+            if (cantidadResumen) cantidadResumen.textContent = cantidad.toFixed(2) + ' ' + ud;
+            if (costoTotalSpan) {
+                const total = costo * cantidad;
+                costoTotalSpan.textContent = '₡' + total.toLocaleString('es-CR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+        } else {
+            const nueva = stockActual - cantidad;
+            if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toFixed(2) + ' ' + ud;
+
+            if (nueva < 0) {
+                if (alertaStock) alertaStock.style.display = 'block';
+                if (btnRegistrar) btnRegistrar.disabled = true;
+            } else {
+                if (alertaStock) alertaStock.style.display = 'none';
+                if (btnRegistrar) btnRegistrar.disabled = false;
+            }
+        }
+    }
+
+    radioEntrada.addEventListener('change', function () {
+        actualizarEstilosRadio();
+        calcularNuevaCantidad();
+    });
+
+    radioSalida.addEventListener('change', function () {
+        actualizarEstilosRadio();
+        calcularNuevaCantidad();
+    });
+
+    inputCantidad.addEventListener('input', calcularNuevaCantidad);
+
+    // Inicializar estado
+    actualizarEstilosRadio();
+    calcularNuevaCantidad();
 }
 
 // ============================================
@@ -246,13 +228,13 @@ function mostrarNotificacion(mensaje, tipo) {
 // ============================================
 // ESTILOS DE ANIMACIÓN
 // ============================================
-if (!document.getElementById('insumo-styles')) {
+if (!document.getElementById('movimiento-styles')) {
     const s = document.createElement('style');
-    s.id = 'insumo-styles';
+    s.id = 'movimiento-styles';
     s.innerHTML = `
-        @keyframes slideInNotif  { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideInNotif { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes slideOutNotif { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
-        @keyframes tooltipFadeIn  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes tooltipFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes tooltipFadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
     `;
     document.head.appendChild(s);

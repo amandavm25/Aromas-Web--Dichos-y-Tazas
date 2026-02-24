@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('laTablaDePlanillas')) {
         initTablePagination({
             tableId: 'laTablaDePlanillas',
-            recordsPerPage: 5,
+            recordsPerPage: 10,
             prevButtonId: 'btnAnterior',
             nextButtonId: 'btnSiguiente',
             startRecordId: 'startRecord',

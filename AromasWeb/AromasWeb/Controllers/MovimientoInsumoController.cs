@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.MovimientoInsumo;
+using AromasWeb.Abstracciones.Logica.Insumo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace AromasWeb.Controllers
     public class MovimientoInsumoController : Controller
     {
         private IListarMovimientos _listarMovimientos;
+        private IListarInsumos _listarInsumos;
 
         public MovimientoInsumoController()
         {
             _listarMovimientos = new LogicaDeNegocio.MovimientosInsumo.ListarMovimientos();
+            _listarInsumos = new LogicaDeNegocio.Insumos.ListarInsumos();
         }
 
         // GET: MovimientoInsumo/HistorialMovimientos
@@ -37,6 +40,50 @@ namespace AromasWeb.Controllers
             }
 
             return View(movimientos);
+        }
+
+        // GET: MovimientoInsumo/RegistrarMovimiento
+        public IActionResult RegistrarMovimiento(int? idInsumo)
+        {
+            // Siempre cargar todos los insumos para el combobox
+            ViewBag.TodosInsumos = _listarInsumos.Obtener();
+
+            // Si viene idInsumo, precargar el insumo en el panel de info
+            if (idInsumo.HasValue)
+            {
+                var insumo = _listarInsumos.ObtenerPorId(idInsumo.Value);
+                ViewBag.Insumo = insumo;
+            }
+
+            var movimiento = new MovimientoInsumo
+            {
+                IdInsumo = idInsumo ?? 0,
+                FechaMovimiento = DateTime.Now,
+                TipoMovimiento = "E"
+            };
+
+            return View(movimiento);
+        }
+
+        // POST: MovimientoInsumo/RegistrarMovimiento
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RegistrarMovimiento(MovimientoInsumo movimiento)
+        {
+            if (ModelState.IsValid)
+            {
+                movimiento.FechaMovimiento = DateTime.Now;
+                movimiento.IdEmpleado = 1; 
+                TempData["Mensaje"] = "Movimiento registrado correctamente";
+                return RedirectToAction(nameof(HistorialMovimientos));
+            }
+
+            // Si hay error, recargar combobox e info del insumo
+            ViewBag.TodosInsumos = _listarInsumos.Obtener();
+            if (movimiento.IdInsumo > 0)
+                ViewBag.Insumo = _listarInsumos.ObtenerPorId(movimiento.IdInsumo);
+
+            return View(movimiento);
         }
 
         // GET: MovimientoInsumo/RegistrarEntrada
