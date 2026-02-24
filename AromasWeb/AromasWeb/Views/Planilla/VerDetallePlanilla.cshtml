@@ -98,8 +98,8 @@
 
         <!-- Botones de Acción -->
         <div style="display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;" data-aos="fade-up">
-            <a href="@Url.Action("ListadoPlanillas", "Planilla")" class="btn btn-secondary">
-                <span><i class="fas fa-arrow-left"></i> Volver al Listado</span>
+            <a href="@ViewBag.ReturnUrl" class="btn btn-secondary">
+                <span><i class="fas fa-arrow-left"></i> Volver</span>
             </a>
             <button onclick="window.print()" class="btn btn-primary" style="margin-left: auto;">
                 <span><i class="fas fa-print"></i> Imprimir Desglose</span>

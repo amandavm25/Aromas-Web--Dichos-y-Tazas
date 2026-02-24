@@ -172,6 +172,7 @@ namespace AromasWeb.Controllers
         {
             try
             {
+                // Remover validación de campos calculados
                 ModelState.Remove("NombreRol");
                 ModelState.Remove("EstadoTexto");
                 ModelState.Remove("FechaContratacionFormateada");
@@ -180,24 +181,39 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("EsEmpleadoAntiguo");
                 ModelState.Remove("Contrasena");
                 ModelState.Remove("TarifaActual");
-
                 ModelState.Remove("ContrasenaActual");
                 ModelState.Remove("ContrasenaNueva");
                 ModelState.Remove("ConfirmarContrasenaNueva");
 
-                // ⭐ VALIDACIÓN DE CONTRASEÑA: Solo si algún campo de contraseña tiene valor
                 bool intentaCambiarContrasena = !string.IsNullOrWhiteSpace(ContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ContrasenaActual);
 
                 if (intentaCambiarContrasena)
                 {
-                    // Si está intentando cambiar contraseña, validar todos los campos
+                    var empleadoActual = _obtenerEmpleado.Obtener(empleado.IdEmpleado);
+
+                    if (empleadoActual == null)
+                    {
+                        ModelState.AddModelError("", "No se pudo cargar la información del empleado");
+                        CargarRoles();
+                        return View(empleado);
+                    }
+
+                    // Validar que se ingresó la contraseña actual
                     if (string.IsNullOrWhiteSpace(ContrasenaActual))
                     {
                         ModelState.AddModelError("ContrasenaActual", "Debes ingresar la contraseña actual");
                     }
+                    else
+                    {
+                        if (empleadoActual.Contrasena != ContrasenaActual)
+                        {
+                            ModelState.AddModelError("ContrasenaActual", "La contraseña actual es incorrecta");
+                        }
+                    }
 
+                    // Validar nueva contraseña
                     if (string.IsNullOrWhiteSpace(ContrasenaNueva))
                     {
                         ModelState.AddModelError("ContrasenaNueva", "Debes ingresar la nueva contraseña");
@@ -207,11 +223,13 @@ namespace AromasWeb.Controllers
                         ModelState.AddModelError("ContrasenaNueva", "La nueva contraseña debe tener al menos 8 caracteres");
                     }
 
+                    // Validar confirmación de contraseña
                     if (string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
                     {
                         ModelState.AddModelError("ConfirmarContrasenaNueva", "Debes confirmar la nueva contraseña");
                     }
 
+                    // Validar que las contraseñas nuevas coincidan
                     if (!string.IsNullOrWhiteSpace(ContrasenaNueva) && !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
                     {
                         if (ContrasenaNueva != ConfirmarContrasenaNueva)
@@ -220,16 +238,24 @@ namespace AromasWeb.Controllers
                         }
                     }
 
-                    // Asignar la nueva contraseña si todo está bien
+                    // Si hay errores de validación, regresar a la vista
+                    if (!ModelState.IsValid)
+                    {
+                        ViewBag.ErrorMessage = "Por favor, corrige los errores en el cambio de contraseña";
+                        CargarRoles();
+                        return View(empleado);
+                    }
+
+                    // Asignar la nueva contraseña
                     empleado.Contrasena = ContrasenaNueva;
                 }
                 else
                 {
-                    // No está cambiando contraseña
+                    // No está cambiando contraseña, dejamos el campo en null para no actualizarlo
                     empleado.Contrasena = null;
                 }
 
-                // ⭐ AHORA SÍ validamos el ModelState
+                // Validar el resto del formulario
                 if (!ModelState.IsValid)
                 {
                     // DIAGNÓSTICO: Ver qué validaciones están fallando

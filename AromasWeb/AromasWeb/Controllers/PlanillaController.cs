@@ -127,7 +127,7 @@ namespace AromasWeb.Controllers
         }
 
         // GET: Planilla/VerDetallePlanilla/1
-        public IActionResult VerDetallePlanilla(int id)
+        public IActionResult VerDetallePlanilla(int id, string returnUrl = null)
         {
             ViewBag.IdPlanilla = id;
 
@@ -140,6 +140,17 @@ namespace AromasWeb.Controllers
             }
 
             ViewBag.Planilla = planilla;
+
+            // Determinar la URL de retorno según el tipo de usuario si no se especificó
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                var tipoUsuario = HttpContext.Session.GetString("UsuarioTipo");
+                returnUrl = tipoUsuario == "empleado"
+                    ? Url.Action(nameof(MiPlanilla), "Planilla")
+                    : Url.Action(nameof(ListadoPlanillas), "Planilla");
+            }
+
+            ViewBag.ReturnUrl = returnUrl;
 
             var detalles = _listarPlanillas.ObtenerDetallesPorPlanilla(id);
 

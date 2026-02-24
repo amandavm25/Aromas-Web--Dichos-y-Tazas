@@ -182,7 +182,7 @@
                                 </div>
 
                                 <div>
-                                    <a href="@Url.Action("VerDetallePlanilla", "Planilla", new { id = planilla.IdPlanilla })"
+                                    <a href="@Url.Action("VerDetallePlanilla", "Planilla", new { id = planilla.IdPlanilla, returnUrl = Url.Action("MiPlanilla", "Planilla") })"
                                        class="btn btn-primary"
                                        style="white-space: nowrap; padding: 0.7rem 1.5rem;">
                                         <span><i class="fas fa-eye"></i> Ver Detalle</span>
