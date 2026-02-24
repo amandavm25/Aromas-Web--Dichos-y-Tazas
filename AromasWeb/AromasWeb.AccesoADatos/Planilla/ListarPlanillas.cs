@@ -303,18 +303,17 @@ namespace AromasWeb.AccesoADatos.Planillas
         {
             using (var contexto = new Contexto())
             {
-                    var planilla = contexto.Planilla.FirstOrDefault(p => p.IdPlanilla == idPlanilla);
-                    if (planilla != null) throw new Exception("La planilla ya ha sido marcada como pagada.");
+                var planilla = contexto.Planilla.FirstOrDefault(p => p.IdPlanilla == idPlanilla);
 
-                    planilla.Estado = "Pagada";
-                    contexto.SaveChanges();
+                if (planilla == null)
+                    throw new Exception("La planilla no existe");
 
-                }
+                if (planilla.Estado == "Pagado")
+                    throw new Exception("La planilla ya se encuentra pagada");
 
-
-             }
-
+                planilla.Estado = "Pagado";
+                contexto.SaveChanges();
+            }
         }
-
     }
-
+}
