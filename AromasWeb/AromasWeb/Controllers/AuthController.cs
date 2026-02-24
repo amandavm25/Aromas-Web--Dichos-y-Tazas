@@ -1,12 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
+using AromasWeb.Abstracciones.Logica.Cliente;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Threading.Tasks;
 
 namespace AromasWeb.Controllers
 {
     public class AuthController : Controller
     {
+        private ICrearCliente _crearCliente;
+
+        public AuthController()
+        {
+            _crearCliente = new LogicaDeNegocio.Clientes.CrearCliente();
+        }
+
         // ============================================
         // LOGIN
         // ============================================
@@ -35,7 +44,6 @@ namespace AromasWeb.Controllers
                 HttpContext.Session.SetString("UsuarioTipo", "admin");
                 HttpContext.Session.SetString("UsuarioNombre", "Administrador");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
-                
 
                 TempData["Mensaje"] = "¡Bienvenido Administrador!";
                 return RedirectToAction("Index", "Home");
@@ -83,37 +91,90 @@ namespace AromasWeb.Controllers
         // REGISTRO
         // ============================================
 
+        // GET: Auth/Registro
         public IActionResult Registro()
         {
             return View();
         }
 
+        // POST: Auth/Registro
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Registro(Cliente cliente, string ConfirmarContrasena)
+        public async Task<IActionResult> Registro(Cliente cliente, string ConfirmarContrasena)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (cliente.Contrasena != ConfirmarContrasena)
+                // Remover validación de campos calculados
+                ModelState.Remove("EstadoTexto");
+                ModelState.Remove("FechaRegistroFormateada");
+                ModelState.Remove("UltimaReservaFormateada");
+                ModelState.Remove("DiasDesdeUltimaReserva");
+                ModelState.Remove("EsClienteFrecuente");
+                ModelState.Remove("UltimaReserva");
+
+                // Validaciones manuales
+                if (string.IsNullOrWhiteSpace(cliente.Contrasena))
                 {
-                    TempData["Error"] = "Las contraseñas no coinciden";
+                    ModelState.AddModelError("Contrasena", "La contraseña es requerida");
+                }
+                else if (cliente.Contrasena.Length < 8)
+                {
+                    ModelState.AddModelError("Contrasena", "La contraseña debe tener al menos 8 caracteres");
+                }
+
+                if (string.IsNullOrWhiteSpace(ConfirmarContrasena))
+                {
+                    ModelState.AddModelError("ConfirmarContrasena", "Debes confirmar la contraseña");
+                }
+                else if (cliente.Contrasena != ConfirmarContrasena)
+                {
+                    ModelState.AddModelError("ConfirmarContrasena", "Las contraseñas no coinciden");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    TempData["Error"] = "Por favor, corrige los errores del formulario";
                     return View(cliente);
                 }
 
-                if (cliente.Contrasena.Length < 8)
-                {
-                    TempData["Error"] = "La contraseña debe tener al menos 8 caracteres";
-                    return View(cliente);
-                }
-
-                cliente.Estado = true;
+                // Establecer valores por defecto para nuevos clientes
+                cliente.Estado = true; // Activo por defecto
                 cliente.FechaRegistro = DateTime.Now;
 
-                TempData["Mensaje"] = "¡Registro exitoso! Ya puedes iniciar sesión";
-                return RedirectToAction(nameof(Login));
-            }
+                // Usar la lógica de negocio ya creada
+                int resultado = await _crearCliente.Crear(cliente);
 
-            return View(cliente);
+                if (resultado > 0)
+                {
+                    TempData["Mensaje"] = "¡Registro exitoso! Ya puedes iniciar sesión con tu cuenta";
+                    return RedirectToAction(nameof(Login));
+                }
+                else
+                {
+                    TempData["Error"] = "No se pudo completar el registro. Intenta nuevamente.";
+                    return View(cliente);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Capturar errores específicos como duplicados
+                System.Diagnostics.Debug.WriteLine($"Error en registro: {ex.Message}");
+
+                if (ex.Message.Contains("identificación"))
+                {
+                    TempData["Error"] = "Ya existe un cliente registrado con esa identificación";
+                }
+                else if (ex.Message.Contains("correo"))
+                {
+                    TempData["Error"] = "Ya existe un cliente registrado con ese correo electrónico";
+                }
+                else
+                {
+                    TempData["Error"] = $"Error al registrar: {ex.Message}";
+                }
+
+                return View(cliente);
+            }
         }
 
         // ============================================
