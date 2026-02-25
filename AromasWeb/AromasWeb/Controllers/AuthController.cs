@@ -4,6 +4,7 @@ using AromasWeb.Abstracciones.Logica.Cliente;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
+using AromasWeb.Helpers;
 
 namespace AromasWeb.Controllers
 {
@@ -112,14 +113,17 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("EsClienteFrecuente");
                 ModelState.Remove("UltimaReserva");
 
-                // Validaciones manuales
+                // Validación robusta de contraseña
                 if (string.IsNullOrWhiteSpace(cliente.Contrasena))
                 {
                     ModelState.AddModelError("Contrasena", "La contraseña es requerida");
                 }
-                else if (cliente.Contrasena.Length < 8)
+                else
                 {
-                    ModelState.AddModelError("Contrasena", "La contraseña debe tener al menos 8 caracteres");
+                    if (!PasswordValidator.EsContrasenaValida(cliente.Contrasena, out string mensajeError))
+                    {
+                        ModelState.AddModelError("Contrasena", mensajeError);
+                    }
                 }
 
                 if (string.IsNullOrWhiteSpace(ConfirmarContrasena))
@@ -137,11 +141,9 @@ namespace AromasWeb.Controllers
                     return View(cliente);
                 }
 
-                // Establecer valores por defecto para nuevos clientes
-                cliente.Estado = true; // Activo por defecto
+                cliente.Estado = true;
                 cliente.FechaRegistro = DateTime.Now;
 
-                // Usar la lógica de negocio ya creada
                 int resultado = await _crearCliente.Crear(cliente);
 
                 if (resultado > 0)
@@ -157,7 +159,6 @@ namespace AromasWeb.Controllers
             }
             catch (Exception ex)
             {
-                // Capturar errores específicos como duplicados
                 System.Diagnostics.Debug.WriteLine($"Error en registro: {ex.Message}");
 
                 if (ex.Message.Contains("identificación"))
