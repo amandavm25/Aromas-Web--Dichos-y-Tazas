@@ -11,11 +11,11 @@
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
-                <i class="fas fa-user-plus"></i>
-                Registro de Tipo de Promoción
+                <i class="fas fa-plus-circle"></i>
+                Nuevo Tipo
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
-                Registrar un
+                Agregar un
                 <span class="hero-title-accent">Tipo de Promoción</span>
             </h1>
             <p class="hero-subtitle">
@@ -31,21 +31,30 @@
 </section>
 
 <!-- Formulario Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 900px;">
-        @using (Html.BeginForm("CrearTipoPromocion", "TipoPromocion", FormMethod.Post))
+<section class="admin-form-section">
+    <div class="container" style="max-width: 80%;">
+        @using (Html.BeginForm("CrearTipoPromocion", "TipoPromocion", FormMethod.Post, new { @class = "contact-form" }))
         {
             @Html.AntiForgeryToken()
 
-            <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+            <div class="admin-form-wrapper" data-aos="fade-up">
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                <!-- Encabezado -->
+                <div class="admin-form-header">
+                    <i class="fas fa-list-alt"></i>
+                    <h5>Información del Tipo de Promoción</h5>
+                </div>
+
+                <!-- Cuerpo del formulario -->
+                <div class="admin-form-body">
 
                     <!-- Nombre del Tipo -->
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Nombre, new { @class = "form-label" })
-                        <i class="fas fa-tag"></i>
-                        Nombre del Tipo
+                        <label>
+                            <i class="fas fa-tag"></i>
+                            Nombre del Tipo
+                        </label>
                         @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Descuento por Temporada" } })
                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                     </div>
@@ -58,22 +67,34 @@
                         </label>
                         @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4", placeholder = "Describe las características de este tipo de promoción..." })
                         @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
                             Máximo 300 caracteres
                         </small>
                     </div>
 
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoTiposPromociones", "TipoPromocion")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
-                            <span><i class="fas fa-save"></i> Agregar Tipo</span>
-                        </button>
+                    <!-- Caja informativa -->
+                    <div class="admin-form-info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Clasificación de Promociones</strong>
+                            <p>Este tipo te ayudará a clasificar y organizar mejor las promociones en el sistema.</p>
+                        </div>
                     </div>
-                </form>
+
+                </div>
+
+                <!-- Botones -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoTiposPromociones", "TipoPromocion")'">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>Guardar Tipo</span>
+                    </button>
+                </div>
             </div>
         }
     </div>
@@ -81,5 +102,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/tipopromocion.js"></script>
+    <script src="~/js/tipopromocion.js" asp-append-version="true"></script>
 }

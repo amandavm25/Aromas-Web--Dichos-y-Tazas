@@ -35,5 +35,7 @@ namespace AromasWeb.AccesoADatos.Modelos
 
         // Propiedades de navegación
         public virtual TipoPromocionAD TipoPromocion { get; set; }
+        public virtual ICollection<PromocionRecetaAD> PromocionRecetas { get; set; }
+            = new List<PromocionRecetaAD>();
     }
 }

@@ -11,7 +11,7 @@
     <div class="container hero-container" style="display: block;">
         <div class="hero-content" data-aos="fade-up" style="text-align: center;">
             <span class="hero-badge">
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-plus-circle"></i>
                 Nuevo Registro
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
@@ -31,22 +31,22 @@
 </section>
 
 <!-- Formulario Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 900px;">
+<section class="admin-form-section">
+    <div class="container" style="max-width: 80%;">
         @using (Html.BeginForm("CrearRol", "Rol", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
-            <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+            <div class="admin-form-wrapper" data-aos="fade-up">
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información del Rol -->
-                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
-                        <h5 style="color: white; margin: 0; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-user-shield"></i> Información del Rol
-                        </h5>
-                    </div>
+                <!-- Header -->
+                <div class="admin-form-header">
+                    <i class="fas fa-user-shield"></i>
+                    <h5>Información del Rol</h5>
+                </div>
+
+                <div class="admin-form-body">
 
                     <!-- Nombre -->
                     <div class="form-group">
@@ -64,32 +64,50 @@
                             <i class="fas fa-align-left"></i>
                             Descripción
                         </label>
-                        @Html.TextAreaFor(model => model.Descripcion, 4, 50, new { @class = "form-control", placeholder = "Describe el rol...", style = "min-height: 120px; resize: vertical;" })
+                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", placeholder = "Describe las responsabilidades de este rol...", rows = 4 })
                         @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                     </div>
 
-                    <!-- Estado del Rol -->
+                    <!-- Estado -->
                     <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer; border: 2px solid rgba(143, 142, 106, 0.2);">
-                            @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox", @checked = "checked" } })
-                            <span style="flex: 1;">
+                        <div class="form-check" style="padding: 1.5rem; background: var(--cream); border-radius: 15px; display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                            <input class="form-check-input" type="checkbox" name="Estado" id="estadoCheckbox" value="true"
+                                   checked
+                                   style="width:20px;height:20px;flex-shrink:0;cursor:pointer;margin-top:0;" />
+                            <input type="hidden" name="Estado" value="false" />
+                            <label class="form-check-label" for="estadoCheckbox" style="cursor:pointer;flex:1;margin-bottom:0;">
                                 <i class="fas fa-toggle-on"></i>
                                 Estado del Rol (Activo/Inactivo)
-                            </span>
-                        </label>
-                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                            </label>
+                        </div>
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Activa o desactiva el rol en el sistema
+                        </small>
                     </div>
 
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoRoles", "Rol")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
-                            <span><i class="fas fa-save"></i> Agregar Rol</span>
-                        </button>
+                    <!-- Info box -->
+                    <div class="admin-form-info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Registro de Nuevo Rol</strong>
+                            <p>Una vez creado, podrás asignar permisos específicos a este rol desde el listado de roles.</p>
+                        </div>
                     </div>
-                </form>
+
+                </div>
+
+                <!-- Botones -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoRoles", "Rol")'">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>Agregar Rol</span>
+                    </button>
+                </div>
             </div>
         }
     </div>

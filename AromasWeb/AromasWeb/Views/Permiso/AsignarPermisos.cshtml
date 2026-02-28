@@ -33,40 +33,48 @@
 </section>
 
 <!-- Content Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 1400px;">
+<section class="admin-form-section">
+    <div class="container" style="max-width: 1200px;">
 
         @using (Html.BeginForm("GuardarPermisos", "Permiso", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             <input type="hidden" name="idRol" value="@rol.IdRol" />
 
-            <!-- Resumen superior con estilo mejorado -->
-            <div class="feature-card" style="margin-bottom: 3rem; padding: 2rem; background: white;" data-aos="fade-up">
-                <div style="display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center;">
-                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
-                        <i class="fas fa-user-shield" style="font-size: 2.5rem; color: white;"></i>
-                    </div>
-                    <div>
-                        <h4 style="margin: 0 0 0.5rem; color: var(--dark-green); font-family: var(--font-primary); font-weight: 700;">@rol.Nombre</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-                            <div>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                    <i class="fas fa-info-circle" style="color: var(--olive-green);"></i> Descripción
-                                </span>
-                                <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@rol.Descripcion</p>
-                            </div>
-                            <div>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                    <i class="fas fa-cube" style="color: var(--olive-green);"></i> Total Módulos
-                                </span>
-                                <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@modulos.Count módulos activos</p>
-                            </div>
-                            <div>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                    <i class="fas fa-shield-alt" style="color: var(--olive-green);"></i> Permisos Asignados
-                                </span>
-                                <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@permisosAsignados.Count de @permisos.Count disponibles</p>
+            <!-- Resumen del Rol -->
+            <div class="admin-form-wrapper" style="margin-bottom: 2rem;" data-aos="fade-up">
+                <div class="admin-form-header">
+                    <i class="fas fa-user-shield"></i>
+                    <h5>Información del Rol</h5>
+                </div>
+                <div class="admin-form-body">
+                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); border: 3px solid var(--gold);">
+                            <i class="fas fa-user-shield" style="font-size: 2.5rem; color: white;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0 0 0.5rem; color: var(--dark-green); font-family: var(--font-primary); font-weight: 700;">@rol.Nombre</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                                <div>
+                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; letter-spacing: 0.5px;">
+                                        <i class="fas fa-info-circle" style="color: var(--olive-green);"></i> Descripción
+                                    </span>
+                                    <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@rol.Descripcion</p>
+                                </div>
+                                <div>
+                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; letter-spacing: 0.5px;">
+                                        <i class="fas fa-cube" style="color: var(--olive-green);"></i> Total Módulos
+                                    </span>
+                                    <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@modulos.Count módulos activos</p>
+                                </div>
+                                <div>
+                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block; letter-spacing: 0.5px;">
+                                        <i class="fas fa-shield-alt" style="color: var(--olive-green);"></i> Permisos Asignados
+                                    </span>
+                                    <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">
+                                        <span id="contadorPermisos">@permisosAsignados.Count</span> de @permisos.Count disponibles
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,64 +98,55 @@
 
                 if (permisosDelModulo.Any())
                 {
-                    <div class="feature-card" style="margin-bottom: 2rem; overflow: hidden;" data-aos="fade-up">
+                    <div class="admin-form-wrapper" style="margin-bottom: 2rem;" data-aos="fade-up">
                         <!-- Header del módulo -->
-                        <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1.5rem; margin: -2rem -2rem 1.5rem -2rem;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div style="display: flex; align-items: center; gap: 1rem;">
-                                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
-                                        <i class="fas fa-cube" style="font-size: 1.5rem; color: white;"></i>
-                                    </div>
-                                    <div>
-                                        <h5 style="color: white; margin: 0; font-size: 1.3rem; font-weight: 700;">@modulo.Nombre</h5>
-                                        <p style="color: rgba(255,255,255,0.8); margin: 0; font-size: 0.9rem;">@permisosDelModulo.Count permiso(s) disponible(s)</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button type="button"
-                                            class="btn btn-sm"
-                                            onclick="toggleModulo(@modulo.IdModulo)"
-                                            style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); padding: 0.6rem 1.5rem; border-radius: 50px;">
-                                        <span><i class="fas fa-check-square"></i> Seleccionar Módulo</span>
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="admin-form-header">
+                            <i class="fas fa-cube"></i>
+                            <h5>@modulo.Nombre</h5>
+                            <span style="margin-left: auto; font-size: 0.85rem; opacity: 0.8; font-weight: 400; color: var(--white)">@permisosDelModulo.Count permiso(s) disponible(s)</span>
+                            <button type="button"
+                                    onclick="toggleModulo(@modulo.IdModulo)"
+                                    style="margin-left: 1.5rem; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.4); padding: 0.4rem 1.2rem; border-radius: 50px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s;">
+                                <i class="fas fa-check-square"></i> Seleccionar módulo
+                            </button>
                         </div>
 
-                        <!-- Permisos del módulo -->
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
-                            @foreach (var permiso in permisosDelModulo)
-                            {
-                                var isChecked = permisosAsignados.Contains(permiso.IdPermiso);
+                        <div class="admin-form-body">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+                                @foreach (var permiso in permisosDelModulo)
+                                {
+                                    var isChecked = permisosAsignados.Contains(permiso.IdPermiso);
 
-                                <label class="permiso-item" data-modulo-id="@modulo.IdModulo" style="display: flex; align-items: center; gap: 1rem; padding: 1.2rem; background: var(--cream); border: 2px solid transparent; border-radius: 15px; cursor: pointer; transition: all 0.3s;">
-                                    <input type="checkbox"
-                                           name="permisosSeleccionados"
-                                           value="@permiso.IdPermiso"
-                                           class="permiso-checkbox"
-                                           @(isChecked ? "checked" : "")
-                                           onchange="actualizarContador()"
-                                           style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--olive-green);">
-                                    <div style="flex: 1;">
-                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                                            <i class="fas fa-shield-alt" style="color: var(--gold-bright); font-size: 0.9rem;"></i>
-                                            <span style="color: var(--dark-green); font-weight: 600; font-size: 1rem;">@permiso.Nombre</span>
+                                    <label class="permiso-item" data-modulo-id="@modulo.IdModulo"
+                                           style="display: flex; align-items: center; gap: 1rem; padding: 1.2rem; background: var(--cream); border: 2px solid transparent; border-radius: 15px; cursor: pointer; transition: all 0.3s;">
+                                        <input type="checkbox"
+                                               name="permisosSeleccionados"
+                                               value="@permiso.IdPermiso"
+                                               class="permiso-checkbox"
+                                               @(isChecked ? "checked" : "")
+                                               onchange="actualizarContador()"
+                                               style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--olive-green); flex-shrink: 0;">
+                                        <div style="flex: 1;">
+                                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                                                <i class="fas fa-shield-alt" style="color: var(--gold-bright); font-size: 0.9rem;"></i>
+                                                <span style="color: var(--dark-green); font-weight: 600; font-size: 0.95rem;">@permiso.Nombre</span>
+                                            </div>
+                                            <span style="color: var(--charcoal); opacity: 0.6; font-size: 0.8rem;">ID: @permiso.IdPermiso</span>
                                         </div>
-                                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;">ID: @permiso.IdPermiso</span>
-                                    </div>
-                                </label>
-                            }
+                                    </label>
+                                }
+                            </div>
                         </div>
                     </div>
                 }
             }
 
             <!-- Botones de acción -->
-            <div style="display: flex; gap: 1rem; margin-top: 3rem;" data-aos="fade-up">
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;" data-aos="fade-up">
                 <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoRoles", "Rol")'" style="flex: 1;">
                     <span><i class="fas fa-times"></i> Cancelar</span>
                 </button>
-                <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">
                     <span><i class="fas fa-save"></i> Guardar Permisos</span>
                 </button>
             </div>
@@ -157,46 +156,47 @@
 
 @section Scripts {
     <script src="~/js/permiso.js"></script>
-    <script>
-        // Estilos adicionales para los permisos
-        const style = document.createElement('style');
-        style.innerHTML = `
-            .permiso-item:hover {
-                background: var(--white) !important;
-                border-color: var(--olive-green) !important;
-                transform: translateX(5px);
-                box-shadow: var(--shadow-md);
-            }
-            .permiso-item input:checked + div {
-                color: var(--olive-green);
-            }
-        `;
-        document.head.appendChild(style);
+    <style>
+        .permiso-item:hover {
+            background: var(--white) !important;
+            border-color: var(--olive-green) !important;
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
 
-        // Funciones para gestionar permisos
+        .permiso-item:has(input:checked) {
+            background: rgba(32, 116, 118, 0.08) !important;
+            border-color: var(--olive-green) !important;
+        }
+
+        .admin-form-header button:hover {
+            background: rgba(255,255,255,0.35) !important;
+        }
+    </style>
+    <script>
         function seleccionarTodos() {
-            const checkboxes = document.querySelectorAll('.permiso-checkbox');
-            checkboxes.forEach(cb => cb.checked = true);
+            document.querySelectorAll('.permiso-checkbox').forEach(cb => cb.checked = true);
             actualizarContador();
+            mostrarNotificacion('Todos los permisos seleccionados', 'success');
         }
 
         function deseleccionarTodos() {
-            const checkboxes = document.querySelectorAll('.permiso-checkbox');
-            checkboxes.forEach(cb => cb.checked = false);
+            document.querySelectorAll('.permiso-checkbox').forEach(cb => cb.checked = false);
             actualizarContador();
+            mostrarNotificacion('Todos los permisos deseleccionados', 'info');
         }
 
         function toggleModulo(moduloId) {
             const items = document.querySelectorAll(`.permiso-item[data-modulo-id="${moduloId}"] input`);
             const allChecked = Array.from(items).every(cb => cb.checked);
-
             items.forEach(cb => cb.checked = !allChecked);
             actualizarContador();
         }
 
         function actualizarContador() {
-            const checkboxes = document.querySelectorAll('.permiso-checkbox:checked');
-            document.getElementById('contadorPermisos').textContent = checkboxes.length;
+            const checked = document.querySelectorAll('.permiso-checkbox:checked').length;
+            const el = document.getElementById('contadorPermisos');
+            if (el) el.textContent = checked;
         }
     </script>
 }

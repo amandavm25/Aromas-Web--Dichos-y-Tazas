@@ -1,115 +1,104 @@
-﻿<div class="modal fade" id="modalDetallesPromocion" tabindex="-1" aria-labelledby="modalDetallesPromocionLabel" aria-hidden="true">
+﻿<div class="modal fade admin-modal modal-olive" id="modalDetallesPromocion" tabindex="-1" aria-labelledby="modalDetallesPromocionLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+        <div class="modal-content">
+
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalDetallesPromocionLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
-                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetallesPromocionLabel">
+                    <div class="modal-icon">
                         <i class="fas fa-tags"></i>
                     </div>
                     Detalles de la Promoción
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--cream);">
-                <!-- Título de la Promoción -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green);">
-                    <h5 id="detalles-nombre-promocion" style="color: var(--dark-green); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
-                </div>
+            <div class="modal-body">
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                    <!-- Columna Izquierda: Información General -->
-                    <div>
-                        <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i> Información General
-                        </h6>
-
-                        <div style="display: grid; gap: 1rem;">
-                            <!-- Tipo -->
-                            <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-list" style="color: var(--olive-green);"></i> Tipo de Promoción
-                                </label>
-                                <p id="detalles-tipo-promocion" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
-                            </div>
-
-                            <!-- Descuento -->
-                            <div class="feature-card" style="padding: 1.2rem; margin: 0; background: linear-gradient(135deg, rgba(184, 167, 106, 0.1), rgba(197, 179, 88, 0.1));">
-                                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-percent" style="color: var(--gold);"></i> Descuento
-                                </label>
-                                <p id="detalles-descuento-promocion" style="color: var(--gold); font-size: 2rem; font-weight: 700; margin: 0; font-family: var(--font-primary);"></p>
-                            </div>
-
-                            <!-- Estado y Vigencia -->
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                                <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                                    <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-toggle-on" style="color: var(--olive-green);"></i> Estado
-                                    </label>
-                                    <span id="detalles-estado-badge-promocion" class="badge" style="font-size: 0.9rem; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600;"></span>
-                                </div>
-
-                                <div class="feature-card" style="padding: 1.2rem; margin: 0;">
-                                    <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-calendar-check" style="color: var(--olive-green);"></i> Vigencia
-                                    </label>
-                                    <span id="detalles-vigencia-badge-promocion" class="badge" style="font-size: 0.9rem; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600;"></span>
-                                </div>
-                            </div>
+                <!-- Nombre + Tipo -->
+                <div class="modal-entity-header entity-block">
+                    <h5 id="detalles-nombre-promocion" class="modal-entity-name"></h5>
+                    <div class="modal-entity-meta">
+                        <div class="modal-entity-meta-item">
+                            <small>Tipo:</small>
+                            <p id="detalles-tipo-promocion"></p>
                         </div>
-
-                        <!-- Fechas -->
-                        <h6 style="color: var(--dark-green); margin: 2rem 0 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-calendar-alt" style="color: var(--gold-bright);"></i> Período de Vigencia
-                        </h6>
-
-                        <div style="background: linear-gradient(135deg, var(--cream) 0%, #f5ede4 100%); padding: 1.5rem; border-radius: 20px;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--white);">
-                                <div>
-                                    <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.3rem;">Fecha de Inicio</label>
-                                    <strong id="detalles-fecha-inicio" style="color: var(--dark-green); font-size: 1.1rem;">-</strong>
-                                </div>
-                                <div style="text-align: right;">
-                                    <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.3rem;">Fecha de Fin</label>
-                                    <strong id="detalles-fecha-fin" style="color: var(--dark-green); font-size: 1.1rem;">-</strong>
-                                </div>
-                            </div>
-                            <div style="text-align: center; padding-top: 1rem;">
-                                <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.5rem;">Duración Total</label>
-                                <strong id="detalles-duracion" style="color: var(--olive-green); font-size: 1.3rem; font-family: var(--font-primary);">-</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Columna Derecha: Recetas -->
-                    <div>
-                        <h6 style="color: var(--dark-green); margin-bottom: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-utensils" style="color: var(--gold-bright);"></i> Recetas en Promoción
-                        </h6>
-
-                        <div id="lista-recetas-promocion" style="max-height: 500px; overflow-y: auto; padding-right: 10px;">
-                            <!-- Las recetas se cargarán dinámicamente aquí -->
+                        <div class="modal-entity-meta-item">
+                            <small>Recetas:</small>
+                            <p id="detalles-recetas-count-promocion"></p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Descripción (si existe) -->
-                <div id="seccion-descripcion" style="margin-top: 2rem; display: none;">
-                    <h6 style="color: var(--dark-green); margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.7rem;">
-                        <i class="fas fa-align-left" style="color: var(--gold-bright);"></i> Descripción
-                    </h6>
-                    <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; box-shadow: var(--shadow-sm);">
-                        <p id="detalles-descripcion-promocion" style="color: var(--charcoal); opacity: 0.8; line-height: 1.8; margin: 0;"></p>
+                <!-- Descuento, Estado, Vigencia -->
+                <div class="modal-data-grid-3">
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-percent"></i> Descuento
+                        </label>
+                        <p id="detalles-descuento-promocion" class="modal-data-value" style="color: var(--gold); font-size: 1.8rem; font-family: var(--font-primary);"></p>
+                    </div>
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-toggle-on"></i> Estado
+                        </label>
+                        <div>
+                            <span id="detalles-estado-badge-promocion" class="badge" style="font-size: 0.95rem; padding: 0.4rem 1.2rem; border-radius: 50px; font-weight: 600; display: inline-block;"></span>
+                        </div>
+                    </div>
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-calendar-check"></i> Vigencia
+                        </label>
+                        <div>
+                            <span id="detalles-vigencia-badge-promocion" class="badge" style="font-size: 0.95rem; padding: 0.4rem 1.2rem; border-radius: 50px; font-weight: 600; display: inline-block;"></span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Período de vigencia -->
+                <h6 class="modal-subsection-title">
+                    <i class="fas fa-calendar-alt"></i> Período de Vigencia
+                </h6>
+                <div class="modal-summary">
+                    <div class="modal-summary-grid">
+                        <div>
+                            <label class="modal-summary-label">
+                                <i class="fas fa-play-circle"></i> Fecha de Inicio
+                            </label>
+                            <p id="detalles-fecha-inicio" class="modal-summary-value"></p>
+                        </div>
+                        <div>
+                            <label class="modal-summary-label">
+                                <i class="fas fa-stop-circle"></i> Fecha de Fin
+                            </label>
+                            <p id="detalles-fecha-fin" class="modal-summary-value"></p>
+                        </div>
+                        <div>
+                            <label class="modal-summary-label">
+                                <i class="fas fa-clock"></i> Duración Total
+                            </label>
+                            <p id="detalles-duracion" class="modal-summary-value summary-extra"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recetas en Promoción -->
+                <h6 class="modal-subsection-title">
+                    <i class="fas fa-utensils"></i> Recetas en Promoción
+                </h6>
+                <div class="modal-summary">
+                    <div id="lista-recetas-promocion" style="max-height: 350px; overflow-y: auto;">
+                        <!-- Se carga dinámicamente vía fetch -->
+                    </div>
+                </div>
+
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <span><i class="fas fa-times"></i> Cerrar</span>
                 </button>
             </div>
@@ -118,104 +107,96 @@
 </div>
 
 <script>
-    // Datos de demo de recetas en promoción
-    const recetasPromocionDemoData = {
-        1: [
-            { nombre: "Torta de Chocolate", categoria: "Pasteles", precioOriginal: 28000.00, descuento: 20, precioFinal: 22400.00, ahorro: 5600.00 },
-            { nombre: "Cheesecake de Vainilla", categoria: "Pasteles", precioOriginal: 25000.00, descuento: 20, precioFinal: 20000.00, ahorro: 5000.00 }
-        ],
-        2: [
-            { nombre: "Café Capuchino", categoria: "Bebidas Calientes", precioOriginal: 2500.00, descuento: 15, precioFinal: 2125.00, ahorro: 375.00 }
-        ],
-        3: [
-            { nombre: "Galletas de Avena", categoria: "Galletas", precioOriginal: 9000.00, descuento: 50, precioFinal: 4500.00, ahorro: 4500.00 }
-        ],
-        4: [
-            { nombre: "Café Capuchino", categoria: "Bebidas Calientes", precioOriginal: 2500.00, descuento: 25, precioFinal: 1875.00, ahorro: 625.00 },
-            { nombre: "Croissant de Mantequilla", categoria: "Panadería", precioOriginal: 12000.00, descuento: 25, precioFinal: 9000.00, ahorro: 3000.00 }
-        ]
-    };
-
     document.addEventListener('DOMContentLoaded', function () {
+
         const botonesDetalles = document.querySelectorAll('.btn-detalles-promocion');
 
         botonesDetalles.forEach(boton => {
             boton.addEventListener('click', function () {
-                const id = parseInt(this.getAttribute('data-id'));
-                const nombre = this.getAttribute('data-nombre');
-                const tipo = this.getAttribute('data-tipo');
+
+                const id        = parseInt(this.getAttribute('data-id'));
+                const nombre    = this.getAttribute('data-nombre');
+                const tipo      = this.getAttribute('data-tipo');
                 const descuento = this.getAttribute('data-descuento');
-                const inicio = this.getAttribute('data-inicio');
-                const fin = this.getAttribute('data-fin');
-                const vigencia = this.getAttribute('data-vigencia');
-                const estado = this.getAttribute('data-estado');
+                const inicio    = this.getAttribute('data-inicio');
+                const fin       = this.getAttribute('data-fin');
+                const vigencia  = this.getAttribute('data-vigencia');
+                const estado    = this.getAttribute('data-estado');
 
-                // Llenar información general
-                document.getElementById('detalles-nombre-promocion').textContent = nombre;
-                document.getElementById('detalles-tipo-promocion').textContent = tipo;
-                document.getElementById('detalles-descuento-promocion').textContent = descuento + '%';
-                document.getElementById('detalles-fecha-inicio').textContent = inicio;
-                document.getElementById('detalles-fecha-fin').textContent = fin;
+                // Datos básicos
+                document.getElementById('detalles-nombre-promocion').textContent  = nombre;
+                document.getElementById('detalles-tipo-promocion').textContent    = tipo;
+                document.getElementById('detalles-descuento-promocion').textContent = parseFloat(descuento).toFixed(2) + '%';
+                document.getElementById('detalles-fecha-inicio').textContent      = inicio;
+                document.getElementById('detalles-fecha-fin').textContent         = fin;
 
-                // Estado badge
+                // Badge estado
                 const estadoBadge = document.getElementById('detalles-estado-badge-promocion');
-                estadoBadge.textContent = estado;
+                estadoBadge.textContent      = estado;
                 estadoBadge.style.background = estado === 'Activa' ? 'var(--green)' : 'var(--red)';
+                estadoBadge.style.color      = 'white';
 
-                // Vigencia badge
+                // Badge vigencia
                 const vigenciaBadge = document.getElementById('detalles-vigencia-badge-promocion');
-                vigenciaBadge.textContent = vigencia;
-                if (vigencia === 'Vigente') {
-                    vigenciaBadge.style.background = 'var(--green)';
-                } else if (vigencia === 'Próximamente') {
-                    vigenciaBadge.style.background = 'var(--gold)';
-                } else {
-                    vigenciaBadge.style.background = 'var(--red)';
-                }
+                vigenciaBadge.textContent      = vigencia;
+                vigenciaBadge.style.color      = 'white';
+                vigenciaBadge.style.background = vigencia === 'Vigente'       ? 'var(--green)' :
+                                                 vigencia === 'Próximamente'  ? 'var(--gold)'  : 'var(--red)';
 
                 // Calcular duración
-                const fechaInicio = new Date(inicio.split('/').reverse().join('-'));
-                const fechaFin = new Date(fin.split('/').reverse().join('-'));
-                const diferenciaDias = Math.ceil((fechaFin - fechaInicio) / (1000 * 60 * 60 * 24)) + 1;
-                document.getElementById('detalles-duracion').textContent = diferenciaDias + ' días';
+                const fi   = new Date(inicio.split('/').reverse().join('-'));
+                const ff   = new Date(fin.split('/').reverse().join('-'));
+                const dias = Math.ceil((ff - fi) / (1000 * 60 * 60 * 24)) + 1;
+                document.getElementById('detalles-duracion').textContent = dias + ' días';
 
-                // Cargar recetas
-                const recetas = recetasPromocionDemoData[id] || [];
+                // ── Cargar recetas reales desde el servidor ──────────
                 const listaRecetas = document.getElementById('lista-recetas-promocion');
-                listaRecetas.innerHTML = '';
+                document.getElementById('detalles-recetas-count-promocion').textContent = 'cargando...';
+                listaRecetas.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--charcoal);opacity:0.6;"><i class="fas fa-spinner fa-spin"></i> Cargando recetas...</p>';
 
-                if (recetas.length === 0) {
-                    listaRecetas.innerHTML = '<p style="text-align: center; color: var(--charcoal); opacity: 0.7; padding: 2rem;">No hay recetas asociadas</p>';
-                } else {
-                    recetas.forEach(rec => {
-                        const div = document.createElement('div');
-                        div.className = 'feature-card';
-                        div.style.cssText = 'padding: 1.5rem; margin-bottom: 1rem;';
-                        div.innerHTML = `
-                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-                                <div style="flex: 1;">
-                                    <strong style="color: var(--dark-green); font-size: 1.1rem; display: block; margin-bottom: 0.3rem;">${rec.nombre}</strong>
-                                    <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">${rec.categoria}</span>
-                                </div>
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; padding-top: 1rem; border-top: 2px solid var(--cream);">
+                fetch(`/Promocion/ObtenerRecetasPromocion?id=${id}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Error al obtener recetas');
+                        return response.json();
+                    })
+                    .then(recetas => {
+                        document.getElementById('detalles-recetas-count-promocion').textContent = recetas.length + ' receta(s)';
+                        listaRecetas.innerHTML = '';
+
+                        if (recetas.length === 0) {
+                            listaRecetas.innerHTML = '<p style="text-align:center;color:var(--charcoal);opacity:0.7;padding:2rem;">No hay recetas asociadas a esta promoción</p>';
+                            return;
+                        }
+
+                        recetas.forEach(rec => {
+                            const div = document.createElement('div');
+                            div.className = 'modal-data-cell';
+                            div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:0.5rem;';
+                            div.innerHTML = `
                                 <div>
-                                    <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.75rem; font-weight: 600; display: block; margin-bottom: 0.3rem;">Precio Original</label>
-                                    <span style="color: var(--charcoal); opacity: 0.7; text-decoration: line-through; font-size: 0.95rem;">₡${rec.precioOriginal.toLocaleString('es-CR', { minimumFractionDigits: 2 })}</span>
+                                    <p class="modal-data-value" style="margin:0;">${rec.nombreReceta}</p>
+                                    <small style="color:var(--charcoal);opacity:0.7;">${rec.categoriaReceta ?? ''}</small>
                                 </div>
-                                <div>
-                                    <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.75rem; font-weight: 600; display: block; margin-bottom: 0.3rem;">Precio Final</label>
-                                    <strong style="color: var(--green); font-size: 1.1rem;">₡${rec.precioFinal.toLocaleString('es-CR', { minimumFractionDigits: 2 })}</strong>
+                                <div style="text-align:right;">
+                                    <small style="color:var(--charcoal);opacity:0.6;text-decoration:line-through;display:block;">
+                                        ₡${parseFloat(rec.precioOriginal).toLocaleString('es-CR', { minimumFractionDigits: 2 })}
+                                    </small>
+                                    <span class="modal-summary-value" style="color:var(--green);">
+                                        ₡${parseFloat(rec.precioPromocional).toLocaleString('es-CR', { minimumFractionDigits: 2 })}
+                                    </span>
+                                    <small style="color:var(--gold);display:block;font-weight:600;">
+                                        Ahorro: ₡${parseFloat(rec.ahorro).toLocaleString('es-CR', { minimumFractionDigits: 2 })}
+                                    </small>
                                 </div>
-                                <div>
-                                    <label style="color: var(--charcoal); opacity: 0.7; font-size: 0.75rem; font-weight: 600; display: block; margin-bottom: 0.3rem;">Ahorro</label>
-                                    <strong style="color: var(--gold); font-size: 1.1rem;">₡${rec.ahorro.toLocaleString('es-CR', { minimumFractionDigits: 2 })}</strong>
-                                </div>
-                            </div>
-                        `;
-                        listaRecetas.appendChild(div);
+                            `;
+                            listaRecetas.appendChild(div);
+                        });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        document.getElementById('detalles-recetas-count-promocion').textContent = '0 receta(s)';
+                        listaRecetas.innerHTML = '<p style="text-align:center;color:var(--red);padding:2rem;"><i class="fas fa-exclamation-triangle"></i> Error al cargar las recetas</p>';
                     });
-                }
             });
         });
     });

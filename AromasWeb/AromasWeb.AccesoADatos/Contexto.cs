@@ -219,7 +219,6 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.FechaFin).IsRequired().HasColumnName("fechafin");
                 entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);
 
-                // Relación con TipoPromocion
                 entity.HasOne(e => e.TipoPromocion)
                     .WithMany()
                     .HasForeignKey(e => e.IdTipoPromocion)
@@ -240,7 +239,7 @@ namespace AromasWeb.AccesoADatos
 
                 // Relaciones
                 entity.HasOne(e => e.Promocion)
-                    .WithMany()
+                    .WithMany(p => p.PromocionRecetas)
                     .HasForeignKey(e => e.IdPromocion)
                     .OnDelete(DeleteBehavior.Cascade);
 

@@ -15,7 +15,8 @@
                 Gestión de Roles
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
-                Roles del Sistema
+                Roles del
+                <span class="hero-title-accent">Sistema</span>
             </h1>
             <p class="hero-subtitle">
                 Administra los roles y permisos de usuarios
@@ -33,7 +34,7 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1400px;">
 
-        <!-- Barra de búsqueda y botones -->
+        <!-- Barra de búsqueda y botón -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoRoles", "Rol")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
@@ -44,7 +45,7 @@
                            placeholder="Buscar por nombre..."
                            style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
                 </div>
-                <select name="filtroEstado" 
+                <select name="filtroEstado"
                         style="padding: 1rem 2rem; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); box-shadow: var(--shadow-sm);">
                     <option value="">Todos los estados</option>
                     <option value="true" @@(ViewBag.FiltroEstado == "true" ? "selected" : "")>Activos</option>
@@ -56,17 +57,17 @@
             </form>
 
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("CrearRol", "Rol")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                <a href="@Url.Action("CrearRol", "Rol")" class="btn btn-primary" style="white-space: nowrap;">
                     <span><i class="fas fa-plus"></i> Agregar Rol</span>
                 </a>
             </div>
         </div>
 
-        <!-- Información de búsqueda -->
+        <!-- Chip de búsqueda activa -->
         @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || !string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string))
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
-                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
+                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                     <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                     @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
                     {
@@ -74,9 +75,9 @@
                     }
                     @if (!string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string))
                     {
-                        <span>- Filtrado por estado: <strong style="color: var(--gold-bright);">@(ViewBag.FiltroEstado == "true" ? "Activos" : "Inactivos")</strong></span>
+                        <span>— Filtrado por: <strong style="color: var(--gold-bright);">@(ViewBag.FiltroEstado == "true" ? "Activos" : "Inactivos")</strong></span>
                     }
-                    - <strong>@(Model?.Count ?? 0)</strong> rol(es) encontrado(s)
+                    — <strong>@(Model?.Count ?? 0)</strong> rol(es) encontrado(s)
                 </p>
             </div>
         }
@@ -105,46 +106,50 @@
                                         <i class="fas fa-user-shield" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
                                         @rol.Nombre
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); max-width: 400px;">@(rol.Descripcion ?? "Sin descripción")</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); max-width: 400px;">
+                                        @(rol.Descripcion ?? "Sin descripción")
+                                    </td>
                                     <td style="padding: 1.2rem;">
                                         @if (rol.Estado)
                                         {
-                                            <span style="background: var(--green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activo</span>
+                                            <span style="background: var(--green); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activo</span>
                                         }
                                         else
                                         {
-                                            <span style="background: var(--red); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactivo</span>
+                                            <span style="background: var(--red); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactivo</span>
                                         }
                                     </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        <!-- Editar -->
                                         <button type="button"
                                                 class="btn btn-sm"
                                                 onclick="window.location.href='@Url.Action("EditarRol", "Rol", new { id = rol.IdRol })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                style="background: var(--olive-green); color: white; border: none; margin: 0 0.2rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </button>
+                                        <!-- Ver detalles -->
                                         <button type="button"
                                                 class="btn btn-sm btn-detalles-rol"
                                                 data-id="@rol.IdRol"
                                                 data-nombre="@rol.Nombre"
                                                 data-descripcion="@(rol.Descripcion ?? "Sin descripción")"
                                                 data-estado="@(rol.Estado ? "Activo" : "Inactivo")"
-                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-cantidadempleados="@(ViewBag.CantidadEmpleados != null && ((Dictionary<int,int>)ViewBag.CantidadEmpleados).ContainsKey(rol.IdRol) ? ((Dictionary<int,int>)ViewBag.CantidadEmpleados)[rol.IdRol] : 0) empleado(s)"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesRol"
+                                                style="background: var(--gold); color: white; border: none; margin: 0 0.2rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 title="Ver detalles">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <form method="post" action="@Url.Action("CambiarEstado", "Rol", new { id = rol.IdRol })" style="display: inline;">
-                                            @Html.AntiForgeryToken()
-                                            <button type="submit"
-                                                    class="btn btn-sm"
-                                                    style="background: @(rol.Estado ? "var(--yellow)" : "var(--green)"); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                    title="@(rol.Estado ? "Desactivar" : "Activar")">
-                                                <i class="fas fa-@(rol.Estado ? "toggle-off" : "toggle-on")"></i>
-                                            </button>
-                                        </form>
+                                        <!-- Asignar permisos -->
+                                        <button type="button"
+                                                onclick="window.location.href='@Url.Action("AsignarPermisos", "Permiso", new { idRol = rol.IdRol })'"
+                                                class="btn btn-sm"
+                                                style="background: var(--dark-green); color: white; border: none; margin: 0 0.2rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                title="Asignar permisos">
+                                            <i class="fas fa-shield-alt"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -157,7 +162,7 @@
                                     <p style="margin: 0; font-size: 1.1rem;">No se encontraron roles</p>
                                     @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
                                     {
-                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
+                                        <p style="margin: 0.5rem 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
                                     }
                                 </td>
                             </tr>
@@ -169,9 +174,8 @@
             <!-- Footer de paginación -->
             <div class="admin-table-footer">
                 <div class="admin-table-footer-text">
-                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                    Mostrando <strong id="startRecord">0</strong> – <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
                 </div>
-
                 <div class="pagination-buttons">
                     <button id="btnAnterior" class="pagination-btn">
                         <i class="fas fa-chevron-left"></i> Anterior
@@ -185,100 +189,9 @@
     </div>
 </section>
 
-<!-- Modal Detalles -->
-<div class="modal fade" id="modalDetallesRol" tabindex="-1" aria-labelledby="modalDetallesRolLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 20px; border: none; overflow: hidden;">
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none;">
-                <h5 class="modal-title" id="modalDetallesRolLabel">
-                    <i class="fas fa-info-circle"></i> Detalles del Rol
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="padding: 2rem;">
-                <div style="margin-bottom: 1.5rem;">
-                    <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Nombre:</label>
-                    <p id="detalleNombre" style="color: var(--dark-green); font-size: 1.1rem; font-weight: 600; margin: 0;"></p>
-                </div>
-                <div style="margin-bottom: 1.5rem;">
-                    <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Descripción:</label>
-                    <p id="detalleDescripcion" style="color: var(--charcoal); margin: 0;"></p>
-                </div>
-                <div>
-                    <label style="color: var(--olive-green); font-weight: 600; display: block; margin-bottom: 0.5rem;">Estado:</label>
-                    <span id="detalleEstado"></span>
-                </div>
-            </div>
-            <div class="modal-footer" style="border: none; padding: 1rem 2rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 50px; padding: 0.75rem 2rem;">
-                    <i class="fas fa-times"></i> Cerrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Eliminar -->
-<div class="modal fade" id="modalEliminarRol" tabindex="-1" aria-labelledby="modalEliminarRolLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 20px; border: none; overflow: hidden;">
-            <div class="modal-header" style="background: var(--red); color: var(--white); border: none;">
-                <h5 class="modal-title" id="modalEliminarRolLabel">
-                    <i class="fas fa-exclamation-triangle"></i> Confirmar Eliminación
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="formEliminarRol" method="post">
-                @Html.AntiForgeryToken()
-                <div class="modal-body" style="padding: 2rem;">
-                    <p style="font-size: 1.1rem; color: var(--charcoal); margin-bottom: 1.5rem;">
-                        ¿Está seguro que desea eliminar el siguiente rol?
-                    </p>
-                    <div style="background: var(--cream); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--red);">
-                        <p style="margin: 0; color: var(--dark-green);"><strong>Nombre:</strong> <span id="eliminarNombre"></span></p>
-                    </div>
-                    <p style="margin-top: 1.5rem; color: var(--red); font-weight: 600;">
-                        <i class="fas fa-exclamation-circle"></i> Esta acción no se puede deshacer
-                    </p>
-                </div>
-                <div class="modal-footer" style="border: none; padding: 1rem 2rem;">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 50px; padding: 0.75rem 2rem;">
-                        <i class="fas fa-times"></i> Cancelar
-                    </button>
-                    <button type="submit" class="btn btn-danger" style="border-radius: 50px; padding: 0.75rem 2rem; background: var(--red); border: none;">
-                        <i class="fas fa-trash"></i> Eliminar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<!-- Modales como partials -->
+<partial name="_ModalDetallesRol" />
 
 @section Scripts {
-    <script>
-        // Modal de detalles
-        document.querySelectorAll('.btn-detalles-rol').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.getElementById('detalleNombre').textContent = this.dataset.nombre;
-                document.getElementById('detalleDescripcion').textContent = this.dataset.descripcion;
-                
-                const estado = this.dataset.estado;
-                const estadoHtml = estado === 'Activo' 
-                    ? '<span style="background: var(--green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activo</span>'
-                    : '<span style="background: var(--red); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactivo</span>';
-                document.getElementById('detalleEstado').innerHTML = estadoHtml;
-            });
-        });
-
-        // Modal de eliminar
-        document.querySelectorAll('.btn-eliminar-rol').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.dataset.id;
-                const nombre = this.dataset.nombre;
-                
-                document.getElementById('eliminarNombre').textContent = nombre;
-                document.getElementById('formEliminarRol').action = '@Url.Action("EliminarRol", "Rol")'.replace('0', id) + '?id=' + id;
-            });
-        });
-    </script>
+    <script src="~/js/rol.js"></script>
 }

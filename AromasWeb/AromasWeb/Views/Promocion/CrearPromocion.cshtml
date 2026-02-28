@@ -31,26 +31,29 @@
 </section>
 
 <!-- Formulario Section -->
-<section style="padding: 4rem 0; background: var(--cream);">
-    <div class="container" style="max-width: 1200px;">
+<section class="admin-form-section">
+    <div class="container" style="max-width: 80%;">
         @using (Html.BeginForm("CrearPromocion", "Promocion", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
-            <div class="contact-form-wrapper" data-aos="fade-up">
-                <form class="contact-form">
-                    @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+            <div class="admin-form-wrapper" data-aos="fade-up">
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                    <!-- Información Básica -->
-                    <h4 style="color: var(--dark-green); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
-                        <i class="fas fa-info-circle"></i> Información Básica
-                    </h4>
+                <!-- Bloque 1: Información Básica -->
+                <div class="admin-form-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h5>Información Básica</h5>
+                </div>
 
-                    <!-- Nombre de la Promoción -->
+                <div class="admin-form-body">
+
+                    <!-- Nombre -->
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Nombre, new { @class = "form-label" })
-                        <i class="fas fa-tag"></i>
-                        Nombre de la Promoción
+                        <label>
+                            <i class="fas fa-tag"></i>
+                            Nombre de la Promoción
+                        </label>
                         @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Descuento Navideño" } })
                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                     </div>
@@ -93,6 +96,10 @@
                         </label>
                         @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "3", placeholder = "Breve descripción de la promoción..." })
                         @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Máximo 500 caracteres
+                        </small>
                     </div>
 
                     <!-- Fechas -->
@@ -116,34 +123,33 @@
                         </div>
                     </div>
 
-                    <!-- Vista previa de duración -->
-                    <div id="duracionPromocion" class="feature-card" style="margin-bottom: 2rem; padding: 1.5rem; display: none; background: linear-gradient(135deg, rgba(143, 142, 106, 0.1), rgba(62, 74, 58, 0.1));">
-                        <div style="display: flex; align-items: center; gap: 1rem;">
-                            <div style="width: 50px; height: 50px; background: var(--olive-green); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-clock" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <div>
-                                <strong style="color: var(--dark-green); display: block; font-size: 1.1rem;">Duración de la Promoción</strong>
-                                <span id="textoDuracion" style="color: var(--charcoal); opacity: 0.7;"></span>
-                            </div>
+                    <!-- Duración -->
+                    <div id="duracionPromocion" class="admin-form-info-box" style="display: none;">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Duración de la Promoción</strong>
+                            <p id="textoDuracion"></p>
                         </div>
                     </div>
 
-                    <!-- Recetas Asociadas -->
-                    <h4 style="color: var(--dark-green); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 0.7rem;">
-                        <i class="fas fa-utensils"></i> Recetas en Promoción
-                    </h4>
+                </div>
 
-                    <div id="recetas-container">
-                        <!-- Las recetas se agregarán dinámicamente aquí -->
-                    </div>
+                <!-- Bloque 2: Recetas Asociadas -->
+                <div class="admin-form-header" style="margin-top: 0;">
+                    <i class="fas fa-utensils"></i>
+                    <h5>Recetas en Promoción</h5>
+                </div>
 
-                    <button type="button" id="btnAgregarReceta" class="btn btn-secondary" style="width: 100%; margin-bottom: 2rem;">
+                <div class="admin-form-body">
+
+                    <div id="recetas-container"></div>
+
+                    <button type="button" id="btnAgregarReceta" class="btn btn-secondary" style="width: 100%; margin-bottom: 1.5rem;">
                         <span><i class="fas fa-plus"></i> Agregar Receta</span>
                     </button>
 
                     <!-- Resumen -->
-                    <div class="testimonial-card" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: white; padding: 2rem; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: white; padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;">
                         <h5 style="margin: 0 0 1rem; color: white; font-weight: 600;">
                             <i class="fas fa-chart-line"></i> Resumen de la Promoción
                         </h5>
@@ -161,32 +167,36 @@
                         </div>
                     </div>
 
-                    <!-- Estado -->
-                    <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer; border: 2px solid var(--cream-dark);">
-                            @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
-                            <span style="flex: 1;">
-                                <i class="fas fa-toggle-on"></i>
-                                Estado (Activa/Inactiva)
-                            </span>
-                        </label>
-                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                        <small style="display: block; margin-top: 0.5rem; color: var(--charcoal); opacity: 0.7;">
-                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
-                            Marca como activa para que la promoción esté disponible inmediatamente
-                        </small>
-                    </div>
+                </div>
 
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoPromociones", "Promocion")'" style="flex: 1;">
-                            <span><i class="fas fa-times"></i> Cancelar</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-3d" style="flex: 1;">
-                            <span><i class="fas fa-save"></i> Guardar Promoción</span>
-                        </button>
-                    </div>
-                </form>
+                <!-- Estado -->
+                <div class="form-group">
+                    <label for="estadoCheckbox" style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
+                        <input type="checkbox" name="Estado" id="estadoCheckbox" value="true"
+                               class="form-check-input" style="width:20px;height:20px;flex-shrink:0;cursor:pointer;" />
+                        <input type="hidden" name="Estado" value="false" />
+                        <span style="flex: 1;">
+                            <i class="fas fa-toggle-on"></i>
+                            Estado (Activo/Inactivo)
+                        </span>
+                    </label>
+                    <small class="admin-form-hint">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Marca como activa para que la promoción esté disponible
+                    </small>
+                </div>
+
+                <!-- Botones -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoPromociones", "Promocion")'">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>Guardar Promoción</span>
+                    </button>
+                </div>
             </div>
         }
     </div>
@@ -198,36 +208,22 @@
         <button type="button" class="btn-eliminar-receta" style="position: absolute; top: 10px; right: 10px; width: 35px; height: 35px; background: var(--red); color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
             <i class="fas fa-times"></i>
         </button>
-
         <div class="form-row">
             <div class="form-group" style="flex: 2;">
-                <label>
-                    <i class="fas fa-utensils"></i>
-                    Receta
-                </label>
+                <label><i class="fas fa-utensils"></i> Receta</label>
                 <select name="Recetas[INDEX].IdReceta" class="form-control select-receta" required>
                     <option value="">-- Selecciona una receta --</option>
-                    <!-- Se llenará con las recetas disponibles -->
                 </select>
             </div>
-
             <div class="form-group">
-                <label>
-                    <i class="fas fa-coins-sign"></i>
-                    Precio Original
-                </label>
+                <label><i class="fas fa-coins"></i> Precio Original</label>
                 <input type="text" class="form-control precio-original" readonly style="background: var(--cream);" value="₡0.00">
             </div>
-
             <div class="form-group">
-                <label>
-                    <i class="fas fa-tag"></i>
-                    Precio con Descuento
-                </label>
+                <label><i class="fas fa-tag"></i> Precio con Descuento</label>
                 <input type="text" class="form-control precio-descuento" readonly style="background: var(--cream); color: var(--green); font-weight: 700;" value="₡0.00">
             </div>
         </div>
-
         <div class="info-receta" style="display: none; background: var(--cream); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
@@ -245,5 +241,29 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/promocion.js"></script>
+    <script src="~/js/promocion.js" asp-append-version="true"></script>
+    <script>
+        window.recetasDisponibles = [];
+
+        @if (ViewBag.RecetasDisponibles != null)
+        {
+                <text>window.recetasDisponibles = [</text>
+                var primero = true;
+                foreach (var rec in (List<AromasWeb.Abstracciones.ModeloUI.Receta>)ViewBag.RecetasDisponibles)
+                {
+                        if (!primero)
+                        {
+
+                        <text>,</text>
+                    }
+                        primero = false;
+                        var idReceta = rec.IdReceta;
+                        var nombreReceta = (rec.Nombre ?? "").Replace("'", "\\'");
+                        var precioVenta = rec.PrecioVenta ?? 0m;
+                        var categoria = (rec.NombreCategoria ?? "").Replace("'", "\\'");
+                        <text>{ idReceta: @idReceta, nombre: '@Html.Raw(nombreReceta)', precioVenta: @precioVenta.ToString(System.Globalization.CultureInfo.InvariantCulture), nombreCategoria: '@Html.Raw(categoria)' }</text>
+                }
+                <text>];</text>
+        }
+    </script>
 }

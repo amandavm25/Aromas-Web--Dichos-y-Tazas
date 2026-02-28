@@ -37,8 +37,8 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
 
-        <!-- Resumen de Promociones -->
-        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+        <!-- Tarjetas de resumen -->
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" data-aos="fade-up">
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
                 <div class="feature-icon">
                     <i class="fas fa-tags"></i>
@@ -49,13 +49,21 @@
 
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
                 <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@promoVigentes</h3>
+                <p style="margin: 0.5rem 0;">Vigentes Hoy</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
                     <i class="fas fa-percent"></i>
                 </div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@descuentoPromedio.ToString("F1")%</h3>
                 <p style="margin: 0.5rem 0;">Descuento Promedio</p>
             </div>
 
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
                 <div class="feature-icon">
                     <i class="fas fa-utensils"></i>
                 </div>
@@ -65,7 +73,7 @@
         </div>
 
         <!-- Barra de búsqueda y botones -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoPromociones", "Promocion")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
                     <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
@@ -99,9 +107,10 @@
             </div>
         }
 
-        <!-- Filtros por tipo y vigencia -->
-        <div style="margin-bottom: 3rem;" data-aos="fade-up">
+        <!-- Filtros -->
+        <div style="margin-bottom: 2rem;" data-aos="fade-up">
             <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: start;">
+
                 <!-- Filtro por tipo -->
                 <div style="flex: 1; min-width: 300px;">
                     <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary); display: block; margin-bottom: 0.7rem;">
@@ -113,7 +122,6 @@
                            style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
                             <span><i class="fas fa-th"></i> Todas</span>
                         </a>
-
                         @if (ViewBag.TodosTipos != null)
                         {
                             @foreach (var tipo in (List<AromasWeb.Abstracciones.ModeloUI.TipoPromocion>)ViewBag.TodosTipos)
@@ -135,7 +143,7 @@
                     </span>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <a href="@Url.Action("ListadoPromociones", "Promocion")"
-                           class="btn @(string.IsNullOrEmpty(ViewBag.Vigencia) ? "btn-primary" : "btn-secondary")"
+                           class="btn @(string.IsNullOrEmpty(ViewBag.Vigencia as string) ? "btn-primary" : "btn-secondary")"
                            style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
                             <span><i class="fas fa-th"></i> Todas</span>
                         </a>
@@ -159,82 +167,77 @@
             </div>
         </div>
 
-        <!-- Grid principal con tabla y panel lateral -->
-        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem;" data-aos="fade-up">
+        <!-- Grid principal: tabla + panel lateral -->
+        <div style="display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start;" data-aos="fade-up">
+
             <!-- Tabla Principal -->
-            <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
+            <div class="admin-table-container">
                 <div class="table-responsive">
-                    <table style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
+                    <table class="admin-table" id="laTablaDeProm">
+                        <thead>
                             <tr>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Tipo</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Descuento</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Inicio</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Fin</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Vigencia</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Recetas</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th style="text-align: center;">Descuento</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th>Vigencia</th>
+                                <th>Estado</th>
+                                <th style="text-align: center;">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (Model != null && Model.Any())
                             {
+                                int contador = 1;
                                 foreach (var promo in Model)
                                 {
-                                    var colorVigencia = promo.VigenciaTexto == "Vigente" ? "var(--green)" :
-                                    promo.VigenciaTexto == "Próximamente" ? "var(--yellow)" : "var(--gray)";
-
-                                    <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1); transition: all 0.3s;">
-                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600;">@promo.IdPromocion</td>
-                                        <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
-                                            <i class="fas fa-tag" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
+                                    <tr>
+                                        <td class="td-id">@contador</td>
+                                        <td class="td-nombre">
                                             @promo.Nombre
                                         </td>
-                                        <td style="padding: 1.2rem; color: var(--charcoal);">
-                                            <span style="background: var(--cream); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; display: inline-block;">
-                                                @promo.NombreTipoPromocion
-                                            </span>
+                                        <td>
+                                            <span class="badge-cantidad">@promo.NombreTipoPromocion</span>
                                         </td>
-                                        <td style="padding: 1.2rem; text-align: center;">
-                                            <span style="background: var(--gold-bright); color: var(--white); padding: 0.5rem 1rem; border-radius: 50%; font-weight: 700; font-size: 1.1rem;">@promo.PorcentajeDescuento%</span>
+                                        <td style="text-align: center; font-weight: 700; color: var(--gold); font-size: 1.05rem;">
+                                            @promo.PorcentajeDescuento%
                                         </td>
-                                        <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@promo.FechaInicio.ToString("dd/MM/yyyy")</td>
-                                        <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">@promo.FechaFin.ToString("dd/MM/yyyy")</td>
-                                        <td style="padding: 1.2rem;">
-                                            <span style="background: @colorVigencia; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
+                                        <td style="color: var(--charcoal);">@promo.FechaInicio.ToString("dd/MM/yyyy")</td>
+                                        <td style="color: var(--charcoal);">@promo.FechaFin.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            @{
+                                                var claseVigencia = promo.VigenciaTexto == "Vigente" ? "activo" :
+                                                promo.VigenciaTexto == "Próximamente" ? "badge-pendiente" : "inactivo";
+                                            }
+                                            <span class="badge-estado @claseVigencia">
                                                 @promo.VigenciaTexto
                                                 @if (promo.DiasRestantes > 0 && promo.VigenciaTexto == "Vigente")
                                                 {
-                                                    <span>(@promo.DiasRestantes días)</span>
+                                                    <span>(@promo.DiasRestantes d.)</span>
                                                 }
                                             </span>
                                         </td>
-                                        <td style="padding: 1.2rem; text-align: center;">
-                                            <span style="background: var(--olive-green); color: var(--white); padding: 0.4rem 0.8rem; border-radius: 50%; font-weight: 700;">@promo.CantidadRecetas</span>
-                                        </td>
-                                        <td style="padding: 1.2rem;">
+                                        <td>
                                             @if (promo.Estado)
                                             {
-                                                <span style="background: var(--green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activa</span>
+                                                <span class="badge-estado activo">Activa</span>
                                             }
                                             else
                                             {
-                                                <span style="background: var(--red); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactiva</span>
+                                                <span class="badge-estado inactivo">Inactiva</span>
                                             }
                                         </td>
-                                        <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        <td style="text-align: center; white-space: nowrap;">
                                             <button type="button"
-                                                    class="btn btn-sm"
+                                                    class="btn-table-action btn-table-edit"
                                                     onclick="window.location.href='@Url.Action("EditarPromocion", "Promocion", new { id = promo.IdPromocion })'"
-                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                             <button type="button"
-                                                    class="btn btn-sm btn-detalles-promocion"
+                                                    class="btn-table-action btn-table-view btn-detalles-promocion"
                                                     data-id="@promo.IdPromocion"
                                                     data-nombre="@promo.Nombre"
                                                     data-tipo="@promo.NombreTipoPromocion"
@@ -244,7 +247,6 @@
                                                     data-vigencia="@promo.VigenciaTexto"
                                                     data-recetas="@promo.CantidadRecetas"
                                                     data-estado="@promo.EstadoTexto"
-                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalDetallesPromocion"
                                                     title="Ver detalles">
@@ -252,14 +254,19 @@
                                             </button>
                                         </td>
                                     </tr>
+                                    contador++;
                                 }
                             }
                             else
                             {
                                 <tr>
-                                    <td colspan="10" style="padding: 3rem; text-align: center; color: var(--charcoal); opacity: 0.7;">
-                                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.3;"></i>
-                                        <p style="margin: 0; font-size: 1.1rem;">No se encontraron promociones</p>
+                                    <td colspan="10" class="admin-table-empty">
+                                        <i class="fas fa-inbox"></i>
+                                        <p>No se encontraron promociones</p>
+                                        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || ViewBag.Tipo != null || !string.IsNullOrWhiteSpace(ViewBag.Vigencia as string))
+                                        {
+                                            <p class="empty-subtitle">Intenta con otros filtros o términos de búsqueda</p>
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -272,7 +279,6 @@
                     <div class="admin-table-footer-text">
                         Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
                     </div>
-
                     <div class="pagination-buttons">
                         <button id="btnAnterior" class="pagination-btn">
                             <i class="fas fa-chevron-left"></i> Anterior
@@ -286,10 +292,11 @@
 
             <!-- Panel Lateral -->
             <div style="position: sticky; top: 100px;">
-                <!-- Promociones Vigentes -->
+
+                <!-- Vigentes Hoy -->
                 <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: 1.5rem;">
                     <div style="background: var(--olive-green); color: white; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-check-circle" style="font-size: 1.5rem;"></i>
                             <div>
                                 <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Vigentes Hoy</h5>
@@ -309,7 +316,7 @@
                 }
                 <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
                     <div style="background: var(--gold); color: white; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.7rem;">
                             <i class="fas fa-clock" style="font-size: 1.5rem;"></i>
                             <div>
                                 <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Por Vencer</h5>
@@ -317,7 +324,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="alertasPorVencer" style="padding: 1rem; display: grid; gap: 0.7rem;">
+                    <div style="padding: 1rem; display: grid; gap: 0.7rem;">
                         @if (promoPorVencer != null && promoPorVencer.Any())
                         {
                             @foreach (var promo in promoPorVencer)
@@ -339,14 +346,14 @@
                         }
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 </section>
 
 <partial name="_ModalDetallesPromocion" />
-<partial name="_ModalEliminarPromocion" />
 
 @section Scripts {
-    <script src="~/js/promocion.js"></script>
+    <script src="~/js/promocion.js" asp-append-version="true"></script>
 }

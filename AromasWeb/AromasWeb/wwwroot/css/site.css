@@ -2496,7 +2496,7 @@ admin-table-footer
 }
 
 /* Estado vacío */
-.admin-table-empty {
+.admin-table-empty {enable-background
     padding: 3rem;
     text-align: center;
     color: var(--charcoal);

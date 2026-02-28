@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Gestión de Bitácora";
+    var totalRegistros = Model?.Count ?? 0;
+    var accionesHoy = Model?.Count(b => b.Fecha.Date == DateTime.Now.Date) ?? 0;
+    var empleadosUnicos = Model?.Select(b => b.IdEmpleado).Distinct().Count() ?? 0;
+    var modulosActivos = Model?.Select(b => b.IdModulo).Distinct().Count() ?? 0;
 }
 
 <!-- Hero Section -->
@@ -33,7 +37,42 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
 
-        <!-- Barra de búsqueda y botones -->
+        <!-- Resumen de Actividad -->
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalRegistros</h3>
+                <p style="margin: 0.5rem 0;">Total de Registros</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@accionesHoy</h3>
+                <p style="margin: 0.5rem 0;">Acciones Hoy</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@empleadosUnicos</h3>
+                <p style="margin: 0.5rem 0;">Empleados Únicos</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-th-large"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@modulosActivos</h3>
+                <p style="margin: 0.5rem 0;">Módulos en Actividad</p>
+            </div>
+        </div>
+
+        <!-- Barra de búsqueda -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
             <form method="get" action="@Url.Action("ListadoBitacoras", "Bitacora")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
                 <div style="position: relative; flex: 1;">
@@ -51,7 +90,7 @@
         </div>
 
         <!-- Filtros -->
-        <div style="margin-bottom: 3rem;" data-aos="fade-up">
+        <div style="margin-bottom: 2rem;" data-aos="fade-up">
             <form method="get" action="@Url.Action("ListadoBitacoras", "Bitacora")" id="formFiltros">
                 <input type="hidden" name="buscar" value="@ViewBag.Buscar" />
                 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
@@ -63,14 +102,14 @@
                         <i class="fas fa-th-large" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
                         <select name="filtroModulo" style="border-radius: 50px; padding: 0.6rem 1.5rem 0.6rem 50px; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white); min-width: 180px; color: var(--dark-green); font-weight: 600;">
                             <option value="">Todos los módulos</option>
-                            <option value="Empleados" @@(ViewBag.FiltroModulo == "Empleados" ? "selected" : "")>Empleados</option>
-                            <option value="Roles" @@(ViewBag.FiltroModulo == "Roles" ? "selected" : "")>Roles</option>
-                            <option value="Asistencia" @@(ViewBag.FiltroModulo == "Asistencia" ? "selected" : "")>Asistencia</option>
-                            <option value="Planilla" @@(ViewBag.FiltroModulo == "Planilla" ? "selected" : "")>Planilla</option>
-                            <option value="Vacaciones" @@(ViewBag.FiltroModulo == "Vacaciones" ? "selected" : "")>Vacaciones</option>
-                            <option value="Insumos" @@(ViewBag.FiltroModulo == "Insumos" ? "selected" : "")>Insumos</option>
-                            <option value="Recetas" @@(ViewBag.FiltroModulo == "Recetas" ? "selected" : "")>Recetas</option>
-                            <option value="Promociones" @@(ViewBag.FiltroModulo == "Promociones" ? "selected" : "")>Promociones</option>
+                            <option value="Empleados" @@(ViewBag.FiltroModulo= ="Empleados" ? "selected" : "" )>Empleados</option>
+                            <option value="Roles" @@(ViewBag.FiltroModulo= ="Roles" ? "selected" : "" )>Roles</option>
+                            <option value="Asistencia" @@(ViewBag.FiltroModulo= ="Asistencia" ? "selected" : "" )>Asistencia</option>
+                            <option value="Planilla" @@(ViewBag.FiltroModulo= ="Planilla" ? "selected" : "" )>Planilla</option>
+                            <option value="Vacaciones" @@(ViewBag.FiltroModulo= ="Vacaciones" ? "selected" : "" )>Vacaciones</option>
+                            <option value="Insumos" @@(ViewBag.FiltroModulo= ="Insumos" ? "selected" : "" )>Insumos</option>
+                            <option value="Recetas" @@(ViewBag.FiltroModulo= ="Recetas" ? "selected" : "" )>Recetas</option>
+                            <option value="Promociones" @@(ViewBag.FiltroModulo= ="Promociones" ? "selected" : "" )>Promociones</option>
                         </select>
                     </div>
 
@@ -79,7 +118,6 @@
                         <input type="date"
                                name="fechaInicio"
                                value="@ViewBag.FechaInicio"
-                               placeholder="Fecha inicio"
                                style="padding: 0.6rem 1.5rem 0.6rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 0.9rem; background: var(--white); color: var(--dark-green); font-weight: 600;">
                     </div>
 
@@ -88,7 +126,6 @@
                         <input type="date"
                                name="fechaFin"
                                value="@ViewBag.FechaFin"
-                               placeholder="Fecha fin"
                                style="padding: 0.6rem 1.5rem 0.6rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 0.9rem; background: var(--white); color: var(--dark-green); font-weight: 600;">
                     </div>
 
@@ -106,11 +143,11 @@
             </form>
         </div>
 
-        <!-- Información de búsqueda -->
+        <!-- Información de filtros activos -->
         @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || !string.IsNullOrWhiteSpace(ViewBag.FiltroModulo as string) || !string.IsNullOrWhiteSpace(ViewBag.FechaInicio as string))
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
-                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem;">
+                <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                     <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
                     @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
                     {
@@ -118,205 +155,114 @@
                     }
                     @if (!string.IsNullOrWhiteSpace(ViewBag.FiltroModulo as string))
                     {
-                        <span> - Módulo: <strong style="color: var(--gold-bright);">@ViewBag.FiltroModulo</strong></span>
+                        <span>· Módulo: <strong style="color: var(--gold-bright);">@ViewBag.FiltroModulo</strong></span>
                     }
                     @if (!string.IsNullOrWhiteSpace(ViewBag.FechaInicio as string))
                     {
-                        <span> - Desde: <strong style="color: var(--gold-bright);">@ViewBag.FechaInicio</strong></span>
+                        <span>· Desde: <strong style="color: var(--gold-bright);">@ViewBag.FechaInicio</strong></span>
                     }
                     @if (!string.IsNullOrWhiteSpace(ViewBag.FechaFin as string))
                     {
-                        <span> - Hasta: <strong style="color: var(--gold-bright);">@ViewBag.FechaFin</strong></span>
+                        <span>· Hasta: <strong style="color: var(--gold-bright);">@ViewBag.FechaFin</strong></span>
                     }
-                    <span> | <strong>@(Model?.Count ?? 0)</strong> registro(s) encontrado(s)</span>
+                    <span>| <strong>@(Model?.Count ?? 0)</strong> registro(s) encontrado(s)</span>
                 </p>
             </div>
         }
 
-        <!-- Layout Principal: Tabla + Estadísticas -->
-        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;" data-aos="fade-up">
-
-            <!-- Tabla Principal -->
-            <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                <div class="table-responsive">
-                    <table id="laTablaDeBitacoras" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
-                        <thead style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%);">
-                            <tr>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha y Hora</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Módulo</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Acción</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Descripción</th>
-                                <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null && Model.Any())
-                            {
-                                foreach (var bitacora in Model)
-                                {
-                                    <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                        <td style="padding: 1.2rem; color: var(--dark-green);">
-                                            <div>
-                                                <strong style="display: block;">@bitacora.Fecha.ToString("dd/MM/yyyy")</strong>
-                                                <small style="color: var(--charcoal); opacity: 0.7;">@bitacora.Fecha.ToString("HH:mm:ss")</small>
-                                            </div>
-                                        </td>
-                                        <td style="padding: 1.2rem; color: var(--dark-green);">
-                                            <strong>@bitacora.NombreEmpleado</strong>
-                                        </td>
-                                        <td style="padding: 1.2rem;">
-                                            <span style="background: var(--olive-green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">
-                                                @bitacora.NombreModulo
-                                            </span>
-                                        </td>
-                                        <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@bitacora.Accion</td>
-                                        <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.85; max-width: 300px;">
-                                            @(bitacora.Descripcion ?? "Sin descripción")
-                                        </td>
-                                        <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                            <button type="button"
-                                                    class="btn btn-sm btn-detalles"
-                                                    data-id="@bitacora.IdBitacora"
-                                                    data-empleado="@bitacora.NombreEmpleado"
-                                                    data-modulo="@bitacora.NombreModulo"
-                                                    data-accion="@bitacora.Accion"
-                                                    data-tabla="@(bitacora.TablaAfectada ?? "N/A")"
-                                                    data-descripcion="@(bitacora.Descripcion ?? "Sin descripción")"
-                                                    data-datos-anteriores="@(bitacora.DatosAnteriores ?? "")"
-                                                    data-datos-nuevos="@(bitacora.DatosNuevos ?? "")"
-                                                    data-fecha="@bitacora.FechaFormateada"
-                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalDetallesBitacora"
-                                                    title="Ver detalles">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            else
+        <!-- Tabla Principal -->
+        <div class="admin-table-container" data-aos="fade-up">
+            <div class="table-responsive">
+                <table class="admin-table" id="laTablaDeBitacoras">
+                    <thead>
+                        <tr>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha y Hora</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Empleado</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Módulo</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Acción</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Descripción</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var bitacora in Model)
                             {
                                 <tr>
-                                    <td colspan="6" style="padding: 3rem; text-align: center; color: var(--charcoal);">
-                                        <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
-                                        <p style="margin: 0; font-size: 1.1rem;">No se encontraron registros en la bitácora</p>
-                                        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || !string.IsNullOrWhiteSpace(ViewBag.FiltroModulo as string))
-                                        {
-                                            <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros criterios de búsqueda</p>
-                                        }
+                                    <td style="padding: 1.2rem; color: var(--dark-green);">
+                                        <div>
+                                            <strong style="display: block;">@bitacora.Fecha.ToString("dd/MM/yyyy")</strong>
+                                            <small style="color: var(--charcoal); opacity: 0.7;">@bitacora.Fecha.ToString("HH:mm:ss")</small>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--dark-green);">
+                                        <strong>@bitacora.NombreEmpleado</strong>
+                                    </td>
+                                    <td style="padding: 1.2rem;">
+                                        <span class="badge" style="background: var(--olive-green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                            @bitacora.NombreModulo
+                                        </span>
+                                    </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); font-weight: 600;">@bitacora.Accion</td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.85; max-width: 300px;">
+                                        @(bitacora.Descripcion ?? "Sin descripción")
+                                    </td>
+                                    <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
+                                        <button type="button"
+                                                class="btn btn-sm btn-detalles"
+                                                data-id="@bitacora.IdBitacora"
+                                                data-empleado="@bitacora.NombreEmpleado"
+                                                data-modulo="@bitacora.NombreModulo"
+                                                data-accion="@bitacora.Accion"
+                                                data-tabla="@(bitacora.TablaAfectada ?? "N/A")"
+                                                data-descripcion="@(bitacora.Descripcion ?? "Sin descripción")"
+                                                data-datos-anteriores="@(bitacora.DatosAnteriores ?? "")"
+                                                data-datos-nuevos="@(bitacora.DatosNuevos ?? "")"
+                                                data-fecha="@bitacora.FechaFormateada"
+                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalDetallesBitacora"
+                                                title="Ver detalles">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             }
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Footer de paginación -->
-                <div class="admin-table-footer">
-                    <div class="admin-table-footer-text">
-                        Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
-                    </div>
-
-                    <div class="pagination-buttons">
-                        <button id="btnAnterior" class="pagination-btn">
-                            <i class="fas fa-chevron-left"></i> Anterior
-                        </button>
-                        <button id="btnSiguiente" class="pagination-btn">
-                            Siguiente <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="admin-table-empty">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>No se encontraron registros en la bitácora</p>
+                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || !string.IsNullOrWhiteSpace(ViewBag.FiltroModulo as string))
+                                    {
+                                        <p class="empty-subtitle">Intenta con otros criterios de búsqueda</p>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Panel de Estadísticas (Derecha) -->
-            <div style="position: sticky; top: 100px;">
-                <!-- Resumen -->
-                <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;">
-                    <div style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); color: white; padding: 1.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.7rem;">
-                            <i class="fas fa-chart-pie" style="font-size: 1.5rem;"></i>
-                            <div>
-                                <h5 style="margin: 0; font-weight: 600; color: white; font-size: 1.1rem;">Resumen de Actividad</h5>
-                                <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">Estadísticas generales</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="padding: 1.5rem; display: grid; gap: 1.2rem;">
-                        <!-- Total Registros -->
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--olive-green);">
-                            <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">
-                                <i class="fas fa-history" style="color: var(--olive-green);"></i>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600;">TOTAL REGISTROS</span>
-                            </div>
-                            <strong style="color: var(--dark-green); font-size: 1.8rem; font-weight: 700; display: block;">@(Model?.Count ?? 0)</strong>
-                        </div>
-
-                        <!-- Acciones Hoy -->
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">
-                                <i class="fas fa-calendar-day" style="color: var(--gold);"></i>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600;">ACCIONES HOY</span>
-                            </div>
-                            <strong style="color: var(--dark-green); font-size: 1.8rem; font-weight: 700; display: block;">@(Model?.Count(b => b.Fecha.Date == DateTime.Now.Date) ?? 0)</strong>
-                        </div>
-
-                        <!-- Usuarios Activos -->
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--olive-green);">
-                            <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">
-                                <i class="fas fa-users" style="color: var(--olive-green);"></i>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600;">EMPLEADOS ÚNICOS</span>
-                            </div>
-                            <strong style="color: var(--dark-green); font-size: 1.8rem; font-weight: 700; display: block;">@(Model?.Select(b => b.IdEmpleado).Distinct().Count() ?? 0)</strong>
-                        </div>
-
-                        <!-- Módulos Activos -->
-                        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; border-left: 3px solid var(--gold);">
-                            <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem;">
-                                <i class="fas fa-th-large" style="color: var(--gold);"></i>
-                                <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600;">MÓDULOS ACTIVOS</span>
-                            </div>
-                            <strong style="color: var(--dark-green); font-size: 1.8rem; font-weight: 700; display: block;">@(Model?.Select(b => b.IdModulo).Distinct().Count() ?? 0)</strong>
-                        </div>
-                    </div>
+            <!-- Footer de paginación -->
+            <div class="admin-table-footer">
+                <div class="admin-table-footer-text">
+                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
                 </div>
-
-                <!-- Últimas Acciones -->
-                @if (Model != null && Model.Any())
-                {
-                    <div style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden; margin-top: 1.5rem;">
-                        <div style="background: var(--olive-green); color: white; padding: 1rem 1.5rem;">
-                            <h5 style="margin: 0; font-weight: 600; font-size: 1rem;">
-                                <i class="fas fa-clock" style="margin-right: 0.5rem;"></i>
-                                Acciones Recientes
-                            </h5>
-                        </div>
-                        <div style="padding: 1rem; max-height: 300px; overflow-y: auto;">
-                            @foreach (var bitacora in Model.Take(5))
-                            {
-                                <div style="padding: 0.8rem; border-bottom: 1px solid var(--cream); display: flex; align-items: center; gap: 0.8rem;">
-                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                        <i class="fas fa-history" style="color: var(--olive-green);"></i>
-                                    </div>
-                                    <div style="flex: 1; min-width: 0;">
-                                        <div style="font-weight: 600; color: var(--dark-green); font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                            @bitacora.Accion
-                                        </div>
-                                        <div style="font-size: 0.75rem; color: var(--charcoal); opacity: 0.7;">
-                                            @bitacora.NombreEmpleado
-                                        </div>
-                                        <div style="font-size: 0.7rem; color: var(--charcoal); opacity: 0.6;">
-                                            @bitacora.Fecha.ToString("dd/MM/yyyy HH:mm")
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
+                <div class="pagination-buttons">
+                    <button id="btnAnterior" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btnSiguiente" class="pagination-btn">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
+
     </div>
 </section>
 
