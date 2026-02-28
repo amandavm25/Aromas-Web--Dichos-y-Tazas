@@ -191,7 +191,10 @@ namespace AromasWeb.AccesoADatos.Empleados
                 Telefono = empleadoAD.Telefono,
                 Cargo = empleadoAD.Cargo,
                 FechaContratacion = empleadoAD.FechaContratacion,
-                Estado = empleadoAD.Estado
+                Estado = empleadoAD.Estado,
+                ContactoEmergencia = empleadoAD.ContactoEmergencia,
+                Alergias = empleadoAD.Alergias,
+                Medicamentos = empleadoAD.Medicamentos
             };
         }
     }

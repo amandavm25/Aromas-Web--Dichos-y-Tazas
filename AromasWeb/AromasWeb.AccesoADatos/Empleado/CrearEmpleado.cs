@@ -81,7 +81,10 @@ namespace AromasWeb.AccesoADatos.Empleados
                 Cargo = empleado.Cargo?.Trim(),
                 FechaContratacion = fechaContratacionUtc, // ⭐ Usar la fecha convertida a UTC
                 Contrasena = empleado.Contrasena,
-                Estado = empleado.Estado
+                Estado = empleado.Estado,
+                ContactoEmergencia = empleado.ContactoEmergencia?.Trim(),
+                Alergias = empleado.Alergias?.Trim(),
+                Medicamentos = empleado.Medicamentos?.Trim()
             };
         }
     }

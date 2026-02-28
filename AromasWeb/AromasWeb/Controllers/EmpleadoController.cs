@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
+using AromasWeb.Helpers;
 
 namespace AromasWeb.Controllers
 {
@@ -65,85 +66,79 @@ namespace AromasWeb.Controllers
         // POST: Empleado/CrearEmpleado
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CrearEmpleado(Empleado empleado, string ConfirmarContrasena)
+    public async Task<IActionResult> CrearEmpleado(Empleado empleado, string ConfirmarContrasena)
+    {
+        try
         {
-            try
+            // Remover validaciones de campos calculados
+            ModelState.Remove("NombreRol");
+            ModelState.Remove("EstadoTexto");
+            ModelState.Remove("FechaContratacionFormateada");
+            ModelState.Remove("MesesTrabajados");
+            ModelState.Remove("AnosTrabajados");
+            ModelState.Remove("EsEmpleadoAntiguo");
+            ModelState.Remove("TarifaActual");
+            ModelState.Remove("ContactoEmergencia");
+            ModelState.Remove("Alergias");
+            ModelState.Remove("Medicamentos");
+
+            // ⭐ Validación de contraseña con requisitos robustos
+            if (string.IsNullOrWhiteSpace(empleado.Contrasena))
             {
-                // ⭐ DIAGNÓSTICO
-                if (!ModelState.IsValid)
+                ModelState.AddModelError("Contrasena", "La contraseña es requerida");
+            }
+            else
+            {
+                if (!PasswordValidator.EsContrasenaValida(empleado.Contrasena, out string mensajeError))
                 {
-                    foreach (var modelState in ModelState.Values)
-                    {
-                        foreach (var error in modelState.Errors)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Error de validación: {error.ErrorMessage}");
-                        }
-                    }
-                }
-
-                // Remover validación de campos calculados
-                ModelState.Remove("NombreRol");
-                ModelState.Remove("EstadoTexto");
-                ModelState.Remove("FechaContratacionFormateada");
-                ModelState.Remove("MesesTrabajados");
-                ModelState.Remove("AnosTrabajados");
-                ModelState.Remove("EsEmpleadoAntiguo");
-                ModelState.Remove("TarifaActual");
-
-                // ⭐ VALIDACIÓN MANUAL DE CONTRASEÑA 
-                if (string.IsNullOrWhiteSpace(empleado.Contrasena))
-                {
-                    ModelState.AddModelError("Contrasena", "La contraseña es requerida");
-                }
-                else if (empleado.Contrasena.Length < 8)
-                {
-                    ModelState.AddModelError("Contrasena", "La contraseña debe tener al menos 8 caracteres");
-                }
-
-                // Validar que las contraseñas coincidan
-                if (!string.IsNullOrEmpty(empleado.Contrasena) && empleado.Contrasena != ConfirmarContrasena)
-                {
-                    ModelState.AddModelError("ConfirmarContrasena", "Las contraseñas no coinciden");
-                }
-
-                if (string.IsNullOrWhiteSpace(ConfirmarContrasena))
-                {
-                    ModelState.AddModelError("ConfirmarContrasena", "Debes confirmar la contraseña");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    // ⭐ MOSTRAR ERRORES EN LA VISTA
-                    ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
-                    CargarRoles();
-                    return View(empleado);
-                }
-
-                int resultado = await _crearEmpleado.Crear(empleado);
-
-                if (resultado > 0)
-                {
-                    TempData["Mensaje"] = "Empleado registrado correctamente";
-                    return RedirectToAction(nameof(ListadoEmpleados));
-                }
-                else
-                {
-                    ModelState.AddModelError("", "No se pudo registrar el empleado en la base de datos");
-                    CargarRoles();
-                    return View(empleado);
+                    ModelState.AddModelError("Contrasena", mensajeError);
                 }
             }
-            catch (Exception ex)
+
+            if (string.IsNullOrWhiteSpace(ConfirmarContrasena))
             {
-                System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
-                ModelState.AddModelError("", $"Error al registrar el empleado: {ex.Message}");
+                ModelState.AddModelError("ConfirmarContrasena", "Debes confirmar la contraseña");
+            }
+            else if (empleado.Contrasena != ConfirmarContrasena)
+            {
+                ModelState.AddModelError("ConfirmarContrasena", "Las contraseñas no coinciden");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
+                CargarRoles();
+                return View(empleado);
+            }
+
+            // Establecer estado activo por defecto
+            empleado.Estado = true;
+
+            int resultado = await _crearEmpleado.Crear(empleado);
+
+            if (resultado > 0)
+            {
+                TempData["Mensaje"] = "Empleado registrado correctamente";
+                return RedirectToAction(nameof(ListadoEmpleados));
+            }
+            else
+            {
+                ModelState.AddModelError("", "No se pudo registrar el empleado en la base de datos");
                 CargarRoles();
                 return View(empleado);
             }
         }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
+            ModelState.AddModelError("", $"Error al registrar el empleado: {ex.Message}");
+            CargarRoles();
+            return View(empleado);
+        }
+    }
 
-        // GET: Empleado/EditarEmpleado/5
-        public IActionResult EditarEmpleado(int id)
+    // GET: Empleado/EditarEmpleado/5
+    public IActionResult EditarEmpleado(int id)
         {
             try
             {
@@ -184,7 +179,11 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("ContrasenaActual");
                 ModelState.Remove("ContrasenaNueva");
                 ModelState.Remove("ConfirmarContrasenaNueva");
+                ModelState.Remove("ContactoEmergencia");
+                ModelState.Remove("Alergias");
+                ModelState.Remove("Medicamentos");
 
+                // Validación de contraseña: Solo si algún campo de contraseña tiene valor
                 bool intentaCambiarContrasena = !string.IsNullOrWhiteSpace(ContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ContrasenaActual);
@@ -200,7 +199,6 @@ namespace AromasWeb.Controllers
                         return View(empleado);
                     }
 
-                    // Validar que se ingresó la contraseña actual
                     if (string.IsNullOrWhiteSpace(ContrasenaActual))
                     {
                         ModelState.AddModelError("ContrasenaActual", "Debes ingresar la contraseña actual");
@@ -213,23 +211,24 @@ namespace AromasWeb.Controllers
                         }
                     }
 
-                    // Validar nueva contraseña
                     if (string.IsNullOrWhiteSpace(ContrasenaNueva))
                     {
                         ModelState.AddModelError("ContrasenaNueva", "Debes ingresar la nueva contraseña");
                     }
-                    else if (ContrasenaNueva.Length < 8)
+                    else
                     {
-                        ModelState.AddModelError("ContrasenaNueva", "La nueva contraseña debe tener al menos 8 caracteres");
+                        // Validación robusta de la nueva contraseña
+                        if (!PasswordValidator.EsContrasenaValida(ContrasenaNueva, out string mensajeError))
+                        {
+                            ModelState.AddModelError("ContrasenaNueva", mensajeError);
+                        }
                     }
 
-                    // Validar confirmación de contraseña
                     if (string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
                     {
                         ModelState.AddModelError("ConfirmarContrasenaNueva", "Debes confirmar la nueva contraseña");
                     }
 
-                    // Validar que las contraseñas nuevas coincidan
                     if (!string.IsNullOrWhiteSpace(ContrasenaNueva) && !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
                     {
                         if (ContrasenaNueva != ConfirmarContrasenaNueva)
@@ -238,7 +237,6 @@ namespace AromasWeb.Controllers
                         }
                     }
 
-                    // Si hay errores de validación, regresar a la vista
                     if (!ModelState.IsValid)
                     {
                         ViewBag.ErrorMessage = "Por favor, corrige los errores en el cambio de contraseña";
@@ -246,32 +244,15 @@ namespace AromasWeb.Controllers
                         return View(empleado);
                     }
 
-                    // Asignar la nueva contraseña
                     empleado.Contrasena = ContrasenaNueva;
                 }
                 else
                 {
-                    // No está cambiando contraseña, dejamos el campo en null para no actualizarlo
                     empleado.Contrasena = null;
                 }
 
-                // Validar el resto del formulario
                 if (!ModelState.IsValid)
                 {
-                    // DIAGNÓSTICO: Ver qué validaciones están fallando
-                    System.Diagnostics.Debug.WriteLine("=== ERRORES DE VALIDACIÓN ===");
-                    foreach (var key in ModelState.Keys)
-                    {
-                        var errors = ModelState[key].Errors;
-                        if (errors.Count > 0)
-                        {
-                            foreach (var error in errors)
-                            {
-                                System.Diagnostics.Debug.WriteLine($"Campo: {key} - Error: {error.ErrorMessage}");
-                            }
-                        }
-                    }
-
                     ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
                     CargarRoles();
                     return View(empleado);

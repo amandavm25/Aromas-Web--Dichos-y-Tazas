@@ -356,6 +356,9 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.FechaContratacion).IsRequired().HasColumnName("fechacontratacion");
                 entity.Property(e => e.Contrasena).HasMaxLength(255).HasColumnName("contrasena");
                 entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);
+                entity.Property(e => e.ContactoEmergencia).HasMaxLength(200).HasColumnName("contactoemergencia");
+                entity.Property(e => e.Alergias).HasMaxLength(500).HasColumnName("alergias");
+                entity.Property(e => e.Medicamentos).HasMaxLength(500).HasColumnName("medicamentos");
 
                 // Relación con Rol
                 entity.HasOne(e => e.Rol)

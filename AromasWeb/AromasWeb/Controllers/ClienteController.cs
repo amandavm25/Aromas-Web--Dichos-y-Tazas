@@ -3,6 +3,7 @@ using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Cliente;
 using System;
 using System.Threading.Tasks;
+using AromasWeb.Helpers;
 
 namespace AromasWeb.Controllers
 {
@@ -73,33 +74,35 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("EsClienteFrecuente");
                 ModelState.Remove("UltimaReserva");
 
-                // Validación manual de contraseña
+                // Validación robusta de contraseña
                 if (string.IsNullOrWhiteSpace(cliente.Contrasena))
                 {
                     ModelState.AddModelError("Contrasena", "La contraseña es requerida");
                 }
-                else if (cliente.Contrasena.Length < 8)
+                else
                 {
-                    ModelState.AddModelError("Contrasena", "La contraseña debe tener al menos 8 caracteres");
-                }
-
-                if (!string.IsNullOrEmpty(cliente.Contrasena) && cliente.Contrasena != ConfirmarContrasena)
-                {
-                    ModelState.AddModelError("ConfirmarContrasena", "Las contraseñas no coinciden");
+                    if (!PasswordValidator.EsContrasenaValida(cliente.Contrasena, out string mensajeError))
+                    {
+                        ModelState.AddModelError("Contrasena", mensajeError);
+                    }
                 }
 
                 if (string.IsNullOrWhiteSpace(ConfirmarContrasena))
                 {
                     ModelState.AddModelError("ConfirmarContrasena", "Debes confirmar la contraseña");
                 }
+                else if (cliente.Contrasena != ConfirmarContrasena)
+                {
+                    ModelState.AddModelError("ConfirmarContrasena", "Las contraseñas no coinciden");
+                }
 
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
+                    TempData["Error"] = "Por favor, corrige los errores del formulario";
                     return View(cliente);
                 }
 
-                // Establecer fecha de registro
+                cliente.Estado = true;
                 cliente.FechaRegistro = DateTime.Now;
 
                 int resultado = await _crearCliente.Crear(cliente);
@@ -111,14 +114,27 @@ namespace AromasWeb.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "No se pudo registrar el cliente en la base de datos");
+                    TempData["Error"] = "No se pudo registrar el cliente en la base de datos";
                     return View(cliente);
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
-                ModelState.AddModelError("", $"Error al registrar el cliente: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error en CrearCliente: {ex.Message}");
+
+                if (ex.Message.Contains("identificación"))
+                {
+                    TempData["Error"] = "Ya existe un cliente registrado con esa identificación";
+                }
+                else if (ex.Message.Contains("correo"))
+                {
+                    TempData["Error"] = "Ya existe un cliente registrado con ese correo electrónico";
+                }
+                else
+                {
+                    TempData["Error"] = $"Error al registrar el cliente: {ex.Message}";
+                }
+
                 return View(cliente);
             }
         }
@@ -164,14 +180,12 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("ContrasenaNueva");
                 ModelState.Remove("ConfirmarContrasenaNueva");
 
-                // Validación de contraseña: Solo si algún campo de contraseña tiene valor
                 bool intentaCambiarContrasena = !string.IsNullOrWhiteSpace(ContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ContrasenaActual);
 
                 if (intentaCambiarContrasena)
                 {
-                    // ⭐ Obtener el cliente actual de la base de datos para validar contraseña
                     var clienteActual = _obtenerCliente.Obtener(cliente.IdCliente);
 
                     if (clienteActual == null)
@@ -180,14 +194,12 @@ namespace AromasWeb.Controllers
                         return View(cliente);
                     }
 
-                    // Validar todos los campos de contraseña
                     if (string.IsNullOrWhiteSpace(ContrasenaActual))
                     {
                         ModelState.AddModelError("ContrasenaActual", "Debes ingresar la contraseña actual");
                     }
                     else
                     {
-                        // ⭐ Validar que la contraseña actual sea correcta
                         if (clienteActual.Contrasena != ContrasenaActual)
                         {
                             ModelState.AddModelError("ContrasenaActual", "La contraseña actual es incorrecta");
@@ -198,9 +210,13 @@ namespace AromasWeb.Controllers
                     {
                         ModelState.AddModelError("ContrasenaNueva", "Debes ingresar la nueva contraseña");
                     }
-                    else if (ContrasenaNueva.Length < 8)
+                    else
                     {
-                        ModelState.AddModelError("ContrasenaNueva", "La nueva contraseña debe tener al menos 8 caracteres");
+                        // ⭐ Validación robusta de la nueva contraseña
+                        if (!PasswordValidator.EsContrasenaValida(ContrasenaNueva, out string mensajeError))
+                        {
+                            ModelState.AddModelError("ContrasenaNueva", mensajeError);
+                        }
                     }
 
                     if (string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
@@ -216,19 +232,16 @@ namespace AromasWeb.Controllers
                         }
                     }
 
-                    // Si hay errores de validación, regresar a la vista
                     if (!ModelState.IsValid)
                     {
                         ViewBag.ErrorMessage = "Por favor, corrige los errores en el cambio de contraseña";
                         return View(cliente);
                     }
 
-                    // Asignar la nueva contraseña
                     cliente.Contrasena = ContrasenaNueva;
                 }
                 else
                 {
-                    // No está cambiando contraseña, dejamos el campo en null para no actualizarlo
                     cliente.Contrasena = null;
                 }
 

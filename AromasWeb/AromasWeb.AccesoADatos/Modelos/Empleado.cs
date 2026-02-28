@@ -46,6 +46,15 @@ namespace AromasWeb.AccesoADatos.Modelos
         [Required]
         public bool Estado { get; set; }
 
+        [StringLength(200)]
+        public string? ContactoEmergencia { get; set; }
+
+        [StringLength(500)]
+        public string? Alergias { get; set; }
+
+        [StringLength(500)]
+        public string? Medicamentos { get; set; }
+
         // Propiedades de navegación
         public virtual RolAD Rol { get; set; }
 
