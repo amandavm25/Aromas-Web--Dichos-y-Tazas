@@ -46,8 +46,22 @@
                         <div class="admin-form-info-box" style="border-color: rgba(47,158,49,0.3); background: rgba(47,158,49,0.06);">
                             <i class="fas fa-check-circle" style="color: var(--green);"></i>
                             <div>
-                                <strong style="color: var(--green);">¡Correo enviado!</strong>
+                                <strong style="color: var(--green);">¡Código enviado!</strong>
                                 <p>@TempData["Mensaje"]</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- Mensaje de error -->
+                @if (TempData["Error"] != null)
+                {
+                    <div class="admin-form-body" style="padding-bottom: 0;">
+                        <div class="admin-form-info-box" style="border-color: rgba(231,76,60,0.3); background: rgba(231,76,60,0.06);">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--red);"></i>
+                            <div>
+                                <strong style="color: var(--red);">Error</strong>
+                                <p>@TempData["Error"]</p>
                             </div>
                         </div>
                     </div>
@@ -66,7 +80,7 @@
                         <i class="fas fa-envelope"></i>
                         <div>
                             <strong>¿Cómo funciona?</strong>
-                            <p>Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña. El enlace será válido por <strong>24 horas</strong>.</p>
+                            <p>Ingresa tu correo y te enviaremos un código de 6 dígitos para restablecer tu contraseña. El código será válido por <strong>15 minutos</strong>.</p>
                         </div>
                     </div>
 
@@ -76,7 +90,7 @@
                             <i class="fas fa-envelope"></i>
                             Correo Electrónico Registrado
                         </label>
-                        <input type="email" name="Correo" class="form-control" placeholder="correo@ejemplo.com" required />
+                        <input type="email" name="correo" class="form-control" placeholder="correo@ejemplo.com" required autofocus />
                         <small class="admin-form-hint">
                             <i class="fas fa-info-circle"></i>
                             Ingresa el correo con el que te registraste
@@ -89,8 +103,8 @@
                         <div>
                             <strong>Importante</strong>
                             <ul style="margin: 0.4rem 0 0; padding-left: 1.2rem; line-height: 1.8;">
-                                <li>El enlace de recuperación expira en 24 horas</li>
-                                <li>Solo puedes usar el enlace una vez</li>
+                                <li>El código de recuperación expira en 15 minutos</li>
+                                <li>Solo puedes usar el código una vez</li>
                                 <li>Si no recibes el correo en 5 minutos, revisa spam</li>
                             </ul>
                         </div>
@@ -104,9 +118,9 @@
                         <i class="fas fa-arrow-left"></i>
                         <span>Volver al Login</span>
                     </button>
-                    <button type="button" class="btn btn-primary btn-3d" onclick="window.location.href='@Url.Action("RestablecerContrasenna", "Auth")'">
+                    <button type="submit" class="btn btn-primary btn-3d">
                         <i class="fas fa-paper-plane"></i>
-                        <span>Enviar Enlace</span>
+                        <span>Enviar Código</span>
                     </button>
                 </div>
 
@@ -131,18 +145,25 @@
                             <div style="width: 36px; height: 36px; background: var(--olive-green); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">2</div>
                             <div class="admin-form-info-box" style="flex: 1; margin: 0; padding: 0.8rem 1rem;">
                                 <i class="fas fa-inbox" style="font-size: 1.1rem;"></i>
-                                <div><strong>Revisa tu correo</strong><p>Te enviaremos un enlace de recuperación (revisa spam)</p></div>
+                                <div><strong>Revisa tu correo</strong><p>Te enviaremos un código de 6 dígitos (revisa spam)</p></div>
                             </div>
                         </div>
                         <div style="display: flex; gap: 1rem; align-items: center;">
                             <div style="width: 36px; height: 36px; background: var(--olive-green); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">3</div>
                             <div class="admin-form-info-box" style="flex: 1; margin: 0; padding: 0.8rem 1rem;">
-                                <i class="fas fa-lock-open" style="font-size: 1.1rem;"></i>
-                                <div><strong>Crea una nueva contraseña</strong><p>Haz clic en el enlace y establece tu nueva contraseña</p></div>
+                                <i class="fas fa-key" style="font-size: 1.1rem;"></i>
+                                <div><strong>Ingresa el código</strong><p>Verifica tu identidad con el código recibido</p></div>
                             </div>
                         </div>
                         <div style="display: flex; gap: 1rem; align-items: center;">
                             <div style="width: 36px; height: 36px; background: var(--olive-green); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">4</div>
+                            <div class="admin-form-info-box" style="flex: 1; margin: 0; padding: 0.8rem 1rem;">
+                                <i class="fas fa-lock-open" style="font-size: 1.1rem;"></i>
+                                <div><strong>Crea una nueva contraseña</strong><p>Establece tu nueva contraseña segura</p></div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <div style="width: 36px; height: 36px; background: var(--olive-green); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">5</div>
                             <div class="admin-form-info-box" style="flex: 1; margin: 0; padding: 0.8rem 1rem;">
                                 <i class="fas fa-sign-in-alt" style="font-size: 1.1rem;"></i>
                                 <div><strong>¡Listo! Inicia sesión</strong><p>Ya podrás acceder con tu nueva contraseña</p></div>
@@ -172,16 +193,16 @@
                     ¿Qué hago si no recibo el correo?
                 </h5>
                 <p style="color: var(--charcoal); opacity: 0.8; margin: 0; line-height: 1.7; padding-left: 2.2rem;">
-                    Primero revisa tu carpeta de spam. Si después de 10 minutos no lo encuentras, intenta solicitar un nuevo enlace o contacta a soporte.
+                    Primero revisa tu carpeta de spam. Si después de 10 minutos no lo encuentras, intenta solicitar un nuevo código o contacta a soporte.
                 </p>
             </div>
             <div class="feature-card" style="padding: 2rem; margin: 0;" data-aos="fade-up" data-aos-delay="100">
                 <h5 style="color: var(--dark-green); margin: 0 0 1rem; display: flex; align-items: center; gap: 0.7rem;">
                     <i class="fas fa-question-circle" style="color: var(--gold-bright);"></i>
-                    ¿El enlace expiró, qué hago?
+                    ¿El código expiró, qué hago?
                 </h5>
                 <p style="color: var(--charcoal); opacity: 0.8; margin: 0; line-height: 1.7; padding-left: 2.2rem;">
-                    Regresa a esta página y solicita un nuevo enlace. Puedes hacerlo cuantas veces necesites.
+                    Regresa a esta página y solicita un nuevo código. Puedes hacerlo cuantas veces necesites.
                 </p>
             </div>
         </div>
@@ -190,50 +211,12 @@
 
 @section Scripts {
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        // Auto-focus en el input del correo
+        document.addEventListener('DOMContentLoaded', function() {
             var emailInput = document.querySelector('input[type="email"]');
             if (emailInput) {
-                emailInput.addEventListener('input', function () { this.style.borderColor = ''; });
-            }
-
-            var btnEnviar = document.querySelector('.btn-primary.btn-3d');
-            if (btnEnviar) {
-                btnEnviar.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    var email = emailInput ? emailInput.value : '';
-                    var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
-                    if (!email || email.trim() === '') {
-                        mostrarNotificacion('Por favor ingresa tu correo electrónico', 'warning');
-                        if (emailInput) { emailInput.style.borderColor = 'var(--gold-bright)'; emailInput.focus(); }
-                        return;
-                    }
-                    if (!emailRegex.test(email)) {
-                        mostrarNotificacion('Por favor ingresa un correo electrónico válido', 'error');
-                        if (emailInput) { emailInput.style.borderColor = 'var(--red)'; emailInput.focus(); }
-                        return;
-                    }
-                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Enviando...</span>';
-                    this.disabled = true;
-                    setTimeout(() => {
-                        mostrarNotificacion('Correo enviado correctamente. Redirigiendo...', 'success');
-                        setTimeout(() => { window.location.href = '/Auth/RestablecerContrasena'; }, 1500);
-                    }, 1000);
-                });
+                emailInput.focus();
             }
         });
-
-        function mostrarNotificacion(mensaje, tipo) {
-            var colores = { 'success': 'var(--green)', 'error': 'var(--red)', 'warning': 'var(--gold-bright)', 'info': 'var(--olive-green)' };
-            var iconos = { 'success': 'fa-check-circle', 'error': 'fa-exclamation-triangle', 'warning': 'fa-exclamation-triangle', 'info': 'fa-info-circle' };
-            var n = document.createElement('div');
-            n.style.cssText = 'position:fixed;top:100px;right:20px;background:' + colores[tipo] + ';color:white;padding:1.2rem 1.8rem;border-radius:12px;box-shadow:var(--shadow-lg);z-index:10001;font-weight:600;display:flex;align-items:center;gap:1rem;min-width:280px;animation:slideIn 0.3s ease;';
-            n.innerHTML = '<i class="fas ' + iconos[tipo] + '"></i><span>' + mensaje + '</span>';
-            document.body.appendChild(n);
-            setTimeout(() => { n.style.animation = 'slideOut 0.3s ease'; setTimeout(() => n.remove(), 300); }, 4000);
-        }
-
-        var s = document.createElement('style');
-        s.innerHTML = '@@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}@@keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(400px);opacity:0}}';
-        document.head.appendChild(s);
     </script>
 }

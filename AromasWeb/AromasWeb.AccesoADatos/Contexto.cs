@@ -264,6 +264,8 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);
                 entity.Property(e => e.FechaRegistro).IsRequired().HasColumnName("fecharegistro").HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.Property(e => e.UltimaReserva).HasColumnName("ultimareserva");
+                entity.Property(e => e.CodigoRecuperacion).HasMaxLength(6).HasColumnName("codigo_recuperacion");
+                entity.Property(e => e.CodigoExpiracion).HasColumnName("codigo_expiracion");
 
                 // Índices
                 entity.HasIndex(e => e.Identificacion).IsUnique();

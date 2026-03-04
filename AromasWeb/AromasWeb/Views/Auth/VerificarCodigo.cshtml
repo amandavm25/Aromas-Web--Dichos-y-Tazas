@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "Verificar Código";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-leaves"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-shield-alt"></i>
+                Verificación de Código
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Ingresa tu
+                <span class="hero-title-accent">Código</span>
+            </h1>
+            <p class="hero-subtitle">
+                Revisa tu correo electrónico
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario Section -->
+<section class="admin-form-section" style="background: var(--light-cream)">
+    <div class="container" style="max-width: 600px;">
+        @using (Html.BeginForm("VerificarCodigo", "Auth", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="correo" value="@ViewBag.Correo" />
+
+            <div class="admin-form-wrapper" data-aos="fade-up">
+
+                <!-- Header -->
+                <div class="admin-form-header">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <h5>Código de Verificación</h5>
+                </div>
+
+                <div class="admin-form-body">
+
+                    <!-- Mensaje de éxito -->
+                    @if (TempData["Mensaje"] != null)
+                    {
+                        <div class="admin-form-info-box" style="border-color: rgba(47,158,49,0.3); background: rgba(47,158,49,0.06);">
+                            <i class="fas fa-check-circle" style="color: var(--green);"></i>
+                            <div>
+                                <strong style="color: var(--green);">¡Código enviado!</strong>
+                                <p>@TempData["Mensaje"]</p>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Mensaje de error -->
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="admin-form-info-box" style="border-color: rgba(231,76,60,0.3); background: rgba(231,76,60,0.06);">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--red);"></i>
+                            <div>
+                                <strong style="color: var(--red);">Error</strong>
+                                <p>@TempData["Error"]</p>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Información -->
+                    <div class="admin-form-info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Revisa tu correo</strong>
+                            <p>Hemos enviado un código de 6 dígitos a <strong>@ViewBag.Correo</strong>. El código expira en 15 minutos.</p>
+                        </div>
+                    </div>
+
+                    <!-- Código -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-key"></i>
+                            Código de Verificación
+                        </label>
+                        <input type="text"
+                               name="codigo"
+                               class="form-control"
+                               placeholder="123456"
+                               maxlength="6"
+                               pattern="[0-9]{6}"
+                               style="font-size: 24px; letter-spacing: 8px; text-align: center; font-weight: bold;"
+                               required
+                               autofocus />
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Ingresa el código de 6 dígitos que recibiste por correo
+                        </small>
+                    </div>
+
+                    <!-- No recibí el código -->
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <p style="color: var(--charcoal); opacity: 0.7; margin-bottom: 0.5rem;">¿No recibiste el código?</p>
+                        <a href="@Url.Action("OlvideContrasenna", "Auth")" style="color: var(--gold-bright); font-weight: 600; text-decoration: underline;">
+                            Solicitar nuevo código
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="admin-form-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Login", "Auth")'">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Volver al Login</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-3d">
+                        <i class="fas fa-check"></i>
+                        <span>Verificar Código</span>
+                    </button>
+                </div>
+
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus en el input del código
+            var codigoInput = document.querySelector('input[name="codigo"]');
+            if (codigoInput) {
+                codigoInput.focus();
+
+                // Solo permitir números
+                codigoInput.addEventListener('input', function(e) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+            }
+        });
+    </script>
+}

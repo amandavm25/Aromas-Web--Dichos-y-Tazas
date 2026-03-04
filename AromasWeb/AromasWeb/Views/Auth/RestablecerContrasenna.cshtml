@@ -13,11 +13,11 @@
                 Nueva Contraseña
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
-                Restablecer
-                <span class="hero-title-accent">Contraseña</span>
+                Crea tu
+                <span class="hero-title-accent">Nueva Contraseña</span>
             </h1>
             <p class="hero-subtitle">
-                Crea una nueva contraseña segura para tu cuenta
+                Elige una contraseña segura
             </p>
         </div>
     </div>
@@ -30,112 +30,104 @@
 
 <!-- Formulario Section -->
 <section class="admin-form-section" style="background: var(--light-cream)">
-
-    <!-- Enlace verificado -->
-    <div class="admin-form-body" style="padding-bottom: 0;">
-        <div class="admin-form-info-box" style="border-color: rgba(47,158,49,0.3); background: rgba(47,158,49,0.06);">
-            <i class="fas fa-check-circle" style="color: var(--green);"></i>
-            <div>
-                <strong style="color: var(--green);">¡Enlace verificado!</strong>
-                <p>Tu identidad ha sido confirmada. Ahora puedes establecer una nueva contraseña.</p>
-            </div>
-        </div>
-    </div>
-
     <div class="container" style="max-width: 80%;">
-        @using (Html.BeginForm("RestablecerContrasena", "Auth", FormMethod.Post))
+        @using (Html.BeginForm("RestablecerContrasenna", "Auth", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
+            <input type="hidden" name="correo" value="@ViewBag.Correo" />
+            <input type="hidden" name="codigo" value="@ViewBag.Codigo" />
 
             <div class="admin-form-wrapper" data-aos="fade-up">
 
-                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
-
                 <!-- Header -->
                 <div class="admin-form-header">
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="fas fa-key"></i>
                     <h5>Nueva Contraseña</h5>
                 </div>
 
                 <div class="admin-form-body">
 
+                    <!-- Mensaje de error -->
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="admin-form-info-box" style="border-color: rgba(231,76,60,0.3); background: rgba(231,76,60,0.06);">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--red);"></i>
+                            <div>
+                                <strong style="color: var(--red);">Error</strong>
+                                <p>@TempData["Error"]</p>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Requisitos de contraseña -->
+                    <div class="admin-form-info-box">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Requisitos de contraseña segura</strong>
+                            <ul style="margin: 0.5rem 0 0; padding-left: 1.2rem; line-height: 1.8;">
+                                <li>Mínimo 8 caracteres</li>
+                                <li>Al menos 1 letra mayúscula</li>
+                                <li>Al menos 1 letra minúscula</li>
+                                <li>Al menos 1 número</li>
+                                <li>Al menos 1 carácter especial (!@@#$%^&amp;*etc.)</li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <!-- Nueva Contraseña -->
                     <div class="form-group">
                         <label>
-                            <i class="fas fa-key"></i>
+                            <i class="fas fa-lock"></i>
                             Nueva Contraseña
                         </label>
                         <div style="position: relative;">
-                            <input type="password" name="NuevaContrasena" id="password-input" class="form-control" placeholder="Ingresa tu nueva contraseña" required />
-                            <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.1rem; opacity: 0.5;">
+                            <input type="password"
+                                   name="nuevaContrasena"
+                                   id="password-input"
+                                   class="form-control"
+                                   placeholder="Ingresa tu nueva contraseña"
+                                   required
+                                   autofocus />
+                            <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.2rem; opacity: 0.6;">
                                 <i class="fas fa-eye" id="eye-icon"></i>
                             </button>
                         </div>
-                        <!-- Barra de fortaleza -->
+
+                        <!-- Indicador de fortaleza -->
                         <div style="margin-top: 0.7rem;">
-                            <div style="display: flex; gap: 0.3rem; height: 4px; margin-bottom: 0.4rem;">
-                                <div id="strength-1" style="flex: 1; background: rgba(143,142,106,0.2); border-radius: 2px; transition: all 0.3s;"></div>
-                                <div id="strength-2" style="flex: 1; background: rgba(143,142,106,0.2); border-radius: 2px; transition: all 0.3s;"></div>
-                                <div id="strength-3" style="flex: 1; background: rgba(143,142,106,0.2); border-radius: 2px; transition: all 0.3s;"></div>
-                                <div id="strength-4" style="flex: 1; background: rgba(143,142,106,0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                            <div style="display: flex; gap: 0.3rem; height: 4px; margin-bottom: 0.5rem;">
+                                <div id="strength-1" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-2" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-3" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
+                                <div id="strength-4" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
                             </div>
                             <small id="strength-text" style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem;"></small>
                         </div>
+
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i>
+                            La contraseña debe cumplir todos los requisitos de seguridad
+                        </small>
                     </div>
 
-                    <!-- Confirmar Contraseña -->
+                    <!-- Confirmar Nueva Contraseña -->
                     <div class="form-group">
                         <label>
-                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-lock"></i>
                             Confirmar Nueva Contraseña
                         </label>
                         <div style="position: relative;">
-                            <input type="password" name="ConfirmarNuevaContrasena" id="confirm-password-input" class="form-control" placeholder="Confirma tu nueva contraseña" required />
-                            <button type="button" id="toggle-confirm-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.1rem; opacity: 0.5;">
+                            <input type="password"
+                                   name="confirmarNuevaContrasena"
+                                   id="confirm-password-input"
+                                   class="form-control"
+                                   placeholder="Confirma tu nueva contraseña"
+                                   required />
+                            <button type="button" id="toggle-confirm-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.2rem; opacity: 0.6;">
                                 <i class="fas fa-eye" id="eye-icon-confirm"></i>
                             </button>
                         </div>
-                        <div id="password-match-message" style="margin-top: 0.4rem;"></div>
-                    </div>
-
-                    <!-- Requisitos de contraseña — lista real -->
-                    <div>
-                        <label style="font-weight: 600; color: var(--dark-green); display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-primary); margin-bottom: 0.8rem;">
-                            <i class="fas fa-list-check" style="color: var(--gold);"></i>
-                            Requisitos de seguridad
-                        </label>
-                        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 0.45rem;">
-                            <li id="req-length" style="display: flex; align-items: center; gap: 0.7rem; font-size: 0.92rem; color: var(--charcoal); opacity: 0.75; transition: all 0.3s;">
-                                <i class="fas fa-circle" style="font-size: 0.45rem; flex-shrink: 0;"></i>
-                                Mínimo 8 caracteres
-                            </li>
-                            <li id="req-uppercase" style="display: flex; align-items: center; gap: 0.7rem; font-size: 0.92rem; color: var(--charcoal); opacity: 0.75; transition: all 0.3s;">
-                                <i class="fas fa-circle" style="font-size: 0.45rem; flex-shrink: 0;"></i>
-                                Al menos una letra mayúscula (A-Z)
-                            </li>
-                            <li id="req-lowercase" style="display: flex; align-items: center; gap: 0.7rem; font-size: 0.92rem; color: var(--charcoal); opacity: 0.75; transition: all 0.3s;">
-                                <i class="fas fa-circle" style="font-size: 0.45rem; flex-shrink: 0;"></i>
-                                Al menos una letra minúscula (a-z)
-                            </li>
-                            <li id="req-number" style="display: flex; align-items: center; gap: 0.7rem; font-size: 0.92rem; color: var(--charcoal); opacity: 0.75; transition: all 0.3s;">
-                                <i class="fas fa-circle" style="font-size: 0.45rem; flex-shrink: 0;"></i>
-                                Al menos un número (0-9)
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Consejos de seguridad -->
-                    <div class="admin-form-info-box" style="border-color: rgba(184,167,106,0.4);">
-                        <i class="fas fa-shield-alt" style="color: var(--gold-bright);"></i>
-                        <div>
-                            <strong>Consejos de seguridad</strong>
-                            <ul style="margin: 0.4rem 0 0; padding-left: 1.2rem; line-height: 1.8;">
-                                <li>No uses información personal (nombre, fecha de nacimiento)</li>
-                                <li>Evita contraseñas que hayas usado antes</li>
-                                <li>No compartas tu contraseña con nadie</li>
-                                <li>Usa una contraseña diferente para cada sitio</li>
-                            </ul>
-                        </div>
+                        <div id="password-match-message" style="margin-top: 0.5rem;"></div>
                     </div>
 
                 </div>
@@ -143,10 +135,10 @@
                 <!-- Footer -->
                 <div class="admin-form-footer">
                     <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Login", "Auth")'">
-                        <i class="fas fa-arrow-left"></i>
+                        <i class="fas fa-times"></i>
                         <span>Cancelar</span>
                     </button>
-                    <button type="button" id="btn-restablecer" class="btn btn-primary btn-3d" style="flex: 2;">
+                    <button type="submit" class="btn btn-primary btn-3d">
                         <i class="fas fa-check"></i>
                         <span>Restablecer Contraseña</span>
                     </button>
@@ -157,34 +149,102 @@
     </div>
 </section>
 
-<!-- Features Section -->
-<section class="features" style="padding: 4rem 0;">
-    <div class="container">
-        <div class="features-grid">
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
-                <div class="feature-icon"><i class="fas fa-lock"></i></div>
-                <h3>Seguridad Total</h3>
-                <p>Tu contraseña se encripta con los más altos estándares</p>
-            </div>
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-icon"><i class="fas fa-history"></i></div>
-                <h3>Cambios Registrados</h3>
-                <p>Recibirás un correo de confirmación del cambio</p>
-            </div>
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon"><i class="fas fa-bell"></i></div>
-                <h3>Alertas Activas</h3>
-                <p>Te notificaremos si detectamos actividad sospechosa</p>
-            </div>
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                <h3>Soporte 24/7</h3>
-                <p>Estamos aquí para ayudarte en todo momento</p>
-            </div>
-        </div>
-    </div>
-</section>
-
 @section Scripts {
-    <script src="~/js/recuperarContrasenna.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            var togglePassword = document.getElementById('toggle-password');
+            var passwordInput = document.getElementById('password-input');
+            var eyeIcon = document.getElementById('eye-icon');
+
+            if (togglePassword) {
+                togglePassword.addEventListener('click', function() {
+                    var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    eyeIcon.classList.toggle('fa-eye');
+                    eyeIcon.classList.toggle('fa-eye-slash');
+                });
+            }
+
+            var toggleConfirmPassword = document.getElementById('toggle-confirm-password');
+            var confirmPasswordInput = document.getElementById('confirm-password-input');
+            var eyeIconConfirm = document.getElementById('eye-icon-confirm');
+
+            if (toggleConfirmPassword) {
+                toggleConfirmPassword.addEventListener('click', function() {
+                    var type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    confirmPasswordInput.setAttribute('type', type);
+                    eyeIconConfirm.classList.toggle('fa-eye');
+                    eyeIconConfirm.classList.toggle('fa-eye-slash');
+                });
+            }
+
+            // Password strength indicator
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    var password = this.value;
+                    var strength = 0;
+
+                    if (password.length >= 8) strength++;
+                    if (/[A-Z]/.test(password)) strength++;
+                    if (/[a-z]/.test(password)) strength++;
+                    if (/[0-9]/.test(password)) strength++;
+                    if (/[!@@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) strength++;
+
+                    var strengthBars = [
+                        document.getElementById('strength-1'),
+                        document.getElementById('strength-2'),
+                        document.getElementById('strength-3'),
+                        document.getElementById('strength-4')
+                    ];
+
+                    var strengthText = document.getElementById('strength-text');
+
+                    // Reset
+                    strengthBars.forEach(function(bar) {
+                        bar.style.background = 'rgba(143, 142, 106, 0.2)';
+                    });
+
+                    if (strength === 0) {
+                        strengthText.textContent = '';
+                    } else if (strength <= 2) {
+                        strengthBars[0].style.background = '#e74c3c';
+                        strengthText.textContent = 'Contraseña débil';
+                        strengthText.style.color = '#e74c3c';
+                    } else if (strength === 3) {
+                        strengthBars[0].style.background = '#f39c12';
+                        strengthBars[1].style.background = '#f39c12';
+                        strengthText.textContent = 'Contraseña media';
+                        strengthText.style.color = '#f39c12';
+                    } else if (strength === 4) {
+                        strengthBars[0].style.background = '#3498db';
+                        strengthBars[1].style.background = '#3498db';
+                        strengthBars[2].style.background = '#3498db';
+                        strengthText.textContent = 'Contraseña buena';
+                        strengthText.style.color = '#3498db';
+                    } else {
+                        strengthBars.forEach(function(bar) {
+                            bar.style.background = '#27ae60';
+                        });
+                        strengthText.textContent = 'Contraseña fuerte';
+                        strengthText.style.color = '#27ae60';
+                    }
+                });
+            }
+
+            // Password match indicator
+            if (confirmPasswordInput) {
+                confirmPasswordInput.addEventListener('input', function() {
+                    var matchMessage = document.getElementById('password-match-message');
+                    if (this.value === '') {
+                        matchMessage.innerHTML = '';
+                    } else if (this.value === passwordInput.value) {
+                        matchMessage.innerHTML = '<small style="color: #27ae60;"><i class="fas fa-check-circle"></i> Las contraseñas coinciden</small>';
+                    } else {
+                        matchMessage.innerHTML = '<small style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Las contraseñas no coinciden</small>';
+                    }
+                });
+            }
+        });
+    </script>
 }

@@ -1,10 +1,15 @@
 ﻿using System.Globalization;
+using AromasWeb.Abstracciones.Servicios;
+using AromasWeb.Services;
 using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Registrar servicio de Email
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Configuración de Sesiones
 builder.Services.AddDistributedMemoryCache();

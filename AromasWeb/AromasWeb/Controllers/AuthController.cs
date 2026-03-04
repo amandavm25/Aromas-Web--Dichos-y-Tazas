@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Cliente;
+using AromasWeb.Abstracciones.Servicios;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
@@ -11,10 +12,16 @@ namespace AromasWeb.Controllers
     public class AuthController : Controller
     {
         private ICrearCliente _crearCliente;
+        private IBuscarClientePorCorreo _buscarClientePorCorreo;
+        private IActualizarCliente _actualizarCliente;
+        private readonly IEmailService _emailService;
 
-        public AuthController()
+        public AuthController(IEmailService emailService)
         {
             _crearCliente = new LogicaDeNegocio.Clientes.CrearCliente();
+            _buscarClientePorCorreo = new LogicaDeNegocio.Clientes.BuscarClientePorCorreo();
+            _actualizarCliente = new LogicaDeNegocio.Clientes.ActualizarCliente();
+            _emailService = emailService;
         }
 
         // ============================================
@@ -41,7 +48,6 @@ namespace AromasWeb.Controllers
             // Login básico - verificamos el correo y contraseña
             if (cliente.Correo.ToLower() == "admin@gmail.com" && cliente.Contrasena == "admin123")
             {
-                // Es administrador
                 HttpContext.Session.SetString("UsuarioTipo", "admin");
                 HttpContext.Session.SetString("UsuarioNombre", "Administrador");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
@@ -51,7 +57,6 @@ namespace AromasWeb.Controllers
             }
             else if (cliente.Correo.ToLower() == "empleado@gmail.com" && cliente.Contrasena == "empleado123")
             {
-                // Es empleado
                 HttpContext.Session.SetString("UsuarioTipo", "empleado");
                 HttpContext.Session.SetString("UsuarioNombre", "Empleado");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
@@ -62,7 +67,6 @@ namespace AromasWeb.Controllers
             }
             else if (cliente.Correo.ToLower() == "cliente@gmail.com" && cliente.Contrasena == "cliente123")
             {
-                // Es cliente
                 HttpContext.Session.SetString("UsuarioTipo", "cliente");
                 HttpContext.Session.SetString("UsuarioNombre", "Cliente");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
@@ -105,7 +109,6 @@ namespace AromasWeb.Controllers
         {
             try
             {
-                // Remover validación de campos calculados
                 ModelState.Remove("EstadoTexto");
                 ModelState.Remove("FechaRegistroFormateada");
                 ModelState.Remove("UltimaReservaFormateada");
@@ -113,7 +116,6 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("EsClienteFrecuente");
                 ModelState.Remove("UltimaReserva");
 
-                // Validación robusta de contraseña
                 if (string.IsNullOrWhiteSpace(cliente.Contrasena))
                 {
                     ModelState.AddModelError("Contrasena", "La contraseña es requerida");
@@ -182,57 +184,287 @@ namespace AromasWeb.Controllers
         // OLVIDÉ CONTRASEÑA
         // ============================================
 
+        // GET: Auth/OlvideContrasenna
         public IActionResult OlvideContrasenna()
         {
             return View();
         }
 
+        // POST: Auth/OlvideContrasenna
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult OlvideContrasenna(string correo)
+        public async Task<IActionResult> OlvideContrasenna(string correo)
         {
-            if (string.IsNullOrEmpty(correo))
+            try
             {
-                TempData["Error"] = "Por favor, ingresa tu correo electrónico";
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Inicio - Correo: {correo}");
+
+                if (string.IsNullOrWhiteSpace(correo))
+                {
+                    TempData["Error"] = "Por favor, ingresa tu correo electrónico";
+                    return View();
+                }
+
+                // Buscar cliente por correo
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Buscando cliente...");
+                var cliente = _buscarClientePorCorreo.ObtenerPorCorreo(correo);
+
+                if (cliente == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Cliente NO encontrado");
+                    // Por seguridad, no revelar si el correo existe o no
+                    TempData["Mensaje"] = "Si el correo existe en nuestro sistema, recibirás un código de verificación en los próximos minutos. Revisa tu bandeja de entrada y spam.";
+                    return View();
+                }
+
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Cliente encontrado: {cliente.Nombre} {cliente.Apellidos}");
+
+                // Verificar que el cliente esté activo
+                if (!cliente.Estado)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Cliente INACTIVO");
+                    TempData["Error"] = "Esta cuenta está inactiva. Contacta a soporte.";
+                    return View();
+                }
+
+                // Generar código aleatorio de 6 dígitos
+                Random random = new Random();
+                string codigo = random.Next(100000, 999999).ToString();
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Código generado: {codigo}");
+
+                // Establecer expiración de 15 minutos
+                DateTime expiracion = DateTime.UtcNow.AddMinutes(15);
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Expiración: {expiracion}");
+
+                // Guardar código y expiración usando AccesoADatos directamente
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Guardando código en BD...");
+                var contexto = new AccesoADatos.Contexto();
+                var clienteAD = contexto.Cliente.FirstOrDefault(c => c.IdCliente == cliente.IdCliente);
+
+                if (clienteAD != null)
+                {
+                    clienteAD.CodigoRecuperacion = codigo;
+                    clienteAD.CodigoExpiracion = expiracion;
+                    int filasAfectadas = contexto.SaveChanges();
+                    System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Código guardado. Filas afectadas: {filasAfectadas}");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[RECUPERACION] ERROR: No se pudo obtener clienteAD");
+                    TempData["Error"] = "Error al procesar la solicitud";
+                    return View();
+                }
+
+                // Enviar email con el código
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Enviando email...");
+                bool emailEnviado = await _emailService.EnviarCodigoRecuperacion(
+                    cliente.Correo,
+                    $"{cliente.Nombre} {cliente.Apellidos}",
+                    codigo
+                );
+
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Email enviado: {emailEnviado}");
+
+                if (emailEnviado)
+                {
+                    TempData["CorreoRecuperacion"] = cliente.Correo;
+                    TempData["Mensaje"] = "Te hemos enviado un código de verificación a tu correo. Revisa tu bandeja de entrada y spam.";
+                    System.Diagnostics.Debug.WriteLine($"[RECUPERACION] Redirigiendo a VerificarCodigo");
+                    return RedirectToAction(nameof(VerificarCodigo), new { correo = cliente.Correo });
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[RECUPERACION] ERROR al enviar email");
+                    TempData["Error"] = "Hubo un problema al enviar el correo. Intenta nuevamente.";
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] EXCEPCION: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[RECUPERACION] STACK TRACE: {ex.StackTrace}");
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[RECUPERACION] INNER EXCEPTION: {ex.InnerException.Message}");
+                }
+                TempData["Error"] = $"Ocurrió un error: {ex.Message}";
                 return View();
             }
-
-            TempData["Mensaje"] = "Te hemos enviado un correo con las instrucciones para recuperar tu contraseña. Revisa tu bandeja de entrada y spam.";
-            return View();
         }
 
-        public IActionResult RestablecerContrasenna(string token = null)
-        {
-            ViewBag.Token = token;
-            return View();
-        }
+        // ============================================
+        // VERIFICAR CÓDIGO
+        // ============================================
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult RestablecerContrasenna(string token, string nuevaContrasena, string confirmarNuevaContrasena)
+        // GET: Auth/VerificarCodigo
+        public IActionResult VerificarCodigo(string correo)
         {
-            if (string.IsNullOrEmpty(token))
+            if (string.IsNullOrWhiteSpace(correo))
             {
-                TempData["Error"] = "Token inválido";
                 return RedirectToAction(nameof(OlvideContrasenna));
             }
 
-            if (nuevaContrasena != confirmarNuevaContrasena)
+            ViewBag.Correo = correo;
+            return View();
+        }
+
+        // POST: Auth/VerificarCodigo
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult VerificarCodigo(string correo, string codigo)
+        {
+            try
             {
-                TempData["Error"] = "Las contraseñas no coinciden";
-                ViewBag.Token = token;
+                if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(codigo))
+                {
+                    TempData["Error"] = "Por favor, ingresa el código de verificación";
+                    ViewBag.Correo = correo;
+                    return View();
+                }
+
+                // Buscar cliente
+                var cliente = _buscarClientePorCorreo.ObtenerPorCorreo(correo);
+
+                if (cliente == null)
+                {
+                    TempData["Error"] = "No se encontró la cuenta";
+                    return RedirectToAction(nameof(OlvideContrasenna));
+                }
+
+                // Obtener código y expiración de la base de datos
+                var contexto = new AccesoADatos.Contexto();
+                var clienteAD = contexto.Cliente.FirstOrDefault(c => c.IdCliente == cliente.IdCliente);
+
+                if (clienteAD == null || string.IsNullOrWhiteSpace(clienteAD.CodigoRecuperacion))
+                {
+                    TempData["Error"] = "No se encontró un código de recuperación válido";
+                    ViewBag.Correo = correo;
+                    return View();
+                }
+
+                // Verificar que el código coincida
+                if (clienteAD.CodigoRecuperacion != codigo.Trim())
+                {
+                    TempData["Error"] = "El código ingresado es incorrecto";
+                    ViewBag.Correo = correo;
+                    return View();
+                }
+
+                // Verificar que no haya expirado
+                if (clienteAD.CodigoExpiracion == null || DateTime.Now > clienteAD.CodigoExpiracion)
+                {
+                    TempData["Error"] = "El código ha expirado. Solicita uno nuevo.";
+                    return RedirectToAction(nameof(OlvideContrasenna));
+                }
+
+                // Código válido, redirigir a restablecer contraseña
+                TempData["CodigoVerificado"] = codigo;
+                return RedirectToAction(nameof(RestablecerContrasenna), new { correo = correo, codigo = codigo });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error en VerificarCodigo: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al verificar el código";
+                ViewBag.Correo = correo;
                 return View();
             }
+        }
 
-            if (nuevaContrasena.Length < 8)
+        // ============================================
+        // RESTABLECER CONTRASEÑA
+        // ============================================
+
+        // GET: Auth/RestablecerContrasenna
+        public IActionResult RestablecerContrasenna(string correo, string codigo)
+        {
+            if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(codigo))
             {
-                TempData["Error"] = "La contraseña debe tener al menos 8 caracteres";
-                ViewBag.Token = token;
-                return View();
+                return RedirectToAction(nameof(OlvideContrasenna));
             }
 
-            TempData["Mensaje"] = "¡Contraseña restablecida exitosamente! Ya puedes iniciar sesión";
-            return RedirectToAction(nameof(Login));
+            ViewBag.Correo = correo;
+            ViewBag.Codigo = codigo;
+            return View();
+        }
+
+        // POST: Auth/RestablecerContrasenna
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RestablecerContrasenna(string correo, string codigo, string nuevaContrasena, string confirmarNuevaContrasena)
+        {
+            try
+            {
+                ViewBag.Correo = correo;
+                ViewBag.Codigo = codigo;
+
+                if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(codigo))
+                {
+                    TempData["Error"] = "Datos inválidos";
+                    return RedirectToAction(nameof(OlvideContrasenna));
+                }
+
+                // Validar nueva contraseña
+                if (string.IsNullOrWhiteSpace(nuevaContrasena))
+                {
+                    TempData["Error"] = "La contraseña es requerida";
+                    return View();
+                }
+
+                if (!PasswordValidator.EsContrasenaValida(nuevaContrasena, out string mensajeError))
+                {
+                    TempData["Error"] = mensajeError;
+                    return View();
+                }
+
+                if (nuevaContrasena != confirmarNuevaContrasena)
+                {
+                    TempData["Error"] = "Las contraseñas no coinciden";
+                    return View();
+                }
+
+                // Buscar cliente
+                var cliente = _buscarClientePorCorreo.ObtenerPorCorreo(correo);
+
+                if (cliente == null)
+                {
+                    TempData["Error"] = "No se encontró la cuenta";
+                    return RedirectToAction(nameof(OlvideContrasenna));
+                }
+
+                // Verificar código nuevamente
+                var contexto = new AccesoADatos.Contexto();
+                var clienteAD = contexto.Cliente.FirstOrDefault(c => c.IdCliente == cliente.IdCliente);
+
+                if (clienteAD == null || clienteAD.CodigoRecuperacion != codigo)
+                {
+                    TempData["Error"] = "Código inválido";
+                    return RedirectToAction(nameof(OlvideContrasenna));
+                }
+
+                if (clienteAD.CodigoExpiracion == null || DateTime.Now > clienteAD.CodigoExpiracion)
+                {
+                    TempData["Error"] = "El código ha expirado";
+                    return RedirectToAction(nameof(OlvideContrasenna));
+                }
+
+                // Actualizar contraseña
+                cliente.Contrasena = nuevaContrasena;
+                _actualizarCliente.Actualizar(cliente);
+
+                // Limpiar código de recuperación
+                clienteAD.CodigoRecuperacion = null;
+                clienteAD.CodigoExpiracion = null;
+                contexto.SaveChanges();
+
+                TempData["Mensaje"] = "¡Contraseña restablecida exitosamente! Ya puedes iniciar sesión";
+                return RedirectToAction(nameof(Login));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error en RestablecerContrasenna: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al restablecer la contraseña";
+                return View();
+            }
         }
 
         [HttpPost]

@@ -32,7 +32,7 @@ namespace AromasWeb.AccesoADatos.Modelos
         public string Telefono { get; set; }
 
         [StringLength(255)]
-        public string Contrasena { get; set; }
+        public string? Contrasena { get; set; }
 
         [Required]
         public bool Estado { get; set; }
@@ -41,5 +41,10 @@ namespace AromasWeb.AccesoADatos.Modelos
         public DateTime FechaRegistro { get; set; }
 
         public DateTime? UltimaReserva { get; set; }
+
+        [StringLength(6)]
+        public string? CodigoRecuperacion { get; set; }
+
+        public DateTime? CodigoExpiracion { get; set; }
     }
 }
