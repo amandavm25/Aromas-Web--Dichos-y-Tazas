@@ -34,93 +34,110 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1200px;">
 
-        <!-- Información del Perfil -->
-        <div class="feature-card" style="margin-bottom: 3rem; padding: 2rem; background: white;" data-aos="fade-up">
-            <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;">
-                <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
-                    <i class="fas fa-user" style="font-size: 3rem; color: white;"></i>
+        <!-- Tarjeta de cabecera del perfil -->
+        <div class="admin-modal" data-aos="fade-up" style="margin-bottom: 3rem;">
+            <div class="modal-entity-header">
+
+                <!-- Avatar -->
+                <div class="modal-entity-avatar">
+                    <i class="fas fa-user"></i>
                 </div>
 
-                <div>
-                    <h4 style="margin: 0 0 0.5rem; color: var(--dark-green); font-family: var(--font-primary); font-weight: 700;">@Model.Nombre @Model.Apellidos</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-                        <div>
-                            <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                <i class="fas fa-envelope" style="color: var(--olive-green);"></i> Correo
-                            </span>
-                            <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.Correo</p>
+                <!-- Nombre y datos rápidos -->
+                <div style="flex: 1;">
+                    <h4 class="modal-entity-name">@Model.Nombre @Model.Apellidos</h4>
+                    <p class="modal-entity-sub">
+                        <i class="fas fa-envelope" style="color: var(--olive-green); margin-right: 0.4rem;"></i>@Model.Correo
+                    </p>
+                    <div class="modal-entity-meta">
+                        <div class="modal-entity-meta-item">
+                            <small><i class="fas fa-calendar-plus"></i> Miembro Desde</small>
+                            <p>@Model.FechaRegistroFormateada</p>
                         </div>
-                        <div>
-                            <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                                <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Miembro Desde
-                            </span>
-                            <p style="margin: 0.3rem 0 0; color: var(--dark-green); font-weight: 600;">@Model.FechaRegistroFormateada</p>
+                        <div class="modal-entity-meta-item">
+                            <small><i class="fas fa-calendar-check"></i> Última Reserva</small>
+                            <p>@Model.UltimaReservaFormateada</p>
                         </div>
                     </div>
                 </div>
 
+                <!-- Botón editar -->
                 <div>
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("EditarPerfil", "Cliente")'" style="border-radius: 15px; padding: 1rem 2rem;">
+                    <button type="button" class="btn btn-primary btn-3d"
+                            onclick="window.location.href='@Url.Action("EditarPerfil", "Cliente")'">
                         <span><i class="fas fa-edit"></i> Editar Perfil</span>
                     </button>
                 </div>
+
             </div>
         </div>
 
-        <!-- Información Personal -->
-        <div style="background: var(--white); border-radius: 25px; box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: 3rem;" data-aos="fade-up">
-            <div style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); padding: 1.5rem 2rem;">
-                <h5 style="color: white; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 0.7rem;">
-                    <i class="fas fa-user-circle"></i> Información Personal
-                </h5>
+        <!-- Sección de Información Personal -->
+        <div class="admin-table-container admin-modal" style="margin-bottom: 3rem;" data-aos="fade-up">
+
+            <!-- Header -->
+            <div class="admin-form-header">
+                <i class="fas fa-user"></i>
+                <h5>Información Personal</h5>
             </div>
 
-            <div style="padding: 2.5rem;">
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
-                    <div>
-                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-user" style="color: var(--olive-green);"></i> Nombre Completo
-                        </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.Nombre @Model.Apellidos</p>
+            <!-- Grid de datos -->
+            <div style="padding: 2.5rem; background: var(--light-cream); border-radius: 0 0 20px 20px;">
+                <div class="modal-data-grid-2">
+
+                    <div class="modal-data-cell" style="background: var(--white);">
+                        <label class="modal-data-label">
+                            <i class="fas fa-user"></i> Nombre Completo
+                        </label>
+                        <p class="modal-data-value">@Model.Nombre @Model.Apellidos</p>
                     </div>
 
-                    <div>
-                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-id-card" style="color: var(--olive-green);"></i> Identificación
-                        </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.Identificacion</p>
+                    <div class="modal-data-cell" style="background: var(--white);">
+                        <label class="modal-data-label">
+                            <i class="fas fa-id-card"></i> Identificación
+                        </label>
+                        <p class="modal-data-value">@Model.Identificacion</p>
                     </div>
 
-                    <div>
-                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-envelope" style="color: var(--olive-green);"></i> Correo Electrónico
-                        </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.Correo</p>
+                    <div class="modal-data-cell" style="background: var(--white);">
+                        <label class="modal-data-label">
+                            <i class="fas fa-envelope"></i> Correo Electrónico
+                        </label>
+                        <p class="modal-data-value">@Model.Correo</p>
                     </div>
 
-                    <div>
-                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-phone" style="color: var(--olive-green);"></i> Teléfono
-                        </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.Telefono</p>
+                    <div class="modal-data-cell" style="background: var(--white);">
+                        <label class="modal-data-label">
+                            <i class="fas fa-phone"></i> Teléfono
+                        </label>
+                        <p class="modal-data-value">@Model.Telefono</p>
                     </div>
 
-                    <div>
-                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Fecha de Registro
-                        </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.FechaRegistroFormateada</p>
+                    <div class="modal-data-cell" style="background: var(--white);">
+                        <label class="modal-data-label">
+                            <i class="fas fa-calendar-plus"></i> Fecha de Registro
+                        </label>
+                        <p class="modal-data-value">@Model.FechaRegistroFormateada</p>
                     </div>
 
-                    <div>
-                        <span style="color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; display: block;">
-                            <i class="fas fa-calendar-check" style="color: var(--olive-green);"></i> Última Reserva
-                        </span>
-                        <p style="margin: 0.5rem 0 0; color: var(--dark-green); font-weight: 600; font-size: 1.1rem;">@Model.UltimaReservaFormateada</p>
+                    <div class="modal-data-cell" style="background: var(--white);">
+                        <label class="modal-data-label">
+                            <i class="fas fa-calendar-check"></i> Última Reserva
+                        </label>
+                        <p class="modal-data-value">@Model.UltimaReservaFormateada</p>
                     </div>
+
+                </div>
+
+                <!-- Nota al pie -->
+                <div class="modal-note">
+                    <i class="fas fa-info-circle"></i>
+                    Para actualizar tu información personal, utiliza el botón <strong>Editar Perfil</strong> en la parte superior.
                 </div>
             </div>
+
         </div>
+
     </div>
 </section>
 

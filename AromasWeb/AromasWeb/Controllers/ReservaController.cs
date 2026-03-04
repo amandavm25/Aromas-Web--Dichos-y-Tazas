@@ -116,6 +116,35 @@ namespace AromasWeb.Controllers
         // GET: Reserva/CrearReserva (Para clientes)
         public IActionResult CrearReserva()
         {
+            using (var contexto = new AromasWeb.AccesoADatos.Contexto())
+            {
+                try
+                {
+                    var cliente = contexto.Cliente
+                        .Where(c => c.Estado == true)
+                        .OrderBy(c => c.IdCliente)
+                        .Select(c => new
+                        {
+                            IdCliente = c.IdCliente,
+                            NombreCompleto = c.Nombre + " " + c.Apellidos,
+                            Identificacion = c.Identificacion,
+                            Telefono = c.Telefono,
+                            Correo = c.Correo
+                        })
+                        .FirstOrDefault();
+
+                    ViewBag.IdCliente = cliente?.IdCliente;
+                    ViewBag.NombreCliente = cliente?.NombreCompleto;
+                    ViewBag.Identificacion = cliente?.Identificacion;
+                    ViewBag.Telefono = cliente?.Telefono;
+                    ViewBag.Correo = cliente?.Correo;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar cliente: {ex.Message}");
+                }
+            }
+
             return View();
         }
 
@@ -313,6 +342,111 @@ namespace AromasWeb.Controllers
             ViewBag.Reservas = reservas;
 
             return View();
+        }
+
+        // GET: Reserva/MisReservas (Para clientes autenticados)
+        public IActionResult MisReservas(string filtro)
+        {
+            ViewBag.Filtro = filtro;
+
+            int idCliente = ObtenerIdClienteActual();
+
+            // Cargar datos del cliente para la tarjeta de perfil
+            using (var contexto = new AromasWeb.AccesoADatos.Contexto())
+            {
+                try
+                {
+                    var cliente = contexto.Cliente
+                        .Where(c => c.IdCliente == idCliente && c.Estado == true)
+                        .Select(c => new
+                        {
+                            IdCliente = c.IdCliente,
+                            NombreCompleto = c.Nombre + " " + c.Apellidos,
+                            Identificacion = c.Identificacion,
+                            Telefono = c.Telefono,
+                            Correo = c.Correo
+                        })
+                        .FirstOrDefault();
+
+                    ViewBag.NombreCliente = cliente?.NombreCompleto;
+                    ViewBag.Identificacion = cliente?.Identificacion;
+                    ViewBag.Telefono = cliente?.Telefono;
+                    ViewBag.Correo = cliente?.Correo;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar cliente: {ex.Message}");
+                }
+            }
+
+            var reservas = _listarReservas.ObtenerPorCliente(idCliente);
+
+            // Aplicar filtro
+            reservas = filtro?.ToLower() switch
+            {
+                "activas" => reservas.Where(r => r.EsFutura || r.EsHoy).ToList(),
+                "pasadas" => reservas.Where(r => r.EsPasada).ToList(),
+                _ => reservas
+            };
+
+            // Ordenar: próximas primero, luego pasadas
+            reservas = reservas
+                .OrderByDescending(r => r.EsFutura || r.EsHoy)
+                .ThenBy(r => r.Fecha)
+                .ThenBy(r => r.Hora)
+                .ToList();
+
+            return View(reservas);
+        }
+
+        // GET: Reserva/EditarMiReserva/5 (Para clientes autenticados)
+        public IActionResult EditarMiReserva(int id)
+        {
+            int idCliente = ObtenerIdClienteActual();
+
+            var reserva = _listarReservas.ObtenerPorId(id);
+
+            if (reserva == null || reserva.IdCliente != idCliente)
+            {
+                TempData["Error"] = "Reserva no encontrada";
+                return RedirectToAction(nameof(MisReservas));
+            }
+
+            if (!reserva.PuedeModificar)
+            {
+                TempData["Error"] = "Esta reserva no puede modificarse";
+                return RedirectToAction(nameof(MisReservas));
+            }
+
+            return View(reserva);
+        }
+
+        // POST: Reserva/EditarMiReserva
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarMiReserva(Reserva reserva)
+        {
+            if (ModelState.IsValid)
+            {
+                // Aquí iría la lógica para actualizar en la base de datos
+                TempData["Mensaje"] = "Reserva actualizada correctamente";
+                return RedirectToAction(nameof(MisReservas));
+            }
+
+            return View(reserva);
+        }
+
+        // Método auxiliar para obtener el IdCliente del usuario autenticado
+        private int ObtenerIdClienteActual()
+        {
+            // Obtener desde claims del usuario autenticado
+            var claim = User.FindFirst("IdCliente");
+            if (claim != null && int.TryParse(claim.Value, out int idCliente))
+                return idCliente;
+
+            // Alternativa: desde sesión
+            var idSesion = HttpContext.Session.GetInt32("IdCliente");
+            return idSesion ?? 0;
         }
 
         // POST: Reserva/CambiarEstado

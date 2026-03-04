@@ -212,7 +212,6 @@ namespace AromasWeb.Controllers
                     }
                     else
                     {
-                        // ⭐ Validación robusta de la nueva contraseña
                         if (!PasswordValidator.EsContrasenaValida(ContrasenaNueva, out string mensajeError))
                         {
                             ModelState.AddModelError("ContrasenaNueva", mensajeError);
@@ -268,6 +267,158 @@ namespace AromasWeb.Controllers
             {
                 System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
                 ModelState.AddModelError("", $"Error al actualizar el cliente: {ex.Message}");
+                return View(cliente);
+            }
+        }
+
+        // GET: Cliente/MiPerfil
+        public IActionResult MiPerfil()
+        {
+            int idCliente = HttpContext.Session.GetInt32("IdCliente") ?? 1;
+
+            try
+            {
+                var cliente = _obtenerCliente.Obtener(idCliente);
+
+                if (cliente == null)
+                {
+                    TempData["Error"] = "No se encontró la información de tu perfil";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return View(cliente);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar el perfil: {ex.Message}";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        // GET: Cliente/EditarPerfil
+        public IActionResult EditarPerfil()
+        {
+            int idCliente = HttpContext.Session.GetInt32("IdCliente") ?? 1;
+
+            try
+            {
+                var cliente = _obtenerCliente.Obtener(idCliente);
+
+                if (cliente == null)
+                {
+                    TempData["Error"] = "No se encontró la información de tu perfil";
+                    return RedirectToAction(nameof(MiPerfil));
+                }
+
+                return View(cliente);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar el perfil: {ex.Message}";
+                return RedirectToAction(nameof(MiPerfil));
+            }
+        }
+
+        // POST: Cliente/EditarPerfil
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarPerfil(Cliente cliente, string ContrasenaActual, string ContrasenaNueva, string ConfirmarContrasenaNueva)
+        {
+            // Forzar siempre el cliente de sesión — el cliente no puede editar el perfil de otro
+            int idCliente = HttpContext.Session.GetInt32("IdCliente") ?? 1;
+            cliente.IdCliente = idCliente;
+
+            try
+            {
+                // Remover validación de campos calculados y de sólo lectura
+                ModelState.Remove("EstadoTexto");
+                ModelState.Remove("FechaRegistroFormateada");
+                ModelState.Remove("UltimaReservaFormateada");
+                ModelState.Remove("DiasDesdeUltimaReserva");
+                ModelState.Remove("EsClienteFrecuente");
+                ModelState.Remove("Contrasena");
+                ModelState.Remove("UltimaReserva");
+                ModelState.Remove("ContrasenaActual");
+                ModelState.Remove("ContrasenaNueva");
+                ModelState.Remove("ConfirmarContrasenaNueva");
+
+                bool intentaCambiarContrasena = !string.IsNullOrWhiteSpace(ContrasenaNueva) ||
+                                                 !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva) ||
+                                                 !string.IsNullOrWhiteSpace(ContrasenaActual);
+
+                if (intentaCambiarContrasena)
+                {
+                    var clienteActual = _obtenerCliente.Obtener(idCliente);
+
+                    if (clienteActual == null)
+                    {
+                        ModelState.AddModelError("", "No se pudo cargar tu información");
+                        return View(cliente);
+                    }
+
+                    if (string.IsNullOrWhiteSpace(ContrasenaActual))
+                    {
+                        ModelState.AddModelError("ContrasenaActual", "Debes ingresar tu contraseña actual");
+                    }
+                    else if (clienteActual.Contrasena != ContrasenaActual)
+                    {
+                        ModelState.AddModelError("ContrasenaActual", "La contraseña actual es incorrecta");
+                    }
+
+                    if (string.IsNullOrWhiteSpace(ContrasenaNueva))
+                    {
+                        ModelState.AddModelError("ContrasenaNueva", "Debes ingresar la nueva contraseña");
+                    }
+                    else if (!PasswordValidator.EsContrasenaValida(ContrasenaNueva, out string mensajeError))
+                    {
+                        ModelState.AddModelError("ContrasenaNueva", mensajeError);
+                    }
+
+                    if (string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
+                    {
+                        ModelState.AddModelError("ConfirmarContrasenaNueva", "Debes confirmar la nueva contraseña");
+                    }
+                    else if (!string.IsNullOrWhiteSpace(ContrasenaNueva) && ContrasenaNueva != ConfirmarContrasenaNueva)
+                    {
+                        ModelState.AddModelError("ConfirmarContrasenaNueva", "Las contraseñas no coinciden");
+                    }
+
+                    if (!ModelState.IsValid)
+                    {
+                        ViewBag.ErrorMessage = "Por favor, corrige los errores en el cambio de contraseña";
+                        return View(cliente);
+                    }
+
+                    cliente.Contrasena = ContrasenaNueva;
+                }
+                else
+                {
+                    cliente.Contrasena = null;
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
+                    return View(cliente);
+                }
+
+                int resultado = _actualizarCliente.Actualizar(cliente);
+
+                if (resultado > 0)
+                {
+                    TempData["Mensaje"] = "Perfil actualizado correctamente";
+                    return RedirectToAction(nameof(MiPerfil));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "No se pudo actualizar el perfil en la base de datos");
+                    return View(cliente);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error en EditarPerfil: {ex.Message}");
+                ModelState.AddModelError("", $"Error al actualizar el perfil: {ex.Message}");
                 return View(cliente);
             }
         }

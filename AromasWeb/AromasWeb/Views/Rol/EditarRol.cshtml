@@ -69,24 +69,6 @@
                         @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                     </div>
 
-                    <!-- Estado -->
-                    <div class="form-group">
-                        <div class="form-check" style="padding: 1.5rem; background: var(--cream); border-radius: 15px; display: flex; align-items: center; gap: 1rem; cursor: pointer;">
-                            <input class="form-check-input" type="checkbox" name="Estado" id="estadoCheckbox" value="true"
-                                   @(Model.Estado ? "checked" : "")
-                                   style="width:20px;height:20px;flex-shrink:0;cursor:pointer;margin-top:0;" />
-                            <input type="hidden" name="Estado" value="false" />
-                            <label class="form-check-label" for="estadoCheckbox" style="cursor:pointer;flex:1;margin-bottom:0;">
-                                <i class="fas fa-toggle-on"></i>
-                                Estado del Rol (Activo/Inactivo)
-                            </label>
-                        </div>
-                        <small class="admin-form-hint">
-                            <i class="fas fa-info-circle"></i>
-                            Activa o desactiva el rol en el sistema
-                        </small>
-                    </div>
-
                     <!-- Info box -->
                     <div class="admin-form-info-box">
                         <i class="fas fa-info-circle"></i>
@@ -96,6 +78,25 @@
                         </div>
                     </div>
 
+                </div>
+
+                <!-- Estado -->
+                <div class="form-group">
+                    <label for="estadoCheckbox" style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
+                        <input type="checkbox" name="Estado" id="estadoCheckbox" value="true"
+                               class="form-check-input" style="width:20px;height:20px;flex-shrink:0;cursor:pointer;"
+                               @(Model.Estado ? "checked" : "") />
+                        <span style="flex: 1;">
+                            <i class="fas fa-toggle-on"></i>
+                            Estado del Rol (Activo/Inactivo)
+                        </span>
+                    </label>
+                    <input type="hidden" name="Estado" value="false" />
+                    @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                    <small class="admin-form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Activa o desactiva el rol en el sistema
+                    </small>
                 </div>
 
                 <!-- Botones -->

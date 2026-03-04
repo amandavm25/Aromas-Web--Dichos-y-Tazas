@@ -1,305 +1,248 @@
-﻿// reserva.js - Script para gestión de reservas
-
+﻿// ============================================
+// INICIALIZACIÓN Y ANIMACIONES
+// ============================================
 document.addEventListener('DOMContentLoaded', function () {
+    animateOnLoad();
+    initializeTooltips();
+    initializeTableHoverEffects();
+    initializeModals();
 
-    // =============================
-    // MODAL DETALLES RESERVA
-    // =============================
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalDetalles = document.getElementById('modalDetallesReserva');
+    // Paginación de tabla (ListadoReservas, HistorialReservas)
+    if (document.getElementById('laTablaDeReservas')) {
+        initTablePagination({
+            tableId: 'laTablaDeReservas',
+            recordsPerPage: 10,
+            prevButtonId: 'btnAnterior',
+            nextButtonId: 'btnSiguiente',
+            startRecordId: 'startRecord',
+            endRecordId: 'endRecord',
+            totalRecordsId: 'totalRecords'
+        });
+    }
 
-        if (modalDetalles) {
-            modalDetalles.addEventListener('show.bs.modal', function (event) {
-                const button = event.relatedTarget;
+    if (document.getElementById('laTablaDeHistorialReservas')) {
+        initTablePagination({
+            tableId: 'laTablaDeHistorialReservas',
+            recordsPerPage: 10,
+            prevButtonId: 'btnAnterior',
+            nextButtonId: 'btnSiguiente',
+            startRecordId: 'startRecord',
+            endRecordId: 'endRecord',
+            totalRecordsId: 'totalRecords'
+        });
+    }
 
-                // Obtener datos del botón
-                const id = button.getAttribute('data-id');
-                const cliente = button.getAttribute('data-cliente');
-                const telefono = button.getAttribute('data-telefono');
-                const personas = button.getAttribute('data-personas');
-                const fecha = button.getAttribute('data-fecha');
-                const hora = button.getAttribute('data-hora');
-                const estado = button.getAttribute('data-estado');
-                const observaciones = button.getAttribute('data-observaciones');
+    // Paginación de cards (MisReservas)
+    if (document.getElementById('historial-reservas-timeline')) {
+        initCardsPagination({
+            containerId: 'historial-reservas-timeline',
+            cardsPerPage: 3,
+            prevButtonId: 'btnAnteriorCards',
+            nextButtonId: 'btnSiguienteCards',
+            startCardId: 'startCard',
+            endCardId: 'endCard',
+            totalCardsId: 'totalCards'
+        });
+    }
+});
 
-                // Actualizar el contenido del modal
-                document.getElementById('detalles-id-reserva').textContent = '#' + id;
-                document.getElementById('detalles-cliente-reserva').textContent = cliente;
-                document.querySelector('#detalles-telefono-reserva span').textContent = telefono;
-                document.getElementById('detalles-fecha-reserva').textContent = fecha;
-                document.getElementById('detalles-hora-reserva').textContent = hora;
-                document.getElementById('detalles-personas-reserva').textContent = personas + ' personas';
-                document.getElementById('detalles-estado-texto-reserva').textContent = estado;
+// ============================================
+// ANIMACIONES AL CARGAR
+// ============================================
+function animateOnLoad() {
+    const statCards = document.querySelectorAll('[style*="linear-gradient(135deg,"]');
+    statCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px) scale(0.9)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) scale(1)';
+        }, index * 100);
+    });
+}
 
-                // Configurar el badge de estado con color e icono
-                const badgeEstado = document.getElementById('detalles-estado-badge-reserva');
-                const iconoEstado = document.getElementById('detalles-estado-icono-reserva');
+// ============================================
+// EFECTOS HOVER EN TABLA
+// ============================================
+function initializeTableHoverEffects() {
+    const tables = document.querySelectorAll('table');
+    tables.forEach(table => {
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+        tbody.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('mouseenter', function () {
+                this.style.background = 'linear-gradient(90deg, rgba(143, 142, 106, 0.05) 0%, transparent 100%)';
+                this.style.transform = 'translateX(5px)';
+                this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
+            });
+            row.addEventListener('mouseleave', function () {
+                this.style.background = '';
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+    });
+}
 
-                // Resetear clases
-                badgeEstado.className = 'badge';
-                iconoEstado.className = 'fas';
+// ============================================
+// TOOLTIPS PERSONALIZADOS
+// ============================================
+function initializeTooltips() {
+    document.querySelectorAll('[title]').forEach(element => {
+        const title = element.getAttribute('title');
+        element.removeAttribute('title');
+        element.setAttribute('data-tooltip', title);
+        element.addEventListener('mouseenter', (e) => showTooltip(e, title));
+        element.addEventListener('mouseleave', hideTooltip);
+    });
+}
 
-                switch (estado.toLowerCase()) {
-                    case 'pendiente':
-                        badgeEstado.style.background = 'var(--yellow)';
-                        iconoEstado.classList.add('fa-clock');
-                        break;
-                    case 'confirmada':
-                        badgeEstado.style.background = 'var(--green)';
-                        iconoEstado.classList.add('fa-check-circle');
-                        break;
-                    case 'completada':
-                        badgeEstado.style.background = 'var(--gold)';
-                        iconoEstado.classList.add('fa-check-double');
-                        break;
-                    case 'cancelada':
-                        badgeEstado.style.background = 'var(--red)';
-                        iconoEstado.classList.add('fa-times-circle');
-                        break;
-                    default:
-                        badgeEstado.style.background = 'var(--gray)';
-                        iconoEstado.classList.add('fa-question-circle');
-                }
+let tooltipElement = null;
+function showTooltip(event, text) {
+    hideTooltip();
+    tooltipElement = document.createElement('div');
+    tooltipElement.textContent = text;
+    tooltipElement.style.cssText = `
+        position: fixed;
+        background: linear-gradient(135deg, var(--dark-green), var(--olive-green));
+        color: white;
+        padding: 0.7rem 1.2rem;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        z-index: 10000;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        pointer-events: none;
+        white-space: nowrap;
+        animation: tooltipFadeIn 0.3s ease;
+    `;
+    document.body.appendChild(tooltipElement);
+    const rect = tooltipElement.getBoundingClientRect();
+    tooltipElement.style.left = (event.clientX - rect.width / 2) + 'px';
+    tooltipElement.style.top = (event.clientY - rect.height - 10) + 'px';
+}
 
-                // Mostrar u ocultar observaciones
-                const obsContainer = document.getElementById('detalles-observaciones-container');
-                const obsTexto = document.getElementById('detalles-observaciones-reserva');
+function hideTooltip() {
+    if (tooltipElement) {
+        tooltipElement.style.animation = 'tooltipFadeOut 0.2s ease';
+        setTimeout(() => {
+            if (tooltipElement && tooltipElement.parentNode) tooltipElement.remove();
+            tooltipElement = null;
+        }, 200);
+    }
+}
 
-                if (observaciones && observaciones.trim() !== '') {
+// ============================================
+// MODALES
+// ============================================
+function initializeModals() {
+    // Modal de detalles
+    document.querySelectorAll('.btn-detalles-reserva').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+            set('detalles-cliente-reserva', this.dataset.cliente);
+            set('detalles-telefono-text-reserva', this.dataset.telefono);
+            set('detalles-id-reserva', '#' + this.dataset.id);
+            set('detalles-fecha-reserva', this.dataset.fecha);
+            set('detalles-hora-reserva', this.dataset.hora);
+            set('detalles-personas-reserva', this.dataset.personas + ' personas');
+
+            // Badge de estado
+            const estadoBadge = document.getElementById('detalles-estado-badge-reserva');
+            if (estadoBadge) {
+                const estado = this.dataset.estado;
+                const config = {
+                    'Confirmada': { icon: 'fa-check-circle', bg: 'var(--green)' },
+                    'Pendiente': { icon: 'fa-clock', bg: 'var(--yellow)' },
+                    'Completada': { icon: 'fa-check-double', bg: 'var(--gold)' },
+                    'Cancelada': { icon: 'fa-times-circle', bg: 'var(--red)' }
+                };
+                const c = config[estado] || { icon: 'fa-question-circle', bg: 'var(--charcoal)' };
+                estadoBadge.innerHTML = `<i class="fas ${c.icon}"></i> ${estado}`;
+                estadoBadge.className = 'badge';
+                estadoBadge.style.cssText = `
+                    background: ${c.bg};
+                    color: white;
+                    font-size: 1rem;
+                    padding: 0.6rem 1.5rem;
+                    border-radius: 50px;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    font-weight: 600;
+                `;
+            }
+
+            // Observaciones
+            const obsContainer = document.getElementById('detalles-observaciones-container');
+            const obsTexto = document.getElementById('detalles-observaciones-reserva');
+            const obs = this.dataset.observaciones;
+            if (obsContainer && obsTexto) {
+                if (obs && obs.trim() !== '') {
+                    obsTexto.textContent = obs;
                     obsContainer.style.display = 'block';
-                    obsTexto.textContent = observaciones;
                 } else {
                     obsContainer.style.display = 'none';
                 }
-            });
-        }
-    });
-
-    // =============================
-    // MODAL CANCELAR RESERVA
-    // =============================
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalCancelar = document.getElementById('modalCancelarReserva');
-
-        if (modalCancelar) {
-            modalCancelar.addEventListener('show.bs.modal', function (event) {
-                const button = event.relatedTarget;
-
-                // Obtener datos del botón
-                const id = button.getAttribute('data-id');
-                const fecha = button.getAttribute('data-fecha');
-                const hora = button.getAttribute('data-hora');
-                const personas = button.getAttribute('data-personas');
-
-                // Actualizar el contenido del modal
-                document.getElementById('cancelar-id-reserva').value = id;
-                document.getElementById('cancelar-id-display').textContent = '#' + id;
-                document.getElementById('cancelar-fecha').textContent = fecha;
-                document.getElementById('cancelar-hora').textContent = hora;
-                document.getElementById('cancelar-personas').textContent = personas + ' personas';
-
-                // Actualizar la acción del formulario
-                const form = document.getElementById('formCancelarReserva');
-                form.action = '/Reserva/CancelarReserva/' + id;
-            });
-        }
-    });
-
-    // =============================
-    // SISTEMA DE NOTIFICACIONES
-    // =============================
-    window.mostrarNotificacion = function (mensaje, tipo = 'info') {
-        // Crear contenedor si no existe
-        let contenedor = document.getElementById('notificaciones-container');
-        if (!contenedor) {
-            contenedor = document.createElement('div');
-            contenedor.id = 'notificaciones-container';
-            contenedor.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 9999;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            `;
-            document.body.appendChild(contenedor);
-        }
-
-        // Crear notificación
-        const notificacion = document.createElement('div');
-        notificacion.style.cssText = `
-            background: white;
-            padding: 1rem 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            min-width: 300px;
-            animation: slideIn 0.3s ease;
-        `;
-
-        // Configurar según tipo
-        let icono = '';
-        let color = '';
-        switch (tipo) {
-            case 'success':
-                icono = 'fa-check-circle';
-                color = 'var(--green)';
-                break;
-            case 'error':
-                icono = 'fa-times-circle';
-                color = 'var(--red)';
-                break;
-            case 'warning':
-                icono = 'fa-exclamation-triangle';
-                color = 'var(--yellow)';
-                break;
-            default:
-                icono = 'fa-info-circle';
-                color = 'var(--gold)';
-        }
-
-        notificacion.innerHTML = `
-            <i class="fas ${icono}" style="color: ${color}; font-size: 1.5rem;"></i>
-            <span style="flex: 1; color: #2c3e50; font-weight: 500;">${mensaje}</span>
-            <button onclick="this.parentElement.remove()" style="background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.2rem;">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
-
-        contenedor.appendChild(notificacion);
-
-        // Auto-remover después de 5 segundos
-        setTimeout(() => {
-            notificacion.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => notificacion.remove(), 300);
-        }, 5000);
-    };
-
-    // =============================
-    // VALIDACIÓN DE FORMULARIOS
-    // =============================
-    const formularios = document.querySelectorAll('form');
-    formularios.forEach(form => {
-        form.addEventListener('submit', function (e) {
-            // Validar campos requeridos
-            const camposRequeridos = form.querySelectorAll('[required]');
-            let formularioValido = true;
-
-            camposRequeridos.forEach(campo => {
-                if (!campo.value.trim()) {
-                    formularioValido = false;
-                    campo.style.borderColor = 'var(--red)';
-                } else {
-                    campo.style.borderColor = '';
-                }
-            });
-
-            if (!formularioValido) {
-                e.preventDefault();
-                mostrarNotificacion('Por favor complete todos los campos requeridos', 'warning');
             }
         });
     });
 
-    // =============================
-    // PAGINACIÓN (si aplica)
-    // =============================
-    window.paginaAnterior = function () {
-        // Implementar lógica de paginación
-        console.log('Página anterior');
-    };
+    // Modal de cancelar
+    document.querySelectorAll('.btn-cancelar-reserva').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const id = this.dataset.id;
+            const set = (id2, val) => { const el = document.getElementById(id2); if (el) el.textContent = val; };
+            set('cancelar-cliente-reserva', this.dataset.cliente);
+            set('cancelar-fecha-reserva', this.dataset.fecha);
+            set('cancelar-hora-reserva', this.dataset.hora);
+            set('cancelar-personas-reserva', (this.dataset.personas || '') + ' personas');
+            set('cancelar-id-display-reserva', '#' + id);
 
-    window.paginaSiguiente = function () {
-        // Implementar lógica de paginación
-        console.log('Página siguiente');
-    };
+            const inputId = document.getElementById('cancelar-id-reserva');
+            if (inputId) inputId.value = id;
 
-    // =============================
-    // BÚSQUEDA EN TIEMPO REAL (opcional)
-    // =============================
-    const campoBusqueda = document.querySelector('input[name="buscar"]');
-    if (campoBusqueda) {
-        let timeoutBusqueda;
-        campoBusqueda.addEventListener('input', function () {
-            clearTimeout(timeoutBusqueda);
-            timeoutBusqueda = setTimeout(() => {
-                // Implementar búsqueda en tiempo real si es necesario
-                console.log('Buscando:', this.value);
-            }, 500);
-        });
-    }
-
-    // =============================
-    // ANIMACIONES DE TABLA
-    // =============================
-    const filasTabla = document.querySelectorAll('tbody tr');
-    filasTabla.forEach((fila, index) => {
-        fila.style.animation = `fadeIn 0.5s ease ${index * 0.05}s both`;
-    });
-
-    // =============================
-    // CONFIRMACIÓN AL SALIR
-    // =============================
-    const formulariosEdicion = document.querySelectorAll('form[action*="Editar"], form[action*="Crear"]');
-    formulariosEdicion.forEach(form => {
-        let formularioModificado = false;
-
-        form.addEventListener('change', () => {
-            formularioModificado = true;
-        });
-
-        window.addEventListener('beforeunload', (e) => {
-            if (formularioModificado) {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        });
-
-        form.addEventListener('submit', () => {
-            formularioModificado = false;
+            const form = document.getElementById('formCancelarReserva');
+            if (form) form.action = '/Reserva/CancelarReserva/' + id;
         });
     });
-});
+}
 
-// =============================
+// ============================================
+// NOTIFICACIONES
+// ============================================
+function mostrarNotificacion(mensaje, tipo) {
+    const iconos = { success: 'fa-check-circle', error: 'fa-exclamation-triangle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
+    const colores = { success: 'var(--green)', error: 'var(--red)', warning: 'var(--yellow)', info: 'var(--gold)' };
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed; top: 100px; right: 20px;
+        background: ${colores[tipo]}; color: white;
+        padding: 1.5rem 2rem; border-radius: 10px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        z-index: 10001; animation: slideInNotif 0.3s ease;
+        font-weight: 600; display: flex; align-items: center;
+        gap: 1rem; min-width: 300px;
+    `;
+    notification.innerHTML = `<i class="fas ${iconos[tipo]}" style="font-size:1.5rem;"></i><span>${mensaje}</span>`;
+    document.body.appendChild(notification);
+    setTimeout(() => {
+        notification.style.animation = 'slideOutNotif 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// ============================================
 // ESTILOS DE ANIMACIÓN
-// =============================
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-`;
-document.head.appendChild(style);
+// ============================================
+if (!document.getElementById('reserva-styles')) {
+    const s = document.createElement('style');
+    s.id = 'reserva-styles';
+    s.innerHTML = `
+        @keyframes slideInNotif  { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOutNotif { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
+        @keyframes tooltipFadeIn  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes tooltipFadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
+    `;
+    document.head.appendChild(s);
+}

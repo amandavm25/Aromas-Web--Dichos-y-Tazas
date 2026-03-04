@@ -69,24 +69,6 @@
                         @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                     </div>
 
-                    <!-- Estado -->
-                    <div class="form-group">
-                        <label for="estadoCheckbox" style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
-                            <input type="checkbox" name="Estado" id="estadoCheckbox" value="true"
-                                   class="form-check-input" style="width:20px;height:20px;flex-shrink:0;cursor:pointer;"
-                                   @(Model.Estado ? "checked" : "") />
-                            <input type="hidden" name="Estado" value="false" />
-                            <span style="flex: 1;">
-                                <i class="fas fa-toggle-on"></i>
-                                Estado (Activo/Inactivo)
-                            </span>
-                        </label>
-                        <small class="admin-form-hint">
-                            <i class="fas fa-info-circle"></i>
-                            Activa o desactiva el módulo en el sistema
-                        </small>
-                    </div>
-
                     <!-- Info box -->
                     <div class="admin-form-info-box">
                         <i class="fas fa-info-circle"></i>
@@ -96,6 +78,25 @@
                         </div>
                     </div>
 
+                </div>
+
+                <!-- Estado -->
+                <div class="form-group">
+                    <label for="estadoCheckbox" style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
+                        <input type="checkbox" name="Estado" id="estadoCheckbox" value="true"
+                               class="form-check-input" style="width:20px;height:20px;flex-shrink:0;cursor:pointer;"
+                               @(Model.Estado ? "checked" : "") />
+                        <span style="flex: 1;">
+                            <i class="fas fa-toggle-on"></i>
+                            Estado del Módulo (Activo/Inactivo)
+                        </span>
+                    </label>
+                    <input type="hidden" name="Estado" value="false" />
+                    @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                    <small class="admin-form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Activa o desactiva el módulo en el sistema
+                    </small>
                 </div>
 
                 <!-- Botones -->

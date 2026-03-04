@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Gestión de Clientes";
+    var totalClientes = Model?.Count ?? 0;
+    var totalActivos = Model?.Count(c => c.Estado) ?? 0;
+    var totalInactivos = Model?.Count(c => !c.Estado) ?? 0;
+    var totalFrecuentes = Model?.Count(c => c.EsClienteFrecuente) ?? 0;
 }
 
 <!-- Hero Section -->
@@ -32,6 +36,41 @@
 <!-- Content Section -->
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1600px;">
+
+        <!-- Resumen de Clientes -->
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalClientes</h3>
+                <p style="margin: 0.5rem 0;">Total de Clientes</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalActivos</h3>
+                <p style="margin: 0.5rem 0;">Clientes Activos</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalInactivos</h3>
+                <p style="margin: 0.5rem 0;">Clientes Inactivos</p>
+            </div>
+
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalFrecuentes</h3>
+                <p style="margin: 0.5rem 0;">Clientes Frecuentes</p>
+            </div>
+        </div>
 
         <!-- Barra de búsqueda y botones -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;">
@@ -93,18 +132,16 @@
         </div>
 
         <!-- Tabla Principal -->
-        <div class="admin-table-container">
+        <div class="admin-table-container" data-aos="fade-up">
             <div class="table-responsive">
-                <table class="admin-table">
+                <table class="admin-table" id="laTablaDeClientes">
                     <thead>
                         <tr>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Nombre</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Apellidos</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Identificación</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Correo</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Teléfono</th>
-                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Fecha Registro</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Estado</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
                         </tr>
@@ -114,35 +151,29 @@
                         {
                             int contador = 1;
                             foreach (var cliente in Model)
-                                                    {
+                            {
                                 <tr style="border-bottom: 1px solid rgba(143, 142, 106, 0.1);">
-                                <td style="padding: 1.2rem; text-align: center;">
-                                    <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
-                                </td>
+                                    <td style="padding: 1.2rem; text-align: center;">
+                                        <span style="color: var(--charcoal); font-weight: 600;">@contador</span>
+                                    </td>
                                     <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
-                                        <i class="fas fa-user" style="color: var(--gold-bright); margin-right: 0.5rem;"></i>
-                                        @cliente.Nombre
+                                        @cliente.Nombre @cliente.Apellidos
                                         @if (cliente.EsClienteFrecuente)
                                         {
                                             <i class="fas fa-star" style="color: var(--gold); margin-left: 0.5rem;" title="Cliente frecuente"></i>
                                         }
                                     </td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal);">@cliente.Apellidos</td>
                                     <td style="padding: 1.2rem; color: var(--charcoal);">@cliente.Identificacion</td>
                                     <td style="padding: 1.2rem; color: var(--charcoal);">@(cliente.Correo ?? "Sin correo")</td>
                                     <td style="padding: 1.2rem; color: var(--charcoal);">@cliente.Telefono</td>
-                                    <td style="padding: 1.2rem; color: var(--charcoal); opacity: 0.7;">
-                                        <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--olive-green);"></i>
-                                        @cliente.FechaRegistroFormateada
-                                    </td>
                                     <td style="padding: 1.2rem;">
                                         @if (cliente.Estado)
                                         {
-                                            <span style="background: var(--green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activo</span>
+                                            <span class="badge" style="background: var(--green); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Activo</span>
                                         }
                                         else
                                         {
-                                            <span style="background: var(--red); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactivo</span>
+                                            <span class="badge" style="background: var(--red); color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Inactivo</span>
                                         }
                                     </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
@@ -155,8 +186,8 @@
                                         </button>
                                         <button type="button"
                                                 class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("HistorialReservas", "Cliente", new { id = cliente.IdCliente })'"
-                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                onclick="window.location.href='@Url.Action("HistorialReservas", "Reserva", new { id = cliente.IdCliente })'"
+                                                style="background: var(--dark-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 title="Ver historial">
                                             <i class="fas fa-history"></i>
                                         </button>
@@ -170,7 +201,7 @@
                                                 data-telefono="@cliente.Telefono"
                                                 data-estado="@(cliente.Estado ? "Activo" : "Inactivo")"
                                                 data-fecha="@cliente.FechaRegistroFormateada"
-                                                style="background: #9b59b6; color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesCliente"
                                                 title="Ver detalles">
@@ -178,18 +209,18 @@
                                         </button>
                                     </td>
                                 </tr>
-                            contador++;
+                                contador++;
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="8" style="padding: 3rem; text-align: center; color: var(--charcoal);">
-                                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--olive-green); opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
-                                    <p style="margin: 0; font-size: 1.1rem;">No se encontraron clientes</p>
+                                <td colspan="9" class="admin-table-empty">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>No se encontraron clientes</p>
                                     @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
                                     {
-                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.7;">Intenta con otros términos de búsqueda</p>
+                                        <p class="empty-subtitle">Intenta con otros términos de búsqueda</p>
                                     }
                                 </td>
                             </tr>
@@ -203,7 +234,6 @@
                 <div class="admin-table-footer-text">
                     Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
                 </div>
-
                 <div class="pagination-buttons">
                     <button id="btnAnterior" class="pagination-btn">
                         <i class="fas fa-chevron-left"></i> Anterior
@@ -214,6 +244,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 

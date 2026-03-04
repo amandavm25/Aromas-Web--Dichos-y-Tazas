@@ -1,133 +1,82 @@
-﻿<div class="modal fade" id="modalDetallesCliente" tabindex="-1" aria-labelledby="modalDetallesClienteLabel" aria-hidden="true">
+﻿<div class="modal fade admin-modal modal-olive" id="modalDetallesCliente" tabindex="-1" aria-labelledby="modalDetallesClienteLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" style="border: none; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-xl);">
+        <div class="modal-content">
+
             <!-- Header -->
-            <div class="modal-header" style="background: linear-gradient(135deg, var(--olive-green) 0%, var(--dark-green) 100%); color: var(--white); border: none; padding: 2rem;">
-                <h5 class="modal-title" id="modalDetallesClienteLabel" style="font-family: var(--font-primary); font-weight: 700; display: flex; align-items: center; gap: 0.7rem; font-size: 1.5rem;">
-                    <div style="width: 50px; height: 50px; background: rgba(255,255,255,0.2); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetallesClienteLabel">
+                    <div class="modal-icon">
                         <i class="fas fa-user-circle"></i>
                     </div>
                     Detalles del Cliente
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- Body -->
-            <div class="modal-body" style="padding: 2.5rem; background: var(--white);">
-                <!-- Título del Cliente -->
-                <div style="background: var(--white); padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-left: 5px solid var(--olive-green); display: flex; align-items: center; justify-content: space-between;">
-                    <div>
-                        <h5 id="detalles-nombre-cliente" style="color: var(--dark-green); margin: 0; font-size: 1.6rem; font-family: var(--font-primary); font-weight: 700;"></h5>
+            <div class="modal-body">
+
+                <!-- Nombre del Cliente -->
+                <div class="modal-entity-header entity-block">
+                    <h5 id="detalles-nombre-cliente" class="modal-entity-name"></h5>
+                </div>
+
+                <!-- ID y Estado en 2 columnas -->
+                <div class="modal-data-grid-2">
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-hashtag"></i> ID del Cliente
+                        </label>
+                        <p id="detalles-id-cliente" class="modal-data-value"></p>
                     </div>
-                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
-                        <i class="fas fa-user" style="font-size: 2rem; color: white;"></i>
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-toggle-on"></i> Estado
+                        </label>
+                        <span id="detalles-estado-badge-cliente" class="badge"
+                              style="font-size: 0.95rem; padding: 0.4rem 1.2rem; border-radius: 50px; font-weight: 600; display: inline-block;"></span>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                    <!-- Columna Izquierda -->
-                    <div style="display: grid; gap: 1.5rem;">
-                        <!-- ID -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-hashtag" style="color: var(--olive-green); font-size: 1.1rem;"></i> ID del Cliente
-                            </label>
-                            <p id="detalles-id-cliente" style="color: var(--dark-green); font-size: 1.3rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
-                        <!-- Identificación -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-id-card" style="color: var(--olive-green); font-size: 1.1rem;"></i> Identificación
-                            </label>
-                            <p id="detalles-identificacion-cliente" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
-                        </div>
-
-                        <!-- Correo -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-envelope" style="color: var(--olive-green); font-size: 1.1rem;"></i> Correo Electrónico
-                            </label>
-                            <p id="detalles-correo-cliente" style="color: var(--dark-green); font-size: 1rem; font-weight: 600; margin: 0; word-break: break-all;"></p>
-                        </div>
-
-                        <!-- Teléfono -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-phone" style="color: var(--olive-green); font-size: 1.1rem;"></i> Teléfono
-                            </label>
-                            <p id="detalles-telefono-cliente" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
-                        </div>
+                <!-- Datos de contacto -->
+                <h6 class="modal-subsection-title">
+                    <i class="fas fa-address-card"></i> Información de Contacto
+                </h6>
+                <div class="modal-data-grid-2">
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-id-card"></i> Identificación
+                        </label>
+                        <p id="detalles-identificacion-cliente" class="modal-data-value"></p>
                     </div>
-
-                    <!-- Columna Derecha -->
-                    <div style="display: grid; gap: 1.5rem;">
-                        <!-- Fecha de Registro -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-calendar-plus" style="color: var(--olive-green); font-size: 1.1rem;"></i> Fecha de Registro
-                            </label>
-                            <p id="detalles-fecha-cliente" style="color: var(--dark-green); font-size: 1.2rem; font-weight: 700; margin: 0;"></p>
-                        </div>
-
-                        <!-- Estado -->
-                        <div class="feature-card" style="padding: 1.5rem; margin: 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--charcoal); opacity: 0.7; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.7rem; letter-spacing: 0.5px;">
-                                <i class="fas fa-toggle-on" style="color: var(--olive-green); font-size: 1.1rem;"></i> Estado
-                            </label>
-                            <span id="detalles-estado-badge-cliente" class="badge" style="font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600;"></span>
-                        </div>
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-phone"></i> Teléfono
+                        </label>
+                        <p id="detalles-telefono-cliente" class="modal-data-value"></p>
+                    </div>
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-envelope"></i> Correo Electrónico
+                        </label>
+                        <p id="detalles-correo-cliente" class="modal-data-value" style="word-break: break-all;"></p>
+                    </div>
+                    <div class="modal-data-cell">
+                        <label class="modal-data-label">
+                            <i class="fas fa-calendar-plus"></i> Fecha de Registro
+                        </label>
+                        <p id="detalles-fecha-cliente" class="modal-data-value"></p>
                     </div>
                 </div>
+
             </div>
 
             <!-- Footer -->
-            <div class="modal-footer" style="background: var(--white); border: none; padding: 1.5rem 2.5rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 0.9rem 2.5rem; border-radius: 50px;">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <span><i class="fas fa-times"></i> Cerrar</span>
                 </button>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const botonesDetalles = document.querySelectorAll('.btn-detalles-cliente');
-
-        botonesDetalles.forEach(boton => {
-            boton.addEventListener('click', function () {
-                const id = this.getAttribute('data-id');
-                const nombre = this.getAttribute('data-nombre');
-                const apellidos = this.getAttribute('data-apellidos');
-                const identificacion = this.getAttribute('data-identificacion');
-                const correo = this.getAttribute('data-correo');
-                const telefono = this.getAttribute('data-telefono');
-                const estado = this.getAttribute('data-estado');
-                const fecha = this.getAttribute('data-fecha');
-
-                // Llenar información general
-                document.getElementById('detalles-id-cliente').textContent = id;
-                document.getElementById('detalles-nombre-cliente').textContent = nombre + ' ' + apellidos;
-                document.getElementById('detalles-identificacion-cliente').textContent = identificacion;
-                document.getElementById('detalles-correo-cliente').textContent = correo;
-                document.getElementById('detalles-telefono-cliente').textContent = telefono;
-                document.getElementById('detalles-fecha-cliente').textContent = fecha;
-
-                // Badge de estado
-                const estadoBadge = document.getElementById('detalles-estado-badge-cliente');
-                if (estadoBadge) {
-                    if (estado === 'Activo') {
-                        estadoBadge.textContent = 'Activo';
-                        estadoBadge.style.background = '#27ae60';
-                        estadoBadge.style.color = 'white';
-                    } else {
-                        estadoBadge.textContent = 'Inactivo';
-                        estadoBadge.style.background = '#e74c3c';
-                        estadoBadge.style.color = 'white';
-                    }
-                }
-            });
-        });
-    });
-</script>

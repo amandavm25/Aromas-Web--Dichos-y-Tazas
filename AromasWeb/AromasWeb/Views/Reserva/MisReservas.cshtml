@@ -1,0 +1,340 @@
+﻿@model List<AromasWeb.Abstracciones.ModeloUI.Reserva>
+
+@{
+    ViewBag.Title = "Mis Reservas";
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-leaves"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-calendar-alt"></i>
+                Mis Reservas
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                Mi Historial de
+                <span class="hero-title-accent">Reservas</span>
+            </h1>
+            <p class="hero-subtitle">
+                Gestiona y consulta todas tus reservas en un solo lugar
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse"><div class="wheel"></div></div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1200px;">
+
+        <!-- Tarjeta del cliente -->
+        <div class="admin-modal" data-aos="fade-up" style="margin-bottom: 2rem;">
+            <div class="modal-entity-header">
+
+                <!-- Avatar -->
+                <div class="modal-entity-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <!-- Nombre y datos -->
+                <div style="flex: 1;">
+                    <h4 class="modal-entity-name">@ViewBag.NombreCliente</h4>
+                    <p class="modal-entity-sub">
+                        <i class="fas fa-envelope" style="color: var(--olive-green); margin-right: 0.4rem;"></i>@ViewBag.Correo
+                    </p>
+                    <div class="modal-entity-meta">
+                        <div class="modal-entity-meta-item">
+                            <small><i class="fas fa-id-card"></i> Identificación</small>
+                            <p>@ViewBag.Identificacion</p>
+                        </div>
+                        <div class="modal-entity-meta-item">
+                            <small><i class="fas fa-phone"></i> Teléfono</small>
+                            <p>@ViewBag.Telefono</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="features-grid" style="margin-bottom: 3rem;" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@(Model?.Count(r => r.Estado == "Pendiente") ?? 0)</h3>
+                <p style="margin: 0.5rem 0;">Pendientes</p>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@(Model?.Count(r => r.Estado == "Confirmada") ?? 0)</h3>
+                <p style="margin: 0.5rem 0;">Confirmadas</p>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon"><i class="fas fa-check-double"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@(Model?.Count(r => r.Estado == "Completada") ?? 0)</h3>
+                <p style="margin: 0.5rem 0;">Completadas</p>
+            </div>
+        </div>
+
+        <!-- Filtros y botón nueva reserva -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1rem; flex-wrap: wrap;" data-aos="fade-up">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+                <span style="color: var(--dark-green); font-weight: 600; margin-right: 0.5rem; font-family: var(--font-primary);">
+                    <i class="fas fa-filter" style="color: var(--gold-bright);"></i> Filtrar:
+                </span>
+                <a href="@Url.Action("MisReservas", "Reserva")"
+                   class="btn @(string.IsNullOrWhiteSpace(ViewBag.Filtro as string) ? "btn-primary" : "btn-secondary")"
+                   style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                    <span><i class="fas fa-th"></i> Todas</span>
+                </a>
+                <a href="@Url.Action("MisReservas", "Reserva", new { filtro = "activas" })"
+                   class="btn @(ViewBag.Filtro == "activas" ? "btn-primary" : "btn-secondary")"
+                   style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                    <span><i class="fas fa-clock"></i> Activas</span>
+                </a>
+                <a href="@Url.Action("MisReservas", "Reserva", new { filtro = "pasadas" })"
+                   class="btn @(ViewBag.Filtro == "pasadas" ? "btn-primary" : "btn-secondary")"
+                   style="border-radius: 50px; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                    <span><i class="fas fa-history"></i> Pasadas</span>
+                </a>
+            </div>
+            <a href="@Url.Action("CrearReserva", "Reserva")" class="btn btn-primary btn-3d">
+                <span><i class="fas fa-plus"></i> Nueva Reserva</span>
+            </a>
+        </div>
+
+        <!-- Timeline de Reservas -->
+        <div class="timeline-container" data-aos="fade-up">
+            <div class="timeline-header">
+                <h2><i class="fas fa-calendar-alt" style="color: var(--gold); margin-right: 0.7rem;"></i> Historial de Mis Reservas</h2>
+                <p>Aquí puedes ver el estado de todas tus reservas</p>
+            </div>
+
+            @if (Model != null && Model.Any())
+            {
+                <div id="historial-reservas-timeline">
+                    @{
+                        int numeroReserva = Model.Count;
+                    }
+                    @foreach (var reserva in Model)
+                    {
+                        var estadoColor = reserva.Estado switch
+                        {
+                            "Confirmada" => "var(--green)",
+                            "Completada" => "var(--gold)",
+                            "Cancelada" => "var(--red)",
+                            "Pendiente" => "var(--yellow)",
+                            _ => "var(--charcoal)"
+                        };
+                        var iconoEstado = reserva.Estado switch
+                        {
+                            "Confirmada" => "fa-check-circle",
+                            "Completada" => "fa-check-double",
+                            "Cancelada" => "fa-times-circle",
+                            "Pendiente" => "fa-clock",
+                            _ => "fa-question-circle"
+                        };
+                        var badgeClass = reserva.Estado switch
+                        {
+                            "Confirmada" => "approved",
+                            "Completada" => "approved",
+                            "Cancelada" => "rejected",
+                            "Pendiente" => "warning",
+                            _ => ""
+                        };
+
+                        <div class="timeline-card">
+                            <div class="timeline-card-content">
+                                <div class="timeline-card-header">
+                                    <div class="timeline-date-wrapper">
+                                        <div class="timeline-date-badge">
+                                            <span class="timeline-date-day">@reserva.Fecha.Day</span>
+                                            <span class="timeline-date-month">@reserva.Fecha.ToString("MMM")</span>
+                                        </div>
+                                        <div class="timeline-date-info">
+                                            <h3>Reserva #@numeroReserva</h3>
+                                            <p>@reserva.FechaFormateada — @reserva.HoraFormateada</p>
+                                        </div>
+                                    </div>
+                                    <span class="timeline-status-badge @badgeClass">
+                                        <i class="fas @iconoEstado"></i> @reserva.Estado
+                                    </span>
+                                </div>
+
+                                <div class="timeline-details-grid">
+                                    <div class="timeline-detail-item">
+                                        <p class="timeline-detail-label">
+                                            <i class="fas fa-calendar" style="color: var(--gold-bright);"></i> Fecha
+                                        </p>
+                                        <p class="timeline-detail-value">@reserva.FechaFormateada</p>
+                                    </div>
+                                    <div class="timeline-detail-item">
+                                        <p class="timeline-detail-label">
+                                            <i class="fas fa-clock" style="color: var(--gold-bright);"></i> Hora
+                                        </p>
+                                        <p class="timeline-detail-value">@reserva.HoraFormateada</p>
+                                    </div>
+                                    <div class="timeline-detail-item">
+                                        <p class="timeline-detail-label">
+                                            <i class="fas fa-users" style="color: var(--olive-green);"></i> Personas
+                                        </p>
+                                        <p class="timeline-detail-value">@reserva.CantidadPersonas</p>
+                                    </div>
+                                    <div class="timeline-detail-item">
+                                        <p class="timeline-detail-label">
+                                            <i class="fas fa-calendar-plus" style="color: var(--olive-green);"></i> Creada
+                                        </p>
+                                        <p class="timeline-detail-value small">@reserva.FechaCreacionFormateada</p>
+                                    </div>
+                                </div>
+
+                                @if (!string.IsNullOrWhiteSpace(reserva.Observaciones))
+                                {
+                                    <div style="background: rgba(143,142,106,0.08); padding: 1rem; border-radius: 12px; border-left: 3px solid var(--olive-green); margin-top: 1rem;">
+                                        <p style="margin: 0; color: var(--charcoal); font-size: 0.9rem; display: flex; align-items: start; gap: 0.5rem;">
+                                            <i class="fas fa-comment" style="color: var(--olive-green); margin-top: 0.2rem;"></i>
+                                            <span>@reserva.Observaciones</span>
+                                        </p>
+                                    </div>
+                                }
+
+                                @if (reserva.Estado == "Pendiente")
+                                {
+                                    <div class="timeline-info-message">
+                                        <p>
+                                            <i class="fas fa-info-circle" style="color: var(--gold-bright);"></i>
+                                            Tu reserva está pendiente de confirmación. Te avisaremos pronto.
+                                        </p>
+                                    </div>
+                                }
+                                else if (reserva.Estado == "Confirmada")
+                                {
+                                    <div style="background: rgba(39,174,96,0.08); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--green); margin-top: 1rem;">
+                                        <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.7rem;">
+                                            <i class="fas fa-check-circle" style="color: var(--green); font-size: 1.2rem;"></i>
+                                            <span><strong>¡Confirmada!</strong> Te esperamos el @reserva.FechaFormateada a las @reserva.HoraFormateada.</span>
+                                        </p>
+                                    </div>
+                                }
+                                else if (reserva.Estado == "Cancelada")
+                                {
+                                    <div style="background: rgba(231,76,60,0.08); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--red); margin-top: 1rem;">
+                                        <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.7rem;">
+                                            <i class="fas fa-times-circle" style="color: var(--red); font-size: 1.2rem;"></i>
+                                            <span>Esta reserva fue cancelada.</span>
+                                        </p>
+                                    </div>
+                                }
+
+                                @if (reserva.PuedeModificar || reserva.PuedeCancelar)
+                                {
+                                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--cream); display: flex; justify-content: flex-end; gap: 0.5rem;">
+                                        @if (reserva.PuedeModificar)
+                                        {
+                                            <a href="@Url.Action("EditarMiReserva", "Reserva", new { id = reserva.IdReserva })"
+                                               class="btn btn-secondary"
+                                               style="font-size: 0.85rem; padding: 0.4rem 1.2rem; background: var(--olive-green); color: white; border: none;">
+                                                <span><i class="fas fa-edit"></i> Editar</span>
+                                            </a>
+                                        }
+                                        @if (reserva.PuedeCancelar)
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-secondary btn-cancelar-reserva"
+                                                    style="font-size: 0.85rem; padding: 0.4rem 1.2rem;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalCancelarReserva"
+                                                    data-id="@reserva.IdReserva"
+                                                    data-cliente="@reserva.NombreCliente"
+                                                    data-fecha="@reserva.FechaFormateada"
+                                                    data-hora="@reserva.HoraFormateada"
+                                                    data-personas="@reserva.CantidadPersonas">
+                                                <span><i class="fas fa-ban"></i> Cancelar</span>
+                                            </button>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        numeroReserva--;
+                    }
+                </div>
+
+                <!-- Footer de paginación -->
+                <div class="timeline-pagination-footer">
+                    <div class="timeline-pagination-info">
+                        Mostrando <strong id="startCard">0</strong> - <strong id="endCard">0</strong> de <strong id="totalCards">0</strong> registros
+                    </div>
+                    <div class="timeline-pagination-buttons">
+                        <button id="btnAnteriorCards" class="timeline-pagination-btn">
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <button id="btnSiguienteCards" class="timeline-pagination-btn">
+                            Siguiente <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div style="text-align: center; padding: 3rem; color: var(--charcoal); opacity: 0.7;">
+                    <i class="fas fa-calendar-times" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                    <p style="margin: 0; font-size: 1.1rem; font-weight: 600;">No tienes reservas registradas</p>
+                    <p style="margin: 0.5rem 0 1.5rem; font-size: 0.95rem;">¡Empieza a reservar y disfruta de nuestros servicios!</p>
+                    <a href="@Url.Action("CrearReserva", "Reserva")" class="btn btn-primary btn-3d">
+                        <span><i class="fas fa-plus"></i> Hacer mi primera reserva</span>
+                    </a>
+                </div>
+            }
+        </div>
+
+        <!-- Información adicional -->
+        <div style="margin-top: 3rem;" data-aos="fade-up">
+            <div style="background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); padding: 2.5rem; border-radius: 25px; box-shadow: var(--shadow-lg);">
+                <h5 style="margin: 0 0 2rem; color: white; font-weight: 600; display: flex; align-items: center; gap: 0.7rem; font-size: 1.3rem;">
+                    <i class="fas fa-info-circle"></i> Información sobre tus Reservas
+                </h5>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div class="feature-card" style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px; margin: 0;">
+                        <div style="display: flex; align-items: start; gap: 1rem;">
+                            <i class="fas fa-edit" style="font-size: 1.5rem; color: white;"></i>
+                            <div>
+                                <strong style="color: white; display: block; margin-bottom: 0.5rem;">Modificaciones</strong>
+                                <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">Puedes editar tu reserva hasta 24 horas antes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-card" style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px; margin: 0;">
+                        <div style="display: flex; align-items: start; gap: 1rem;">
+                            <i class="fas fa-ban" style="font-size: 1.5rem; color: white;"></i>
+                            <div>
+                                <strong style="color: white; display: block; margin-bottom: 0.5rem;">Cancelaciones</strong>
+                                <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">Cancela sin cargo con 24 horas de anticipación</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-card" style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px; margin: 0;">
+                        <div style="display: flex; align-items: start; gap: 1rem;">
+                            <i class="fas fa-phone" style="font-size: 1.5rem; color: white;"></i>
+                            <div>
+                                <strong style="color: white; display: block; margin-bottom: 0.5rem;">Contacto</strong>
+                                <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">¿Dudas? Llámanos al +506 6138-3502</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="_ModalCancelarReserva" />
+
+@section Scripts {
+    <script src="~/js/reserva.js"></script>
+}

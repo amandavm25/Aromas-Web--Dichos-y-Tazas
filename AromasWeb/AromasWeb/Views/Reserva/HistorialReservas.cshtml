@@ -1,0 +1,230 @@
+﻿@{
+    ViewBag.Title = "Historial de Reservas";
+    var cliente = ViewBag.Cliente;
+    var reservas = (List<AromasWeb.Abstracciones.ModeloUI.Reserva>)ViewBag.Reservas;
+
+    int totalReservas = reservas.Count;
+    int completadas = reservas.Count(r => r.Estado == "Completada");
+    int confirmadas = reservas.Count(r => r.Estado == "Confirmada");
+    int canceladas = reservas.Count(r => r.Estado == "Cancelada");
+    int pendientes = reservas.Count(r => r.Estado == "Pendiente");
+}
+
+<!-- Hero Section -->
+<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-leaves"></div>
+    <div class="container hero-container" style="display: block;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+            <span class="hero-badge">
+                <i class="fas fa-history"></i>
+                Historial de Reservas
+            </span>
+            <h1 class="hero-title" style="font-size: 3.5rem;">
+                @cliente.NombreCompleto
+            </h1>
+            <p class="hero-subtitle">
+                Todas las reservas realizadas por este cliente
+            </p>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse"><div class="wheel"></div></div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section style="padding: 4rem 0; background: var(--cream);">
+    <div class="container" style="max-width: 1400px;">
+
+        <!-- Info del Cliente -->
+        <div class="feature-card" style="margin-bottom: 3rem; padding: 2rem; background: white; border-left: 5px solid var(--gold);" data-aos="fade-up">
+            <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center;">
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--olive-green), var(--dark-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
+                    <i class="fas fa-user" style="font-size: 2.5rem; color: white;"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 0.5rem; color: var(--dark-green); font-family: var(--font-primary); font-weight: 700;">@cliente.NombreCompleto</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block;">
+                                <i class="fas fa-id-card" style="color: var(--olive-green);"></i> Identificación
+                            </small>
+                            <strong style="color: var(--dark-green);">@cliente.Identificacion</strong>
+                        </div>
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block;">
+                                <i class="fas fa-phone" style="color: var(--olive-green);"></i> Teléfono
+                            </small>
+                            <strong style="color: var(--dark-green);">@cliente.Telefono</strong>
+                        </div>
+                        <div>
+                            <small style="color: var(--charcoal); opacity: 0.7; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; display: block;">
+                                <i class="fas fa-envelope" style="color: var(--olive-green);"></i> Correo
+                            </small>
+                            <strong style="color: var(--dark-green);">@cliente.Correo</strong>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("ListadoClientes", "Cliente")'" style="border-radius: 15px; padding: 1rem 2rem;">
+                        <span><i class="fas fa-arrow-left"></i> Volver</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas Rápidas -->
+        <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));" data-aos="fade-up">
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalReservas</h3>
+                <p style="margin: 0.5rem 0;">Total Reservas</p>
+                <small style="opacity: 0.7; display: block; margin-top: 0.5rem;"><i class="fas fa-history"></i> Historial completo</small>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon"><i class="fas fa-check-double"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@completadas</h3>
+                <p style="margin: 0.5rem 0;">Completadas</p>
+                <small style="opacity: 0.7; display: block; margin-top: 0.5rem;"><i class="fas fa-percentage"></i> @(totalReservas > 0 ? Math.Round((decimal)completadas / totalReservas * 100, 1) : 0)% del total</small>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@(confirmadas + pendientes)</h3>
+                <p style="margin: 0.5rem 0;">Activas</p>
+                <small style="opacity: 0.7; display: block; margin-top: 0.5rem;"><i class="fas fa-clock"></i> Confirmadas y pendientes</small>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon"><i class="fas fa-times-circle"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@canceladas</h3>
+                <p style="margin: 0.5rem 0;">Canceladas</p>
+                <small style="opacity: 0.7; display: block; margin-top: 0.5rem;"><i class="fas fa-ban"></i> @(totalReservas > 0 ? Math.Round((decimal)canceladas / totalReservas * 100, 1) : 0)% del total</small>
+            </div>
+        </div>
+
+        <!-- Tabla de Historial -->
+        <div class="admin-table-container" data-aos="fade-up">
+            <div class="table-responsive">
+                <table id="laTablaDeHistorialReservas" class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th style="text-align: center;">Personas</th>
+                            <th>Estado</th>
+                            <th>Fecha Creación</th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (reservas != null && reservas.Count > 0)
+                        {
+                            int contador = 1;
+                            @foreach (var reserva in reservas.OrderByDescending(r => r.Fecha))
+                            {
+                                <tr>
+                                    <td><span style="color: var(--charcoal); font-weight: 600;">@contador</span></td>
+                                    <td>
+                                        <span style="color: var(--dark-green); font-weight: 600;">
+                                            <i class="fas fa-calendar" style="margin-right: 0.3rem; color: var(--olive-green);"></i>
+                                            @reserva.FechaFormateada
+                                        </span>
+                                    </td>
+                                    <td style="color: var(--gold-bright); font-weight: 700;">@reserva.HoraFormateada</td>
+                                    <td style="text-align: center;">
+                                        <span style="background: var(--cream); padding: 0.3rem 0.8rem; border-radius: 10px; font-weight: 600;">
+                                            <i class="fas fa-users" style="color: var(--olive-green);"></i> @reserva.CantidadPersonas
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge" style="background: @reserva.ColorEstado; color: var(--white); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                            @reserva.Estado
+                                        </span>
+                                    </td>
+                                    <td style="color: var(--charcoal); opacity: 0.7; font-size: 0.9rem;">@reserva.FechaCreacionFormateada</td>
+                                    <td style="text-align: center; white-space: nowrap;">
+                                        @if (reserva.Estado == "Pendiente" || reserva.Estado == "Confirmada")
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-sm"
+                                                    onclick="window.location.href='@Url.Action("EditarReserva", "Reserva", new { id = reserva.IdReserva })'"
+                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        }
+                                        <button type="button"
+                                                class="btn btn-sm btn-detalles-reserva"
+                                                data-id="@reserva.IdReserva"
+                                                data-cliente="@cliente.NombreCompleto"
+                                                data-telefono="@cliente.Telefono"
+                                                data-fecha="@reserva.FechaFormateada"
+                                                data-hora="@reserva.HoraFormateada"
+                                                data-personas="@reserva.CantidadPersonas"
+                                                data-estado="@reserva.Estado"
+                                                data-observaciones="@reserva.Observaciones"
+                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalDetallesReserva"
+                                                title="Ver detalles">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        @if (reserva.Estado != "Cancelada" && reserva.Estado != "Completada")
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-sm btn-cancelar-reserva"
+                                                    data-id="@reserva.IdReserva"
+                                                    data-cliente="@cliente.NombreCompleto"
+                                                    data-fecha="@reserva.FechaFormateada"
+                                                    data-hora="@reserva.HoraFormateada"
+                                                    data-personas="@reserva.CantidadPersonas"
+                                                    style="background: var(--red); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalCancelarReserva"
+                                                    title="Cancelar">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                                contador++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="admin-table-empty">
+                                    <i class="fas fa-calendar-times"></i>
+                                    <p>Este cliente aún no tiene reservas registradas</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer de paginación -->
+            <div class="admin-table-footer">
+                <div class="admin-table-footer-text">
+                    Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
+                </div>
+                <div class="pagination-buttons">
+                    <button id="btnAnterior" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btnSiguiente" class="pagination-btn">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="_ModalDetallesReserva" />
+<partial name="_ModalCancelarReserva" />
+
+@section Scripts {
+    <script src="~/js/reserva.js"></script>
+}
