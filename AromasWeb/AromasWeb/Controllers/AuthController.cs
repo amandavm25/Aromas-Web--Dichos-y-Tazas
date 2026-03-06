@@ -45,13 +45,43 @@ namespace AromasWeb.Controllers
                 return View(cliente);
             }
 
-            // Login básico - verificamos el correo y contraseña
+            // ⭐ FUTURO: Buscar cliente en la base de datos
+            var clienteBD = _buscarClientePorCorreo.ObtenerPorCorreo(cliente.Correo);
+
+            if (clienteBD != null)
+            {
+                // ⭐ Verificar que el cliente haya verificado su email
+                if (!clienteBD.Estado)
+                {
+                    TempData["Error"] = "Debes verificar tu correo antes de iniciar sesión. Revisa tu bandeja de entrada.";
+                    return View(cliente);
+                }
+
+                // ⭐ Verificar contraseña
+                if (clienteBD.Contrasena == cliente.Contrasena)
+                {
+                    // Login exitoso
+                    HttpContext.Session.SetString("UsuarioTipo", "cliente");
+                    HttpContext.Session.SetString("UsuarioNombre", $"{clienteBD.Nombre} {clienteBD.Apellidos}");
+                    HttpContext.Session.SetString("UsuarioCorreo", clienteBD.Correo);
+                    HttpContext.Session.SetInt32("IdCliente", clienteBD.IdCliente);
+
+                    TempData["Mensaje"] = $"¡Bienvenido {clienteBD.Nombre}!";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Error"] = "Correo o contraseña incorrectos";
+                    return View(cliente);
+                }
+            }
+
+            // Si no encontró el cliente en BD, verificar usuarios hardcodeados (admin, empleado)
             if (cliente.Correo.ToLower() == "admin@gmail.com" && cliente.Contrasena == "admin123")
             {
                 HttpContext.Session.SetString("UsuarioTipo", "admin");
                 HttpContext.Session.SetString("UsuarioNombre", "Administrador");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
-
                 TempData["Mensaje"] = "¡Bienvenido Administrador!";
                 return RedirectToAction("Index", "Home");
             }
@@ -61,17 +91,7 @@ namespace AromasWeb.Controllers
                 HttpContext.Session.SetString("UsuarioNombre", "Empleado");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
                 HttpContext.Session.SetInt32("IdEmpleado", 1);
-
                 TempData["Mensaje"] = "¡Bienvenido Empleado!";
-                return RedirectToAction("Index", "Home");
-            }
-            else if (cliente.Correo.ToLower() == "cliente@gmail.com" && cliente.Contrasena == "cliente123")
-            {
-                HttpContext.Session.SetString("UsuarioTipo", "cliente");
-                HttpContext.Session.SetString("UsuarioNombre", "Cliente");
-                HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
-
-                TempData["Mensaje"] = "¡Bienvenido! Has iniciado sesión correctamente";
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -109,6 +129,8 @@ namespace AromasWeb.Controllers
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine($"[REGISTRO] Inicio para: {cliente.Correo}");
+
                 ModelState.Remove("EstadoTexto");
                 ModelState.Remove("FechaRegistroFormateada");
                 ModelState.Remove("UltimaReservaFormateada");
@@ -116,6 +138,7 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("EsClienteFrecuente");
                 ModelState.Remove("UltimaReserva");
 
+                // Validación robusta de contraseña
                 if (string.IsNullOrWhiteSpace(cliente.Contrasena))
                 {
                     ModelState.AddModelError("Contrasena", "La contraseña es requerida");
@@ -143,25 +166,68 @@ namespace AromasWeb.Controllers
                     return View(cliente);
                 }
 
-                cliente.Estado = true;
+                // Estado = false (no verificado hasta el código de verificación)
+                cliente.Estado = false;
                 cliente.FechaRegistro = DateTime.Now;
 
+                System.Diagnostics.Debug.WriteLine($"[REGISTRO] Creando cliente en BD...");
                 int resultado = await _crearCliente.Crear(cliente);
 
                 if (resultado > 0)
                 {
-                    TempData["Mensaje"] = "¡Registro exitoso! Ya puedes iniciar sesión con tu cuenta";
-                    return RedirectToAction(nameof(Login));
+                    System.Diagnostics.Debug.WriteLine($"[REGISTRO] Cliente creado exitosamente");
+
+                    // Generar código de verificación de 6 dígitos
+                    Random random = new Random();
+                    string codigo = random.Next(100000, 999999).ToString();
+                    DateTime expiracion = DateTime.UtcNow.AddMinutes(15);
+
+                    System.Diagnostics.Debug.WriteLine($"[REGISTRO] Código generado: {codigo}");
+
+                    // Guardar código en la base de datos
+                    var contexto = new AccesoADatos.Contexto();
+                    var clienteAD = contexto.Cliente.FirstOrDefault(c => c.Correo.ToLower() == cliente.Correo.ToLower());
+
+                    if (clienteAD != null)
+                    {
+                        clienteAD.CodigoRecuperacion = codigo;
+                        clienteAD.CodigoExpiracion = expiracion;
+                        contexto.SaveChanges();
+                        System.Diagnostics.Debug.WriteLine($"[REGISTRO] Código guardado en BD");
+                    }
+
+                    // Enviar email de verificación
+                    System.Diagnostics.Debug.WriteLine($"[REGISTRO] Enviando email de verificación...");
+                    bool emailEnviado = await _emailService.EnviarCodigoVerificacion(
+                        cliente.Correo,
+                        $"{cliente.Nombre} {cliente.Apellidos}",
+                        codigo
+                    );
+
+                    if (emailEnviado)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[REGISTRO] Email enviado correctamente");
+                        TempData["Mensaje"] = "Te hemos enviado un código de verificación a tu correo. Revisa tu bandeja de entrada y spam.";
+                        return RedirectToAction(nameof(VerificarEmail), new { correo = cliente.Correo });
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[REGISTRO] ERROR al enviar email");
+                        TempData["Error"] = "Cuenta creada pero hubo un problema al enviar el email. Contacta a soporte.";
+                        return View(cliente);
+                    }
                 }
                 else
                 {
+                    System.Diagnostics.Debug.WriteLine($"[REGISTRO] No se pudo crear el cliente");
                     TempData["Error"] = "No se pudo completar el registro. Intenta nuevamente.";
                     return View(cliente);
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error en registro: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[REGISTRO] EXCEPCION: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[REGISTRO] STACK: {ex.StackTrace}");
 
                 if (ex.Message.Contains("identificación"))
                 {
@@ -464,6 +530,174 @@ namespace AromasWeb.Controllers
                 System.Diagnostics.Debug.WriteLine($"Error en RestablecerContrasenna: {ex.Message}");
                 TempData["Error"] = "Ocurrió un error al restablecer la contraseña";
                 return View();
+            }
+        }
+
+        // ============================================
+        // VERIFICAR EMAIL
+        // ============================================
+
+        // GET: Auth/VerificarEmail
+        public IActionResult VerificarEmail(string correo)
+        {
+            if (string.IsNullOrWhiteSpace(correo))
+            {
+                return RedirectToAction(nameof(Registro));
+            }
+
+            ViewBag.Correo = correo;
+            return View();
+        }
+
+        // POST: Auth/VerificarEmail
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult VerificarEmail(string correo, string codigo)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"[VERIFICAR EMAIL] Verificando código para: {correo}");
+
+                if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(codigo))
+                {
+                    TempData["Error"] = "Por favor, ingresa el código de verificación";
+                    ViewBag.Correo = correo;
+                    return View();
+                }
+
+                // Buscar cliente
+                var cliente = _buscarClientePorCorreo.ObtenerPorCorreo(correo);
+
+                if (cliente == null)
+                {
+                    TempData["Error"] = "No se encontró la cuenta";
+                    return RedirectToAction(nameof(Registro));
+                }
+
+                // Si ya está verificado
+                if (cliente.Estado)
+                {
+                    TempData["Mensaje"] = "Tu cuenta ya está verificada. Puedes iniciar sesión.";
+                    return RedirectToAction(nameof(Login));
+                }
+
+                // Obtener código de la base de datos
+                var contexto = new AccesoADatos.Contexto();
+                var clienteAD = contexto.Cliente.FirstOrDefault(c => c.IdCliente == cliente.IdCliente);
+
+                if (clienteAD == null || string.IsNullOrWhiteSpace(clienteAD.CodigoRecuperacion))
+                {
+                    TempData["Error"] = "No se encontró un código de verificación válido";
+                    ViewBag.Correo = correo;
+                    return View();
+                }
+
+                // Verificar que el código coincida
+                if (clienteAD.CodigoRecuperacion != codigo.Trim())
+                {
+                    System.Diagnostics.Debug.WriteLine($"[VERIFICAR EMAIL] Código incorrecto");
+                    TempData["Error"] = "El código ingresado es incorrecto";
+                    ViewBag.Correo = correo;
+                    return View();
+                }
+
+                // Verificar que no haya expirado
+                if (clienteAD.CodigoExpiracion == null || DateTime.UtcNow > clienteAD.CodigoExpiracion)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[VERIFICAR EMAIL] Código expirado");
+                    TempData["Error"] = "El código ha expirado. Solicita uno nuevo.";
+                    ViewBag.Correo = correo;
+                    return View();
+                }
+
+                // ⭐ Activar cuenta (Estado = true)
+                clienteAD.Estado = true;
+                clienteAD.CodigoRecuperacion = null;
+                clienteAD.CodigoExpiracion = null;
+                contexto.SaveChanges();
+
+                System.Diagnostics.Debug.WriteLine($"[VERIFICAR EMAIL] Cuenta verificada exitosamente");
+
+                TempData["Mensaje"] = "¡Tu cuenta ha sido verificada exitosamente! Ya puedes iniciar sesión";
+                return RedirectToAction(nameof(Login));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[VERIFICAR EMAIL] EXCEPCION: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al verificar el código";
+                ViewBag.Correo = correo;
+                return View();
+            }
+        }
+
+        // GET: Auth/ReenviarCodigoVerificacion
+        public async Task<IActionResult> ReenviarCodigoVerificacion(string correo)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"[REENVIAR CODIGO] Para: {correo}");
+
+                if (string.IsNullOrWhiteSpace(correo))
+                {
+                    return RedirectToAction(nameof(Registro));
+                }
+
+                var cliente = _buscarClientePorCorreo.ObtenerPorCorreo(correo);
+
+                if (cliente == null)
+                {
+                    TempData["Error"] = "No se encontró la cuenta";
+                    return RedirectToAction(nameof(Registro));
+                }
+
+                // Si ya está verificado
+                if (cliente.Estado)
+                {
+                    TempData["Mensaje"] = "Tu cuenta ya está verificada";
+                    return RedirectToAction(nameof(Login));
+                }
+
+                // Generar nuevo código
+                Random random = new Random();
+                string codigo = random.Next(100000, 999999).ToString();
+                DateTime expiracion = DateTime.UtcNow.AddMinutes(15);
+
+                System.Diagnostics.Debug.WriteLine($"[REENVIAR CODIGO] Nuevo código: {codigo}");
+
+                // Actualizar en BD
+                var contexto = new AccesoADatos.Contexto();
+                var clienteAD = contexto.Cliente.FirstOrDefault(c => c.IdCliente == cliente.IdCliente);
+
+                if (clienteAD != null)
+                {
+                    clienteAD.CodigoRecuperacion = codigo;
+                    clienteAD.CodigoExpiracion = expiracion;
+                    contexto.SaveChanges();
+                }
+
+                // Enviar email
+                bool emailEnviado = await _emailService.EnviarCodigoVerificacion(
+                    cliente.Correo,
+                    $"{cliente.Nombre} {cliente.Apellidos}",
+                    codigo
+                );
+
+                if (emailEnviado)
+                {
+                    TempData["Mensaje"] = "Hemos reenviado el código a tu correo";
+                }
+                else
+                {
+                    TempData["Error"] = "Hubo un problema al reenviar el código";
+                }
+
+                return RedirectToAction(nameof(VerificarEmail), new { correo = correo });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[REENVIAR CODIGO] ERROR: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al reenviar el código";
+                return RedirectToAction(nameof(VerificarEmail), new { correo = correo });
             }
         }
 

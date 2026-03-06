@@ -5,5 +5,6 @@ namespace AromasWeb.Abstracciones.Servicios
     public interface IEmailService
     {
         Task<bool> EnviarCodigoRecuperacion(string destinatario, string nombreDestinatario, string codigo);
+        Task<bool> EnviarCodigoVerificacion(string destinatario, string nombreDestinatario, string codigo);
     }
 }
