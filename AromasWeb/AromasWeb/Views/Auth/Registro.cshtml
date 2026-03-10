@@ -4,52 +4,39 @@
     ViewBag.Title = "Crear Cuenta";
 }
 
-<!-- Hero Section -->
-<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
-    <div class="hero-bg-overlay"></div>
-    <div class="hero-leaves"></div>
-    <div class="container hero-container" style="display: block;">
-        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
-            <span class="hero-badge">
-                <i class="fas fa-user-plus"></i>
-                Nueva Cuenta
-            </span>
-            <h1 class="hero-title" style="font-size: 3.5rem;">
-                Únete a
-                <span class="hero-title-accent">Nosotros</span>
-            </h1>
-            <p class="hero-subtitle">
-                Crea tu cuenta y disfruta de todos los beneficios
-            </p>
-        </div>
-    </div>
-    <div class="scroll-indicator">
-        <div class="mouse">
-            <div class="wheel"></div>
-        </div>
-    </div>
-</section>
+<section class="login-hero registro-hero">
 
-<!-- Formulario Section -->
-<section class="admin-form-section">
-    <div class="container" style="max-width: 80%;">
-        @using (Html.BeginForm("Registro", "Auth", FormMethod.Post))
+    <div class="login-card registro-card">
+
+        @if (TempData["Error"] != null)
         {
-            @Html.AntiForgeryToken()
-
-                <div class="admin-form-wrapper" data-aos="fade-up">
-                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
-
-                @if (TempData["Error"] != null)
-                {
-                    <div class="alert alert-danger" style="margin-bottom: 2rem;">
-                        <i class="fas fa-exclamation-triangle"></i> @TempData["Error"]
+            <div style="padding: 1.5rem 2.5rem 0;">
+                <div class="login-error-box">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>
+                        <strong>Error al crear la cuenta</strong>
+                        <p>@TempData["Error"]</p>
                     </div>
-                }
+                </div>
+            </div>
+        }
+
+        <div class="login-card-inner">
+
+            <!-- Título + subtítulo centrados -->
+            <div class="login-card-heading">
+                <h2>Crear Cuenta</h2>
+                <p>Únete a nuestro santuario de bienestar</p>
+            </div>
+
+            @using (Html.BeginForm("Registro", "Auth", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                 @if (!ViewData.ModelState.IsValid)
                 {
-                    <div class="alert alert-warning" style="margin-bottom: 2rem;">
+                    <div class="alert alert-warning" style="margin-bottom: 1.5rem;">
                         <strong>Errores encontrados:</strong>
                         <ul style="margin: 0.5rem 0 0 0;">
                             @foreach (var modelState in ViewData.ModelState.Values)
@@ -63,52 +50,39 @@
                     </div>
                 }
 
-                <!-- Información Personal -->
-                    <div class="admin-form-header">
-                        <i class="fas fa-box"></i>
-                        <h5>Información Personal</h5>
+                <!-- ── Información Personal ── -->
+                <div class="admin-form-header" style="margin-bottom: 1.2rem;">
+                    <i class="fas fa-user"></i>
+                    <h5>Información Personal</h5>
+                </div>
+
+                <!-- Nombre + Apellidos en dos columnas -->
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nombre</label>
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Juan", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                     </div>
-
-                <!-- Nombre -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-user"></i>
-                        Nombre
-                    </label>
-                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Juan", required = "required" } })
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Apellidos</label>
+                        @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Pérez Rodríguez", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-
-                <!-- Apellidos -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-user"></i>
-                        Apellidos
-                    </label>
-                    @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Pérez Rodríguez", required = "required" } })
-                    @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
-                    <small class="admin-form-hint">
+                <small class="admin-form-hint" style="display:block; margin-bottom: 1.2rem;">
                     <i class="fas fa-info-circle"></i>
-	                    Ingresa tu nombre según tu identificación para evitar problemas al momento de validar tu reserva en el restaurante
-                    </small>
-                </div>
+                    Ingresa tu nombre según tu identificación para evitar problemas al momento de validar tu reserva en el restaurante
+                </small>
 
                 <!-- Identificación y Teléfono -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>
-                            <i class="fas fa-id-card"></i>
-                            Identificación
-                        </label>
+                        <label><i class="fas fa-id-card"></i> Identificación</label>
                         @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", placeholder = "1-1234-5678", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
                     </div>
-
                     <div class="form-group">
-                        <label>
-                            <i class="fas fa-phone"></i>
-                            Teléfono
-                        </label>
+                        <label><i class="fas fa-phone"></i> Teléfono</label>
                         @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", placeholder = "8888-1234", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                     </div>
@@ -116,30 +90,24 @@
 
                 <!-- Correo Electrónico -->
                 <div class="form-group">
-                    <label>
-                        <i class="fas fa-envelope"></i>
-                        Correo Electrónico
-                    </label>
+                    <label><i class="fas fa-envelope"></i> Correo Electrónico</label>
                     @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", type = "email", placeholder = "correo@ejemplo.com", required = "required" } })
                     @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
                     <small class="admin-form-hint">
                         <i class="fas fa-info-circle"></i>
-	                           Se utilizará este correo para enviarte confirmaciones de tus reservas y promociones exclusivas, asegúrate de que sea válido y esté activo
+                        Se utilizará este correo para enviarte confirmaciones de tus reservas y promociones exclusivas, asegúrate de que sea válido y esté activo
                     </small>
                 </div>
 
-                <!-- Información de Seguridad -->
-                <div class="admin-form-header">
-                    <i class="fas fa-box"></i>
+                <!-- ── Información de Seguridad ── -->
+                <div class="admin-form-header" style="margin: 1.2rem 0;">
+                    <i class="fas fa-shield-alt"></i>
                     <h5>Información de Seguridad</h5>
                 </div>
 
                 <!-- Contraseña -->
                 <div class="form-group">
-                    <label>
-                        <i class="fas fa-key"></i>
-                        Contraseña
-                    </label>
+                    <label><i class="fas fa-key"></i> Contraseña</label>
                     <div style="position: relative;">
                         @Html.EditorFor(model => model.Contrasena, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Mínimo 8 caracteres", id = "password-input", required = "required" } })
                         <button type="button" id="toggle-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.2rem; opacity: 0.6;">
@@ -147,8 +115,6 @@
                         </button>
                     </div>
                     @Html.ValidationMessageFor(model => model.Contrasena, "", new { @class = "text-danger" })
-
-                    <!-- Indicador de fortaleza -->
                     <div style="margin-top: 0.7rem;">
                         <div style="display: flex; gap: 0.3rem; height: 4px; margin-bottom: 0.5rem;">
                             <div id="strength-1" style="flex: 1; background: rgba(143, 142, 106, 0.2); border-radius: 2px; transition: all 0.3s;"></div>
@@ -166,10 +132,7 @@
 
                 <!-- Confirmar Contraseña -->
                 <div class="form-group">
-                    <label>
-                        <i class="fas fa-key"></i>
-                        Confirmar Contraseña
-                    </label>
+                    <label><i class="fas fa-key"></i> Confirmar Contraseña</label>
                     <div style="position: relative;">
                         <input type="password" name="ConfirmarContrasena" id="confirm-password-input" class="form-control" placeholder="Repite la contraseña" required />
                         <button type="button" id="toggle-confirm-password" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--charcoal); cursor: pointer; font-size: 1.2rem; opacity: 0.6;">
@@ -194,57 +157,46 @@
                 </div>
 
                 <!-- Botones -->
-                    <div class="admin-form-footer">
+                <div class="admin-form-footer">
                     <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Login", "Auth")'">
-                            <i class="fas fa-times"></i>
+                        <i class="fas fa-times"></i>
                         <span> Ya tengo cuenta </span>
                     </button>
                     <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i>
+                        <i class="fas fa-save"></i>
                         <span> Crear Mi Cuenta</span>
                     </button>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </section>
 
-<!-- Features Section -->
+<!-- FEATURE CARDS -->
 <section class="features" style="padding: 4rem 0;">
     <div class="container">
         <div class="section-header">
             <span class="section-badge">¿Por qué registrarte?</span>
-            <h2 class="section-title">
-                Beneficios <span class="title-accent">Exclusivos</span>
-            </h2>
+            <h2 class="section-title">Beneficios <span class="title-accent">Exclusivos</span></h2>
         </div>
-
         <div class="features-grid">
             <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
                 <h3>Reservas Rápidas</h3>
                 <p>Realiza reservaciones en segundos sin llenar formularios repetidamente</p>
             </div>
             <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-icon">
-                    <i class="fas fa-history"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-history"></i></div>
                 <h3>Historial Completo</h3>
                 <p>Consulta todas tus visitas anteriores y repetir tus favoritas</p>
             </div>
             <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon">
-                    <i class="fas fa-gift"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-gift"></i></div>
                 <h3>Recompensas</h3>
                 <p>Gana puntos por cada visita y canjéalos por beneficios</p>
             </div>
             <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
                 <h3>Acceso Multiplataforma</h3>
                 <p>Usa tu cuenta desde cualquier dispositivo, en cualquier momento</p>
             </div>

@@ -2,118 +2,81 @@
     ViewBag.Title = "Recuperar Contraseña";
 }
 
-<!-- Hero Section -->
-<section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
-    <div class="hero-bg-overlay"></div>
-    <div class="hero-leaves"></div>
-    <div class="container hero-container" style="display: block;">
-        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
-            <span class="hero-badge">
-                <i class="fas fa-key"></i>
-                Recuperación de Cuenta
-            </span>
-            <h1 class="hero-title" style="font-size: 3.5rem;">
-                ¿Olvidaste tu
-                <span class="hero-title-accent">Contraseña?</span>
-            </h1>
-            <p class="hero-subtitle">
-                No te preocupes, te ayudaremos a recuperar tu cuenta
-            </p>
-        </div>
-    </div>
-    <div class="scroll-indicator">
-        <div class="mouse">
-            <div class="wheel"></div>
-        </div>
-    </div>
-</section>
+<section class="login-hero registro-hero">
+    <div class="login-card registro-card">
 
-<!-- Formulario Section -->
-<section class="admin-form-section" style="background: var(--light-cream)">
-    <div class="container" style="max-width: 80%;">
-        @using (Html.BeginForm("OlvideContrasenna", "Auth", FormMethod.Post))
+        @if (TempData["Mensaje"] != null)
         {
-            @Html.AntiForgeryToken()
+            <div style="padding: 1.5rem 2.5rem 0;">
+                <div class="login-error-box" style="background: rgba(47,158,49,0.05); border-color: rgba(47,158,49,0.3);">
+                    <i class="fas fa-check-circle" style="color: var(--green);"></i>
+                    <div>
+                        <strong style="color: var(--green);">¡Código enviado!</strong>
+                        <p>@TempData["Mensaje"]</p>
+                    </div>
+                </div>
+            </div>
+        }
 
-            <div class="admin-form-wrapper" data-aos="fade-up">
+        @if (TempData["Error"] != null)
+        {
+            <div style="padding: 1.5rem 2.5rem 0;">
+                <div class="login-error-box">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>
+                        <strong>Error</strong>
+                        <p>@TempData["Error"]</p>
+                    </div>
+                </div>
+            </div>
+        }
 
+        <div class="login-card-inner">
+
+            <div class="login-card-heading">
+                <h2>¿Olvidaste tu Contraseña?</h2>
+                <p>Te enviaremos un código para recuperar tu cuenta</p>
+            </div>
+
+            @using (Html.BeginForm("OlvideContrasenna", "Auth", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
-                <!-- Mensaje de éxito -->
-                @if (TempData["Mensaje"] != null)
-                {
-                    <div class="admin-form-body" style="padding-bottom: 0;">
-                        <div class="admin-form-info-box" style="border-color: rgba(47,158,49,0.3); background: rgba(47,158,49,0.06);">
-                            <i class="fas fa-check-circle" style="color: var(--green);"></i>
-                            <div>
-                                <strong style="color: var(--green);">¡Código enviado!</strong>
-                                <p>@TempData["Mensaje"]</p>
-                            </div>
-                        </div>
+                <!-- ¿Cómo funciona? -->
+                <div class="admin-form-info-box" style="margin-bottom: 1.2rem;">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>¿Cómo funciona?</strong>
+                        <p>Ingresa tu correo y te enviaremos un código de 6 dígitos para restablecer tu contraseña. El código será válido por <strong>15 minutos</strong>.</p>
                     </div>
-                }
-
-                <!-- Mensaje de error -->
-                @if (TempData["Error"] != null)
-                {
-                    <div class="admin-form-body" style="padding-bottom: 0;">
-                        <div class="admin-form-info-box" style="border-color: rgba(231,76,60,0.3); background: rgba(231,76,60,0.06);">
-                            <i class="fas fa-exclamation-triangle" style="color: var(--red);"></i>
-                            <div>
-                                <strong style="color: var(--red);">Error</strong>
-                                <p>@TempData["Error"]</p>
-                            </div>
-                        </div>
-                    </div>
-                }
-
-                <!-- Header -->
-                <div class="admin-form-header">
-                    <i class="fas fa-key"></i>
-                    <h5>Recuperar Acceso</h5>
                 </div>
 
-                <div class="admin-form-body">
-
-                    <!-- ¿Cómo funciona? -->
-                    <div class="admin-form-info-box">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <strong>¿Cómo funciona?</strong>
-                            <p>Ingresa tu correo y te enviaremos un código de 6 dígitos para restablecer tu contraseña. El código será válido por <strong>15 minutos</strong>.</p>
-                        </div>
-                    </div>
-
-                    <!-- Correo Electrónico -->
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-envelope"></i>
-                            Correo Electrónico Registrado
-                        </label>
-                        <input type="email" name="correo" class="form-control" placeholder="correo@ejemplo.com" required autofocus />
-                        <small class="admin-form-hint">
-                            <i class="fas fa-info-circle"></i>
-                            Ingresa el correo con el que te registraste
-                        </small>
-                    </div>
-
-                    <!-- Advertencia -->
-                    <div class="admin-form-info-box" style="border-color: rgba(184,167,106,0.4);">
-                        <i class="fas fa-exclamation-triangle" style="color: var(--gold-bright);"></i>
-                        <div>
-                            <strong>Importante</strong>
-                            <ul style="margin: 0.4rem 0 0; padding-left: 1.2rem; line-height: 1.8;">
-                                <li>El código de recuperación expira en 15 minutos</li>
-                                <li>Solo puedes usar el código una vez</li>
-                                <li>Si no recibes el correo en 5 minutos, revisa spam</li>
-                            </ul>
-                        </div>
-                    </div>
-
+                <!-- Correo -->
+                <div class="form-group" style="margin-bottom: 1.2rem;">
+                    <label><i class="fas fa-envelope"></i> Correo Electrónico Registrado</label>
+                    <input type="email" name="correo" class="form-control" placeholder="correo@ejemplo.com" required autofocus />
+                    <small class="admin-form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Ingresa el correo con el que te registraste
+                    </small>
                 </div>
 
-                <!-- Footer -->
-                <div class="admin-form-footer">
+                <!-- Advertencia -->
+                <div class="admin-form-info-box" style="border-color: rgba(184,167,106,0.4); margin-bottom: 1.5rem;">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--gold-bright);"></i>
+                    <div>
+                        <strong>Importante</strong>
+                        <ul style="margin: 0.4rem 0 0; padding-left: 1.2rem; line-height: 1.8;">
+                            <li>El código de recuperación expira en 15 minutos</li>
+                            <li>Solo puedes usar el código una vez</li>
+                            <li>Si no recibes el correo en 5 minutos, revisa spam</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="admin-form-footer" style="padding: 1.2rem 0 0; background: transparent; border-top: 1px solid rgba(143,142,106,0.12);">
                     <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Login", "Auth")'">
                         <i class="fas fa-arrow-left"></i>
                         <span>Volver al Login</span>
@@ -123,71 +86,50 @@
                         <span>Enviar Código</span>
                     </button>
                 </div>
+            }
 
-            </div>
-
-            <!-- Pasos a seguir — tarjeta separada -->
-            <div class="admin-form-wrapper" data-aos="fade-up" data-aos-delay="100" style="margin-top: 2rem;">
-                <div class="admin-form-header">
+            <!-- Pasos a seguir -->
+            <div style="margin-top: 2rem; padding-top: 1.8rem; border-top: 1px solid rgba(143,142,106,0.12);">
+                <div class="admin-form-header" style="margin-bottom: 1.2rem; border-radius: 12px;">
                     <i class="fas fa-list-ol"></i>
                     <h5>Pasos a seguir</h5>
                 </div>
-                <div class="admin-form-body">
-                    <div style="display: grid; gap: 0.8rem;">
+                <div style="display: grid; gap: 0.8rem;">
+                    @{
+                        var pasos = new[] {
+                            new { num = "1", bg = "var(--dark-green)", icon = "fa-keyboard",   titulo = "Ingresa tu correo",          desc = "Escribe el correo electrónico asociado a tu cuenta" },
+                            new { num = "2", bg = "var(--olive-green)", icon = "fa-inbox",     titulo = "Revisa tu correo",           desc = "Te enviaremos un código de 6 dígitos (revisa spam)" },
+                            new { num = "3", bg = "var(--olive-green)", icon = "fa-key",       titulo = "Ingresa el código",          desc = "Verifica tu identidad con el código recibido" },
+                            new { num = "4", bg = "var(--olive-green)", icon = "fa-lock-open", titulo = "Crea una nueva contraseña",  desc = "Establece tu nueva contraseña segura" },
+                            new { num = "5", bg = "var(--olive-green)", icon = "fa-sign-in-alt",titulo = "¡Listo! Inicia sesión",    desc = "Ya podrás acceder con tu nueva contraseña" },
+                        };
+                    }
+                    @foreach (var paso in pasos)
+                    {
                         <div style="display: flex; gap: 1rem; align-items: center;">
-                            <div style="width: 36px; height: 36px; background: var(--dark-green); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">1</div>
+                            <div style="width: 36px; height: 36px; background: @paso.bg; color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">@paso.num</div>
                             <div class="admin-form-info-box" style="flex: 1; margin: 0; padding: 0.8rem 1rem;">
-                                <i class="fas fa-keyboard" style="font-size: 1.1rem;"></i>
-                                <div><strong>Ingresa tu correo</strong><p>Escribe el correo electrónico asociado a tu cuenta</p></div>
+                                <i class="fas @paso.icon" style="font-size: 1.1rem;"></i>
+                                <div><strong>@paso.titulo</strong><p>@paso.desc</p></div>
                             </div>
                         </div>
-                        <div style="display: flex; gap: 1rem; align-items: center;">
-                            <div style="width: 36px; height: 36px; background: var(--olive-green); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">2</div>
-                            <div class="admin-form-info-box" style="flex: 1; margin: 0; padding: 0.8rem 1rem;">
-                                <i class="fas fa-inbox" style="font-size: 1.1rem;"></i>
-                                <div><strong>Revisa tu correo</strong><p>Te enviaremos un código de 6 dígitos (revisa spam)</p></div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 1rem; align-items: center;">
-                            <div style="width: 36px; height: 36px; background: var(--olive-green); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">3</div>
-                            <div class="admin-form-info-box" style="flex: 1; margin: 0; padding: 0.8rem 1rem;">
-                                <i class="fas fa-key" style="font-size: 1.1rem;"></i>
-                                <div><strong>Ingresa el código</strong><p>Verifica tu identidad con el código recibido</p></div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 1rem; align-items: center;">
-                            <div style="width: 36px; height: 36px; background: var(--olive-green); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">4</div>
-                            <div class="admin-form-info-box" style="flex: 1; margin: 0; padding: 0.8rem 1rem;">
-                                <i class="fas fa-lock-open" style="font-size: 1.1rem;"></i>
-                                <div><strong>Crea una nueva contraseña</strong><p>Establece tu nueva contraseña segura</p></div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 1rem; align-items: center;">
-                            <div style="width: 36px; height: 36px; background: var(--olive-green); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.85rem;">5</div>
-                            <div class="admin-form-info-box" style="flex: 1; margin: 0; padding: 0.8rem 1rem;">
-                                <i class="fas fa-sign-in-alt" style="font-size: 1.1rem;"></i>
-                                <div><strong>¡Listo! Inicia sesión</strong><p>Ya podrás acceder con tu nueva contraseña</p></div>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
 
-        }
+        </div>
     </div>
 </section>
 
-<!-- FAQ Section -->
-<section class="features" style="padding: 4rem 0;">
+<!-- FAQ -->
+<section class="login-features">
     <div class="container" style="max-width: 900px;">
         <div class="section-header">
             <span class="section-badge">¿Necesitas ayuda?</span>
-            <h2 class="section-title">
-                Preguntas <span class="title-accent">Frecuentes</span>
-            </h2>
+            <h2 class="section-title">Preguntas <span class="title-accent">Frecuentes</span></h2>
         </div>
         <div style="display: grid; gap: 1.5rem;">
-            <div class="feature-card" style="padding: 2rem; margin: 0;" data-aos="fade-up">
+            <div class="feature-card" data-aos="fade-up">
                 <h5 style="color: var(--dark-green); margin: 0 0 1rem; display: flex; align-items: center; gap: 0.7rem;">
                     <i class="fas fa-question-circle" style="color: var(--gold-bright);"></i>
                     ¿Qué hago si no recibo el correo?
@@ -196,7 +138,7 @@
                     Primero revisa tu carpeta de spam. Si después de 10 minutos no lo encuentras, intenta solicitar un nuevo código o contacta a soporte.
                 </p>
             </div>
-            <div class="feature-card" style="padding: 2rem; margin: 0;" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                 <h5 style="color: var(--dark-green); margin: 0 0 1rem; display: flex; align-items: center; gap: 0.7rem;">
                     <i class="fas fa-question-circle" style="color: var(--gold-bright);"></i>
                     ¿El código expiró, qué hago?
@@ -211,12 +153,9 @@
 
 @section Scripts {
     <script>
-        // Auto-focus en el input del correo
         document.addEventListener('DOMContentLoaded', function() {
             var emailInput = document.querySelector('input[type="email"]');
-            if (emailInput) {
-                emailInput.focus();
-            }
+            if (emailInput) emailInput.focus();
         });
     </script>
 }

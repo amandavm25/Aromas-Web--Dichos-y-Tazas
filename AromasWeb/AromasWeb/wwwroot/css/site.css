@@ -20,6 +20,7 @@
     --red: #E6210B;
     --yellow: #F39C12;
     --gray: #95A5A6;
+    --beige: #F2EFE0;
     /* Tipografía */
     --font-primary: 'Playfair Display', serif;
     --font-secondary: 'Lato', sans-serif;
@@ -2585,7 +2586,7 @@ admin-table-footer
 /* Fondo de la sección del formulario */
 .admin-form-section {
     padding: 4rem 0;
-    background: #EDEADE; /* Lino suave - diferente al cream pero no cansado */
+    background: var(--beige);
     min-height: 100vh;
 }
 
@@ -3074,7 +3075,7 @@ admin-table-footer
     flex-wrap: wrap;
 }
 
-/* NUEVO: Footer de paginación del timeline (fuera de los cards) */
+/* Footer de paginación del timeline (fuera de los cards) */
 .timeline-pagination-footer {
     background: white;
     padding: 1.5rem 2rem;
@@ -3720,6 +3721,363 @@ admin-table-footer
 
 @media (max-width: 480px) {
     .admin-modal .modal-summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   LOGIN PAGE
+   ============================================ */
+
+/* ── HERO / FONDO ── */
+.login-hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 20px 60px;
+    overflow: hidden;
+    background: var(--beige);
+}
+
+    .login-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.05;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 Q60 30 50 50 Q40 30 50 10z' fill='%238F8E6A'/%3E%3C/svg%3E");
+        background-size: 100px 100px;
+    }
+
+    .login-hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 15% 40%, rgba(143,142,106,0.10) 0%, transparent 50%), radial-gradient(circle at 85% 75%, rgba(184,167,106,0.10) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+/* ── CARD ── */
+.login-card {
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid rgba(184,167,106,0.18);
+    overflow: hidden;
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+    z-index: 2;
+    animation: loginCardIn 0.7s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes loginCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Franja verde */
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--dark-green);
+    background-size: 300% 100%;
+    z-index: 3;
+}
+
+@keyframes loginBarShimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ── INTERIOR ── */
+.login-card-inner {
+    padding: 2.5rem 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+/* ── HEADER CENTRADO ── */
+.login-card-heading {
+    text-align: center;
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid rgba(143,142,106,0.15);
+}
+
+.login-card-heading-logo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(143,142,106,0.35);
+    margin: 0 auto 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-cream);
+}
+
+    .login-card-heading-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.login-card-heading h2 {
+    font-family: var(--font-primary);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark-green);
+    margin: 0 0 0.4rem;
+    letter-spacing: 0.5px;
+}
+
+.login-card-heading p {
+    margin: 0;
+    color: var(--charcoal);
+    opacity: 0.6;
+    font-size: 0.92rem;
+    font-style: italic;
+}
+
+/* ── FORM GROUPS ── */
+.login-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+    .login-form-group label {
+        font-weight: 600;
+        color: var(--dark-green);
+        font-family: var(--font-secondary);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        opacity: 0.85;
+    }
+
+        .login-form-group label i {
+            color: var(--gold);
+            font-size: 0.82rem;
+        }
+
+    .login-form-group .form-control {
+        padding: 0.9rem 1.2rem;
+        border: 1.5px solid rgba(143,142,106,0.28);
+        border-radius: 15px;
+        font-family: var(--font-secondary);
+        font-size: 0.93rem;
+        background: var(--light-cream);
+        color: var(--charcoal);
+        transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+        width: 100%;
+        outline: none;
+    }
+
+        .login-form-group .form-control:focus {
+            border-color: var(--olive-green);
+            box-shadow: 0 0 0 3px rgba(143,142,106,0.12);
+            background: var(--white);
+        }
+
+/* Wrapper contraseña */
+.password-wrapper {
+    position: relative;
+}
+
+    .password-wrapper .form-control {
+        padding-right: 3rem;
+    }
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--charcoal);
+    opacity: 0.4;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: opacity 0.2s;
+    padding: 0;
+}
+
+    .toggle-password:hover {
+        opacity: 0.8;
+    }
+
+/* Recordarme + olvidé */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-remember {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--dark-green);
+    font-size: 0.88rem;
+}
+
+    .login-remember input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        accent-color: var(--olive-green);
+        cursor: pointer;
+    }
+
+.login-forgot {
+    color: var(--gold-bright);
+    font-weight: 600;
+    font-size: 0.86rem;
+    transition: color 0.2s;
+}
+
+    .login-forgot:hover {
+        color: var(--dark-olive);
+    }
+
+/* Divisor */
+.login-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.login-divider-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(143,142,106,0.2);
+}
+
+.login-divider span {
+    color: var(--charcoal);
+    opacity: 0.4;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.login-register-hint {
+    color: var(--charcoal);
+    opacity: 0.6;
+    font-size: 0.86rem;
+    text-align: center;
+    margin: 0;
+}
+
+/* Error box */
+.login-error-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: rgba(230,33,11,0.05);
+    border: 1px solid rgba(230,33,11,0.25);
+    border-radius: 14px;
+    padding: 1.1rem 1.4rem;
+}
+
+    .login-error-box i {
+        color: var(--red);
+        font-size: 1.1rem;
+        margin-top: 2px;
+    }
+
+    .login-error-box strong {
+        color: var(--red);
+        display: block;
+        margin-bottom: 0.2rem;
+        font-size: 0.88rem;
+    }
+
+    .login-error-box p {
+        margin: 0;
+        color: var(--charcoal);
+        opacity: 0.8;
+        font-size: 0.86rem;
+    }
+
+/* ── FEATURE CARDS SECTION ── */
+.login-features {
+    background: var(--white);
+    padding: 5rem 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+    .login-card {
+        max-width: 100%;
+        border-radius: 20px;
+    }
+
+    .login-card-inner {
+        padding: 1.8rem 1.5rem 1.5rem;
+    }
+}
+
+/* ============================================
+   REGISTRO
+   ============================================ */
+
+/* Card más ancha */
+.login-hero.registro-hero {
+    min-height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 140px 20px 80px;
+}
+
+.login-card.registro-card {
+    max-width: 820px;
+}
+
+/* Dos columnas reutilizable dentro de admin-form-wrapper */
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Quitar fondo beige del footer de botones dentro de la login-card */
+.login-card .admin-form-footer {
+    background: transparent;
+    border-top: 1px solid rgba(143, 142, 106, 0.12);
+    padding: 1.2rem 0 0;
+}
+
+@media (max-width: 768px) {
+    .login-card.registro-card {
+        max-width: 100%;
+    }
+
+    .form-row-2 {
         grid-template-columns: 1fr;
     }
 }
