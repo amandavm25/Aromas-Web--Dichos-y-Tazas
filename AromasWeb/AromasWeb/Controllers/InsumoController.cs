@@ -2,7 +2,11 @@
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Insumo;
 using AromasWeb.Abstracciones.Logica.CategoriaInsumo;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System.Collections.Generic;
+using System.Text.Json;
+using System;
 
 namespace AromasWeb.Controllers
 {
@@ -10,11 +14,23 @@ namespace AromasWeb.Controllers
     {
         private IListarInsumos _listarInsumos;
         private IListarCategoriasInsumo _listarCategoriasInsumo;
+        private readonly CrearBitacora _crearBitacora;
 
         public InsumoController()
         {
             _listarInsumos = new LogicaDeNegocio.Insumos.ListarInsumos();
             _listarCategoriasInsumo = new LogicaDeNegocio.CategoriasInsumo.ListarCategoriasInsumo();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1;
         }
 
         // GET: Insumo/ListadoInsumos
@@ -23,33 +39,36 @@ namespace AromasWeb.Controllers
             ViewBag.Buscar = buscar;
             ViewBag.Categoria = categoria;
 
-            // Obtener todas las categorías para el filtro
-            var categorias = _listarCategoriasInsumo.Obtener();
-            ViewBag.TodasCategorias = categorias;
-
-            // Obtener insumos según los filtros
             List<Insumo> insumos;
 
-            if (!string.IsNullOrEmpty(buscar) && categoria.HasValue)
+            try
             {
-                // Buscar por nombre y filtrar por categoría
-                insumos = _listarInsumos.BuscarPorNombre(buscar)
-                    .FindAll(i => i.IdCategoria == categoria.Value);
+                var categorias = _listarCategoriasInsumo.Obtener();
+                ViewBag.TodasCategorias = categorias;
+
+                if (!string.IsNullOrEmpty(buscar) && categoria.HasValue)
+                {
+                    insumos = _listarInsumos.BuscarPorNombre(buscar)
+                        .FindAll(i => i.IdCategoria == categoria.Value);
+                }
+                else if (!string.IsNullOrEmpty(buscar))
+                {
+                    insumos = _listarInsumos.BuscarPorNombre(buscar);
+                }
+                else if (categoria.HasValue)
+                {
+                    insumos = _listarInsumos.BuscarPorCategoria(categoria.Value);
+                }
+                else
+                {
+                    insumos = _listarInsumos.Obtener();
+                }
             }
-            else if (!string.IsNullOrEmpty(buscar))
+            catch (Exception ex)
             {
-                // Solo buscar por nombre
-                insumos = _listarInsumos.BuscarPorNombre(buscar);
-            }
-            else if (categoria.HasValue)
-            {
-                // Solo filtrar por categoría
-                insumos = _listarInsumos.BuscarPorCategoria(categoria.Value);
-            }
-            else
-            {
-                // Obtener todos
-                insumos = _listarInsumos.Obtener();
+                TempData["Error"] = $"Error al cargar los insumos: {ex.Message}";
+                insumos = new List<Insumo>();
+                ViewBag.TodasCategorias = new List<CategoriaInsumo>();
             }
 
             return View(insumos);
@@ -58,8 +77,16 @@ namespace AromasWeb.Controllers
         // GET: Insumo/CrearInsumo
         public IActionResult CrearInsumo()
         {
-            var categorias = _listarCategoriasInsumo.Obtener();
-            ViewBag.TodasCategorias = categorias;
+            try
+            {
+                var categorias = _listarCategoriasInsumo.Obtener();
+                ViewBag.TodasCategorias = categorias;
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar las categorías: {ex.Message}";
+                ViewBag.TodasCategorias = new List<CategoriaInsumo>();
+            }
 
             return View();
         }
@@ -69,35 +96,74 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CrearInsumo(Insumo insumo)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var categorias = _listarCategoriasInsumo.Obtener();
-                ViewBag.TodasCategorias = categorias;
-                return View(insumo);
+                try
+                {
+                    _listarInsumos.Crear(insumo);
 
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de insumos"),
+                        accion: Bitacora.Acciones.Crear,
+                        tablaAfectada: "Insumo",
+                        descripcion: $"Se creó el insumo: {insumo.NombreInsumo}",
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            insumo.NombreInsumo,
+                            insumo.UnidadMedida,
+                            insumo.IdCategoria,
+                            insumo.CostoUnitario,
+                            insumo.CantidadDisponible,
+                            insumo.StockMinimo,
+                            insumo.Estado
+                        })
+                    );
+
+                    TempData["Mensaje"] = "Insumo registrado correctamente";
+                    return RedirectToAction(nameof(ListadoInsumos));
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = $"Error al registrar el insumo: {ex.Message}";
+                }
             }
 
-            _listarInsumos.Crear(insumo);
+            try
+            {
+                ViewBag.TodasCategorias = _listarCategoriasInsumo.Obtener();
+            }
+            catch
+            {
+                ViewBag.TodasCategorias = new List<CategoriaInsumo>();
+            }
 
-            TempData["Mensaje"] = "Insumo registrado correctamente";
-            return RedirectToAction(nameof(ListadoInsumos));
+            return View(insumo);
         }
 
         // GET: Insumo/EditarInsumo/5
         public IActionResult EditarInsumo(int id)
         {
-            var categorias = _listarCategoriasInsumo.Obtener();
-            ViewBag.TodasCategorias = categorias;
-
-            var insumo = _listarInsumos.ObtenerPorId(id);
-
-            if (insumo == null)
+            try
             {
-                TempData["Error"] = "Insumo no encontrado";
+                var categorias = _listarCategoriasInsumo.Obtener();
+                ViewBag.TodasCategorias = categorias;
+
+                var insumo = _listarInsumos.ObtenerPorId(id);
+
+                if (insumo == null)
+                {
+                    TempData["Error"] = "Insumo no encontrado";
+                    return RedirectToAction(nameof(ListadoInsumos));
+                }
+
+                return View(insumo);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar el insumo: {ex.Message}";
                 return RedirectToAction(nameof(ListadoInsumos));
             }
-
-            return View(insumo);
         }
 
         // POST: Insumo/EditarInsumo
@@ -107,28 +173,62 @@ namespace AromasWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _listarInsumos.Actualizar(insumo);
+                try
+                {
+                    // Capturar datos anteriores ANTES de actualizar
+                    var anterior = _listarInsumos.ObtenerPorId(insumo.IdInsumo);
 
-                // Aquí iría la lógica para actualizar en la base de datos
-                TempData["Mensaje"] = "Insumo actualizado correctamente";
-                return RedirectToAction(nameof(ListadoInsumos));
+                    _listarInsumos.Actualizar(insumo);
+
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de insumos"),
+                        accion: Bitacora.Acciones.Actualizar,
+                        tablaAfectada: "Insumo",
+                        descripcion: $"Se actualizó el insumo: {insumo.NombreInsumo} (ID: {insumo.IdInsumo})",
+                        datosAnteriores: anterior != null
+                            ? JsonSerializer.Serialize(new
+                            {
+                                anterior.NombreInsumo,
+                                anterior.UnidadMedida,
+                                anterior.IdCategoria,
+                                anterior.CostoUnitario,
+                                anterior.CantidadDisponible,
+                                anterior.StockMinimo,
+                                anterior.Estado
+                            })
+                            : null,
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            insumo.NombreInsumo,
+                            insumo.UnidadMedida,
+                            insumo.IdCategoria,
+                            insumo.CostoUnitario,
+                            insumo.CantidadDisponible,
+                            insumo.StockMinimo,
+                            insumo.Estado
+                        })
+                    );
+
+                    TempData["Mensaje"] = "Insumo actualizado correctamente";
+                    return RedirectToAction(nameof(ListadoInsumos));
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = $"Error al actualizar el insumo: {ex.Message}";
+                }
             }
 
-            // Si hay errores, recargar las categorías
-            var categorias = _listarCategoriasInsumo.Obtener();
-            ViewBag.TodasCategorias = categorias;
+            try
+            {
+                ViewBag.TodasCategorias = _listarCategoriasInsumo.Obtener();
+            }
+            catch
+            {
+                ViewBag.TodasCategorias = new List<CategoriaInsumo>();
+            }
 
             return View(insumo);
-        }
-
-        // POST: Insumo/EliminarInsumo/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EliminarInsumo(int id)
-        {
-            // Aquí iría la lógica para eliminar el insumo
-            TempData["Mensaje"] = "Insumo eliminado correctamente";
-            return RedirectToAction(nameof(ListadoInsumos));
         }
     }
 }

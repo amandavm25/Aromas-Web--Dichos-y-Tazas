@@ -38,7 +38,7 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [DisplayName("Fecha")]
         public DateTime Fecha { get; set; }
 
-        // Propiedades de navegación (para mostrar nombres)
+        // Propiedades de navegación
         [DisplayName("Empleado")]
         public string NombreEmpleado { get; set; }
 
@@ -49,10 +49,44 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [DisplayName("Fecha")]
         public string FechaFormateada
         {
-            get
-            {
-                return Fecha.ToString("dd/MM/yyyy HH:mm:ss");
-            }
+            get { return Fecha.ToString("dd/MM/yyyy HH:mm:ss"); }
+        }
+
+        // Acciones estándar
+        public static class Acciones
+        {
+            public const string Crear = "Crear";
+            public const string Actualizar = "Actualizar";
+            public const string Eliminar = "Eliminar";
+
+            // Autenticación
+            public const string Login = "Login";
+            public const string Logout = "Logout";
+
+            // Empleados
+            public const string CambiarEstado = "Cambiar Estado";
+
+            // Asistencia
+            public const string RegistrarEntrada = "Registrar Entrada";
+            public const string RegistrarSalida = "Registrar Salida";
+
+            // Planilla
+            public const string Calcular = "Calcular";
+            public const string MarcarPagado = "Marcar Pagado";
+
+            // Tarifas
+            public const string ActualizarTarifa = "Actualizar Tarifa";
+            public const string FinalizarTarifa = "Finalizar Tarifa";
+
+            // Vacaciones (EMP-13)
+            public const string Aprobar = "Aprobar";
+            public const string Rechazar = "Rechazar";
+
+            // Inventario
+            public const string RegistrarMovimiento = "Registrar Movimiento";
+
+            // Permisos
+            public const string AsignarPermisos = "Asignar Permiso";
         }
     }
 }

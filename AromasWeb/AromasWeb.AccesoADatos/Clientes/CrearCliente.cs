@@ -18,41 +18,44 @@ namespace AromasWeb.AccesoADatos.Clientes
 
         public async Task<int> Crear(ClienteUI cliente)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                // Validar que no exista otro cliente con la misma identificación
-                bool identificacionExiste = _contexto.Cliente
-                    .Any(c => c.Identificacion == cliente.Identificacion);
-
-                if (identificacionExiste)
+                try
                 {
-                    throw new Exception("Ya existe un cliente registrado con esa identificación");
+                    // Validar que no exista otro cliente con la misma identificación
+                    bool identificacionExiste = contexto.Cliente
+                        .Any(c => c.Identificacion == cliente.Identificacion);
+
+                    if (identificacionExiste)
+                    {
+                        throw new Exception("Ya existe un cliente registrado con esa identificación");
+                    }
+
+                    // Validar que no exista otro cliente con el mismo correo
+                    bool correoExiste = contexto.Cliente
+                        .Any(c => c.Correo == cliente.Correo);
+
+                    if (correoExiste)
+                    {
+                        throw new Exception("Ya existe un cliente registrado con ese correo electrónico");
+                    }
+
+                    // Convertir el objeto de UI a AD
+                    var clienteAD = ConvertirObjetoParaAD(cliente);
+
+                    // Agregar al contexto
+                    contexto.Cliente.Add(clienteAD);
+
+                    // Guardar cambios
+                    int cantidadDeDatosInsertados = await contexto.SaveChangesAsync();
+
+                    return cantidadDeDatosInsertados;
                 }
-
-                // Validar que no exista otro cliente con el mismo correo
-                bool correoExiste = _contexto.Cliente
-                    .Any(c => c.Correo == cliente.Correo);
-
-                if (correoExiste)
+                catch (Exception ex)
                 {
-                    throw new Exception("Ya existe un cliente registrado con ese correo electrónico");
+                    System.Diagnostics.Debug.WriteLine($"Error al crear cliente: {ex.Message}");
+                    throw;
                 }
-
-                // Convertir el objeto de UI a AD
-                var clienteAD = ConvertirObjetoParaAD(cliente);
-
-                // Agregar al contexto
-                _contexto.Cliente.Add(clienteAD);
-
-                // Guardar cambios
-                int cantidadDeDatosInsertados = await _contexto.SaveChangesAsync();
-
-                return cantidadDeDatosInsertados;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al crear cliente: {ex.Message}");
-                throw;
             }
         }
 

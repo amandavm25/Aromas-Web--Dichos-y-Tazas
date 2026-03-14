@@ -16,15 +16,18 @@ namespace AromasWeb.AccesoADatos.Clientes
 
         public ClienteUI ObtenerPorCorreo(string correo)
         {
-            var clienteAD = _contexto.Cliente
+            using (var contexto = new Contexto())
+            {
+                var clienteAD = contexto.Cliente
                 .FirstOrDefault(c => c.Correo.ToLower() == correo.ToLower());
 
-            if (clienteAD == null)
-            {
-                return null;
-            }
+                if (clienteAD == null)
+                {
+                    return null;
+                }
 
-            return ConvertirObjetoParaUI(clienteAD);
+                return ConvertirObjetoParaUI(clienteAD);
+            }
         }
 
         private ClienteUI ConvertirObjetoParaUI(ClienteAD clienteAD)

@@ -17,43 +17,46 @@ namespace AromasWeb.AccesoADatos.CategoriasInsumo
 
         public int Eliminar(int id)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                CategoriaInsumoAD categoriaAEliminar = _contexto.CategoriaInsumo
-                    .FirstOrDefault(c => c.IdCategoria == id);
-
-                if (categoriaAEliminar == null)
+                try
                 {
-                    return 0;
+                    CategoriaInsumoAD categoriaAEliminar = contexto.CategoriaInsumo
+                        .FirstOrDefault(c => c.IdCategoria == id);
+
+                    if (categoriaAEliminar == null)
+                    {
+                        return 0;
+                    }
+
+                    // Guardar información antes de eliminar para registro
+                    var infoCategoria = new
+                    {
+                        categoriaAEliminar.IdCategoria,
+                        categoriaAEliminar.NombreCategoria,
+                        categoriaAEliminar.Estado
+                    };
+
+                    contexto.CategoriaInsumo.Remove(categoriaAEliminar);
+                    int cantidadDeDatosEliminados = contexto.SaveChanges();
+
+                    return cantidadDeDatosEliminados;
                 }
-
-                // Guardar información antes de eliminar para registro
-                var infoCategoria = new
+                catch (DbUpdateException dbEx)
                 {
-                    categoriaAEliminar.IdCategoria,
-                    categoriaAEliminar.NombreCategoria,
-                    categoriaAEliminar.Estado
-                };
+                    // Verificar si el error es por relaciones con otras tablas
+                    if (dbEx.InnerException != null &&
+                        dbEx.InnerException.Message.Contains("foreign key constraint"))
+                    {
+                        throw new Exception("No se puede eliminar la categoría porque tiene insumos asociados.", dbEx);
+                    }
 
-                _contexto.CategoriaInsumo.Remove(categoriaAEliminar);
-                int cantidadDeDatosEliminados = _contexto.SaveChanges();
-
-                return cantidadDeDatosEliminados;
-            }
-            catch (DbUpdateException dbEx)
-            {
-                // Verificar si el error es por relaciones con otras tablas
-                if (dbEx.InnerException != null &&
-                    dbEx.InnerException.Message.Contains("foreign key constraint"))
-                {
-                    throw new Exception("No se puede eliminar la categoría porque tiene insumos asociados.", dbEx);
+                    throw new Exception("No se puede eliminar la categoría. Verifica que no esté siendo utilizada.", dbEx);
                 }
-
-                throw new Exception("No se puede eliminar la categoría. Verifica que no esté siendo utilizada.", dbEx);
-            }
-            catch (Exception ex)
-            {
-                throw;
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
         }
     }

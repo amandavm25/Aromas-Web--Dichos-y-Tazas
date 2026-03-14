@@ -7,7 +7,7 @@ namespace AromasWeb.LogicaDeNegocio.Bitacoras
 {
     public class ListarBitacoras : IListarBitacora
     {
-        private IListarBitacora _listarBitacoras;
+        private readonly IListarBitacora _listarBitacoras;
 
         public ListarBitacoras()
         {
@@ -19,13 +19,20 @@ namespace AromasWeb.LogicaDeNegocio.Bitacoras
             return _listarBitacoras.Obtener();
         }
 
-        public List<Bitacora> BuscarPorFiltros(string buscar, string filtroModulo, DateTime? fechaInicio, DateTime? fechaFin)
+        public List<Bitacora> BuscarPorFiltros(
+            string buscar,
+            string filtroModulo,
+            DateTime? fechaInicio,
+            DateTime? fechaFin)
         {
             return _listarBitacoras.BuscarPorFiltros(buscar, filtroModulo, fechaInicio, fechaFin);
         }
 
         public Bitacora ObtenerPorId(int id)
         {
+            if (id <= 0)
+                return null;
+
             return _listarBitacoras.ObtenerPorId(id);
         }
 

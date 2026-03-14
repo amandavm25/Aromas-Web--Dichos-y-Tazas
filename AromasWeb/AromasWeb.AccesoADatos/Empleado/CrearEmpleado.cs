@@ -18,42 +18,45 @@ namespace AromasWeb.AccesoADatos.Empleados
 
         public async Task<int> Crear(Abstracciones.ModeloUI.Empleado empleado)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                // Validar que no exista un empleado con la misma identificación
-                bool identificacionExiste = await _contexto.Empleado
-                    .AnyAsync(e => e.Identificacion == empleado.Identificacion);
-                if (identificacionExiste)
+                try
                 {
-                    throw new Exception("Ya existe un empleado registrado con esa identificación");
-                }
+                    // Validar que no exista un empleado con la misma identificación
+                    bool identificacionExiste = await contexto.Empleado
+                        .AnyAsync(e => e.Identificacion == empleado.Identificacion);
+                    if (identificacionExiste)
+                    {
+                        throw new Exception("Ya existe un empleado registrado con esa identificación");
+                    }
 
-                // Validar que no exista un empleado con el mismo correo
-                bool correoExiste = await _contexto.Empleado
-                    .AnyAsync(e => e.Correo == empleado.Correo);
-                if (correoExiste)
+                    // Validar que no exista un empleado con el mismo correo
+                    bool correoExiste = await contexto.Empleado
+                        .AnyAsync(e => e.Correo == empleado.Correo);
+                    if (correoExiste)
+                    {
+                        throw new Exception("Ya existe un empleado registrado con ese correo electrónico");
+                    }
+
+                    // Validar que el rol exista
+                    bool rolExiste = await contexto.Rol
+                        .AnyAsync(r => r.IdRol == empleado.IdRol);
+                    if (!rolExiste)
+                    {
+                        throw new Exception("El rol seleccionado no existe");
+                    }
+
+                    EmpleadoAD empleadoAGuardar = ConvertirObjetoParaAD(empleado);
+                    contexto.Empleado.Add(empleadoAGuardar);
+                    int cantidadDeDatosAgregados = await contexto.SaveChangesAsync();
+
+                    return cantidadDeDatosAgregados;
+                }
+                catch (Exception ex)
                 {
-                    throw new Exception("Ya existe un empleado registrado con ese correo electrónico");
+                    System.Diagnostics.Debug.WriteLine($"Error al guardar empleado: {ex.Message}");
+                    throw;
                 }
-
-                // Validar que el rol exista
-                bool rolExiste = await _contexto.Rol
-                    .AnyAsync(r => r.IdRol == empleado.IdRol);
-                if (!rolExiste)
-                {
-                    throw new Exception("El rol seleccionado no existe");
-                }
-
-                EmpleadoAD empleadoAGuardar = ConvertirObjetoParaAD(empleado);
-                _contexto.Empleado.Add(empleadoAGuardar);
-                int cantidadDeDatosAgregados = await _contexto.SaveChangesAsync();
-
-                return cantidadDeDatosAgregados;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al guardar empleado: {ex.Message}");
-                throw;
             }
         }
 

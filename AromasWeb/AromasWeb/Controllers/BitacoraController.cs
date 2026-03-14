@@ -8,7 +8,7 @@ namespace AromasWeb.Controllers
 {
     public class BitacoraController : Controller
     {
-        private IListarBitacora _listarBitacora;
+        private readonly IListarBitacora _listarBitacora;
 
         public BitacoraController()
         {
@@ -16,37 +16,45 @@ namespace AromasWeb.Controllers
         }
 
         // GET: Bitacora/ListadoBitacoras
-        public IActionResult ListadoBitacoras(string buscar, string filtroModulo, DateTime? fechaInicio, DateTime? fechaFin)
+        public IActionResult ListadoBitacoras(
+            string buscar = null,
+            string filtroModulo = null,
+            DateTime? fechaInicio = null,
+            DateTime? fechaFin = null)
         {
             ViewBag.Buscar = buscar;
             ViewBag.FiltroModulo = filtroModulo;
             ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd");
             ViewBag.FechaFin = fechaFin?.ToString("yyyy-MM-dd");
 
-            List<Bitacora> bitacoras;
+            bool hayFiltros = !string.IsNullOrEmpty(buscar)
+                           || !string.IsNullOrEmpty(filtroModulo)
+                           || fechaInicio.HasValue
+                           || fechaFin.HasValue;
 
-            // Si hay filtros, buscar con ellos
-            if (!string.IsNullOrEmpty(buscar) || !string.IsNullOrEmpty(filtroModulo) || fechaInicio.HasValue || fechaFin.HasValue)
-            {
-                bitacoras = _listarBitacora.BuscarPorFiltros(buscar, filtroModulo, fechaInicio, fechaFin);
-            }
-            else
-            {
-                // Si no hay filtros, obtener todos
-                bitacoras = _listarBitacora.Obtener();
-            }
+            List<Bitacora> bitacoras = hayFiltros
+                ? _listarBitacora.BuscarPorFiltros(buscar, filtroModulo, fechaInicio, fechaFin)
+                : _listarBitacora.Obtener();
 
             return View(bitacoras);
         }
 
         // GET: Bitacora/DetallesBitacora/5
+
         public IActionResult DetallesBitacora(int id)
         {
+            if (id <= 0)
+            {
+                TempData["Error"] = "El registro de auditoría no se encuentra disponible";
+                return RedirectToAction(nameof(ListadoBitacoras));
+            }
+
             var bitacora = _listarBitacora.ObtenerPorId(id);
 
             if (bitacora == null)
             {
-                TempData["Error"] = "Registro de bitácora no encontrado";
+                // Registro inexistente
+                TempData["Error"] = "El registro de auditoría no se encuentra disponible";
                 return RedirectToAction(nameof(ListadoBitacoras));
             }
 

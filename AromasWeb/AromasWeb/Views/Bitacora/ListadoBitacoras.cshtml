@@ -4,8 +4,12 @@
     ViewBag.Title = "Gestión de Bitácora";
     var totalRegistros = Model?.Count ?? 0;
     var accionesHoy = Model?.Count(b => b.Fecha.Date == DateTime.Now.Date) ?? 0;
-    var empleadosUnicos = Model?.Select(b => b.IdEmpleado).Distinct().Count() ?? 0;
-    var modulosActivos = Model?.Select(b => b.IdModulo).Distinct().Count() ?? 0;
+
+    var inicioSemana = DateTime.Now.Date.AddDays(-(int)DateTime.Now.DayOfWeek + (int)DayOfWeek.Monday);
+    var registrosSemana = Model?.Count(b => b.Fecha.Date >= inicioSemana) ?? 0;
+
+    var inicioMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+    var registrosMes = Model?.Count(b => b.Fecha.Date >= inicioMes) ?? 0;
 }
 
 <!-- Hero Section -->
@@ -57,18 +61,18 @@
 
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
                 <div class="feature-icon">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-calendar-week"></i>
                 </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@empleadosUnicos</h3>
-                <p style="margin: 0.5rem 0;">Empleados Únicos</p>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@registrosSemana</h3>
+                <p style="margin: 0.5rem 0;">Registros Esta Semana</p>
             </div>
 
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="300">
                 <div class="feature-icon">
-                    <i class="fas fa-th-large"></i>
+                    <i class="fas fa-calendar-alt"></i>
                 </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@modulosActivos</h3>
-                <p style="margin: 0.5rem 0;">Módulos en Actividad</p>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@registrosMes</h3>
+                <p style="margin: 0.5rem 0;">Registros Este Mes</p>
             </div>
         </div>
 
@@ -102,14 +106,24 @@
                         <i class="fas fa-th-large" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
                         <select name="filtroModulo" style="border-radius: 50px; padding: 0.6rem 1.5rem 0.6rem 50px; font-size: 0.9rem; border: 2px solid var(--cream); background: var(--white); min-width: 180px; color: var(--dark-green); font-weight: 600;">
                             <option value="">Todos los módulos</option>
+                            <option value="Autenticación" @@(ViewBag.FiltroModulo= ="Autenticación" ? "selected" : "" )>Autenticación</option>
+                            <option value="Bitácora" @@(ViewBag.FiltroModulo= ="Bitácora" ? "selected" : "" )>Bitácora</option>
+                            <option value="Categoría de insumos" @@(ViewBag.FiltroModulo= ="Categoría de insumos" ? "selected" : "" )>Categoría de insumos</option>
+                            <option value="Categoría de recetas" @@(ViewBag.FiltroModulo= ="Categoría de recetas" ? "selected" : "" )>Categoría de recetas</option>
+                            <option value="Clientes" @@(ViewBag.FiltroModulo= ="Clientes" ? "selected" : "" )>Clientes</option>
                             <option value="Empleados" @@(ViewBag.FiltroModulo= ="Empleados" ? "selected" : "" )>Empleados</option>
-                            <option value="Roles" @@(ViewBag.FiltroModulo= ="Roles" ? "selected" : "" )>Roles</option>
-                            <option value="Asistencia" @@(ViewBag.FiltroModulo= ="Asistencia" ? "selected" : "" )>Asistencia</option>
-                            <option value="Planilla" @@(ViewBag.FiltroModulo= ="Planilla" ? "selected" : "" )>Planilla</option>
-                            <option value="Vacaciones" @@(ViewBag.FiltroModulo= ="Vacaciones" ? "selected" : "" )>Vacaciones</option>
+                            <option value="Historial de tarifas" @@(ViewBag.FiltroModulo= ="Historial de tarifas" ? "selected" : "" )>Historial de tarifas</option>
                             <option value="Insumos" @@(ViewBag.FiltroModulo= ="Insumos" ? "selected" : "" )>Insumos</option>
-                            <option value="Recetas" @@(ViewBag.FiltroModulo= ="Recetas" ? "selected" : "" )>Recetas</option>
+                            <option value="Módulos" @@(ViewBag.FiltroModulo= ="Módulos" ? "selected" : "" )>Módulos</option>
+                            <option value="Movimientos de inventario" @@(ViewBag.FiltroModulo= ="Movimientos de inventario" ? "selected" : "" )>Movimientos de inventario</option>
+                            <option value="Permisos" @@(ViewBag.FiltroModulo= ="Permisos" ? "selected" : "" )>Permisos</option>
+                            <option value="Planilla" @@(ViewBag.FiltroModulo= ="Planilla" ? "selected" : "" )>Planilla</option>
                             <option value="Promociones" @@(ViewBag.FiltroModulo= ="Promociones" ? "selected" : "" )>Promociones</option>
+                            <option value="Recetas" @@(ViewBag.FiltroModulo= ="Recetas" ? "selected" : "" )>Recetas</option>
+                            <option value="Reservas" @@(ViewBag.FiltroModulo= ="Reservas" ? "selected" : "" )>Reservas</option>
+                            <option value="Rol" @@(ViewBag.FiltroModulo= ="Rol" ? "selected" : "" )>Rol</option>
+                            <option value="Solicitud de vacaciones" @@(ViewBag.FiltroModulo= ="Solicitud de vacaciones" ? "selected" : "" )>Solicitud de vacaciones</option>
+                            <option value="Tipo de promoción" @@(ViewBag.FiltroModulo= ="Tipo de promoción" ? "selected" : "" )>Tipo de promoción</option>
                         </select>
                     </div>
 

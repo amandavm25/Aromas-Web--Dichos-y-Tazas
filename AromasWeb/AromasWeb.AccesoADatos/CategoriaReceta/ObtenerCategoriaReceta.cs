@@ -15,15 +15,18 @@ namespace AromasWeb.AccesoADatos.CategoriasReceta
 
         public Abstracciones.ModeloUI.CategoriaReceta Obtener(int id)
         {
-            var categoriaAD = _contexto.CategoriaReceta
+            using (var contexto = new Contexto())
+            {
+                var categoriaAD = contexto.CategoriaReceta
                 .FirstOrDefault(c => c.IdCategoriaReceta == id);
 
-            if (categoriaAD == null)
-            {
-                return null;
-            }
+                if (categoriaAD == null)
+                {
+                    return null;
+                }
 
-            return ConvertirObjetoParaUI(categoriaAD);
+                return ConvertirObjetoParaUI(categoriaAD);
+            }
         }
 
         private Abstracciones.ModeloUI.CategoriaReceta ConvertirObjetoParaUI(CategoriaRecetaAD categoriaAD)

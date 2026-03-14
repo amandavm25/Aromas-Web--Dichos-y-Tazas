@@ -27,20 +27,18 @@
                     </div>
                 </div>
 
-                <!-- Fila 1: ID, Empleado, Fecha, Tabla en 2x2 -->
-                <div class="modal-data-grid-2">
-                    <div class="modal-data-cell">
-                        <label class="modal-data-label">
-                            <i class="fas fa-hashtag"></i> ID del Registro
-                        </label>
-                        <p id="detalles-id-bitacora" class="modal-data-value"></p>
-                    </div>
+                <!-- Empleado: ancho completo -->
+                <div class="modal-data-grid-2" style="grid-template-columns: 1fr;">
                     <div class="modal-data-cell">
                         <label class="modal-data-label">
                             <i class="fas fa-user"></i> Empleado
                         </label>
                         <p id="detalles-empleado-bitacora" class="modal-data-value"></p>
                     </div>
+                </div>
+
+                <!-- Fila 2: Fecha y Hora + Tabla Afectada -->
+                <div class="modal-data-grid-2">
                     <div class="modal-data-cell">
                         <label class="modal-data-label">
                             <i class="fas fa-clock"></i> Fecha y Hora
@@ -114,56 +112,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        const coloresAccion = {
-            'INSERT': 'var(--green)',
-            'UPDATE': 'var(--gold)',
-            'DELETE': 'var(--red)',
-            'SELECT': 'var(--olive-green)'
-        };
-
-        const formatearJSON = (texto) => {
-            if (!texto || texto.trim() === '') return 'Sin datos';
-            try { return JSON.stringify(JSON.parse(texto), null, 2); }
-            catch { return texto; }
-        };
-
-        document.querySelectorAll('.btn-detalles').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const set = (id, val) => {
-                    const el = document.getElementById(id);
-                    if (el) el.textContent = val || '—';
-                };
-
-                set('detalles-id-bitacora',          '#' + this.dataset.id);
-                set('detalles-accion-bitacora',       this.dataset.accion);
-                set('detalles-descripcion-bitacora',  this.dataset.descripcion);
-                set('detalles-empleado-bitacora',     this.dataset.empleado);
-                set('detalles-fecha-bitacora',        this.dataset.fecha);
-                set('detalles-tabla-bitacora',        this.dataset.tabla);
-
-                // Badge módulo
-                const elModulo = document.getElementById('detalles-modulo-badge-bitacora');
-                if (elModulo) elModulo.textContent = this.dataset.modulo || '—';
-
-                // Badge tipo de acción con color dinámico
-                const accion = (this.dataset.accion || '').toUpperCase();
-                const badgeAccion = document.getElementById('detalles-tipo-accion-badge-bitacora');
-                if (badgeAccion) {
-                    badgeAccion.textContent = accion || '—';
-                    badgeAccion.style.background = coloresAccion[accion] || 'var(--charcoal)';
-                    badgeAccion.style.color = 'white';
-                }
-
-                // Datos JSON formateados
-                const elAntes = document.getElementById('detalles-datos-anteriores-bitacora');
-                const elDespues = document.getElementById('detalles-datos-nuevos-bitacora');
-                if (elAntes) elAntes.textContent = formatearJSON(this.dataset.datosAnteriores);
-                if (elDespues) elDespues.textContent = formatearJSON(this.dataset.datosNuevos);
-            });
-        });
-    });
-</script>

@@ -2,9 +2,12 @@
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.MovimientoInsumo;
 using AromasWeb.Abstracciones.Logica.Insumo;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace AromasWeb.Controllers
 {
@@ -12,11 +15,23 @@ namespace AromasWeb.Controllers
     {
         private IListarMovimientos _listarMovimientos;
         private IListarInsumos _listarInsumos;
+        private readonly CrearBitacora _crearBitacora;
 
         public MovimientoInsumoController()
         {
             _listarMovimientos = new LogicaDeNegocio.MovimientosInsumo.ListarMovimientos();
             _listarInsumos = new LogicaDeNegocio.Insumos.ListarInsumos();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1;
         }
 
         // GET: MovimientoInsumo/HistorialMovimientos
@@ -29,7 +44,6 @@ namespace AromasWeb.Controllers
 
             List<MovimientoInsumo> movimientos;
 
-            // Aplicar filtros según los parámetros recibidos
             if (!string.IsNullOrEmpty(buscar) || !string.IsNullOrEmpty(tipo) || fechaDesde.HasValue || fechaHasta.HasValue)
             {
                 movimientos = _listarMovimientos.BuscarConFiltros(buscar, tipo, fechaDesde, fechaHasta);
@@ -45,10 +59,8 @@ namespace AromasWeb.Controllers
         // GET: MovimientoInsumo/RegistrarMovimiento
         public IActionResult RegistrarMovimiento(int? idInsumo)
         {
-            // Siempre cargar todos los insumos para el combobox
             ViewBag.TodosInsumos = _listarInsumos.Obtener();
 
-            // Si viene idInsumo, precargar el insumo en el panel de info
             if (idInsumo.HasValue)
             {
                 var insumo = _listarInsumos.ObtenerPorId(idInsumo.Value);
@@ -73,12 +85,33 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 movimiento.FechaMovimiento = DateTime.Now;
-                movimiento.IdEmpleado = 1; 
+                movimiento.IdEmpleado = ObtenerIdEmpleadoSesion();
+
+                string tipoTexto = movimiento.TipoMovimiento == "E" ? "Entrada" : "Salida";
+                var insumo = _listarInsumos.ObtenerPorId(movimiento.IdInsumo);
+
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Movimientos de insumos"),
+                    accion: Bitacora.Acciones.RegistrarMovimiento,
+                    tablaAfectada: "MovimientoInsumo",
+                    descripcion: $"Se registró {tipoTexto} de insumo: {insumo?.NombreInsumo ?? movimiento.IdInsumo.ToString()} — Cantidad: {movimiento.Cantidad} {insumo?.UnidadMedida}",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        movimiento.IdInsumo,
+                        NombreInsumo = insumo?.NombreInsumo,
+                        movimiento.TipoMovimiento,
+                        movimiento.Cantidad,
+                        movimiento.CostoUnitario,
+                        movimiento.Motivo,
+                        FechaMovimiento = movimiento.FechaMovimiento.ToString("dd/MM/yyyy HH:mm")
+                    })
+                );
+
                 TempData["Mensaje"] = "Movimiento registrado correctamente";
                 return RedirectToAction(nameof(HistorialMovimientos));
             }
 
-            // Si hay error, recargar combobox e info del insumo
             ViewBag.TodosInsumos = _listarInsumos.Obtener();
             if (movimiento.IdInsumo > 0)
                 ViewBag.Insumo = _listarInsumos.ObtenerPorId(movimiento.IdInsumo);
@@ -166,7 +199,6 @@ namespace AromasWeb.Controllers
             }
             else
             {
-                // Por defecto, movimientos del mes actual
                 var primerDiaMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 var ultimoDiaMes = primerDiaMes.AddMonths(1).AddDays(-1);
                 movimientos = _listarMovimientos.BuscarPorRangoFechas(primerDiaMes, ultimoDiaMes);

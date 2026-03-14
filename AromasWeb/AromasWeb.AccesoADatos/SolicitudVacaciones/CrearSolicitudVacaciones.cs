@@ -17,38 +17,41 @@ namespace AromasWeb.AccesoADatos.SolicitudesVacaciones
 
         public async Task<int> Crear(Abstracciones.ModeloUI.SolicitudVacaciones solicitud)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                // Convertir primero para usar en la validación de solapamiento
-                DateTime fechaInicioUtc = EnsureUtc(solicitud.FechaInicio);
-                DateTime fechaFinUtc = EnsureUtc(solicitud.FechaFin);
+                try
+                {
+                    // Convertir primero para usar en la validación de solapamiento
+                    DateTime fechaInicioUtc = EnsureUtc(solicitud.FechaInicio);
+                    DateTime fechaFinUtc = EnsureUtc(solicitud.FechaFin);
 
-                bool empleadoExiste = await _contexto.Empleado
-                    .AnyAsync(e => e.IdEmpleado == solicitud.IdEmpleado);
-                if (!empleadoExiste)
-                    throw new Exception("El empleado seleccionado no existe");
+                    bool empleadoExiste = await contexto.Empleado
+                        .AnyAsync(e => e.IdEmpleado == solicitud.IdEmpleado);
+                    if (!empleadoExiste)
+                        throw new Exception("El empleado seleccionado no existe");
 
-                if (fechaInicioUtc > fechaFinUtc)
-                    throw new Exception("La fecha de inicio no puede ser mayor a la fecha de fin");
+                    if (fechaInicioUtc > fechaFinUtc)
+                        throw new Exception("La fecha de inicio no puede ser mayor a la fecha de fin");
 
-                // Usar fechas UTC en la comparación
-                bool solicitudSolapada = await _contexto.SolicitudVacaciones
-                    .AnyAsync(s => s.IdEmpleado == solicitud.IdEmpleado
-                                && s.Estado != "Rechazada"
-                                && s.Estado != "Cancelada"
-                                && s.FechaInicio <= fechaFinUtc
-                                && s.FechaFin >= fechaInicioUtc);
-                if (solicitudSolapada)
-                    throw new Exception("Ya existe una solicitud de vacaciones en ese período");
+                    // Usar fechas UTC en la comparación
+                    bool solicitudSolapada = await contexto.SolicitudVacaciones
+                        .AnyAsync(s => s.IdEmpleado == solicitud.IdEmpleado
+                                    && s.Estado != "Rechazada"
+                                    && s.Estado != "Cancelada"
+                                    && s.FechaInicio <= fechaFinUtc
+                                    && s.FechaFin >= fechaInicioUtc);
+                    if (solicitudSolapada)
+                        throw new Exception("Ya existe una solicitud de vacaciones en ese período");
 
-                SolicitudVacacionesAD solicitudAGuardar = ConvertirObjetoParaAD(solicitud);
-                _contexto.SolicitudVacaciones.Add(solicitudAGuardar);
-                return await _contexto.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al guardar solicitud de vacaciones: {ex.Message}");
-                throw;
+                    SolicitudVacacionesAD solicitudAGuardar = ConvertirObjetoParaAD(solicitud);
+                    contexto.SolicitudVacaciones.Add(solicitudAGuardar);
+                    return await contexto.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error al guardar solicitud de vacaciones: {ex.Message}");
+                    throw;
+                }
             }
         }
 

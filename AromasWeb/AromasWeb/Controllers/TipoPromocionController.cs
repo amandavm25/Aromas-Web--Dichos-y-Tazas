@@ -1,17 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.TipoPromocion;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System.Collections.Generic;
+using System.Text.Json;
+using System;
 
 namespace AromasWeb.Controllers
 {
     public class TipoPromocionController : Controller
     {
         private IListarTiposPromociones _listarTiposPromociones;
+        private readonly CrearBitacora _crearBitacora;
 
         public TipoPromocionController()
         {
             _listarTiposPromociones = new LogicaDeNegocio.TiposPromociones.ListarTiposPromociones();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1;
         }
 
         // GET: TipoPromocion/ListadoTiposPromociones
@@ -21,13 +37,16 @@ namespace AromasWeb.Controllers
 
             List<TipoPromocion> tiposPromociones;
 
-            if (!string.IsNullOrEmpty(buscar))
+            try
             {
-                tiposPromociones = _listarTiposPromociones.BuscarPorNombre(buscar);
+                tiposPromociones = !string.IsNullOrEmpty(buscar)
+                    ? _listarTiposPromociones.BuscarPorNombre(buscar)
+                    : _listarTiposPromociones.Obtener();
             }
-            else
+            catch (Exception ex)
             {
-                tiposPromociones = _listarTiposPromociones.Obtener();
+                TempData["Error"] = $"Error al cargar los tipos de promoción: {ex.Message}";
+                tiposPromociones = new List<TipoPromocion>();
             }
 
             return View(tiposPromociones);
@@ -58,15 +77,23 @@ namespace AromasWeb.Controllers
         // GET: TipoPromocion/EditarTipoPromocion/5
         public IActionResult EditarTipoPromocion(int id)
         {
-            var tipoPromocion = _listarTiposPromociones.ObtenerPorId(id);
-
-            if (tipoPromocion == null)
+            try
             {
-                TempData["Error"] = "Tipo de promoción no encontrado";
+                var tipoPromocion = _listarTiposPromociones.ObtenerPorId(id);
+
+                if (tipoPromocion == null)
+                {
+                    TempData["Error"] = "Tipo de promoción no encontrado";
+                    return RedirectToAction(nameof(ListadoTiposPromociones));
+                }
+
+                return View(tipoPromocion);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar el tipo de promoción: {ex.Message}";
                 return RedirectToAction(nameof(ListadoTiposPromociones));
             }
-
-            return View(tipoPromocion);
         }
 
         // POST: TipoPromocion/EditarTipoPromocion
@@ -101,15 +128,23 @@ namespace AromasWeb.Controllers
         // GET: TipoPromocion/DetallesTipoPromocion/5
         public IActionResult DetallesTipoPromocion(int id)
         {
-            var tipoPromocion = _listarTiposPromociones.ObtenerPorId(id);
-
-            if (tipoPromocion == null)
+            try
             {
-                TempData["Error"] = "Tipo de promoción no encontrado";
+                var tipoPromocion = _listarTiposPromociones.ObtenerPorId(id);
+
+                if (tipoPromocion == null)
+                {
+                    TempData["Error"] = "Tipo de promoción no encontrado";
+                    return RedirectToAction(nameof(ListadoTiposPromociones));
+                }
+
+                return View(tipoPromocion);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar el tipo de promoción: {ex.Message}";
                 return RedirectToAction(nameof(ListadoTiposPromociones));
             }
-
-            return View(tipoPromocion);
         }
     }
 }

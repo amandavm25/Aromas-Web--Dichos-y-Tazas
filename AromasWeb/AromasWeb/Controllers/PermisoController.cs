@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Permiso;
 using AromasWeb.Abstracciones.Logica.Modulo;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace AromasWeb.Controllers
 {
@@ -12,11 +16,21 @@ namespace AromasWeb.Controllers
     {
         private IListarPermisos _listarPermisos;
         private IListarModulos _listarModulos;
+        private readonly CrearBitacora _crearBitacora;
 
         public PermisoController()
         {
             _listarPermisos = new LogicaDeNegocio.Permisos.ListarPermisos();
             _listarModulos = new LogicaDeNegocio.Modulos.ListarModulos();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+            return 1;
         }
 
         // GET: Permiso/ListadoPermisos
@@ -70,6 +84,19 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 // Aquí iría la lógica para guardar en la base de datos
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
+                    accion: Bitacora.Acciones.Crear,
+                    tablaAfectada: "Permiso",
+                    descripcion: $"Se registró el permiso: {permiso.Nombre} (módulo ID: {permiso.IdModulo})",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        permiso.Nombre,
+                        permiso.IdModulo
+                    })
+                );
+
                 TempData["Mensaje"] = "Permiso registrado correctamente";
                 return RedirectToAction(nameof(ListadoPermisos));
             }
@@ -101,6 +128,24 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 // Aquí iría la lógica para actualizar en la base de datos
+                var anterior = _listarPermisos.ObtenerPorId(permiso.IdPermiso);
+
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
+                    accion: Bitacora.Acciones.Actualizar,
+                    tablaAfectada: "Permiso",
+                    descripcion: $"Se actualizó el permiso: {permiso.Nombre} (ID: {permiso.IdPermiso})",
+                    datosAnteriores: anterior != null
+                        ? JsonSerializer.Serialize(new { anterior.Nombre, anterior.IdModulo })
+                        : null,
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        permiso.Nombre,
+                        permiso.IdModulo
+                    })
+                );
+
                 TempData["Mensaje"] = "Permiso actualizado correctamente";
                 return RedirectToAction(nameof(ListadoPermisos));
             }
@@ -115,6 +160,19 @@ namespace AromasWeb.Controllers
         public IActionResult EliminarPermiso(int id)
         {
             // Aquí iría la lógica para eliminar de la base de datos
+            var permiso = _listarPermisos.ObtenerPorId(id);
+
+            _crearBitacora.RegistrarAccion(
+                idEmpleado: ObtenerIdEmpleadoSesion(),
+                idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
+                accion: Bitacora.Acciones.Eliminar,
+                tablaAfectada: "Permiso",
+                descripcion: $"Se eliminó el permiso: {permiso?.Nombre ?? id.ToString()} (ID: {id})",
+                datosAnteriores: permiso != null
+                    ? JsonSerializer.Serialize(new { permiso.Nombre, permiso.IdModulo })
+                    : null
+            );
+
             TempData["Mensaje"] = "Permiso eliminado correctamente";
             return RedirectToAction(nameof(ListadoPermisos));
         }
@@ -157,6 +215,19 @@ namespace AromasWeb.Controllers
 
             if (exito)
             {
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
+                    accion: Bitacora.Acciones.AsignarPermisos,
+                    tablaAfectada: "RolPermiso",
+                    descripcion: $"Se asignaron {permisosSeleccionados.Count} permiso(s) al rol ID: {idRol}",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        IdRol = idRol,
+                        Permisos = permisosSeleccionados
+                    })
+                );
+
                 TempData["Mensaje"] = "Permisos asignados correctamente";
             }
             else

@@ -16,56 +16,62 @@ namespace AromasWeb.AccesoADatos.SolicitudesVacaciones
 
         public int Actualizar(Abstracciones.ModeloUI.SolicitudVacaciones solicitud)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                var solicitudExistente = _contexto.SolicitudVacaciones
-                    .FirstOrDefault(s => s.IdSolicitud == solicitud.IdSolicitud);
-
-                if (solicitudExistente == null)
+                try
                 {
-                    return 0;
+                    var solicitudExistente = contexto.SolicitudVacaciones
+                        .FirstOrDefault(s => s.IdSolicitud == solicitud.IdSolicitud);
+
+                    if (solicitudExistente == null)
+                    {
+                        return 0;
+                    }
+
+                    solicitudExistente.FechaInicio = EnsureUtc(solicitud.FechaInicio);
+                    solicitudExistente.FechaFin = EnsureUtc(solicitud.FechaFin);
+                    solicitudExistente.DiasSolicitados = solicitud.DiasSolicitados;
+                    solicitudExistente.Estado = solicitud.Estado;
+                    solicitudExistente.FechaRespuesta = solicitud.FechaRespuesta;
+
+                    int cantidadDeDatosActualizados = contexto.SaveChanges();
+
+                    return cantidadDeDatosActualizados;
                 }
-
-                solicitudExistente.FechaInicio = EnsureUtc(solicitud.FechaInicio);
-                solicitudExistente.FechaFin = EnsureUtc(solicitud.FechaFin);
-                solicitudExistente.DiasSolicitados = solicitud.DiasSolicitados;
-                solicitudExistente.Estado = solicitud.Estado;
-                solicitudExistente.FechaRespuesta = solicitud.FechaRespuesta;
-
-                int cantidadDeDatosActualizados = _contexto.SaveChanges();
-
-                return cantidadDeDatosActualizados;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al actualizar solicitud de vacaciones: {ex.Message}");
-                throw;
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error al actualizar solicitud de vacaciones: {ex.Message}");
+                    throw;
+                }
             }
         }
 
         public int ActualizarEstado(int idSolicitud, string estado)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                var solicitudExistente = _contexto.SolicitudVacaciones
-                    .FirstOrDefault(s => s.IdSolicitud == idSolicitud);
-
-                if (solicitudExistente == null)
+                try
                 {
-                    return 0;
+                    var solicitudExistente = contexto.SolicitudVacaciones
+                        .FirstOrDefault(s => s.IdSolicitud == idSolicitud);
+
+                    if (solicitudExistente == null)
+                    {
+                        return 0;
+                    }
+
+                    solicitudExistente.Estado = estado;
+                    solicitudExistente.FechaRespuesta = DateTime.UtcNow;
+
+                    int cantidadDeDatosActualizados = contexto.SaveChanges();
+
+                    return cantidadDeDatosActualizados;
                 }
-
-                solicitudExistente.Estado = estado;
-                solicitudExistente.FechaRespuesta = DateTime.UtcNow;
-
-                int cantidadDeDatosActualizados = _contexto.SaveChanges();
-
-                return cantidadDeDatosActualizados;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al actualizar estado de solicitud: {ex.Message}");
-                throw;
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error al actualizar estado de solicitud: {ex.Message}");
+                    throw;
+                }
             }
         }
 

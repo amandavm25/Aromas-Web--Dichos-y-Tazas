@@ -2,9 +2,12 @@
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Planilla;
 using AromasWeb.AccesoADatos;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace AromasWeb.Controllers
 {
@@ -12,17 +15,28 @@ namespace AromasWeb.Controllers
     {
         private IListarPlanillas _listarPlanillas;
         private ICalcularPlanilla _calcularPlanilla;
+        private readonly CrearBitacora _crearBitacora;
 
         public PlanillaController()
         {
             _listarPlanillas = new LogicaDeNegocio.Planillas.ListarPlanillas();
             _calcularPlanilla = new LogicaDeNegocio.Planillas.CalcularPlanilla();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1;
         }
 
         // GET: Planilla/ListadoPlanillas
         public IActionResult ListadoPlanillas(int? empleado, string estado, DateTime? fechaInicio, DateTime? fechaFin)
         {
-            // Cargar empleados para el filtro
             CargarEmpleados();
 
             ViewBag.EmpleadoFiltro = empleado;
@@ -30,7 +44,6 @@ namespace AromasWeb.Controllers
             ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd");
             ViewBag.FechaFin = fechaFin?.ToString("yyyy-MM-dd");
 
-            // Obtener planillas según los filtros
             List<Planilla> planillas;
 
             if (empleado.HasValue && !string.IsNullOrEmpty(estado) && fechaInicio.HasValue && fechaFin.HasValue)
@@ -76,7 +89,6 @@ namespace AromasWeb.Controllers
                 planillas = _listarPlanillas.Obtener();
             }
 
-            // Calcular resumen dinámico
             ViewBag.TotalPlanillas = planillas.Count;
             ViewBag.PlanillasPagadas = planillas.Count(p => p.Estado.Equals("Pagado", StringComparison.OrdinalIgnoreCase));
             ViewBag.PlanillasPendientes = planillas.Count(p => p.Estado.Equals("Calculado", StringComparison.OrdinalIgnoreCase));
@@ -113,8 +125,26 @@ namespace AromasWeb.Controllers
                 CargarEmpleados();
                 return View();
             }
+
             try
-            { int idPlanillaCreada = _calcularPlanilla.CalcularYGuardar(idEmpleado, periodoInicio, periodoFin);
+            {
+                int idPlanillaCreada = _calcularPlanilla.CalcularYGuardar(idEmpleado, periodoInicio, periodoFin);
+
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de planilla"),
+                    accion: Bitacora.Acciones.Calcular,
+                    tablaAfectada: "Planilla",
+                    descripcion: $"Se calculó la planilla del empleado ID {idEmpleado} — Período: {periodoInicio:dd/MM/yyyy} al {periodoFin:dd/MM/yyyy} (ID planilla: {idPlanillaCreada})",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        idEmpleado,
+                        PeriodoInicio = periodoInicio.ToString("dd/MM/yyyy"),
+                        PeriodoFin = periodoFin.ToString("dd/MM/yyyy"),
+                        IdPlanillaCreada = idPlanillaCreada
+                    })
+                );
+
                 TempData["Mensaje"] = "Planilla calculada correctamente";
                 return RedirectToAction(nameof(VerDetallePlanilla), new { id = idPlanillaCreada });
             }
@@ -141,7 +171,6 @@ namespace AromasWeb.Controllers
 
             ViewBag.Planilla = planilla;
 
-            // Determinar la URL de retorno según el tipo de usuario si no se especificó
             if (string.IsNullOrEmpty(returnUrl))
             {
                 var tipoUsuario = HttpContext.Session.GetString("UsuarioTipo");
@@ -166,8 +195,23 @@ namespace AromasWeb.Controllers
             {
                 try
                 {
+                    // Capturar datos ANTES de marcar como pagado
+                    var planilla = _listarPlanillas.ObtenerPorId(IdPlanilla);
 
                     _listarPlanillas.MarcarComoPagado(IdPlanilla);
+
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de planilla"),
+                        accion: Bitacora.Acciones.MarcarPagado,
+                        tablaAfectada: "Planilla",
+                        descripcion: $"Se marcó como pagada la planilla ID {IdPlanilla}" + (planilla != null ? $" del empleado ID {planilla.IdEmpleado} — Pago neto: ₡{planilla.PagoNeto:N2}" : ""),
+                        datosAnteriores: planilla != null
+                            ? JsonSerializer.Serialize(new { planilla.Estado })
+                            : null,
+                        datosNuevos: JsonSerializer.Serialize(new { Estado = "Pagado" })
+                    );
+
                     TempData["Mensaje"] = "Planilla marcada como pagada correctamente";
                 }
                 catch (Exception ex)
@@ -177,13 +221,14 @@ namespace AromasWeb.Controllers
 
                 return RedirectToAction(nameof(ListadoPlanillas));
             }
-
         }
+
         // POST: Planilla/AnularPlanilla/1
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AnularPlanilla(int id)
         {
+            // Aquí iría la lógica para anular la planilla
             TempData["Mensaje"] = "Planilla anulada correctamente";
             return RedirectToAction(nameof(ListadoPlanillas));
         }
@@ -209,7 +254,6 @@ namespace AromasWeb.Controllers
             ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd");
             ViewBag.FechaFin = fechaFin?.ToString("yyyy-MM-dd");
 
-            // CORREGIDO: Ahora retorna Empleado de UI
             var empleado = ObtenerDatosEmpleadoPorId(id);
             ViewBag.Empleado = empleado;
 
@@ -225,7 +269,6 @@ namespace AromasWeb.Controllers
             return View(planillas);
         }
 
-        // MÉTODO CORREGIDO: Ahora retorna Empleado de UI en lugar de dynamic
         private Empleado ObtenerDatosEmpleadoPorId(int id)
         {
             using (var contexto = new Contexto())
@@ -237,7 +280,6 @@ namespace AromasWeb.Controllers
                     if (empleadoAD == null)
                         return null;
 
-                    // Convertir de AccesoADatos.Modelos.EmpleadoAD a ModeloUI.Empleado
                     return new Empleado
                     {
                         IdEmpleado = empleadoAD.IdEmpleado,
@@ -250,12 +292,6 @@ namespace AromasWeb.Controllers
                         Cargo = empleadoAD.Cargo,
                         FechaContratacion = empleadoAD.FechaContratacion,
                         Estado = empleadoAD.Estado
-                        // Las propiedades calculadas se generan automáticamente:
-                        // - AnosTrabajados
-                        // - FechaContratacionFormateada
-                        // - EstadoTexto
-                        // - MesesTrabajados
-                        // - EsEmpleadoAntiguo
                     };
                 }
                 catch (Exception ex)
@@ -266,7 +302,6 @@ namespace AromasWeb.Controllers
             }
         }
 
-        // Cargar empleados desde la base de datos
         private void CargarEmpleados()
         {
             using (var contexto = new Contexto())

@@ -20,15 +20,16 @@ namespace AromasWeb.AccesoADatos.Modelos
         [StringLength(200)]
         public string Accion { get; set; }
 
+        // Nullable: estas columnas pueden ser NULL en la BD
         [StringLength(100)]
-        public string TablaAfectada { get; set; }
+        public string? TablaAfectada { get; set; }
 
         [StringLength(1000)]
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
 
-        public string DatosAnteriores { get; set; }
+        public string? DatosAnteriores { get; set; }
 
-        public string DatosNuevos { get; set; }
+        public string? DatosNuevos { get; set; }
 
         [Required]
         public DateTime Fecha { get; set; }

@@ -2,9 +2,12 @@
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.SolicitudVacaciones;
 using AromasWeb.AccesoADatos;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace AromasWeb.Controllers
@@ -15,6 +18,7 @@ namespace AromasWeb.Controllers
         private ICrearSolicitudVacaciones _crearSolicitudVacaciones;
         private IActualizarSolicitudVacaciones _actualizarSolicitudVacaciones;
         private IObtenerSolicitudVacaciones _obtenerSolicitudVacaciones;
+        private readonly CrearBitacora _crearBitacora;
 
         public SolicitudVacacionesController()
         {
@@ -22,6 +26,16 @@ namespace AromasWeb.Controllers
             _crearSolicitudVacaciones = new LogicaDeNegocio.SolicitudesVacaciones.CrearSolicitudVacaciones();
             _actualizarSolicitudVacaciones = new LogicaDeNegocio.SolicitudesVacaciones.ActualizarSolicitudVacaciones();
             _obtenerSolicitudVacaciones = new LogicaDeNegocio.SolicitudesVacaciones.ObtenerSolicitudVacaciones();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+            return 1;
         }
 
         // Empleado
@@ -93,6 +107,23 @@ namespace AromasWeb.Controllers
 
                 if (resultado > 0)
                 {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Solicitud de vacaciones"),
+                        accion: Bitacora.Acciones.Crear,
+                        tablaAfectada: "SolicitudVacaciones",
+                        descripcion: $"El empleado registró una solicitud de vacaciones del {solicitud.FechaInicioFormateada} al {solicitud.FechaFinFormateada} ({solicitud.DiasSolicitados} días)",
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            solicitud.IdEmpleado,
+                            solicitud.FechaSolicitud,
+                            solicitud.FechaInicio,
+                            solicitud.FechaFin,
+                            solicitud.DiasSolicitados,
+                            solicitud.Estado
+                        })
+                    );
+
                     TempData["Mensaje"] = "Solicitud de vacaciones registrada correctamente";
                     return RedirectToAction(nameof(MisSolicitudes));
                 }
@@ -131,6 +162,19 @@ namespace AromasWeb.Controllers
                 }
 
                 int resultado = _actualizarSolicitudVacaciones.ActualizarEstado(id, "Cancelada");
+
+                if (resultado > 0)
+                {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Solicitud de vacaciones"),
+                        accion: Bitacora.Acciones.CambiarEstado,
+                        tablaAfectada: "SolicitudVacaciones",
+                        descripcion: $"Se canceló la solicitud de vacaciones ID: {id} (empleado: {solicitud.NombreEmpleado})",
+                        datosAnteriores: JsonSerializer.Serialize(new { solicitud.Estado }),
+                        datosNuevos: JsonSerializer.Serialize(new { Estado = "Cancelada" })
+                    );
+                }
 
                 TempData[resultado > 0 ? "Mensaje" : "Error"] =
                     resultado > 0 ? "Solicitud cancelada correctamente" : "No se pudo cancelar la solicitud";
@@ -263,6 +307,23 @@ namespace AromasWeb.Controllers
 
                 if (resultado > 0)
                 {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Solicitud de vacaciones"),
+                        accion: Bitacora.Acciones.Crear,
+                        tablaAfectada: "SolicitudVacaciones",
+                        descripcion: $"Se registró solicitud de vacaciones para empleado ID: {solicitud.IdEmpleado}, del {solicitud.FechaInicioFormateada} al {solicitud.FechaFinFormateada} ({solicitud.DiasSolicitados} días)",
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            solicitud.IdEmpleado,
+                            solicitud.FechaSolicitud,
+                            solicitud.FechaInicio,
+                            solicitud.FechaFin,
+                            solicitud.DiasSolicitados,
+                            solicitud.Estado
+                        })
+                    );
+
                     TempData["Mensaje"] = "Solicitud de vacaciones registrada correctamente";
                     return RedirectToAction(nameof(ListadoSolicitudes));
                 }
@@ -353,6 +414,22 @@ namespace AromasWeb.Controllers
 
                 if (resultado > 0)
                 {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Solicitud de vacaciones"),
+                        accion: Bitacora.Acciones.Actualizar,
+                        tablaAfectada: "SolicitudVacaciones",
+                        descripcion: $"Se editó la solicitud de vacaciones ID: {solicitud.IdSolicitud}",
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            solicitud.IdSolicitud,
+                            solicitud.FechaInicio,
+                            solicitud.FechaFin,
+                            solicitud.DiasSolicitados,
+                            solicitud.Estado
+                        })
+                    );
+
                     TempData["Mensaje"] = "Solicitud actualizada correctamente";
                     return Redirect(returnUrl);
                 }
@@ -378,7 +455,22 @@ namespace AromasWeb.Controllers
         {
             try
             {
+                var solicitud = _listarSolicitudesVacaciones.ObtenerPorId(id);
+
                 int resultado = _actualizarSolicitudVacaciones.ActualizarEstado(id, "Aprobada");
+
+                if (resultado > 0)
+                {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Solicitud de vacaciones"),
+                        accion: Bitacora.Acciones.Aprobar,
+                        tablaAfectada: "SolicitudVacaciones",
+                        descripcion: $"Se aprobó la solicitud de vacaciones ID: {id} (empleado: {solicitud?.NombreEmpleado ?? id.ToString()})",
+                        datosAnteriores: solicitud != null ? JsonSerializer.Serialize(new { solicitud.Estado }) : null,
+                        datosNuevos: JsonSerializer.Serialize(new { Estado = "Aprobada" })
+                    );
+                }
 
                 TempData[resultado > 0 ? "Mensaje" : "Error"] =
                     resultado > 0 ? "Solicitud aprobada correctamente" : "No se pudo aprobar la solicitud";
@@ -398,7 +490,22 @@ namespace AromasWeb.Controllers
         {
             try
             {
+                var solicitud = _listarSolicitudesVacaciones.ObtenerPorId(id);
+
                 int resultado = _actualizarSolicitudVacaciones.ActualizarEstado(id, "Rechazada");
+
+                if (resultado > 0)
+                {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Solicitud de vacaciones"),
+                        accion: Bitacora.Acciones.Rechazar,
+                        tablaAfectada: "SolicitudVacaciones",
+                        descripcion: $"Se rechazó la solicitud de vacaciones ID: {id} (empleado: {solicitud?.NombreEmpleado ?? id.ToString()})",
+                        datosAnteriores: solicitud != null ? JsonSerializer.Serialize(new { solicitud.Estado }) : null,
+                        datosNuevos: JsonSerializer.Serialize(new { Estado = "Rechazada" })
+                    );
+                }
 
                 TempData[resultado > 0 ? "Mensaje" : "Error"] =
                     resultado > 0 ? "Solicitud rechazada correctamente" : "No se pudo rechazar la solicitud";

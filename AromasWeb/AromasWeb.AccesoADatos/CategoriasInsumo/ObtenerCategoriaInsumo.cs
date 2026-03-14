@@ -15,15 +15,18 @@ namespace AromasWeb.AccesoADatos.CategoriasInsumo
 
         public Abstracciones.ModeloUI.CategoriaInsumo Obtener(int id)
         {
-            var categoriaAD = _contexto.CategoriaInsumo
+            using (var contexto = new Contexto())
+            {
+                var categoriaAD = contexto.CategoriaInsumo
                 .FirstOrDefault(c => c.IdCategoria == id);
 
-            if (categoriaAD == null)
-            {
-                return null;
-            }
+                if (categoriaAD == null)
+                {
+                    return null;
+                }
 
-            return ConvertirObjetoParaUI(categoriaAD);
+                return ConvertirObjetoParaUI(categoriaAD);
+            }
         }
 
         private Abstracciones.ModeloUI.CategoriaInsumo ConvertirObjetoParaUI(CategoriaInsumoAD categoriaAD)

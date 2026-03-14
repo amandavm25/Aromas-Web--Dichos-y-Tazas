@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Cliente;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
+using System.Collections.Generic;
+using System.Text.Json;
 using System;
 using System.Threading.Tasks;
 using AromasWeb.Helpers;
@@ -13,6 +17,7 @@ namespace AromasWeb.Controllers
         private ICrearCliente _crearCliente;
         private IActualizarCliente _actualizarCliente;
         private IObtenerCliente _obtenerCliente;
+        private readonly CrearBitacora _crearBitacora;
 
         public ClienteController()
         {
@@ -20,6 +25,17 @@ namespace AromasWeb.Controllers
             _crearCliente = new LogicaDeNegocio.Clientes.CrearCliente();
             _actualizarCliente = new LogicaDeNegocio.Clientes.ActualizarCliente();
             _obtenerCliente = new LogicaDeNegocio.Clientes.ObtenerCliente();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1;
         }
 
         // GET: Cliente/ListadoClientes
@@ -66,7 +82,6 @@ namespace AromasWeb.Controllers
         {
             try
             {
-                // Remover validación de campos calculados
                 ModelState.Remove("EstadoTexto");
                 ModelState.Remove("FechaRegistroFormateada");
                 ModelState.Remove("UltimaReservaFormateada");
@@ -74,7 +89,6 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("EsClienteFrecuente");
                 ModelState.Remove("UltimaReserva");
 
-                // Validación robusta de contraseña
                 if (string.IsNullOrWhiteSpace(cliente.Contrasena))
                 {
                     ModelState.AddModelError("Contrasena", "La contraseña es requerida");
@@ -109,6 +123,23 @@ namespace AromasWeb.Controllers
 
                 if (resultado > 0)
                 {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de clientes"),
+                        accion: Bitacora.Acciones.Crear,
+                        tablaAfectada: "Cliente",
+                        descripcion: $"Se creó el cliente: {cliente.Nombre} {cliente.Apellidos}",
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            cliente.Identificacion,
+                            cliente.Nombre,
+                            cliente.Apellidos,
+                            cliente.Correo,
+                            cliente.Telefono,
+                            cliente.Estado
+                        })
+                    );
+
                     TempData["Mensaje"] = "Cliente registrado correctamente";
                     return RedirectToAction(nameof(ListadoClientes));
                 }
@@ -168,7 +199,6 @@ namespace AromasWeb.Controllers
         {
             try
             {
-                // Remover validación de campos calculados
                 ModelState.Remove("EstadoTexto");
                 ModelState.Remove("FechaRegistroFormateada");
                 ModelState.Remove("UltimaReservaFormateada");
@@ -250,10 +280,41 @@ namespace AromasWeb.Controllers
                     return View(cliente);
                 }
 
+                // Capturar datos anteriores ANTES de actualizar
+                var anterior = _obtenerCliente.Obtener(cliente.IdCliente);
+
                 int resultado = _actualizarCliente.Actualizar(cliente);
 
                 if (resultado > 0)
                 {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de clientes"),
+                        accion: Bitacora.Acciones.Actualizar,
+                        tablaAfectada: "Cliente",
+                        descripcion: $"Se actualizó el cliente: {cliente.Nombre} {cliente.Apellidos} (ID: {cliente.IdCliente})",
+                        datosAnteriores: anterior != null
+                            ? JsonSerializer.Serialize(new
+                            {
+                                anterior.Identificacion,
+                                anterior.Nombre,
+                                anterior.Apellidos,
+                                anterior.Correo,
+                                anterior.Telefono,
+                                anterior.Estado
+                            })
+                            : null,
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            cliente.Identificacion,
+                            cliente.Nombre,
+                            cliente.Apellidos,
+                            cliente.Correo,
+                            cliente.Telefono,
+                            cliente.Estado
+                        })
+                    );
+
                     TempData["Mensaje"] = "Cliente actualizado correctamente";
                     return RedirectToAction(nameof(ListadoClientes));
                 }
@@ -324,13 +385,11 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditarPerfil(Cliente cliente, string ContrasenaActual, string ContrasenaNueva, string ConfirmarContrasenaNueva)
         {
-            // Forzar siempre el cliente de sesión — el cliente no puede editar el perfil de otro
             int idCliente = HttpContext.Session.GetInt32("IdCliente") ?? 1;
             cliente.IdCliente = idCliente;
 
             try
             {
-                // Remover validación de campos calculados y de sólo lectura
                 ModelState.Remove("EstadoTexto");
                 ModelState.Remove("FechaRegistroFormateada");
                 ModelState.Remove("UltimaReservaFormateada");
@@ -402,10 +461,37 @@ namespace AromasWeb.Controllers
                     return View(cliente);
                 }
 
+                // Capturar datos anteriores ANTES de actualizar
+                var anterior = _obtenerCliente.Obtener(idCliente);
+
                 int resultado = _actualizarCliente.Actualizar(cliente);
 
                 if (resultado > 0)
                 {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de clientes"),
+                        accion: Bitacora.Acciones.Actualizar,
+                        tablaAfectada: "Cliente",
+                        descripcion: $"El cliente actualizó su perfil: {cliente.Nombre} {cliente.Apellidos} (ID: {idCliente})",
+                        datosAnteriores: anterior != null
+                            ? JsonSerializer.Serialize(new
+                            {
+                                anterior.Nombre,
+                                anterior.Apellidos,
+                                anterior.Correo,
+                                anterior.Telefono
+                            })
+                            : null,
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            cliente.Nombre,
+                            cliente.Apellidos,
+                            cliente.Correo,
+                            cliente.Telefono
+                        })
+                    );
+
                     TempData["Mensaje"] = "Perfil actualizado correctamente";
                     return RedirectToAction(nameof(MiPerfil));
                 }

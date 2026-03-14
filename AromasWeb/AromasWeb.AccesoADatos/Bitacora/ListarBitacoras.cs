@@ -25,18 +25,18 @@ namespace AromasWeb.AccesoADatos.Bitacoras
                 {
                     Console.WriteLine($"Error al obtener bitácoras: {ex.Message}");
                     Console.WriteLine($"Stack trace: {ex.StackTrace}");
-
                     if (ex.InnerException != null)
-                    {
                         Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                    }
-
                     throw;
                 }
             }
         }
 
-        public List<Abstracciones.ModeloUI.Bitacora> BuscarPorFiltros(string buscar, string filtroModulo, DateTime? fechaInicio, DateTime? fechaFin)
+        public List<Abstracciones.ModeloUI.Bitacora> BuscarPorFiltros(
+            string buscar,
+            string filtroModulo,
+            DateTime? fechaInicio,
+            DateTime? fechaFin)
         {
             using (var contexto = new Contexto())
             {
@@ -44,38 +44,30 @@ namespace AromasWeb.AccesoADatos.Bitacoras
                 {
                     var query = contexto.Bitacora.AsQueryable();
 
-                    // Filtro de búsqueda general
+                    // Guardar null checks: Descripcion y TablaAfectada pueden ser null en la BD
                     if (!string.IsNullOrWhiteSpace(buscar))
                     {
+                        string buscarLower = buscar.ToLower();
                         query = query.Where(b =>
-                            b.Accion.ToLower().Contains(buscar.ToLower()) ||
-                            b.Descripcion.ToLower().Contains(buscar.ToLower()) ||
-                            b.TablaAfectada.ToLower().Contains(buscar.ToLower())
+                            b.Accion.ToLower().Contains(buscarLower) ||
+                            (b.Descripcion != null && b.Descripcion.ToLower().Contains(buscarLower)) ||
+                            (b.TablaAfectada != null && b.TablaAfectada.ToLower().Contains(buscarLower))
                         );
                     }
 
-                    // Filtro por módulo
                     if (!string.IsNullOrWhiteSpace(filtroModulo))
                     {
-                        // Buscar el ID del módulo por nombre
-                        var modulo = contexto.Modulo.FirstOrDefault(m => m.Nombre.ToLower() == filtroModulo.ToLower());
+                        var modulo = contexto.Modulo
+                            .FirstOrDefault(m => m.Nombre.ToLower() == filtroModulo.ToLower());
                         if (modulo != null)
-                        {
                             query = query.Where(b => b.IdModulo == modulo.IdModulo);
-                        }
                     }
 
-                    // Filtro por fecha de inicio
                     if (fechaInicio.HasValue)
-                    {
                         query = query.Where(b => b.Fecha.Date >= fechaInicio.Value.Date);
-                    }
 
-                    // Filtro por fecha de fin
                     if (fechaFin.HasValue)
-                    {
                         query = query.Where(b => b.Fecha.Date <= fechaFin.Value.Date);
-                    }
 
                     List<BitacoraAD> bitacorasAD = query
                         .OrderByDescending(b => b.Fecha)
@@ -97,7 +89,8 @@ namespace AromasWeb.AccesoADatos.Bitacoras
             {
                 try
                 {
-                    var bitacoraAD = contexto.Bitacora.FirstOrDefault(b => b.IdBitacora == id);
+                    var bitacoraAD = contexto.Bitacora
+                        .FirstOrDefault(b => b.IdBitacora == id);
                     return bitacoraAD != null ? ConvertirObjetoParaUI(bitacoraAD, contexto) : null;
                 }
                 catch (Exception ex)
@@ -150,7 +143,9 @@ namespace AromasWeb.AccesoADatos.Bitacoras
             }
         }
 
-        public List<Abstracciones.ModeloUI.Bitacora> ObtenerPorRangoDeFechas(DateTime fechaInicio, DateTime fechaFin)
+        public List<Abstracciones.ModeloUI.Bitacora> ObtenerPorRangoDeFechas(
+            DateTime fechaInicio,
+            DateTime fechaFin)
         {
             using (var contexto = new Contexto())
             {
@@ -171,14 +166,18 @@ namespace AromasWeb.AccesoADatos.Bitacoras
             }
         }
 
-        private Abstracciones.ModeloUI.Bitacora ConvertirObjetoParaUI(BitacoraAD bitacoraAD, Contexto contexto)
+        private Abstracciones.ModeloUI.Bitacora ConvertirObjetoParaUI(
+            BitacoraAD bitacoraAD,
+            Contexto contexto)
         {
-            // Obtener el nombre del empleado
-            var empleado = contexto.Empleado.FirstOrDefault(e => e.IdEmpleado == bitacoraAD.IdEmpleado);
-            string nombreEmpleado = empleado != null ? $"{empleado.Nombre} {empleado.Apellidos}".Trim() : "Empleado Desconocido";
+            var empleado = contexto.Empleado
+                .FirstOrDefault(e => e.IdEmpleado == bitacoraAD.IdEmpleado);
+            string nombreEmpleado = empleado != null
+                ? $"{empleado.Nombre} {empleado.Apellidos}".Trim()
+                : "Empleado Desconocido";
 
-            // Obtener el nombre del módulo
-            var modulo = contexto.Modulo.FirstOrDefault(m => m.IdModulo == bitacoraAD.IdModulo);
+            var modulo = contexto.Modulo
+                .FirstOrDefault(m => m.IdModulo == bitacoraAD.IdModulo);
             string nombreModulo = modulo != null ? modulo.Nombre : "Módulo Desconocido";
 
             return new Abstracciones.ModeloUI.Bitacora
@@ -189,10 +188,11 @@ namespace AromasWeb.AccesoADatos.Bitacoras
                 IdModulo = bitacoraAD.IdModulo,
                 NombreModulo = nombreModulo,
                 Accion = bitacoraAD.Accion,
-                TablaAfectada = bitacoraAD.TablaAfectada,
-                Descripcion = bitacoraAD.Descripcion,
-                DatosAnteriores = bitacoraAD.DatosAnteriores,
-                DatosNuevos = bitacoraAD.DatosNuevos,
+                // Operador ?? para columnas TEXT que pueden ser NULL en PostgreSQL
+                TablaAfectada = bitacoraAD.TablaAfectada ?? null,
+                Descripcion = bitacoraAD.Descripcion ?? null,
+                DatosAnteriores = bitacoraAD.DatosAnteriores ?? null,
+                DatosNuevos = bitacoraAD.DatosNuevos ?? null,
                 Fecha = bitacoraAD.Fecha
             };
         }

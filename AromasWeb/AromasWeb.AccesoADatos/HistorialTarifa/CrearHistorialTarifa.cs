@@ -18,40 +18,43 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
 
         public async Task<int> Crear(HistorialTarifaUI historialTarifa)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                // Validar que el empleado exista
-                bool empleadoExiste = _contexto.Empleado
-                    .Any(e => e.IdEmpleado == historialTarifa.IdEmpleado);
-                if (!empleadoExiste)
+                try
                 {
-                    throw new Exception("El empleado especificado no existe");
-                }
+                    // Validar que el empleado exista
+                    bool empleadoExiste = contexto.Empleado
+                        .Any(e => e.IdEmpleado == historialTarifa.IdEmpleado);
+                    if (!empleadoExiste)
+                    {
+                        throw new Exception("El empleado especificado no existe");
+                    }
 
-                // Validar que la tarifa sea mayor a 0
-                if (historialTarifa.TarifaHora <= 0)
+                    // Validar que la tarifa sea mayor a 0
+                    if (historialTarifa.TarifaHora <= 0)
+                    {
+                        throw new Exception("La tarifa por hora debe ser mayor a 0");
+                    }
+
+                    // Validar que FechaFin sea mayor a FechaInicio si está definida
+                    if (historialTarifa.FechaFin.HasValue &&
+                        historialTarifa.FechaFin.Value <= historialTarifa.FechaInicio)
+                    {
+                        throw new Exception("La fecha de fin debe ser mayor a la fecha de inicio");
+                    }
+
+                    var historialAD = ConvertirObjetoParaAD(historialTarifa);
+
+                    contexto.HistorialTarifa.Add(historialAD);
+
+                    int cantidadDeDatosInsertados = await contexto.SaveChangesAsync();
+                    return cantidadDeDatosInsertados;
+                }
+                catch (Exception ex)
                 {
-                    throw new Exception("La tarifa por hora debe ser mayor a 0");
+                    System.Diagnostics.Debug.WriteLine($"Error al crear historial de tarifa: {ex.Message}");
+                    throw;
                 }
-
-                // Validar que FechaFin sea mayor a FechaInicio si está definida
-                if (historialTarifa.FechaFin.HasValue &&
-                    historialTarifa.FechaFin.Value <= historialTarifa.FechaInicio)
-                {
-                    throw new Exception("La fecha de fin debe ser mayor a la fecha de inicio");
-                }
-
-                var historialAD = ConvertirObjetoParaAD(historialTarifa);
-
-                _contexto.HistorialTarifa.Add(historialAD);
-
-                int cantidadDeDatosInsertados = await _contexto.SaveChangesAsync();
-                return cantidadDeDatosInsertados;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al crear historial de tarifa: {ex.Message}");
-                throw;
             }
         }
 

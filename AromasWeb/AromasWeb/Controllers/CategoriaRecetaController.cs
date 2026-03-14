@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.CategoriaReceta;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System;
 
@@ -14,6 +17,7 @@ namespace AromasWeb.Controllers
         private IActualizarCategoriaReceta _actualizarCategoriaReceta;
         private IEliminarCategoriaReceta _eliminarCategoriaReceta;
         private IObtenerCategoriaReceta _obtenerCategoriaReceta;
+        private readonly CrearBitacora _crearBitacora;
 
         public CategoriaRecetaController()
         {
@@ -22,6 +26,17 @@ namespace AromasWeb.Controllers
             _actualizarCategoriaReceta = new LogicaDeNegocio.CategoriasReceta.ActualizarCategoriaReceta();
             _eliminarCategoriaReceta = new LogicaDeNegocio.CategoriasReceta.EliminarCategoriaReceta();
             _obtenerCategoriaReceta = new LogicaDeNegocio.CategoriasReceta.ObtenerCategoriaReceta();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1;
         }
 
         // GET: CategoriaReceta/ListadoCategoriasRecetas
@@ -66,13 +81,26 @@ namespace AromasWeb.Controllers
             {
                 try
                 {
-                    // Establecer valores por defecto
                     categoria.Estado = true;
 
                     int resultado = await _crearCategoriaReceta.Crear(categoria);
 
                     if (resultado > 0)
                     {
+                        _crearBitacora.RegistrarAccion(
+                            idEmpleado: ObtenerIdEmpleadoSesion(),
+                            idModulo: ObtenerModulo.ObtenerIdPorNombre("Categoría de recetas"),
+                            accion: Bitacora.Acciones.Crear,
+                            tablaAfectada: "CategoriaReceta",
+                            descripcion: $"Se creó la categoría de receta: {categoria.Nombre}",
+                            datosNuevos: JsonSerializer.Serialize(new
+                            {
+                                categoria.Nombre,
+                                categoria.Descripcion,
+                                categoria.Estado
+                            })
+                        );
+
                         TempData["Mensaje"] = "Categoría de receta registrada correctamente";
                         return RedirectToAction(nameof(ListadoCategoriasRecetas));
                     }
@@ -121,10 +149,35 @@ namespace AromasWeb.Controllers
             {
                 try
                 {
+                    // Capturar datos anteriores ANTES de actualizar
+                    var anterior = _obtenerCategoriaReceta.Obtener(categoria.IdCategoriaReceta);
+
                     int resultado = _actualizarCategoriaReceta.Actualizar(categoria);
 
                     if (resultado > 0)
                     {
+                        _crearBitacora.RegistrarAccion(
+                            idEmpleado: ObtenerIdEmpleadoSesion(),
+                            idModulo: ObtenerModulo.ObtenerIdPorNombre("Categoría de recetas"),
+                            accion: Bitacora.Acciones.Actualizar,
+                            tablaAfectada: "CategoriaReceta",
+                            descripcion: $"Se actualizó la categoría de receta: {categoria.Nombre} (ID: {categoria.IdCategoriaReceta})",
+                            datosAnteriores: anterior != null
+                                ? JsonSerializer.Serialize(new
+                                {
+                                    anterior.Nombre,
+                                    anterior.Descripcion,
+                                    anterior.Estado
+                                })
+                                : null,
+                            datosNuevos: JsonSerializer.Serialize(new
+                            {
+                                categoria.Nombre,
+                                categoria.Descripcion,
+                                categoria.Estado
+                            })
+                        );
+
                         TempData["Mensaje"] = "Categoría de receta actualizada correctamente";
                         return RedirectToAction(nameof(ListadoCategoriasRecetas));
                     }
@@ -149,10 +202,29 @@ namespace AromasWeb.Controllers
         {
             try
             {
+                // Capturar datos ANTES de eliminar
+                var categoria = _obtenerCategoriaReceta.Obtener(id);
+
                 int resultado = _eliminarCategoriaReceta.Eliminar(id);
 
                 if (resultado > 0)
                 {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Categoría de recetas"),
+                        accion: Bitacora.Acciones.Eliminar,
+                        tablaAfectada: "CategoriaReceta",
+                        descripcion: $"Se eliminó la categoría de receta: {categoria?.Nombre ?? id.ToString()} (ID: {id})",
+                        datosAnteriores: categoria != null
+                            ? JsonSerializer.Serialize(new
+                            {
+                                categoria.Nombre,
+                                categoria.Descripcion,
+                                categoria.Estado
+                            })
+                            : null
+                    );
+
                     TempData["Mensaje"] = "Categoría de receta eliminada correctamente";
                 }
                 else

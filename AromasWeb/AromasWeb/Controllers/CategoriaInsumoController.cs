@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AromasWeb.Abstracciones.Logica.CategoriaInsumo;
 using AromasWeb.Abstracciones.ModeloUI;
-using AromasWeb.Abstracciones.Logica.CategoriaInsumo;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace AromasWeb.Controllers
 {
@@ -14,6 +17,7 @@ namespace AromasWeb.Controllers
         private IActualizarCategoriaInsumo _actualizarCategoriaInsumo;
         private IEliminarCategoriaInsumo _eliminarCategoriaInsumo;
         private IObtenerCategoriaInsumo _obtenerCategoriaInsumo;
+        private readonly CrearBitacora _crearBitacora;
 
         public CategoriaInsumoController()
         {
@@ -22,6 +26,17 @@ namespace AromasWeb.Controllers
             _actualizarCategoriaInsumo = new LogicaDeNegocio.CategoriasInsumo.ActualizarCategoriaInsumo();
             _eliminarCategoriaInsumo = new LogicaDeNegocio.CategoriasInsumo.EliminarCategoriaInsumo();
             _obtenerCategoriaInsumo = new LogicaDeNegocio.CategoriasInsumo.ObtenerCategoriaInsumo();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1; // ← quitar el fallback del contexto temporalmente
         }
 
         // GET: CategoriaInsumo/ListadoCategoriasInsumos
@@ -73,6 +88,21 @@ namespace AromasWeb.Controllers
 
                     if (resultado > 0)
                     {
+                        // Registrar en bitácora
+                        _crearBitacora.RegistrarAccion(
+                            idEmpleado: ObtenerIdEmpleadoSesion(),
+                            idModulo: ObtenerModulo.ObtenerIdPorNombre("Categoría de insumos"),
+                            accion: Bitacora.Acciones.Crear,
+                            tablaAfectada: "CategoriaInsumo",
+                            descripcion: $"Se creó la categoría de insumo: {categoria.NombreCategoria}",
+                            datosNuevos: JsonSerializer.Serialize(new
+                            {
+                                categoria.NombreCategoria,
+                                categoria.Descripcion,
+                                categoria.Estado
+                            })
+                        );
+
                         TempData["Mensaje"] = "Categoría registrada correctamente";
                         return RedirectToAction(nameof(ListadoCategoriasInsumos));
                     }
@@ -121,10 +151,36 @@ namespace AromasWeb.Controllers
             {
                 try
                 {
+                    // Capturar datos anteriores ANTES de actualizar
+                    var anterior = _obtenerCategoriaInsumo.Obtener(categoria.IdCategoria);
+
                     int resultado = _actualizarCategoriaInsumo.Actualizar(categoria);
 
                     if (resultado > 0)
                     {
+                        // Registrar en bitácora
+                        _crearBitacora.RegistrarAccion(
+                            idEmpleado: ObtenerIdEmpleadoSesion(),
+                            idModulo: ObtenerModulo.ObtenerIdPorNombre("Categoría de insumos"),
+                            accion: Bitacora.Acciones.Actualizar,
+                            tablaAfectada: "CategoriaInsumo",
+                            descripcion: $"Se actualizó la categoría de insumo: {categoria.NombreCategoria} (ID: {categoria.IdCategoria})",
+                            datosAnteriores: anterior != null
+                                ? JsonSerializer.Serialize(new
+                                {
+                                    anterior.NombreCategoria,
+                                    anterior.Descripcion,
+                                    anterior.Estado
+                                })
+                                : null,
+                            datosNuevos: JsonSerializer.Serialize(new
+                            {
+                                categoria.NombreCategoria,
+                                categoria.Descripcion,
+                                categoria.Estado
+                            })
+                        );
+
                         TempData["Mensaje"] = "Categoría actualizada correctamente";
                         return RedirectToAction(nameof(ListadoCategoriasInsumos));
                     }
@@ -149,10 +205,30 @@ namespace AromasWeb.Controllers
         {
             try
             {
+                // Capturar datos ANTES de eliminar
+                var categoria = _obtenerCategoriaInsumo.Obtener(id);
+
                 int resultado = _eliminarCategoriaInsumo.Eliminar(id);
 
                 if (resultado > 0)
                 {
+                    // Registrar en bitácora
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Categoría de insumos"),
+                        accion: Bitacora.Acciones.Eliminar,
+                        tablaAfectada: "CategoriaInsumo",
+                        descripcion: $"Se eliminó la categoría de insumo: {categoria?.NombreCategoria ?? id.ToString()} (ID: {id})",
+                        datosAnteriores: categoria != null
+                            ? JsonSerializer.Serialize(new
+                            {
+                                categoria.NombreCategoria,
+                                categoria.Descripcion,
+                                categoria.Estado
+                            })
+                            : null
+                    );
+
                     TempData["Mensaje"] = "Categoría eliminada correctamente";
                 }
                 else

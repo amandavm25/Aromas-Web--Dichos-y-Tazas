@@ -17,26 +17,29 @@ namespace AromasWeb.AccesoADatos.CategoriasInsumo
 
         public async Task<int> Crear(Abstracciones.ModeloUI.CategoriaInsumo categoriaInsumo)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                // Validar que no exista una categoría con el mismo nombre
-                bool nombreExiste = await _contexto.CategoriaInsumo
-                    .AnyAsync(c => c.NombreCategoria == categoriaInsumo.NombreCategoria);
-
-                if (nombreExiste)
+                try
                 {
-                    throw new Exception("Ya existe una categoría registrada con ese nombre");
+                    // Validar que no exista una categoría con el mismo nombre
+                    bool nombreExiste = await contexto.CategoriaInsumo
+                        .AnyAsync(c => c.NombreCategoria == categoriaInsumo.NombreCategoria);
+
+                    if (nombreExiste)
+                    {
+                        throw new Exception("Ya existe una categoría registrada con ese nombre");
+                    }
+
+                    CategoriaInsumoAD categoriaAGuardar = ConvertirObjetoParaAD(categoriaInsumo);
+                    contexto.CategoriaInsumo.Add(categoriaAGuardar);
+                    int cantidadDeDatosAgregados = await contexto.SaveChangesAsync();
+
+                    return cantidadDeDatosAgregados;
                 }
-
-                CategoriaInsumoAD categoriaAGuardar = ConvertirObjetoParaAD(categoriaInsumo);
-                _contexto.CategoriaInsumo.Add(categoriaAGuardar);
-                int cantidadDeDatosAgregados = await _contexto.SaveChangesAsync();
-
-                return cantidadDeDatosAgregados;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
         }
 

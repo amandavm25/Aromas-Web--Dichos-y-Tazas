@@ -3,8 +3,12 @@ using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Promocion;
 using AromasWeb.Abstracciones.Logica.TipoPromocion;
 using AromasWeb.Abstracciones.Logica.Receta;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Linq;
+using System;
 
 namespace AromasWeb.Controllers
 {
@@ -13,54 +17,71 @@ namespace AromasWeb.Controllers
         private IListarPromociones _listarPromociones;
         private IListarTiposPromociones _listarTiposPromociones;
         private IListarRecetas _listarRecetas;
+        private readonly CrearBitacora _crearBitacora;
 
         public PromocionController()
         {
             _listarPromociones = new LogicaDeNegocio.Promociones.ListarPromociones();
             _listarTiposPromociones = new LogicaDeNegocio.TiposPromociones.ListarTiposPromociones();
             _listarRecetas = new LogicaDeNegocio.Recetas.ListarRecetas();
+            _crearBitacora = new CrearBitacora();
         }
 
-        // ============================================================
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1;
+        }
+
         // GET: Promocion/ListadoPromociones
-        // ============================================================
         public IActionResult ListadoPromociones(string buscar, int? tipo, string vigencia)
         {
             ViewBag.Buscar = buscar;
             ViewBag.Tipo = tipo;
             ViewBag.Vigencia = vigencia;
-            ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
 
             List<Promocion> promociones;
 
-            if (!string.IsNullOrEmpty(buscar) && tipo.HasValue && !string.IsNullOrEmpty(vigencia))
-                promociones = _listarPromociones.BuscarPorNombre(buscar)
-                    .FindAll(p => p.IdTipoPromocion == tipo.Value && p.VigenciaTexto == vigencia);
-            else if (!string.IsNullOrEmpty(buscar) && tipo.HasValue)
-                promociones = _listarPromociones.BuscarPorNombre(buscar)
-                    .FindAll(p => p.IdTipoPromocion == tipo.Value);
-            else if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(vigencia))
-                promociones = _listarPromociones.BuscarPorNombre(buscar)
-                    .FindAll(p => p.VigenciaTexto == vigencia);
-            else if (tipo.HasValue && !string.IsNullOrEmpty(vigencia))
-                promociones = _listarPromociones.BuscarPorTipo(tipo.Value)
-                    .FindAll(p => p.VigenciaTexto == vigencia);
-            else if (!string.IsNullOrEmpty(buscar))
-                promociones = _listarPromociones.BuscarPorNombre(buscar);
-            else if (tipo.HasValue)
-                promociones = _listarPromociones.BuscarPorTipo(tipo.Value);
-            else if (!string.IsNullOrEmpty(vigencia))
-                promociones = _listarPromociones.BuscarPorVigencia(vigencia);
-            else
-                promociones = _listarPromociones.Obtener();
+            try
+            {
+                ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
+
+                if (!string.IsNullOrEmpty(buscar) && tipo.HasValue && !string.IsNullOrEmpty(vigencia))
+                    promociones = _listarPromociones.BuscarPorNombre(buscar)
+                        .FindAll(p => p.IdTipoPromocion == tipo.Value && p.VigenciaTexto == vigencia);
+                else if (!string.IsNullOrEmpty(buscar) && tipo.HasValue)
+                    promociones = _listarPromociones.BuscarPorNombre(buscar)
+                        .FindAll(p => p.IdTipoPromocion == tipo.Value);
+                else if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(vigencia))
+                    promociones = _listarPromociones.BuscarPorNombre(buscar)
+                        .FindAll(p => p.VigenciaTexto == vigencia);
+                else if (tipo.HasValue && !string.IsNullOrEmpty(vigencia))
+                    promociones = _listarPromociones.BuscarPorTipo(tipo.Value)
+                        .FindAll(p => p.VigenciaTexto == vigencia);
+                else if (!string.IsNullOrEmpty(buscar))
+                    promociones = _listarPromociones.BuscarPorNombre(buscar);
+                else if (tipo.HasValue)
+                    promociones = _listarPromociones.BuscarPorTipo(tipo.Value);
+                else if (!string.IsNullOrEmpty(vigencia))
+                    promociones = _listarPromociones.BuscarPorVigencia(vigencia);
+                else
+                    promociones = _listarPromociones.Obtener();
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar las promociones: {ex.Message}";
+                promociones = new List<Promocion>();
+                ViewBag.TodosTipos = new List<TipoPromocion>();
+            }
 
             return View(promociones);
         }
 
-        // ============================================================
         // GET: Promocion/ObtenerRecetasPromocion?id=5
-        // Endpoint JSON para el modal de detalles
-        // ============================================================
         [HttpGet]
         public IActionResult ObtenerRecetasPromocion(int id)
         {
@@ -69,7 +90,6 @@ namespace AromasWeb.Controllers
             if (promocion == null)
                 return NotFound();
 
-            // Devolver solo los campos que necesita el modal
             var recetas = (promocion.Recetas ?? new List<PromocionReceta>())
                 .Select(r => new
                 {
@@ -84,13 +104,21 @@ namespace AromasWeb.Controllers
             return Json(recetas);
         }
 
-        // ============================================================
         // GET: Promocion/CrearPromocion
-        // ============================================================
         public IActionResult CrearPromocion()
         {
-            ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
-            ViewBag.RecetasDisponibles = _listarRecetas.ObtenerDisponibles();
+            try
+            {
+                ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
+                ViewBag.RecetasDisponibles = _listarRecetas.ObtenerDisponibles();
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar los datos: {ex.Message}";
+                ViewBag.TodosTipos = new List<TipoPromocion>();
+                ViewBag.RecetasDisponibles = new List<Receta>();
+            }
+
             return View();
         }
 
@@ -106,27 +134,42 @@ namespace AromasWeb.Controllers
                 return RedirectToAction(nameof(ListadoPromociones));
             }
 
-            ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
-            ViewBag.RecetasDisponibles = _listarRecetas.ObtenerDisponibles();
+            try
+            {
+                ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
+                ViewBag.RecetasDisponibles = _listarRecetas.ObtenerDisponibles();
+            }
+            catch
+            {
+                ViewBag.TodosTipos = new List<TipoPromocion>();
+                ViewBag.RecetasDisponibles = new List<Receta>();
+            }
+
             return View(promocion);
         }
 
-        // ============================================================
         // GET: Promocion/EditarPromocion/5
-        // ============================================================
         public IActionResult EditarPromocion(int id)
         {
-            var promocion = _listarPromociones.ObtenerPorId(id);
-
-            if (promocion == null)
+            try
             {
-                TempData["Error"] = "Promoción no encontrada";
+                var promocion = _listarPromociones.ObtenerPorId(id);
+
+                if (promocion == null)
+                {
+                    TempData["Error"] = "Promoción no encontrada";
+                    return RedirectToAction(nameof(ListadoPromociones));
+                }
+
+                ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
+                ViewBag.RecetasDisponibles = _listarRecetas.ObtenerDisponibles();
+                return View(promocion);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar la promoción: {ex.Message}";
                 return RedirectToAction(nameof(ListadoPromociones));
             }
-
-            ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
-            ViewBag.RecetasDisponibles = _listarRecetas.ObtenerDisponibles();
-            return View(promocion);
         }
 
         // POST: Promocion/EditarPromocion
@@ -141,14 +184,21 @@ namespace AromasWeb.Controllers
                 return RedirectToAction(nameof(ListadoPromociones));
             }
 
-            ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
-            ViewBag.RecetasDisponibles = _listarRecetas.ObtenerDisponibles();
+            try
+            {
+                ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
+                ViewBag.RecetasDisponibles = _listarRecetas.ObtenerDisponibles();
+            }
+            catch
+            {
+                ViewBag.TodosTipos = new List<TipoPromocion>();
+                ViewBag.RecetasDisponibles = new List<Receta>();
+            }
+
             return View(promocion);
         }
 
-        // ============================================================
         // POST: Promocion/EliminarPromocion/5
-        // ============================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EliminarPromocion(int id)

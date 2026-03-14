@@ -16,14 +16,17 @@ namespace AromasWeb.AccesoADatos.Clientes
 
         public ClienteUI Obtener(int id)
         {
-            var clienteAD = _contexto.Cliente.FirstOrDefault(c => c.IdCliente == id);
-
-            if (clienteAD == null)
+            using (var contexto = new Contexto())
             {
-                return null;
-            }
+                var clienteAD = contexto.Cliente.FirstOrDefault(c => c.IdCliente == id);
 
-            return ConvertirObjetoParaUI(clienteAD);
+                if (clienteAD == null)
+                {
+                    return null;
+                }
+
+                return ConvertirObjetoParaUI(clienteAD);
+            }
         }
 
         private ClienteUI ConvertirObjetoParaUI(ClienteAD clienteAD)

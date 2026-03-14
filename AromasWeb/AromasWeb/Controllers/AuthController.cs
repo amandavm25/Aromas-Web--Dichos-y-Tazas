@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AromasWeb.Abstracciones.Logica.Cliente;
 using AromasWeb.Abstracciones.ModeloUI;
-using AromasWeb.Abstracciones.Logica.Cliente;
 using AromasWeb.Abstracciones.Servicios;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.Helpers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using AromasWeb.Helpers;
 
 namespace AromasWeb.Controllers
 {
@@ -15,6 +17,7 @@ namespace AromasWeb.Controllers
         private IBuscarClientePorCorreo _buscarClientePorCorreo;
         private IActualizarCliente _actualizarCliente;
         private readonly IEmailService _emailService;
+        private readonly CrearBitacora _crearBitacora;
 
         public AuthController(IEmailService emailService)
         {
@@ -22,6 +25,36 @@ namespace AromasWeb.Controllers
             _buscarClientePorCorreo = new LogicaDeNegocio.Clientes.BuscarClientePorCorreo();
             _actualizarCliente = new LogicaDeNegocio.Clientes.ActualizarCliente();
             _emailService = emailService;
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helpers de sesión
+
+        // Retorna el IdEmpleado de sesión. Si no hay sesión activa,
+        // busca el empleado por correo en la BD (para admin hardcodeado)
+        // o cae en el primer empleado activo como último recurso.
+        private int ObtenerIdEmpleadoSesion()
+        {
+            // Leer de sesión
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            // Primer empleado activo como fallback mientras no haya login de empleado
+            try
+            {
+                using (var contexto = new AccesoADatos.Contexto())
+                {
+                    var emp = contexto.Empleado
+                        .Where(e => e.Estado == true)
+                        .OrderBy(e => e.IdEmpleado)
+                        .FirstOrDefault();
+                    if (emp != null) return emp.IdEmpleado;
+                }
+            }
+            catch { }
+
+            return 1;
         }
 
         // ============================================
@@ -61,6 +94,7 @@ namespace AromasWeb.Controllers
                 if (clienteBD.Contrasena == cliente.Contrasena)
                 {
                     // Login exitoso
+                    // NO se registra en bitácora
                     HttpContext.Session.SetString("UsuarioTipo", "cliente");
                     HttpContext.Session.SetString("UsuarioNombre", $"{clienteBD.Nombre} {clienteBD.Apellidos}");
                     HttpContext.Session.SetString("UsuarioCorreo", clienteBD.Correo);
@@ -82,6 +116,17 @@ namespace AromasWeb.Controllers
                 HttpContext.Session.SetString("UsuarioTipo", "admin");
                 HttpContext.Session.SetString("UsuarioNombre", "Administrador");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
+
+                // Registrar login en bitácora
+                int idEmp = ObtenerIdEmpleadoSesion();
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: idEmp,
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Autenticación"),
+                    accion: Bitacora.Acciones.Login,
+                    tablaAfectada: "Empleado",
+                    descripcion: $"Inicio de sesión del administrador ({cliente.Correo})"
+                );
+
                 TempData["Mensaje"] = "¡Bienvenido Administrador!";
                 return RedirectToAction("Index", "Home");
             }
@@ -91,6 +136,16 @@ namespace AromasWeb.Controllers
                 HttpContext.Session.SetString("UsuarioNombre", "Empleado");
                 HttpContext.Session.SetString("UsuarioCorreo", cliente.Correo);
                 HttpContext.Session.SetInt32("IdEmpleado", 1);
+
+                // Registrar login en bitácora
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: 1,
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Autenticación"),
+                    accion: Bitacora.Acciones.Login,
+                    tablaAfectada: "Empleado",
+                    descripcion: $"Inicio de sesión del empleado ({cliente.Correo})"
+                );
+
                 TempData["Mensaje"] = "¡Bienvenido Empleado!";
                 return RedirectToAction("Index", "Home");
             }
@@ -107,6 +162,21 @@ namespace AromasWeb.Controllers
 
         public IActionResult CerrarSesion()
         {
+            // Registrar logout en bitácora solo si era sesión de empleado/admin
+            string tipo = HttpContext.Session.GetString("UsuarioTipo");
+            if (tipo == "admin" || tipo == "empleado")
+            {
+                string correo = HttpContext.Session.GetString("UsuarioCorreo");
+                int idEmp = ObtenerIdEmpleadoSesion();
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: idEmp,
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Autenticación"),
+                    accion: Bitacora.Acciones.Logout,
+                    tablaAfectada: "Empleado",
+                    descripcion: $"Cierre de sesión ({correo})"
+                );
+            }
+
             HttpContext.Session.Clear();
             TempData["Mensaje"] = "Has cerrado sesión correctamente";
             return RedirectToAction("Index", "Home");
@@ -705,6 +775,21 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Logout()
         {
+            // Registrar logout en bitácora solo si era sesión de empleado/admin
+            string tipo = HttpContext.Session.GetString("UsuarioTipo");
+            if (tipo == "admin" || tipo == "empleado")
+            {
+                string correo = HttpContext.Session.GetString("UsuarioCorreo");
+                int idEmp = ObtenerIdEmpleadoSesion();
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: idEmp,
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Autenticación"),
+                    accion: Bitacora.Acciones.Logout,
+                    tablaAfectada: "Empleado",
+                    descripcion: $"Cierre de sesión ({correo})"
+                );
+            }
+
             HttpContext.Session.Clear();
             TempData["Mensaje"] = "Has cerrado sesión correctamente";
             return RedirectToAction("Index", "Home");

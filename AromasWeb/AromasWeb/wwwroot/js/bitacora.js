@@ -58,6 +58,33 @@ document.addEventListener('DOMContentLoaded', function () {
     // ============================================
     // MODAL DETALLES BITÁCORA
     // ============================================
+
+    // Colores según las acciones definidas en Bitacora.Acciones
+    const coloresAccion = {
+        'Crear': 'var(--green)',
+        'Actualizar': 'var(--gold)',
+        'Eliminar': 'var(--red)',
+        'Login': 'var(--olive-green)',
+        'Logout': 'var(--charcoal)',
+        'Cambiar Estado': 'var(--gold)',
+        'Registrar Entrada': 'var(--green)',
+        'Registrar Salida': 'var(--red)',
+        'Calcular': 'var(--olive-green)',
+        'Marcar Pagado': 'var(--green)',
+        'Actualizar Tarifa': 'var(--gold)',
+        'Finalizar Tarifa': 'var(--charcoal)',
+        'Aprobar': 'var(--green)',
+        'Rechazar': 'var(--red)',
+        'Registrar Movimiento': 'var(--olive-green)',
+        'Asignar Permiso': 'var(--gold)'
+    };
+
+    const formatearJSON = (texto) => {
+        if (!texto || texto.trim() === '') return 'Sin datos';
+        try { return JSON.stringify(JSON.parse(texto), null, 2); }
+        catch { return texto; }
+    };
+
     document.querySelectorAll('.btn-detalles').forEach(btn => {
         btn.addEventListener('click', function () {
             const set = (id, val) => {
@@ -71,17 +98,21 @@ document.addEventListener('DOMContentLoaded', function () {
             set('detalles-empleado-bitacora', this.dataset.empleado);
             set('detalles-fecha-bitacora', this.dataset.fecha);
             set('detalles-tabla-bitacora', this.dataset.tabla);
-            set('detalles-tipo-accion-bitacora', this.dataset.accion);
 
+            // Badge módulo
             const elModulo = document.getElementById('detalles-modulo-badge-bitacora');
             if (elModulo) elModulo.textContent = this.dataset.modulo || '—';
 
-            const formatearJSON = (texto) => {
-                if (!texto || texto.trim() === '') return 'Sin datos';
-                try { return JSON.stringify(JSON.parse(texto), null, 2); }
-                catch { return texto; }
-            };
+            // Badge tipo de acción con color dinámico
+            const accion = (this.dataset.accion || '').toUpperCase();
+            const badgeAccion = document.getElementById('detalles-tipo-accion-badge-bitacora');
+            if (badgeAccion) {
+                badgeAccion.textContent = accion || '—';
+                badgeAccion.style.background = coloresAccion[accion] || 'var(--charcoal)';
+                badgeAccion.style.color = 'white';
+            }
 
+            // Datos JSON formateados
             const elAntes = document.getElementById('detalles-datos-anteriores-bitacora');
             const elDespues = document.getElementById('detalles-datos-nuevos-bitacora');
             if (elAntes) elAntes.textContent = formatearJSON(this.dataset.datosAnteriores);

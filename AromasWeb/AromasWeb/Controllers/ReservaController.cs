@@ -1,19 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Reserva;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace AromasWeb.Controllers
 {
     public class ReservaController : Controller
     {
         private IListarReservas _listarReservas;
+        private readonly CrearBitacora _crearBitacora;
 
         public ReservaController()
         {
             _listarReservas = new LogicaDeNegocio.Reservas.ListarReservas();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+            return 1;
         }
 
         // GET: Reserva/ListadoReservas
@@ -156,6 +170,23 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 // Aquí iría la lógica para guardar en la base de datos
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de reservas"),
+                    accion: Bitacora.Acciones.Crear,
+                    tablaAfectada: "Reserva",
+                    descripcion: $"Se registró una reserva para el cliente ID: {reserva.IdCliente}, fecha: {reserva.FechaFormateada} {reserva.HoraFormateada}, {reserva.CantidadPersonas} persona(s)",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        reserva.IdCliente,
+                        reserva.Fecha,
+                        reserva.Hora,
+                        reserva.CantidadPersonas,
+                        reserva.Estado,
+                        reserva.Observaciones
+                    })
+                );
+
                 TempData["Mensaje"] = "Reserva registrada correctamente. Recibirá una confirmación pronto.";
                 return RedirectToAction("Index", "Home");
             }
@@ -177,6 +208,23 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 // Aquí iría la lógica para guardar en la base de datos
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de reservas"),
+                    accion: Bitacora.Acciones.Crear,
+                    tablaAfectada: "Reserva",
+                    descripcion: $"Empleado registró reserva para cliente ID: {reserva.IdCliente}, fecha: {reserva.FechaFormateada} {reserva.HoraFormateada}, {reserva.CantidadPersonas} persona(s)",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        reserva.IdCliente,
+                        reserva.Fecha,
+                        reserva.Hora,
+                        reserva.CantidadPersonas,
+                        reserva.Estado,
+                        reserva.Observaciones
+                    })
+                );
+
                 TempData["Mensaje"] = "Reserva registrada correctamente";
                 return RedirectToAction(nameof(ListadoReservas));
             }
@@ -265,6 +313,24 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 // Aquí iría la lógica para actualizar en la base de datos
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de reservas"),
+                    accion: Bitacora.Acciones.Actualizar,
+                    tablaAfectada: "Reserva",
+                    descripcion: $"Se editó la reserva ID: {reserva.IdReserva} (cliente: {reserva.NombreCliente ?? reserva.IdCliente.ToString()})",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        reserva.IdReserva,
+                        reserva.IdCliente,
+                        reserva.Fecha,
+                        reserva.Hora,
+                        reserva.CantidadPersonas,
+                        reserva.Estado,
+                        reserva.Observaciones
+                    })
+                );
+
                 TempData["Mensaje"] = "Reserva actualizada correctamente";
                 return RedirectToAction(nameof(ListadoReservas));
             }
@@ -429,6 +495,22 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 // Aquí iría la lógica para actualizar en la base de datos
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de reservas"),
+                    accion: Bitacora.Acciones.Actualizar,
+                    tablaAfectada: "Reserva",
+                    descripcion: $"Cliente editó su reserva ID: {reserva.IdReserva}, fecha: {reserva.FechaFormateada} {reserva.HoraFormateada}",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        reserva.IdReserva,
+                        reserva.Fecha,
+                        reserva.Hora,
+                        reserva.CantidadPersonas,
+                        reserva.Observaciones
+                    })
+                );
+
                 TempData["Mensaje"] = "Reserva actualizada correctamente";
                 return RedirectToAction(nameof(MisReservas));
             }
@@ -455,6 +537,15 @@ namespace AromasWeb.Controllers
         public IActionResult CambiarEstado(int id, string nuevoEstado)
         {
             // Aquí iría la lógica para cambiar el estado en la base de datos
+            _crearBitacora.RegistrarAccion(
+                idEmpleado: ObtenerIdEmpleadoSesion(),
+                idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de reservas"),
+                accion: Bitacora.Acciones.CambiarEstado,
+                tablaAfectada: "Reserva",
+                descripcion: $"Se cambió el estado de la reserva ID: {id} a '{nuevoEstado}'",
+                datosNuevos: JsonSerializer.Serialize(new { IdReserva = id, Estado = nuevoEstado })
+            );
+
             TempData["Mensaje"] = $"Estado de la reserva cambiado a {nuevoEstado}";
             return RedirectToAction(nameof(ListadoReservas));
         }
@@ -465,6 +556,18 @@ namespace AromasWeb.Controllers
         public IActionResult CancelarReserva(int id)
         {
             // Aquí iría la lógica para cambiar el estado a "Cancelada" en la base de datos
+            var reserva = _listarReservas.ObtenerPorId(id);
+
+            _crearBitacora.RegistrarAccion(
+                idEmpleado: ObtenerIdEmpleadoSesion(),
+                idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de reservas"),
+                accion: Bitacora.Acciones.CambiarEstado,
+                tablaAfectada: "Reserva",
+                descripcion: $"Se canceló la reserva ID: {id} (cliente: {reserva?.NombreCliente ?? id.ToString()})",
+                datosAnteriores: reserva != null ? JsonSerializer.Serialize(new { reserva.Estado }) : null,
+                datosNuevos: JsonSerializer.Serialize(new { Estado = "Cancelada" })
+            );
+
             TempData["Mensaje"] = "Reserva cancelada correctamente";
             return RedirectToAction(nameof(ListadoReservas));
         }

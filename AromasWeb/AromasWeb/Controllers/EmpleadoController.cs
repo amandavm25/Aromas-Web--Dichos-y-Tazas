@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Empleado;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
@@ -15,6 +18,7 @@ namespace AromasWeb.Controllers
         private IObtenerEmpleado _obtenerEmpleado;
         private IActualizarEmpleado _actualizarEmpleado;
         private ICrearEmpleado _crearEmpleado;
+        private readonly CrearBitacora _crearBitacora;
 
         public EmpleadoController()
         {
@@ -22,6 +26,17 @@ namespace AromasWeb.Controllers
             _obtenerEmpleado = new LogicaDeNegocio.Empleados.ObtenerEmpleado();
             _actualizarEmpleado = new LogicaDeNegocio.Empleados.ActualizarEmpleado();
             _crearEmpleado = new LogicaDeNegocio.Empleados.CrearEmpleado();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1;
         }
 
         // GET: Empleado/ListadoEmpleados
@@ -66,79 +81,94 @@ namespace AromasWeb.Controllers
         // POST: Empleado/CrearEmpleado
         [HttpPost]
         [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CrearEmpleado(Empleado empleado, string ConfirmarContrasena)
-    {
-        try
+        public async Task<IActionResult> CrearEmpleado(Empleado empleado, string ConfirmarContrasena)
         {
-            // Remover validaciones de campos calculados
-            ModelState.Remove("NombreRol");
-            ModelState.Remove("EstadoTexto");
-            ModelState.Remove("FechaContratacionFormateada");
-            ModelState.Remove("MesesTrabajados");
-            ModelState.Remove("AnosTrabajados");
-            ModelState.Remove("EsEmpleadoAntiguo");
-            ModelState.Remove("TarifaActual");
-            ModelState.Remove("ContactoEmergencia");
-            ModelState.Remove("Alergias");
-            ModelState.Remove("Medicamentos");
+            try
+            {
+                ModelState.Remove("NombreRol");
+                ModelState.Remove("EstadoTexto");
+                ModelState.Remove("FechaContratacionFormateada");
+                ModelState.Remove("MesesTrabajados");
+                ModelState.Remove("AnosTrabajados");
+                ModelState.Remove("EsEmpleadoAntiguo");
+                ModelState.Remove("TarifaActual");
+                ModelState.Remove("ContactoEmergencia");
+                ModelState.Remove("Alergias");
+                ModelState.Remove("Medicamentos");
 
-            // ⭐ Validación de contraseña con requisitos robustos
-            if (string.IsNullOrWhiteSpace(empleado.Contrasena))
-            {
-                ModelState.AddModelError("Contrasena", "La contraseña es requerida");
-            }
-            else
-            {
-                if (!PasswordValidator.EsContrasenaValida(empleado.Contrasena, out string mensajeError))
+                if (string.IsNullOrWhiteSpace(empleado.Contrasena))
                 {
-                    ModelState.AddModelError("Contrasena", mensajeError);
+                    ModelState.AddModelError("Contrasena", "La contraseña es requerida");
+                }
+                else
+                {
+                    if (!PasswordValidator.EsContrasenaValida(empleado.Contrasena, out string mensajeError))
+                    {
+                        ModelState.AddModelError("Contrasena", mensajeError);
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(ConfirmarContrasena))
+                {
+                    ModelState.AddModelError("ConfirmarContrasena", "Debes confirmar la contraseña");
+                }
+                else if (empleado.Contrasena != ConfirmarContrasena)
+                {
+                    ModelState.AddModelError("ConfirmarContrasena", "Las contraseñas no coinciden");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
+                    CargarRoles();
+                    return View(empleado);
+                }
+
+                empleado.Estado = true;
+
+                int resultado = await _crearEmpleado.Crear(empleado);
+
+                if (resultado > 0)
+                {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de empleados"),
+                        accion: Bitacora.Acciones.Crear,
+                        tablaAfectada: "Empleado",
+                        descripcion: $"Se creó el empleado: {empleado.Nombre} {empleado.Apellidos}",
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            empleado.Identificacion,
+                            empleado.Nombre,
+                            empleado.Apellidos,
+                            empleado.Correo,
+                            empleado.Cargo,
+                            empleado.IdRol,
+                            empleado.Estado
+                        })
+                    );
+
+                    TempData["Mensaje"] = "Empleado registrado correctamente";
+                    return RedirectToAction(nameof(ListadoEmpleados));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "No se pudo registrar el empleado en la base de datos");
+                    CargarRoles();
+                    return View(empleado);
                 }
             }
-
-            if (string.IsNullOrWhiteSpace(ConfirmarContrasena))
+            catch (Exception ex)
             {
-                ModelState.AddModelError("ConfirmarContrasena", "Debes confirmar la contraseña");
-            }
-            else if (empleado.Contrasena != ConfirmarContrasena)
-            {
-                ModelState.AddModelError("ConfirmarContrasena", "Las contraseñas no coinciden");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
-                CargarRoles();
-                return View(empleado);
-            }
-
-            // Establecer estado activo por defecto
-            empleado.Estado = true;
-
-            int resultado = await _crearEmpleado.Crear(empleado);
-
-            if (resultado > 0)
-            {
-                TempData["Mensaje"] = "Empleado registrado correctamente";
-                return RedirectToAction(nameof(ListadoEmpleados));
-            }
-            else
-            {
-                ModelState.AddModelError("", "No se pudo registrar el empleado en la base de datos");
+                System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
+                ModelState.AddModelError("", $"Error al registrar el empleado: {ex.Message}");
                 CargarRoles();
                 return View(empleado);
             }
         }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
-            ModelState.AddModelError("", $"Error al registrar el empleado: {ex.Message}");
-            CargarRoles();
-            return View(empleado);
-        }
-    }
 
-    // GET: Empleado/EditarEmpleado/5
-    public IActionResult EditarEmpleado(int id)
+        // GET: Empleado/EditarEmpleado/5
+        public IActionResult EditarEmpleado(int id)
         {
             try
             {
@@ -167,7 +197,6 @@ namespace AromasWeb.Controllers
         {
             try
             {
-                // Remover validación de campos calculados
                 ModelState.Remove("NombreRol");
                 ModelState.Remove("EstadoTexto");
                 ModelState.Remove("FechaContratacionFormateada");
@@ -183,7 +212,6 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("Alergias");
                 ModelState.Remove("Medicamentos");
 
-                // Validación de contraseña: Solo si algún campo de contraseña tiene valor
                 bool intentaCambiarContrasena = !string.IsNullOrWhiteSpace(ContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ContrasenaActual);
@@ -217,7 +245,6 @@ namespace AromasWeb.Controllers
                     }
                     else
                     {
-                        // Validación robusta de la nueva contraseña
                         if (!PasswordValidator.EsContrasenaValida(ContrasenaNueva, out string mensajeError))
                         {
                             ModelState.AddModelError("ContrasenaNueva", mensajeError);
@@ -258,10 +285,43 @@ namespace AromasWeb.Controllers
                     return View(empleado);
                 }
 
+                // Capturar datos anteriores ANTES de actualizar
+                var anterior = _obtenerEmpleado.Obtener(empleado.IdEmpleado);
+
                 int resultado = _actualizarEmpleado.Actualizar(empleado);
 
                 if (resultado > 0)
                 {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de empleados"),
+                        accion: Bitacora.Acciones.Actualizar,
+                        tablaAfectada: "Empleado",
+                        descripcion: $"Se actualizó el empleado: {empleado.Nombre} {empleado.Apellidos} (ID: {empleado.IdEmpleado})",
+                        datosAnteriores: anterior != null
+                            ? JsonSerializer.Serialize(new
+                            {
+                                anterior.Identificacion,
+                                anterior.Nombre,
+                                anterior.Apellidos,
+                                anterior.Correo,
+                                anterior.Cargo,
+                                anterior.IdRol,
+                                anterior.Estado
+                            })
+                            : null,
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            empleado.Identificacion,
+                            empleado.Nombre,
+                            empleado.Apellidos,
+                            empleado.Correo,
+                            empleado.Cargo,
+                            empleado.IdRol,
+                            empleado.Estado
+                        })
+                    );
+
                     TempData["Mensaje"] = "Empleado actualizado correctamente";
                     return RedirectToAction(nameof(ListadoEmpleados));
                 }
@@ -296,12 +356,23 @@ namespace AromasWeb.Controllers
                     return RedirectToAction(nameof(ListadoEmpleados));
                 }
 
+                bool estadoAnterior = empleado.Estado;
                 empleado.Estado = !empleado.Estado;
 
                 int resultado = _actualizarEmpleado.Actualizar(empleado);
 
                 if (resultado > 0)
                 {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de empleados"),
+                        accion: Bitacora.Acciones.CambiarEstado,
+                        tablaAfectada: "Empleado",
+                        descripcion: $"Se cambió el estado del empleado: {empleado.Nombre} {empleado.Apellidos} (ID: {id})",
+                        datosAnteriores: JsonSerializer.Serialize(new { Estado = estadoAnterior }),
+                        datosNuevos: JsonSerializer.Serialize(new { Estado = empleado.Estado })
+                    );
+
                     TempData["Mensaje"] = $"Empleado marcado como {(empleado.Estado ? "activo" : "inactivo")}";
                 }
                 else

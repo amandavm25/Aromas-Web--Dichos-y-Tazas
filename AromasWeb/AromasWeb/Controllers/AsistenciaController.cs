@@ -2,7 +2,10 @@
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Asistencia;
 using AromasWeb.Abstracciones.Logica.Empleado;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +16,23 @@ namespace AromasWeb.Controllers
     {
         private IListarAsistencias _listarAsistencias;
         private IListarEmpleados _listarEmpleados;
+        private readonly CrearBitacora _crearBitacora;
 
         public AsistenciaController()
         {
             _listarAsistencias = new LogicaDeNegocio.Asistencias.ListarAsistencias();
             _listarEmpleados = new LogicaDeNegocio.Empleados.ListarEmpleados();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        // Helper de sesión
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+
+            return 1;
         }
 
         //ADMIN-LISTADO GENERAL
@@ -29,21 +44,17 @@ namespace AromasWeb.Controllers
             ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd");
             ViewBag.FechaFin = fechaFin?.ToString("yyyy-MM-dd");
 
-            // Obtener asistencias según los filtros
             List<Asistencia> asistencias;
 
             if (fechaInicio.HasValue && fechaFin.HasValue)
             {
-                // Buscar por rango de fechas
                 asistencias = _listarAsistencias.BuscarPorRangoFechas(fechaInicio.Value, fechaFin.Value);
             }
             else
             {
-                // Obtener todas
                 asistencias = _listarAsistencias.Obtener();
             }
 
-            // Aplicar filtro de búsqueda por nombre/identificación/cargo
             if (!string.IsNullOrEmpty(buscar))
             {
                 asistencias = asistencias.Where(a =>
@@ -53,7 +64,6 @@ namespace AromasWeb.Controllers
                 ).ToList();
             }
 
-            // Calcular horas para cada registro
             foreach (var asistencia in asistencias)
             {
                 asistencia.CalcularHoras();
@@ -69,7 +79,6 @@ namespace AromasWeb.Controllers
             int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 0;
 
             if (idEmpleado == 0)
-
                 return RedirectToAction("Login", "Auth");
 
             var empleado = _listarEmpleados.ObtenerPorId(idEmpleado);
@@ -80,12 +89,12 @@ namespace AromasWeb.Controllers
             foreach (var asistencia in asistencias)
             {
                 asistencia.CalcularHoras();
-
             }
+
             return View(asistencias);
         }
 
-        // EMPLEADO- MI ENTRADA GET
+        // EMPLEADO - MI ENTRADA GET
 
         [HttpGet]
         public IActionResult MiEntrada()
@@ -93,11 +102,9 @@ namespace AromasWeb.Controllers
             int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 0;
 
             if (idEmpleado == 0)
-
                 return RedirectToAction("Login", "Auth");
 
             var empleado = _listarEmpleados.ObtenerPorId(idEmpleado);
-
             ViewBag.Empleado = empleado;
 
             var model = new Asistencia
@@ -110,18 +117,15 @@ namespace AromasWeb.Controllers
             return View(model);
         }
 
-        // EMPLEADO- MI ENTRADA POST
-        // POST: Asistencia/MiEntrada
+        // EMPLEADO - MI ENTRADA POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult MiEntrada(Asistencia asistencia)
         {
-
             int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 0;
             if (idEmpleado == 0) return RedirectToAction("Login", "Auth");
 
             asistencia.IdEmpleado = idEmpleado;
-
             asistencia.Fecha = DateTime.SpecifyKind(asistencia.Fecha.Date, DateTimeKind.Utc);
 
             var empleado = _listarEmpleados.ObtenerPorId(asistencia.IdEmpleado);
@@ -137,11 +141,26 @@ namespace AromasWeb.Controllers
             }
 
             _listarAsistencias.CrearEntrada(asistencia);
+
+            _crearBitacora.RegistrarAccion(
+                idEmpleado: idEmpleado,
+                idModulo: ObtenerModulo.ObtenerIdPorNombre("Control de asistencia"),
+                accion: Bitacora.Acciones.RegistrarEntrada,
+                tablaAfectada: "Asistencia",
+                descripcion: $"El empleado registró su entrada — Fecha: {asistencia.Fecha:dd/MM/yyyy}, Hora: {asistencia.HoraEntrada:hh\\:mm}",
+                datosNuevos: JsonSerializer.Serialize(new
+                {
+                    asistencia.IdEmpleado,
+                    Fecha = asistencia.Fecha.ToString("dd/MM/yyyy"),
+                    HoraEntrada = asistencia.HoraEntrada.ToString(@"hh\:mm")
+                })
+            );
+
             TempData["Mensaje"] = "Entrada registrada correctamente.";
             return RedirectToAction("MiHistorialAsistencias");
         }
 
-        //EMPLEADO MI SALIDA GET
+        // EMPLEADO - MI SALIDA GET
 
         [HttpGet]
         public IActionResult MiSalida()
@@ -161,13 +180,12 @@ namespace AromasWeb.Controllers
                 TempData["Error"] = "No tienes una entrada abierta para registrar la salida.";
                 return RedirectToAction(nameof(MiEntrada));
             }
+
             entradaABierta.HoraSalida = DateTime.Now.TimeOfDay;
             return View(entradaABierta);
-
-
         }
 
-        //EMPLEADO MI SALIDA POST
+        // EMPLEADO - MI SALIDA POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult MiSalida(Asistencia asistencia)
@@ -182,7 +200,7 @@ namespace AromasWeb.Controllers
             ViewBag.Empleado = empleado;
 
             if (!asistencia.HoraSalida.HasValue)
-            { 
+            {
                 ModelState.AddModelError("", "La hora de salida es obligatoria.");
             }
 
@@ -195,10 +213,25 @@ namespace AromasWeb.Controllers
 
             _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value);
 
+            _crearBitacora.RegistrarAccion(
+                idEmpleado: idEmpleado,
+                idModulo: ObtenerModulo.ObtenerIdPorNombre("Control de asistencia"),
+                accion: Bitacora.Acciones.RegistrarSalida,
+                tablaAfectada: "Asistencia",
+                descripcion: $"El empleado registró su salida — Fecha: {asistencia.Fecha:dd/MM/yyyy}, Hora: {asistencia.HoraSalida.Value:hh\\:mm}, Horas trabajadas: {asistencia.HorasTotales:F2}h",
+                datosNuevos: JsonSerializer.Serialize(new
+                {
+                    asistencia.IdEmpleado,
+                    Fecha = asistencia.Fecha.ToString("dd/MM/yyyy"),
+                    HoraSalida = asistencia.HoraSalida.Value.ToString(@"hh\:mm"),
+                    asistencia.HorasRegulares,
+                    asistencia.HorasExtras,
+                    asistencia.HorasTotales
+                })
+            );
+
             TempData["Mensaje"] = "Salida registrada correctamente.";
-
             return RedirectToAction("MiHistorialAsistencias");
-
         }
 
         // ADMIN - HISTORIAL DE UN EMPLEADO ESPECÍFICO
@@ -242,7 +275,7 @@ namespace AromasWeb.Controllers
             return View(asistencias);
         }
 
-        //ADMIN - REGISTRAR ENTRADA 
+        // ADMIN - REGISTRAR ENTRADA
 
         // GET: Asistencia/RegistrarEntrada
         public IActionResult RegistrarEntrada()
@@ -267,8 +300,8 @@ namespace AromasWeb.Controllers
             {
                 CargarEmpleados();
                 return View(asistencia);
-
             }
+
             var yaExiste = _listarAsistencias.ExisteEntradaAbierta(asistencia.IdEmpleado, asistencia.Fecha);
             if (yaExiste)
             {
@@ -278,12 +311,26 @@ namespace AromasWeb.Controllers
             }
 
             _listarAsistencias.CrearEntrada(asistencia);
-            // Aquí iría la lógica para guardar en la base de datos
-            TempData["Mensaje"] = "Registro de inicio de jornada correctamente";
-                return RedirectToAction(nameof(ListadoAsistencias));
-            }
 
-        //ADMIN REGISTRAR SALIDA
+            _crearBitacora.RegistrarAccion(
+                idEmpleado: ObtenerIdEmpleadoSesion(),
+                idModulo: ObtenerModulo.ObtenerIdPorNombre("Control de asistencia"),
+                accion: Bitacora.Acciones.RegistrarEntrada,
+                tablaAfectada: "Asistencia",
+                descripcion: $"Admin registró entrada del empleado ID {asistencia.IdEmpleado} — Fecha: {asistencia.Fecha:dd/MM/yyyy}, Hora: {asistencia.HoraEntrada:hh\\:mm}",
+                datosNuevos: JsonSerializer.Serialize(new
+                {
+                    asistencia.IdEmpleado,
+                    Fecha = asistencia.Fecha.ToString("dd/MM/yyyy"),
+                    HoraEntrada = asistencia.HoraEntrada.ToString(@"hh\:mm")
+                })
+            );
+
+            TempData["Mensaje"] = "Registro de inicio de jornada correctamente";
+            return RedirectToAction(nameof(ListadoAsistencias));
+        }
+
+        // ADMIN - REGISTRAR SALIDA
 
         // GET: Asistencia/RegistrarSalida/5
         public IActionResult RegistrarSalida(int id)
@@ -297,7 +344,6 @@ namespace AromasWeb.Controllers
             }
 
             asistencia.HoraSalida = DateTime.Now.TimeOfDay;
-
             return View(asistencia);
         }
 
@@ -312,16 +358,29 @@ namespace AromasWeb.Controllers
             if (!ModelState.IsValid)
                 return View(asistencia);
 
-            
-                asistencia.CalcularHoras();
+            asistencia.CalcularHoras();
             _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value);
 
-            // Aquí iría la lógica para actualizar en la base de datos
-            TempData["Mensaje"] = "Registro de finalización de jornada correctamente";
-                return RedirectToAction(nameof(ListadoAsistencias));
-            }
+            _crearBitacora.RegistrarAccion(
+                idEmpleado: ObtenerIdEmpleadoSesion(),
+                idModulo: ObtenerModulo.ObtenerIdPorNombre("Control de asistencia"),
+                accion: Bitacora.Acciones.RegistrarSalida,
+                tablaAfectada: "Asistencia",
+                descripcion: $"Admin registró salida del empleado ID {asistencia.IdEmpleado} — Fecha: {asistencia.Fecha:dd/MM/yyyy}, Hora: {asistencia.HoraSalida.Value:hh\\:mm}, Horas trabajadas: {asistencia.HorasTotales:F2}h",
+                datosNuevos: JsonSerializer.Serialize(new
+                {
+                    asistencia.IdEmpleado,
+                    Fecha = asistencia.Fecha.ToString("dd/MM/yyyy"),
+                    HoraSalida = asistencia.HoraSalida.Value.ToString(@"hh\:mm"),
+                    asistencia.HorasRegulares,
+                    asistencia.HorasExtras,
+                    asistencia.HorasTotales
+                })
+            );
 
-        
+            TempData["Mensaje"] = "Registro de finalización de jornada correctamente";
+            return RedirectToAction(nameof(ListadoAsistencias));
+        }
 
         // GET: Asistencia/EditarAsistencia/5
         public IActionResult EditarAsistencia(int id)
@@ -347,6 +406,26 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 asistencia.CalcularHoras();
+
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Control de asistencia"),
+                    accion: Bitacora.Acciones.Actualizar,
+                    tablaAfectada: "Asistencia",
+                    descripcion: $"Se editó el registro de asistencia ID {asistencia.IdAsistencia} del empleado ID {asistencia.IdEmpleado}",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        asistencia.IdEmpleado,
+                        Fecha = asistencia.Fecha.ToString("dd/MM/yyyy"),
+                        HoraEntrada = asistencia.HoraEntrada.ToString(@"hh\:mm"),
+                        HoraSalida = asistencia.HoraSalida?.ToString(@"hh\:mm") ?? "Pendiente",
+                        asistencia.TiempoAlmuerzo,
+                        asistencia.HorasRegulares,
+                        asistencia.HorasExtras,
+                        asistencia.HorasTotales
+                    })
+                );
+
                 // Aquí iría la lógica para actualizar en la base de datos
                 TempData["Mensaje"] = "Asistencia actualizada correctamente";
                 return RedirectToAction(nameof(ListadoAsistencias));
@@ -361,7 +440,6 @@ namespace AromasWeb.Controllers
         {
             var empleados = _listarEmpleados.Obtener();
 
-            // Crear lista con el formato necesario para el dropdown
             var empleadosDropdown = empleados.Select(e => new
             {
                 IdEmpleado = e.IdEmpleado,

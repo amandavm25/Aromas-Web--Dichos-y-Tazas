@@ -16,38 +16,41 @@ namespace AromasWeb.AccesoADatos.CategoriasInsumo
 
         public int Actualizar(Abstracciones.ModeloUI.CategoriaInsumo categoria)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                var categoriaExistente = _contexto.CategoriaInsumo
-                    .FirstOrDefault(c => c.IdCategoria == categoria.IdCategoria);
-
-                if (categoriaExistente == null)
+                try
                 {
-                    return 0;
+                    var categoriaExistente = contexto.CategoriaInsumo
+                        .FirstOrDefault(c => c.IdCategoria == categoria.IdCategoria);
+
+                    if (categoriaExistente == null)
+                    {
+                        return 0;
+                    }
+
+                    // Validar que no exista otra categoría con el mismo nombre
+                    bool nombreDuplicado = contexto.CategoriaInsumo
+                        .Any(c => c.NombreCategoria == categoria.NombreCategoria
+                               && c.IdCategoria != categoria.IdCategoria);
+
+                    if (nombreDuplicado)
+                    {
+                        throw new Exception("Ya existe otra categoría con ese nombre");
+                    }
+
+                    // Actualizar campos
+                    categoriaExistente.NombreCategoria = categoria.NombreCategoria?.Trim();
+                    categoriaExistente.Descripcion = categoria.Descripcion?.Trim();
+                    categoriaExistente.Estado = categoria.Estado;
+
+                    int cantidadDeDatosActualizados = contexto.SaveChanges();
+
+                    return cantidadDeDatosActualizados;
                 }
-
-                // Validar que no exista otra categoría con el mismo nombre
-                bool nombreDuplicado = _contexto.CategoriaInsumo
-                    .Any(c => c.NombreCategoria == categoria.NombreCategoria
-                           && c.IdCategoria != categoria.IdCategoria);
-
-                if (nombreDuplicado)
+                catch (Exception ex)
                 {
-                    throw new Exception("Ya existe otra categoría con ese nombre");
+                    throw;
                 }
-
-                // Actualizar campos
-                categoriaExistente.NombreCategoria = categoria.NombreCategoria?.Trim();
-                categoriaExistente.Descripcion = categoria.Descripcion?.Trim();
-                categoriaExistente.Estado = categoria.Estado;
-
-                int cantidadDeDatosActualizados = _contexto.SaveChanges();
-
-                return cantidadDeDatosActualizados;
-            }
-            catch (Exception ex)
-            {
-                throw;
             }
         }
     }

@@ -15,15 +15,18 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
 
         public Abstracciones.ModeloUI.HistorialTarifa Obtener(int id)
         {
-            var historialAD = _contexto.HistorialTarifa
+            using (var contexto = new Contexto())
+            {
+                var historialAD = contexto.HistorialTarifa
                 .FirstOrDefault(h => h.IdHistorialTarifa == id);
 
-            if (historialAD == null)
-            {
-                return null;
-            }
+                if (historialAD == null)
+                {
+                    return null;
+                }
 
-            return ConvertirObjetoParaUI(historialAD);
+                return ConvertirObjetoParaUI(historialAD);
+            }
         }
 
         private Abstracciones.ModeloUI.HistorialTarifa ConvertirObjetoParaUI(HistorialTarifaAD historialAD)

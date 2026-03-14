@@ -17,26 +17,29 @@ namespace AromasWeb.AccesoADatos.CategoriasReceta
 
         public async Task<int> Crear(Abstracciones.ModeloUI.CategoriaReceta categoriaReceta)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                // Validar que no exista una categoría con el mismo nombre
-                bool nombreExiste = await _contexto.CategoriaReceta
-                    .AnyAsync(c => c.Nombre == categoriaReceta.Nombre);
-
-                if (nombreExiste)
+                try
                 {
-                    throw new Exception("Ya existe una categoría registrada con ese nombre");
+                    // Validar que no exista una categoría con el mismo nombre
+                    bool nombreExiste = await contexto.CategoriaReceta
+                        .AnyAsync(c => c.Nombre == categoriaReceta.Nombre);
+
+                    if (nombreExiste)
+                    {
+                        throw new Exception("Ya existe una categoría registrada con ese nombre");
+                    }
+
+                    CategoriaRecetaAD categoriaAGuardar = ConvertirObjetoParaAD(categoriaReceta);
+                    _contexto.CategoriaReceta.Add(categoriaAGuardar);
+                    int cantidadDeDatosAgregados = await contexto.SaveChangesAsync();
+
+                    return cantidadDeDatosAgregados;
                 }
-
-                CategoriaRecetaAD categoriaAGuardar = ConvertirObjetoParaAD(categoriaReceta);
-                _contexto.CategoriaReceta.Add(categoriaAGuardar);
-                int cantidadDeDatosAgregados = await _contexto.SaveChangesAsync();
-
-                return cantidadDeDatosAgregados;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
         }
 

@@ -1,18 +1,32 @@
 ﻿using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Modulo;
+using AromasWeb.AccesoADatos.Modulos;
+using AromasWeb.LogicaDeNegocio.Bitacoras;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace AromasWeb.Controllers
 {
     public class ModuloController : Controller
     {
         private IListarModulos _listarModulos;
+        private readonly CrearBitacora _crearBitacora;
 
         public ModuloController()
         {
             _listarModulos = new LogicaDeNegocio.Modulos.ListarModulos();
+            _crearBitacora = new CrearBitacora();
+        }
+
+        private int ObtenerIdEmpleadoSesion()
+        {
+            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
+            if (idSesion.HasValue && idSesion.Value > 0)
+                return idSesion.Value;
+            return 1;
         }
 
         // GET: Modulo/ListadoModulos
@@ -66,6 +80,20 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 // Aquí iría la lógica para guardar en la base de datos
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de módulos"),
+                    accion: Bitacora.Acciones.Crear,
+                    tablaAfectada: "Modulo",
+                    descripcion: $"Se registró el módulo: {modulo.Nombre}",
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        modulo.Nombre,
+                        modulo.Descripcion,
+                        modulo.Estado
+                    })
+                );
+
                 TempData["Mensaje"] = "Módulo registrado correctamente";
                 TempData["TipoMensaje"] = "success";
                 return RedirectToAction(nameof(ListadoModulos));
@@ -97,6 +125,25 @@ namespace AromasWeb.Controllers
             if (ModelState.IsValid)
             {
                 // Aquí iría la lógica para actualizar en la base de datos
+                var anterior = _listarModulos.ObtenerPorId(modulo.IdModulo);
+
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de módulos"),
+                    accion: Bitacora.Acciones.Actualizar,
+                    tablaAfectada: "Modulo",
+                    descripcion: $"Se actualizó el módulo: {modulo.Nombre} (ID: {modulo.IdModulo})",
+                    datosAnteriores: anterior != null
+                        ? JsonSerializer.Serialize(new { anterior.Nombre, anterior.Descripcion, anterior.Estado })
+                        : null,
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        modulo.Nombre,
+                        modulo.Descripcion,
+                        modulo.Estado
+                    })
+                );
+
                 TempData["Mensaje"] = "Módulo actualizado correctamente";
                 TempData["TipoMensaje"] = "success";
                 return RedirectToAction(nameof(ListadoModulos));
@@ -112,6 +159,18 @@ namespace AromasWeb.Controllers
         {
             // Aquí iría la lógica para eliminar de la base de datos
             // Validar que no tenga permisos asociados antes de eliminar
+            var modulo = _listarModulos.ObtenerPorId(id);
+
+            _crearBitacora.RegistrarAccion(
+                idEmpleado: ObtenerIdEmpleadoSesion(),
+                idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de módulos"),
+                accion: Bitacora.Acciones.Eliminar,
+                tablaAfectada: "Modulo",
+                descripcion: $"Se eliminó el módulo: {modulo?.Nombre ?? id.ToString()} (ID: {id})",
+                datosAnteriores: modulo != null
+                    ? JsonSerializer.Serialize(new { modulo.Nombre, modulo.Descripcion, modulo.Estado })
+                    : null
+            );
 
             TempData["Mensaje"] = "Módulo eliminado correctamente";
             TempData["TipoMensaje"] = "success";

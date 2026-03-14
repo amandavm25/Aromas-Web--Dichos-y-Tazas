@@ -260,12 +260,12 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.Apellidos).IsRequired().HasMaxLength(200).HasColumnName("apellidos");
                 entity.Property(e => e.Correo).IsRequired().HasMaxLength(100).HasColumnName("correo");
                 entity.Property(e => e.Telefono).IsRequired().HasMaxLength(20).HasColumnName("telefono");
-                entity.Property(e => e.Contrasena).HasMaxLength(255).HasColumnName("contrasena");
+                entity.Property(e => e.Contrasena).IsRequired(false).HasMaxLength(255).HasColumnName("contrasena");
                 entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);
                 entity.Property(e => e.FechaRegistro).IsRequired().HasColumnName("fecharegistro").HasDefaultValueSql("CURRENT_TIMESTAMP");
-                entity.Property(e => e.UltimaReserva).HasColumnName("ultimareserva");
-                entity.Property(e => e.CodigoRecuperacion).HasMaxLength(6).HasColumnName("codigo_recuperacion");
-                entity.Property(e => e.CodigoExpiracion).HasColumnName("codigo_expiracion");
+                entity.Property(e => e.UltimaReserva).IsRequired(false).HasColumnName("ultimareserva");
+                entity.Property(e => e.CodigoRecuperacion).IsRequired(false).HasMaxLength(6).HasColumnName("codigo_recuperacion");
+                entity.Property(e => e.CodigoExpiracion).IsRequired(false).HasColumnName("codigo_expiracion");
 
                 // Índices
                 entity.HasIndex(e => e.Identificacion).IsUnique();
@@ -283,7 +283,7 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.Fecha).IsRequired().HasColumnName("fecha");
                 entity.Property(e => e.Hora).IsRequired().HasColumnName("hora");
                 entity.Property(e => e.Estado).IsRequired().HasMaxLength(20).HasColumnName("estado").HasDefaultValue("Pendiente");
-                entity.Property(e => e.Observaciones).HasMaxLength(500).HasColumnName("observaciones");
+                entity.Property(e => e.Observaciones).IsRequired(false).HasMaxLength(500).HasColumnName("observaciones");
                 entity.Property(e => e.FechaCreacion).IsRequired().HasColumnName("fechacreacion").HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 // Relación con Cliente
@@ -355,7 +355,7 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.Telefono).IsRequired().HasMaxLength(20).HasColumnName("telefono");
                 entity.Property(e => e.Cargo).IsRequired().HasMaxLength(100).HasColumnName("cargo");
                 entity.Property(e => e.FechaContratacion).IsRequired().HasColumnName("fechacontratacion");
-                entity.Property(e => e.Contrasena).HasMaxLength(255).HasColumnName("contrasena");
+                entity.Property(e => e.Contrasena).IsRequired(false).HasMaxLength(255).HasColumnName("contrasena");
                 entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);
                 entity.Property(e => e.ContactoEmergencia).HasMaxLength(200).HasColumnName("contactoemergencia");
                 entity.Property(e => e.Alergias).HasMaxLength(500).HasColumnName("alergias");
@@ -382,7 +382,7 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.TarifaHora).IsRequired().HasColumnType("decimal(10,2)").HasColumnName("tarifahora");
                 entity.Property(e => e.Motivo).IsRequired().HasMaxLength(500).HasColumnName("motivo");
                 entity.Property(e => e.FechaInicio).IsRequired().HasColumnName("fechainicio");
-                entity.Property(e => e.FechaFin).HasColumnName("fechafin");
+                entity.Property(e => e.FechaFin).IsRequired(false).HasColumnName("fechafin");
                 entity.Property(e => e.FechaRegistro).IsRequired().HasColumnName("fecharegistro").HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 // Relación con Empleado
@@ -500,7 +500,7 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.FechaFin).IsRequired().HasColumnName("fechafin");
                 entity.Property(e => e.DiasSolicitados).IsRequired().HasColumnName("diassolicitados");
                 entity.Property(e => e.Estado).IsRequired().HasMaxLength(50).HasColumnName("estado").HasDefaultValue("Pendiente");
-                entity.Property(e => e.FechaRespuesta).HasColumnName("fecharespuesta");
+                entity.Property(e => e.FechaRespuesta).IsRequired(false).HasColumnName("fecharespuesta");
 
                 // Relación con Empleado
                 entity.HasOne(e => e.Empleado)
@@ -521,7 +521,7 @@ namespace AromasWeb.AccesoADatos
                 entity.HasKey(e => e.IdModulo);
                 entity.Property(e => e.IdModulo).HasColumnName("idmodulo").ValueGeneratedOnAdd();
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100).HasColumnName("nombre");
-                entity.Property(e => e.Descripcion).HasMaxLength(500).HasColumnName("descripcion");
+                entity.Property(e => e.Descripcion).IsRequired(false).HasMaxLength(500).HasColumnName("descripcion");
                 entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);
 
                 // Índices
@@ -585,10 +585,10 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.IdEmpleado).IsRequired().HasColumnName("idempleado");
                 entity.Property(e => e.IdModulo).IsRequired().HasColumnName("idmodulo");
                 entity.Property(e => e.Accion).IsRequired().HasMaxLength(200).HasColumnName("accion");
-                entity.Property(e => e.TablaAfectada).HasMaxLength(100).HasColumnName("tablaafectada");
-                entity.Property(e => e.Descripcion).HasMaxLength(1000).HasColumnName("descripcion");
-                entity.Property(e => e.DatosAnteriores).HasColumnName("datosanteriores");
-                entity.Property(e => e.DatosNuevos).HasColumnName("datosnuevos");
+                entity.Property(e => e.TablaAfectada).IsRequired(false).HasMaxLength(100).HasColumnName("tablaafectada");
+                entity.Property(e => e.Descripcion).IsRequired(false).HasMaxLength(1000).HasColumnName("descripcion");
+                entity.Property(e => e.DatosAnteriores).IsRequired(false).HasColumnName("datosanteriores");
+                entity.Property(e => e.DatosNuevos).IsRequired(false).HasColumnName("datosnuevos");
                 entity.Property(e => e.Fecha).IsRequired().HasColumnName("fecha").HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 // Relación con Empleado

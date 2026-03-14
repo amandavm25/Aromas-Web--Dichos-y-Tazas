@@ -17,18 +17,21 @@ namespace AromasWeb.AccesoADatos.Recetas
 
         public Abstracciones.ModeloUI.Receta Obtener(int idReceta)
         {
-            var recetaAD = _contexto.Receta
+            using (var contexto = new Contexto())
+            {
+                var recetaAD = contexto.Receta
                 .Include(r => r.CategoriaReceta)
                 .Include(r => r.RecetaInsumos)
                     .ThenInclude(ri => ri.Insumo)
                 .FirstOrDefault(r => r.IdReceta == idReceta);
 
-            if (recetaAD == null)
-            {
-                return null;
-            }
+                if (recetaAD == null)
+                {
+                    return null;
+                }
 
-            return ConvertirObjetoParaUI(recetaAD);
+                return ConvertirObjetoParaUI(recetaAD);
+            }
         }
 
         private Abstracciones.ModeloUI.Receta ConvertirObjetoParaUI(RecetaAD recetaAD)
