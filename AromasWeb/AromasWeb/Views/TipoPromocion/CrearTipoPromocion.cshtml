@@ -33,7 +33,7 @@
 <!-- Formulario Section -->
 <section class="admin-form-section">
     <div class="container" style="max-width: 80%;">
-        @using (Html.BeginForm("CrearTipoPromocion", "TipoPromocion", FormMethod.Post, new { @class = "contact-form" }))
+        @using (Html.BeginForm("CrearTipoPromocion", "TipoPromocion", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
@@ -102,5 +102,4 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/tipopromocion.js" asp-append-version="true"></script>
 }

@@ -68,13 +68,10 @@
                             @{
                                 var tiposPromocion = ViewBag.TodosTipos as List<AromasWeb.Abstracciones.ModeloUI.TipoPromocion> ?? new List<AromasWeb.Abstracciones.ModeloUI.TipoPromocion>();
                             }
-                            <select name="IdTipoPromocion" class="form-control">
-                                <option value="">-- Selecciona un tipo --</option>
-                                @foreach (var tipo in tiposPromocion)
-                                {
-                                    <option value="@tipo.IdTipoPromocion">@tipo.Nombre</option>
-                                }
-                            </select>
+                            @Html.DropDownListFor(model => model.IdTipoPromocion,
+                            new SelectList(tiposPromocion, "IdTipoPromocion", "Nombre", Model?.IdTipoPromocion),
+                                                "-- Selecciona un tipo --",
+                                                new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.IdTipoPromocion, "", new { @class = "text-danger" })
                         </div>
 

@@ -13,11 +13,16 @@ namespace AromasWeb.Controllers
     {
         private IListarTiposPromociones _listarTiposPromociones;
         private readonly CrearBitacora _crearBitacora;
+        private ICrearTiposPromociones _crearTiposPromociones;
+        private IEditarTiposPromociones _editarTiposPromociones;
+        
 
         public TipoPromocionController()
         {
             _listarTiposPromociones = new LogicaDeNegocio.TiposPromociones.ListarTiposPromociones();
             _crearBitacora = new CrearBitacora();
+            _crearTiposPromociones = new LogicaDeNegocio.TiposPromociones.CrearTiposPromociones();
+            _editarTiposPromociones = new LogicaDeNegocio.TiposPromociones.EditarTiposPromociones();
         }
 
         // Helper de sesión
@@ -64,9 +69,11 @@ namespace AromasWeb.Controllers
         public IActionResult CrearTipoPromocion(TipoPromocion tipoPromocion)
         {
             if (ModelState.IsValid)
-            {
-                // Aquí iría la lógica para guardar en la base de datos
-                TempData["Mensaje"] = "Tipo de promoción registrado correctamente";
+            { 
+                _crearTiposPromociones.Ejecutar(tipoPromocion);
+
+
+            TempData["Mensaje"] = "Tipo de promoción registrado correctamente";
                 TempData["TipoMensaje"] = "success";
                 return RedirectToAction(nameof(ListadoTiposPromociones));
             }
@@ -102,8 +109,11 @@ namespace AromasWeb.Controllers
         public IActionResult EditarTipoPromocion(TipoPromocion tipoPromocion)
         {
             if (ModelState.IsValid)
+
             {
-                // Aquí iría la lógica para actualizar en la base de datos
+                _editarTiposPromociones.Ejecutar(tipoPromocion);
+
+
                 TempData["Mensaje"] = "Tipo de promoción actualizado correctamente";
                 TempData["TipoMensaje"] = "success";
                 return RedirectToAction(nameof(ListadoTiposPromociones));

@@ -87,10 +87,20 @@
                                 <i class="fas fa-percent"></i>
                                 Porcentaje de Descuento
                             </label>
-                            @Html.EditorFor(model => model.PorcentajeDescuento, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", max = "100", step = "0.01" } })
-                            @Html.ValidationMessageFor(model => model.PorcentajeDescuento, "", new { @class = "text-danger" })
-                        </div>
+
+                            @Html.TextBoxFor(model => model.PorcentajeDescuento, "{0:0.##}", new
+                            {
+                                @class = "form-control",
+                                                type = "number",
+                                                min = "0",
+                                                max = "100",
+                                                step = "0.01"
+                                                })
+
+                        @Html.ValidationMessageFor(model => model.PorcentajeDescuento, "", new { @class = "text-danger" })
                     </div>
+                </div>
+
 
                     <!-- Descripción -->
                     <div class="form-group">

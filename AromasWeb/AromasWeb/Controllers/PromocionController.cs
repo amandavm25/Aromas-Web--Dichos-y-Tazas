@@ -220,9 +220,11 @@ namespace AromasWeb.Controllers
                 // Calcular precios desde la BD
                 RecalcularPreciosDesdeDB(promocion);
 
+                var errores = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+
                 if (!ModelState.IsValid)
                 {
-                    TempData["Error"] = "Complete todos los campos obligatorios antes de guardar";
+                    TempData["Error"] = string.Join(" ", errores);
                     ViewBag.TodosTipos = _listarTiposPromociones.Obtener();
                     ViewBag.RecetasDisponibles = _listarRecetas.ObtenerDisponibles();
                     return View(promocion);
