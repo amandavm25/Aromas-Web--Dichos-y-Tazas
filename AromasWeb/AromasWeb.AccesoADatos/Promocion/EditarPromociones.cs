@@ -26,8 +26,8 @@ namespace AromasWeb.AccesoADatos.Promocion
                     promocionAD.Descripcion = promocion.Descripcion;
                     promocionAD.IdTipoPromocion = promocion.IdTipoPromocion;
                     promocionAD.PorcentajeDescuento = promocion.PorcentajeDescuento;
-                    promocionAD.FechaInicio = promocion.FechaInicio;
-                    promocionAD.FechaFin = promocion.FechaFin;
+                    promocionAD.FechaInicio = DateTime.SpecifyKind(promocion.FechaInicio, DateTimeKind.Utc);
+                    promocionAD.FechaFin = DateTime.SpecifyKind(promocion.FechaFin, DateTimeKind.Utc);
                     promocionAD.Estado = promocion.Estado;
 
                     contexto.SaveChanges();

@@ -19,6 +19,8 @@
                 <!-- Nombre + Tipo -->
                 <div class="modal-entity-header entity-block">
                     <h5 id="detalles-nombre-promocion" class="modal-entity-name"></h5>
+                    <p id="detalles-descripcion-promocion"
+                       style="color: var(--charcoal); opacity: 0.75; font-size: 0.95rem; margin: 0.3rem 0 0.8rem; font-style: italic;"></p>
                     <div class="modal-entity-meta">
                         <div class="modal-entity-meta-item">
                             <small>Tipo:</small>
@@ -116,6 +118,7 @@
 
                 const id        = parseInt(this.getAttribute('data-id'));
                 const nombre    = this.getAttribute('data-nombre');
+                const descripcion = this.getAttribute('data-descripcion');
                 const tipo      = this.getAttribute('data-tipo');
                 const descuento = this.getAttribute('data-descuento');
                 const inicio    = this.getAttribute('data-inicio');
@@ -125,6 +128,7 @@
 
                 // Datos básicos
                 document.getElementById('detalles-nombre-promocion').textContent  = nombre;
+                document.getElementById('detalles-descripcion-promocion').textContent = descripcion || 'Sin descripción';
                 document.getElementById('detalles-tipo-promocion').textContent    = tipo;
                 document.getElementById('detalles-descuento-promocion').textContent = parseFloat(descuento).toFixed(2) + '%';
                 document.getElementById('detalles-fecha-inicio').textContent      = inicio;

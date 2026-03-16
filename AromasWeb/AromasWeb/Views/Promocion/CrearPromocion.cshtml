@@ -224,6 +224,12 @@
                 <input type="text" class="form-control precio-descuento" readonly style="background: var(--cream); color: var(--green); font-weight: 700;" value="₡0.00">
             </div>
         </div>
+
+        <!-- Hiddens para enviar los valores numéricos reales al controller -->
+        <input type="hidden" name="Recetas[INDEX].PrecioOriginal" class="hidden-precio-original" value="0" />
+        <input type="hidden" name="Recetas[INDEX].PrecioPromocional" class="hidden-precio-promocional" value="0" />
+        <input type="hidden" name="Recetas[INDEX].PorcentajeDescuento" class="hidden-descuento-receta" value="0" />
+
         <div class="info-receta" style="display: none; background: var(--cream); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>

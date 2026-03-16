@@ -255,11 +255,17 @@ function actualizarPreciosReceta(item) {
     const infoReceta = item.querySelector('.info-receta');
     const categoriaEl = item.querySelector('.categoria-receta');
     const ahorroEl = item.querySelector('.ahorro-receta');
+    const hiddenPrecioOriginal = item.querySelector('.hidden-precio-original');
+    const hiddenPrecio = item.querySelector('.hidden-precio-promocional');
+    const hiddenDescuento = item.querySelector('.hidden-descuento-receta');
 
     if (!selectReceta || !selectReceta.value) {
         if (precioOriginalEl) precioOriginalEl.value = '₡0.00';
         if (precioDescuentoEl) precioDescuentoEl.value = '₡0.00';
         if (infoReceta) infoReceta.style.display = 'none';
+        if (hiddenPrecioOriginal) hiddenPrecioOriginal.value = '0';
+        if (hiddenPrecio) hiddenPrecio.value = '0';
+        if (hiddenDescuento) hiddenDescuento.value = '0';
         return;
     }
 
@@ -275,6 +281,10 @@ function actualizarPreciosReceta(item) {
     if (infoReceta) infoReceta.style.display = 'block';
     if (categoriaEl) categoriaEl.textContent = categoria;
     if (ahorroEl) ahorroEl.textContent = '₡' + ahorro.toLocaleString('es-CR', { minimumFractionDigits: 2 });
+
+    if (hiddenPrecioOriginal) hiddenPrecioOriginal.value = precio.toFixed(2);
+    if (hiddenPrecio) hiddenPrecio.value = precioFinal.toFixed(2);
+    if (hiddenDescuento) hiddenDescuento.value = descuento.toFixed(2);
 }
 
 function recalcularTodosLosPrecios() {
