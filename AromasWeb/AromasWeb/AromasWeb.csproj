@@ -9,7 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AromasWeb.Abstracciones\AromasWeb.Abstracciones.csproj" />
     <ProjectReference Include="..\AromasWeb.AccesoADatos\AromasWeb.AccesoADatos.csproj" />
-    <ProjectReference Include="..\AromasWeb.LogicDeNegocio\AromasWeb.LogicDeNegocio.csproj" />
+    <ProjectReference Include="..\AromasWeb.LogicDeNegocio\AromasWeb.LogicaDeNegocio.csproj" />
   </ItemGroup>
 
   <ItemGroup>

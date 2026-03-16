@@ -62,12 +62,14 @@ namespace AromasWeb.Abstracciones.ModeloUI
             get
             {
                 var hoy = DateTime.Today;
+
                 if (hoy < FechaInicio)
-                    return "Próximamente";
-                else if (hoy > FechaFin)
-                    return "Expirada";
-                else
-                    return "Vigente";
+                    return "Proxima";
+
+                if (hoy > FechaFin)
+                    return "Vencida";
+
+                return "Vigente";
             }
         }
 

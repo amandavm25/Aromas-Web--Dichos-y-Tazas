@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 18
-VisualStudioVersion = 18.3.11429.125
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36908.2 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AromasWeb", "AromasWeb.csproj", "{DBC3A844-B768-4131-83D8-AF71DF05F7E3}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AromasWeb.Abstracciones", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AromasWeb.AccesoADatos", "..\AromasWeb.AccesoADatos\AromasWeb.AccesoADatos.csproj", "{EE7D3D85-1A2D-4277-B9B3-83973DCCB2D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AromasWeb.LogicDeNegocio", "..\AromasWeb.LogicDeNegocio\AromasWeb.LogicDeNegocio.csproj", "{4CCFD3E1-E4C2-48B9-9B9C-DB945AB8B9EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AromasWeb.LogicaDeNegocio", "..\AromasWeb.LogicDeNegocio\AromasWeb.LogicaDeNegocio.csproj", "{4CCFD3E1-E4C2-48B9-9B9C-DB945AB8B9EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A7839F8-C8EE-4686-86F5-3B2EA745DB09}"
 	ProjectSection(SolutionItems) = preProject

@@ -85,17 +85,18 @@ namespace AromasWeb.AccesoADatos.Promocion
                 try
                 {
                     List<PromocionAD> promocionesAD;
-                    DateTime hoy = DateTime.Now;
+                    DateTime hoy = DateTime.UtcNow.Date;
+                    var filtro = vigencia.ToLower();
 
-                    if (vigencia.ToLower() == "vigente")
+                    if (filtro.Contains("vigent"))
                     {
                         promocionesAD = contexto.Promocion
                             .Include(p => p.TipoPromocion)
-                            .Where(p => p.FechaInicio <= hoy && p.FechaFin >= hoy && p.Estado == true)
+                            .Where(p => p.FechaInicio <= hoy && p.FechaFin >= hoy)
                             .OrderBy(p => p.Nombre)
                             .ToList();
                     }
-                    else if (vigencia.ToLower() == "vencida")
+                    else if (filtro.Contains("expir") || filtro.Contains("venc"))
                     {
                         promocionesAD = contexto.Promocion
                             .Include(p => p.TipoPromocion)
@@ -103,7 +104,7 @@ namespace AromasWeb.AccesoADatos.Promocion
                             .OrderBy(p => p.Nombre)
                             .ToList();
                     }
-                    else if (vigencia.ToLower() == "proxima")
+                    else if (filtro.Contains("proxim"))
                     {
                         promocionesAD = contexto.Promocion
                             .Include(p => p.TipoPromocion)
@@ -160,7 +161,7 @@ namespace AromasWeb.AccesoADatos.Promocion
             {
                 try
                 {
-                    DateTime hoy = DateTime.Now;
+                    DateTime hoy = DateTime.UtcNow.Date;
                     List<PromocionAD> promocionesAD = contexto.Promocion
                         .Include(p => p.TipoPromocion)
                         .Where(p => p.FechaInicio <= hoy && p.FechaFin >= hoy && p.Estado == true)

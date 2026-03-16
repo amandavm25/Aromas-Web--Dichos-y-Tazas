@@ -2,6 +2,7 @@
 using AromasWeb.Abstracciones.ModeloUI;
 using System;
 using System.Collections.Generic;
+using PromocionUI = AromasWeb.Abstracciones.ModeloUI.Promocion;
 
 namespace AromasWeb.LogicaDeNegocio.Promociones
 {
@@ -14,37 +15,37 @@ namespace AromasWeb.LogicaDeNegocio.Promociones
             _listarPromociones = new AccesoADatos.Promocion.ListarPromociones();
         }
 
-        public List<Promocion> Obtener()
+        public List<PromocionUI> Obtener()
         {
             return _listarPromociones.Obtener();
         }
 
-        public List<Promocion> BuscarPorNombre(string nombre)
+        public List<PromocionUI> BuscarPorNombre(string nombre)
         {
             return _listarPromociones.BuscarPorNombre(nombre);
         }
 
-        public List<Promocion> BuscarPorTipo(int idTipoPromocion)
+        public List<PromocionUI> BuscarPorTipo(int idTipoPromocion)
         {
             return _listarPromociones.BuscarPorTipo(idTipoPromocion);
         }
 
-        public List<Promocion> BuscarPorVigencia(string vigencia)
+        public List<PromocionUI> BuscarPorVigencia(string vigencia)
         {
             return _listarPromociones.BuscarPorVigencia(vigencia);
         }
 
-        public Promocion ObtenerPorId(int id)
+        public PromocionUI ObtenerPorId(int id)
         {
             return _listarPromociones.ObtenerPorId(id);
         }
 
-        public List<Promocion> ObtenerVigentes()
+        public List<PromocionUI> ObtenerVigentes()
         {
             return _listarPromociones.ObtenerVigentes();
         }
 
-        public List<Promocion> ObtenerPorFecha(DateTime fecha)
+        public List<PromocionUI> ObtenerPorFecha(DateTime fecha)
         {
             return _listarPromociones.ObtenerPorFecha(fecha);
         }
