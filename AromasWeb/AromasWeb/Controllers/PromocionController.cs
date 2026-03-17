@@ -378,49 +378,8 @@ namespace AromasWeb.Controllers
                 return View(promocion);
             }
         }
-
-        // ============================================================
-        // POST: Promocion/EliminarPromocion/5
-        // ============================================================
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EliminarPromocion(int id)
-        {
-            try
-            {
-                // Capturar datos ANTES de eliminar (para bitácora)
-                var promocion = _listarPromociones.ObtenerPorId(id);
-
-                _eliminarPromociones.Ejecutar(id);
-
-                _crearBitacora.RegistrarAccion(
-                    idEmpleado: ObtenerIdEmpleadoSesion(),
-                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de promociones"),
-                    accion: Bitacora.Acciones.Eliminar,
-                    tablaAfectada: "Promocion",
-                    descripcion: $"Se eliminó la promoción: {promocion?.Nombre} (ID: {id})",
-                    datosAnteriores: promocion != null
-                        ? JsonSerializer.Serialize(new
-                        {
-                            promocion.Nombre,
-                            promocion.Descripcion,
-                            promocion.IdTipoPromocion,
-                            promocion.PorcentajeDescuento,
-                            FechaInicio = promocion.FechaInicio.ToString("yyyy-MM-dd"),
-                            FechaFin = promocion.FechaFin.ToString("yyyy-MM-dd"),
-                            promocion.Estado
-                        })
-                        : null
-                );
-
-                TempData["Mensaje"] = "Promoción eliminada correctamente";
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = $"Error al eliminar la promoción: {ex.Message}";
-            }
-
-            return RedirectToAction(nameof(ListadoPromociones));
-        }
     }
+
 }
+
+        
