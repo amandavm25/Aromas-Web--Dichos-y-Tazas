@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AromasWeb.AccesoADatos.Modelos
 {
-    [Table("Rol")]
+    [Table("rol")]
     public class RolAD
     {
         [Key]

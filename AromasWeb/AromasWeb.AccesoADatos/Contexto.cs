@@ -332,7 +332,9 @@ namespace AromasWeb.AccesoADatos
             {
                 entity.ToTable("rol");
                 entity.HasKey(e => e.IdRol);
-                entity.Property(e => e.IdRol).HasColumnName("idrol").ValueGeneratedOnAdd();
+                entity.Property(e => e.IdRol)
+                    .HasColumnName("idrol")
+                    .UseIdentityColumn(); // ← IMPORTANTE
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100).HasColumnName("nombre");
                 entity.Property(e => e.Descripcion).HasMaxLength(500).HasColumnName("descripcion");
                 entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);
