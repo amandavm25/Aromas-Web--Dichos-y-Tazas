@@ -197,4 +197,61 @@
 
 @section Scripts {
     <script src="~/js/tipopromocion.js" asp-append-version="true"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const filasPorPagina = 5;
+            const tabla = document.getElementById("laTablaDeTipos");
+            const cuerpoTabla = tabla.querySelector("tbody");
+            const filas = Array.from(cuerpoTabla.querySelectorAll("tr"))
+                .filter(fila => !fila.classList.contains("admin-table-empty"));
+
+            const btnAnterior = document.getElementById("btnAnterior");
+            const btnSiguiente = document.getElementById("btnSiguiente");
+            const startRecord = document.getElementById("startRecord");
+            const endRecord = document.getElementById("endRecord");
+            const totalRecords = document.getElementById("totalRecords");
+
+            let paginaActual = 1;
+            const totalPaginas = Math.ceil(filas.length / filasPorPagina);
+
+            function mostrarPagina(pagina) {
+                const inicio = (pagina - 1) * filasPorPagina;
+                const fin = inicio + filasPorPagina;
+
+                filas.forEach((fila, index) => {
+                    fila.style.display = (index >= inicio && index < fin) ? "" : "none";
+                });
+
+                if (filas.length === 0) {
+                    startRecord.textContent = 0;
+                    endRecord.textContent = 0;
+                    totalRecords.textContent = 0;
+                } else {
+                    startRecord.textContent = inicio + 1;
+                    endRecord.textContent = Math.min(fin, filas.length);
+                    totalRecords.textContent = filas.length;
+                }
+
+                btnAnterior.disabled = pagina === 1;
+                btnSiguiente.disabled = pagina === totalPaginas || totalPaginas === 0;
+            }
+
+            btnAnterior.addEventListener("click", function () {
+                if (paginaActual > 1) {
+                    paginaActual--;
+                    mostrarPagina(paginaActual);
+                }
+            });
+
+            btnSiguiente.addEventListener("click", function () {
+                if (paginaActual < totalPaginas) {
+                    paginaActual++;
+                    mostrarPagina(paginaActual);
+                }
+            });
+
+            mostrarPagina(paginaActual);
+        });
+    </script>
 }
