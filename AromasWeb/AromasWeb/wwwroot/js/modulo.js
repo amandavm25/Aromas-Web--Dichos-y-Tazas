@@ -1,113 +1,91 @@
-﻿// modulo.js - Gestión de módulos
+﻿// ============================================
+// PAGINACIÓN DE TABLA DE MÓDULOS
+// ============================================
+
 document.addEventListener('DOMContentLoaded', function () {
-
-    // ============================================
-    // PAGINACIÓN
-    // ============================================
-    if (document.getElementById('laTablaDeModulos')) {
-        initTablePagination({
-            tableId: 'laTablaDeModulos',
-            recordsPerPage: 10,
-            prevButtonId: 'btnAnterior',
-            nextButtonId: 'btnSiguiente',
-            startRecordId: 'startRecord',
-            endRecordId: 'endRecord',
-            totalRecordsId: 'totalRecords'
-        });
-    }
-
-    // ============================================
-    // HOVER EFFECTS EN TABLA
-    // ============================================
     const tabla = document.getElementById('laTablaDeModulos');
-    if (tabla) {
-        tabla.querySelectorAll('tbody tr').forEach(fila => {
-            fila.addEventListener('mouseenter', function () {
-                this.style.background = 'linear-gradient(90deg, rgba(32, 116, 118, 0.05) 0%, transparent 100%)';
-                this.style.transform = 'translateX(5px)';
-                this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
-                this.style.transition = 'all 0.2s ease';
-            });
-            fila.addEventListener('mouseleave', function () {
-                this.style.background = '';
-                this.style.transform = '';
-                this.style.boxShadow = '';
-            });
+    if (!tabla) return;
+
+    const tbody = tabla.querySelector('tbody');
+    const filas = Array.from(tbody.querySelectorAll('tr'));
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnSiguiente = document.getElementById('btnSiguiente');
+    const startRecord = document.getElementById('startRecord');
+    const endRecord = document.getElementById('endRecord');
+    const totalRecords = document.getElementById('totalRecords');
+
+    const registrosPorPagina = 10;
+    let paginaActual = 1;
+
+    // Filtrar solo filas válidas (que no sean el "No se encontraron" message)
+    const filasValidas = filas.filter(fila => !fila.querySelector('.admin-table-empty'));
+    const totalPaginas = Math.ceil(filasValidas.length / registrosPorPagina);
+
+    function mostrarPagina(pagina) {
+        const inicio = (pagina - 1) * registrosPorPagina;
+        const fin = inicio + registrosPorPagina;
+
+        // Ocultar todas las filas
+        filasValidas.forEach(fila => fila.style.display = 'none');
+
+        // Mostrar solo las filas de la página actual
+        filasValidas.slice(inicio, fin).forEach(fila => fila.style.display = '');
+
+        // Actualizar contador
+        if (filasValidas.length > 0) {
+            startRecord.textContent = inicio + 1;
+            endRecord.textContent = Math.min(fin, filasValidas.length);
+            totalRecords.textContent = filasValidas.length;
+        } else {
+            startRecord.textContent = '0';
+            endRecord.textContent = '0';
+            totalRecords.textContent = '0';
+        }
+
+        // Actualizar estado de botones
+        btnAnterior.disabled = pagina === 1;
+        btnSiguiente.disabled = pagina === totalPaginas || totalPaginas === 0;
+    }
+
+    // Event listeners
+    if (btnAnterior) {
+        btnAnterior.addEventListener('click', () => {
+            if (paginaActual > 1) {
+                paginaActual--;
+                mostrarPagina(paginaActual);
+            }
         });
     }
 
-    // ============================================
-    // ANIMACIÓN DE ENTRADA
-    // ============================================
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+    if (btnSiguiente) {
+        btnSiguiente.addEventListener('click', () => {
+            if (paginaActual < totalPaginas) {
+                paginaActual++;
+                mostrarPagina(paginaActual);
             }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }
 
-    document.querySelectorAll('.feature-card, .admin-form-wrapper').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'all 0.6s ease';
-        observer.observe(card);
-    });
-
-    // ============================================
-    // MODAL DETALLES MÓDULO
-    // ============================================
-    document.querySelectorAll('.btn-detalles-modulo').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const elId = document.getElementById('detalles-id-modulo');
-            const elNombre = document.getElementById('detalles-nombre-modulo');
-            const elDescripcion = document.getElementById('detalles-descripcion-modulo');
-            const elEstadoBadge = document.getElementById('detalles-estado-badge-modulo');
-
-            if (elId) elId.textContent = '#' + this.dataset.id;
-            if (elNombre) elNombre.textContent = this.dataset.nombre;
-            if (elDescripcion) elDescripcion.textContent = this.dataset.descripcion || 'Sin descripción';
-
-            if (elEstadoBadge) {
-                const estado = this.dataset.estado;
-                elEstadoBadge.textContent = estado;
-                elEstadoBadge.style.background = estado === 'Activo' ? 'var(--green)' : 'var(--red)';
-                elEstadoBadge.style.color = 'white';
-                elEstadoBadge.style.padding = '0.5rem 1.2rem';
-                elEstadoBadge.style.borderRadius = '50px';
-                elEstadoBadge.style.display = 'inline-block';
-            }
-        });
-    });
+    // Mostrar primera página al cargar
+    mostrarPagina(1);
 });
 
 // ============================================
-// NOTIFICACIONES
+// MODAL DE DETALLES DEL MÓDULO
 // ============================================
-function mostrarNotificacion(mensaje, tipo) {
-    const iconos = { 'success': 'fa-check-circle', 'error': 'fa-exclamation-triangle', 'warning': 'fa-exclamation-triangle', 'info': 'fa-info-circle' };
-    const colores = { 'success': 'var(--green)', 'error': 'var(--red)', 'warning': 'var(--yellow)', 'info': 'var(--gold)' };
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed; top: 100px; right: 20px;
-        background: ${colores[tipo]}; color: white;
-        padding: 1.5rem 2rem; border-radius: 10px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-        z-index: 10001; animation: slideIn 0.3s ease;
-        font-weight: 600; display: flex; align-items: center; gap: 1rem; min-width: 300px;
-    `;
-    notification.innerHTML = `<i class="fas ${iconos[tipo]}" style="font-size: 1.5rem;"></i><span>${mensaje}</span>`;
-    document.body.appendChild(notification);
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
-}
 
-const notifStyle = document.createElement('style');
-notifStyle.innerHTML = `
-    @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
-`;
-document.head.appendChild(notifStyle);
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.btn-detalles-modulo').forEach(btn => {
+        btn.addEventListener('click', function () {
+            document.getElementById('detalles-id-modulo').textContent = '#' + this.dataset.id;
+            document.getElementById('detalles-nombre-modulo').textContent = this.dataset.nombre;
+            document.getElementById('detalles-descripcion-modulo').textContent = this.dataset.descripcion || 'Sin descripción';
+
+            const badge = document.getElementById('detalles-estado-badge-modulo');
+            const estado = this.dataset.estado;
+            badge.textContent = estado;
+            badge.style.background = estado === 'Activo' ? 'var(--green)' : 'var(--red)';
+            badge.style.color = 'white';
+        });
+    });
+});

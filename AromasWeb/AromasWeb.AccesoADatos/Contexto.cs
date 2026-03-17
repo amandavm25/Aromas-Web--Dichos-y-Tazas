@@ -519,7 +519,9 @@ namespace AromasWeb.AccesoADatos
             {
                 entity.ToTable("modulo");
                 entity.HasKey(e => e.IdModulo);
-                entity.Property(e => e.IdModulo).HasColumnName("idmodulo").ValueGeneratedOnAdd();
+                entity.Property(e => e.IdModulo)
+                    .HasColumnName("idmodulo")
+                    .UseIdentityColumn(); // ← CAMBIO CRÍTICO
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100).HasColumnName("nombre");
                 entity.Property(e => e.Descripcion).IsRequired(false).HasMaxLength(500).HasColumnName("descripcion");
                 entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);

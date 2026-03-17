@@ -1,5 +1,5 @@
-﻿using ModuloUI = AromasWeb.Abstracciones.ModeloUI.Modulo;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ModuloUI = AromasWeb.Abstracciones.ModeloUI.Modulo;
 
 namespace AromasWeb.Abstracciones.Logica.Modulo
 {

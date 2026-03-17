@@ -7,20 +7,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace AromasWeb.Controllers
 {
     public class ModuloController : Controller
     {
         private IListarModulos _listarModulos;
+        private ICrearModulo _crearModulo;
+        private IActualizarModulo _actualizarModulo;
+        private IObtenerModulo _obtenerModulo;
         private readonly CrearBitacora _crearBitacora;
 
         public ModuloController()
         {
             _listarModulos = new LogicaDeNegocio.Modulos.ListarModulos();
+            _crearModulo = new LogicaDeNegocio.Modulos.CrearModulo();
+            _actualizarModulo = new LogicaDeNegocio.Modulos.ActualizarModulo();
+            _obtenerModulo = new LogicaDeNegocio.Modulos.ObtenerModulo();
             _crearBitacora = new CrearBitacora();
         }
 
+        // Helper de sesión
         private int ObtenerIdEmpleadoSesion()
         {
             int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
@@ -35,12 +43,10 @@ namespace AromasWeb.Controllers
             ViewBag.Buscar = buscar;
             ViewBag.FiltroEstado = filtroEstado;
 
-            // Obtener módulos según los filtros
             List<Modulo> modulos;
 
             if (!string.IsNullOrEmpty(buscar) && !string.IsNullOrEmpty(filtroEstado))
             {
-                // Buscar por nombre y filtrar por estado
                 bool estado = filtroEstado == "activo";
                 modulos = _listarModulos.BuscarPorNombre(buscar)
                     .Where(m => m.Estado == estado)
@@ -48,18 +54,15 @@ namespace AromasWeb.Controllers
             }
             else if (!string.IsNullOrEmpty(buscar))
             {
-                // Solo buscar por nombre
                 modulos = _listarModulos.BuscarPorNombre(buscar);
             }
             else if (!string.IsNullOrEmpty(filtroEstado))
             {
-                // Solo filtrar por estado
                 bool estado = filtroEstado == "activo";
                 modulos = _listarModulos.BuscarPorEstado(estado);
             }
             else
             {
-                // Obtener todos
                 modulos = _listarModulos.Obtener();
             }
 
@@ -75,46 +78,86 @@ namespace AromasWeb.Controllers
         // POST: Modulo/CrearModulo
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CrearModulo(Modulo modulo)
+        public async Task<IActionResult> CrearModulo(Modulo modulo)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Aquí iría la lógica para guardar en la base de datos
-                _crearBitacora.RegistrarAccion(
-                    idEmpleado: ObtenerIdEmpleadoSesion(),
-                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de módulos"),
-                    accion: Bitacora.Acciones.Crear,
-                    tablaAfectada: "Modulo",
-                    descripcion: $"Se registró el módulo: {modulo.Nombre}",
-                    datosNuevos: JsonSerializer.Serialize(new
-                    {
-                        modulo.Nombre,
-                        modulo.Descripcion,
-                        modulo.Estado
-                    })
-                );
+                // Remover propiedades calculadas del ModelState
+                ModelState.Remove("EstadoTexto");
 
-                TempData["Mensaje"] = "Módulo registrado correctamente";
-                TempData["TipoMensaje"] = "success";
-                return RedirectToAction(nameof(ListadoModulos));
+                if (!ModelState.IsValid)
+                {
+                    TempData["Error"] = "Por favor, corrige los errores del formulario";
+                    return View(modulo);
+                }
+
+                // Establecer estado por defecto si no viene
+                modulo.Estado = true;
+
+                int resultado = await _crearModulo.Crear(modulo);
+
+                if (resultado > 0)
+                {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de módulos"),
+                        accion: Bitacora.Acciones.Crear,
+                        tablaAfectada: "Modulo",
+                        descripcion: $"Se creó el módulo: {modulo.Nombre}",
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            modulo.Nombre,
+                            modulo.Descripcion,
+                            modulo.Estado
+                        })
+                    );
+
+                    TempData["Mensaje"] = "Módulo registrado correctamente";
+                    return RedirectToAction(nameof(ListadoModulos));
+                }
+                else
+                {
+                    TempData["Error"] = "No se pudo registrar el módulo en la base de datos";
+                    return View(modulo);
+                }
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error en CrearModulo: {ex.Message}");
 
-            return View(modulo);
+                if (ex.Message.Contains("Ya existe un módulo"))
+                {
+                    TempData["Error"] = "Ya existe un módulo con ese nombre";
+                }
+                else
+                {
+                    TempData["Error"] = $"Error al registrar el módulo: {ex.Message}";
+                }
+
+                return View(modulo);
+            }
         }
 
         // GET: Modulo/EditarModulo/5
         public IActionResult EditarModulo(int id)
         {
-            var modulo = _listarModulos.ObtenerPorId(id);
-
-            if (modulo == null)
+            try
             {
-                TempData["Mensaje"] = "Módulo no encontrado";
-                TempData["TipoMensaje"] = "error";
+                var modulo = _obtenerModulo.Obtener(id);
+
+                if (modulo == null)
+                {
+                    TempData["Error"] = "Módulo no encontrado";
+                    return RedirectToAction(nameof(ListadoModulos));
+                }
+
+                return View(modulo);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar el módulo: {ex.Message}";
                 return RedirectToAction(nameof(ListadoModulos));
             }
-
-            return View(modulo);
         }
 
         // POST: Modulo/EditarModulo
@@ -122,59 +165,70 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditarModulo(Modulo modulo)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Aquí iría la lógica para actualizar en la base de datos
-                var anterior = _listarModulos.ObtenerPorId(modulo.IdModulo);
+                // Remover propiedades calculadas del ModelState
+                ModelState.Remove("EstadoTexto");
 
-                _crearBitacora.RegistrarAccion(
-                    idEmpleado: ObtenerIdEmpleadoSesion(),
-                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de módulos"),
-                    accion: Bitacora.Acciones.Actualizar,
-                    tablaAfectada: "Modulo",
-                    descripcion: $"Se actualizó el módulo: {modulo.Nombre} (ID: {modulo.IdModulo})",
-                    datosAnteriores: anterior != null
-                        ? JsonSerializer.Serialize(new { anterior.Nombre, anterior.Descripcion, anterior.Estado })
-                        : null,
-                    datosNuevos: JsonSerializer.Serialize(new
-                    {
-                        modulo.Nombre,
-                        modulo.Descripcion,
-                        modulo.Estado
-                    })
-                );
+                if (!ModelState.IsValid)
+                {
+                    TempData["Error"] = "Por favor, corrige los errores del formulario";
+                    return View(modulo);
+                }
 
-                TempData["Mensaje"] = "Módulo actualizado correctamente";
-                TempData["TipoMensaje"] = "success";
-                return RedirectToAction(nameof(ListadoModulos));
+                // Capturar datos anteriores ANTES de actualizar
+                var anterior = _obtenerModulo.Obtener(modulo.IdModulo);
+
+                int resultado = _actualizarModulo.Actualizar(modulo);
+
+                if (resultado > 0)
+                {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de módulos"),
+                        accion: Bitacora.Acciones.Actualizar,
+                        tablaAfectada: "Modulo",
+                        descripcion: $"Se actualizó el módulo: {modulo.Nombre} (ID: {modulo.IdModulo})",
+                        datosAnteriores: anterior != null
+                            ? JsonSerializer.Serialize(new
+                            {
+                                anterior.Nombre,
+                                anterior.Descripcion,
+                                anterior.Estado
+                            })
+                            : null,
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            modulo.Nombre,
+                            modulo.Descripcion,
+                            modulo.Estado
+                        })
+                    );
+
+                    TempData["Mensaje"] = "Módulo actualizado correctamente";
+                    return RedirectToAction(nameof(ListadoModulos));
+                }
+                else
+                {
+                    TempData["Error"] = "No se pudo actualizar el módulo en la base de datos";
+                    return View(modulo);
+                }
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error en EditarModulo: {ex.Message}");
 
-            return View(modulo);
-        }
+                if (ex.Message.Contains("Ya existe otro módulo"))
+                {
+                    TempData["Error"] = "Ya existe otro módulo con ese nombre";
+                }
+                else
+                {
+                    TempData["Error"] = $"Error al actualizar el módulo: {ex.Message}";
+                }
 
-        // POST: Modulo/EliminarModulo/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EliminarModulo(int id)
-        {
-            // Aquí iría la lógica para eliminar de la base de datos
-            // Validar que no tenga permisos asociados antes de eliminar
-            var modulo = _listarModulos.ObtenerPorId(id);
-
-            _crearBitacora.RegistrarAccion(
-                idEmpleado: ObtenerIdEmpleadoSesion(),
-                idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de módulos"),
-                accion: Bitacora.Acciones.Eliminar,
-                tablaAfectada: "Modulo",
-                descripcion: $"Se eliminó el módulo: {modulo?.Nombre ?? id.ToString()} (ID: {id})",
-                datosAnteriores: modulo != null
-                    ? JsonSerializer.Serialize(new { modulo.Nombre, modulo.Descripcion, modulo.Estado })
-                    : null
-            );
-
-            TempData["Mensaje"] = "Módulo eliminado correctamente";
-            TempData["TipoMensaje"] = "success";
-            return RedirectToAction(nameof(ListadoModulos));
+                return View(modulo);
+            }
         }
     }
 }
