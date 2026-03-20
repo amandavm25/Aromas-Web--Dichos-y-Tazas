@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Permiso;
 using AromasWeb.Abstracciones.Logica.Modulo;
+using AromasWeb.Abstracciones.Logica.Rol;
 using AromasWeb.AccesoADatos.Modulos;
 using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System;
@@ -15,104 +16,123 @@ namespace AromasWeb.Controllers
     public class PermisoController : Controller
     {
         private IListarPermisos _listarPermisos;
+        private ICrearPermiso _crearPermiso;
+        private IActualizarPermiso _actualizarPermiso;
+        private IEliminarPermiso _eliminarPermiso;
         private IListarModulos _listarModulos;
+        private IListarRoles _listarRoles;
         private readonly CrearBitacora _crearBitacora;
 
         public PermisoController()
         {
             _listarPermisos = new LogicaDeNegocio.Permisos.ListarPermisos();
+            _crearPermiso = new LogicaDeNegocio.Permisos.CrearPermiso();
+            _actualizarPermiso = new LogicaDeNegocio.Permisos.ActualizarPermiso();
+            _eliminarPermiso = new LogicaDeNegocio.Permisos.EliminarPermiso();
             _listarModulos = new LogicaDeNegocio.Modulos.ListarModulos();
+            _listarRoles = new LogicaDeNegocio.Roles.ListarRoles();
             _crearBitacora = new CrearBitacora();
         }
 
         private int ObtenerIdEmpleadoSesion()
         {
-            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
-            if (idSesion.HasValue && idSesion.Value > 0)
-                return idSesion.Value;
-            return 1;
+            int? id = HttpContext.Session.GetInt32("IdEmpleado");
+            return (id.HasValue && id.Value > 0) ? id.Value : 1;
         }
 
-        // GET: Permiso/ListadoPermisos
-        public IActionResult ListadoPermisos(string buscar, int? filtroModulo)
+        // ============================================================
+        // LISTADO
+        // ============================================================
+        public IActionResult ListadoPermisos(string buscar, int? filtroModulo, string filtroEstado)
         {
             ViewBag.Buscar = buscar;
             ViewBag.FiltroModulo = filtroModulo;
+            ViewBag.FiltroEstado = filtroEstado;
 
-            // Cargar módulos para filtro
             CargarModulos();
 
-            // Obtener permisos
-            List<Permiso> permisos;
+            var permisos = _listarPermisos.Obtener();
 
-            if (!string.IsNullOrEmpty(buscar) && filtroModulo.HasValue)
+            // Filtro por módulo
+            if (filtroModulo.HasValue)
+                permisos = permisos.Where(p => p.IdModulo == filtroModulo.Value).ToList();
+
+            // Filtro por estado
+            if (!string.IsNullOrEmpty(filtroEstado))
             {
-                permisos = _listarPermisos.ObtenerPorModulo(filtroModulo.Value)
-                    .Where(p => p.Nombre.ToLower().Contains(buscar.ToLower()))
-                    .ToList();
+                bool activo = filtroEstado == "true";
+                permisos = permisos.Where(p => p.Estado == activo).ToList();
             }
-            else if (!string.IsNullOrEmpty(buscar))
-            {
-                permisos = _listarPermisos.Obtener()
-                    .Where(p => p.Nombre.ToLower().Contains(buscar.ToLower()))
-                    .ToList();
-            }
-            else if (filtroModulo.HasValue)
-            {
-                permisos = _listarPermisos.ObtenerPorModulo(filtroModulo.Value);
-            }
-            else
-            {
-                permisos = _listarPermisos.Obtener();
-            }
+
+            // Filtro por nombre
+            if (!string.IsNullOrEmpty(buscar))
+                permisos = permisos.Where(p => p.Nombre.ToLower().Contains(buscar.ToLower())).ToList();
 
             return View(permisos);
         }
 
-        // GET: Permiso/CrearPermiso
+        // ============================================================
+        // CREAR
+        // ============================================================
         public IActionResult CrearPermiso()
         {
             CargarModulosParaSelect();
             return View();
         }
 
-        // POST: Permiso/CrearPermiso
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CrearPermiso(Permiso permiso)
         {
-            if (ModelState.IsValid)
+            // Si el modelo no es válido, mostrar qué falta
+            if (!ModelState.IsValid)
             {
-                // Aquí iría la lógica para guardar en la base de datos
-                _crearBitacora.RegistrarAccion(
-                    idEmpleado: ObtenerIdEmpleadoSesion(),
-                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
-                    accion: Bitacora.Acciones.Crear,
-                    tablaAfectada: "Permiso",
-                    descripcion: $"Se registró el permiso: {permiso.Nombre} (módulo ID: {permiso.IdModulo})",
-                    datosNuevos: JsonSerializer.Serialize(new
-                    {
-                        permiso.Nombre,
-                        permiso.IdModulo
-                    })
-                );
-
-                TempData["Mensaje"] = "Permiso registrado correctamente";
-                return RedirectToAction(nameof(ListadoPermisos));
+                TempData["Error"] = "Por favor completa todos los campos requeridos";
+                CargarModulosParaSelect(permiso.IdModulo);
+                return View(permiso);
             }
 
-            CargarModulosParaSelect();
-            return View(permiso);
+            try
+            {
+                int resultado = _crearPermiso.Crear(permiso);
+
+                if (resultado > 0)
+                {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
+                        accion: Bitacora.Acciones.Crear,
+                        tablaAfectada: "Permiso",
+                        descripcion: $"Se registró el permiso: {permiso.Nombre} (módulo ID: {permiso.IdModulo})",
+                        datosNuevos: JsonSerializer.Serialize(new { permiso.Nombre, permiso.IdModulo, permiso.Descripcion, permiso.Estado })
+                    );
+
+                    TempData["Mensaje"] = "Permiso registrado correctamente";
+                    return RedirectToAction(nameof(ListadoPermisos));
+                }
+
+                // SaveChanges devolvió 0 sin lanzar excepción
+                TempData["Error"] = "No se pudo registrar el permiso";
+                CargarModulosParaSelect(permiso.IdModulo);
+                return View(permiso);
+            }
+            catch (Exception ex)
+            {
+                // Redirigir al GET para que TempData se muestre de forma segura
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(CrearPermiso));
+            }
         }
 
-        // GET: Permiso/EditarPermiso/5
+        // ============================================================
+        // EDITAR
+        // ============================================================
         public IActionResult EditarPermiso(int id)
         {
             var permiso = _listarPermisos.ObtenerPorId(id);
-
             if (permiso == null)
             {
-                TempData["Mensaje"] = "Permiso no encontrado";
+                TempData["Error"] = "Permiso no encontrado";
                 return RedirectToAction(nameof(ListadoPermisos));
             }
 
@@ -120,135 +140,181 @@ namespace AromasWeb.Controllers
             return View(permiso);
         }
 
-        // POST: Permiso/EditarPermiso
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditarPermiso(Permiso permiso)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // Aquí iría la lógica para actualizar en la base de datos
-                var anterior = _listarPermisos.ObtenerPorId(permiso.IdPermiso);
-
-                _crearBitacora.RegistrarAccion(
-                    idEmpleado: ObtenerIdEmpleadoSesion(),
-                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
-                    accion: Bitacora.Acciones.Actualizar,
-                    tablaAfectada: "Permiso",
-                    descripcion: $"Se actualizó el permiso: {permiso.Nombre} (ID: {permiso.IdPermiso})",
-                    datosAnteriores: anterior != null
-                        ? JsonSerializer.Serialize(new { anterior.Nombre, anterior.IdModulo })
-                        : null,
-                    datosNuevos: JsonSerializer.Serialize(new
-                    {
-                        permiso.Nombre,
-                        permiso.IdModulo
-                    })
-                );
-
-                TempData["Mensaje"] = "Permiso actualizado correctamente";
-                return RedirectToAction(nameof(ListadoPermisos));
+                TempData["Error"] = "Por favor completa todos los campos requeridos";
+                CargarModulosParaSelect(permiso.IdModulo);
+                return View(permiso);
             }
 
-            CargarModulosParaSelect(permiso.IdModulo);
-            return View(permiso);
+            try
+            {
+                var anterior = _listarPermisos.ObtenerPorId(permiso.IdPermiso);
+                int resultado = _actualizarPermiso.Actualizar(permiso);
+
+                if (resultado > 0)
+                {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
+                        accion: Bitacora.Acciones.Actualizar,
+                        tablaAfectada: "Permiso",
+                        descripcion: $"Se actualizó el permiso: {permiso.Nombre} (ID: {permiso.IdPermiso})",
+                        datosAnteriores: anterior != null
+                            ? JsonSerializer.Serialize(new { anterior.Nombre, anterior.IdModulo, anterior.Descripcion, anterior.Estado })
+                            : null,
+                        datosNuevos: JsonSerializer.Serialize(new { permiso.Nombre, permiso.IdModulo, permiso.Descripcion, permiso.Estado })
+                    );
+
+                    TempData["Mensaje"] = "Permiso actualizado correctamente";
+                    return RedirectToAction(nameof(ListadoPermisos));
+                }
+
+                TempData["Error"] = "No se encontró el permiso a actualizar";
+                CargarModulosParaSelect(permiso.IdModulo);
+                return View(permiso);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(EditarPermiso), new { id = permiso.IdPermiso });
+            }
         }
 
-        // POST: Permiso/EliminarPermiso/5
+        // ============================================================
+        // ELIMINAR
+        // ============================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EliminarPermiso(int id)
         {
-            // Aquí iría la lógica para eliminar de la base de datos
-            var permiso = _listarPermisos.ObtenerPorId(id);
+            try
+            {
+                var permiso = _listarPermisos.ObtenerPorId(id);
+                int resultado = _eliminarPermiso.Eliminar(id);
 
-            _crearBitacora.RegistrarAccion(
-                idEmpleado: ObtenerIdEmpleadoSesion(),
-                idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
-                accion: Bitacora.Acciones.Eliminar,
-                tablaAfectada: "Permiso",
-                descripcion: $"Se eliminó el permiso: {permiso?.Nombre ?? id.ToString()} (ID: {id})",
-                datosAnteriores: permiso != null
-                    ? JsonSerializer.Serialize(new { permiso.Nombre, permiso.IdModulo })
-                    : null
-            );
+                if (resultado > 0)
+                {
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
+                        accion: Bitacora.Acciones.Eliminar,
+                        tablaAfectada: "Permiso",
+                        descripcion: $"Se eliminó el permiso: {permiso?.Nombre ?? id.ToString()} (ID: {id})",
+                        datosAnteriores: permiso != null
+                            ? JsonSerializer.Serialize(new { permiso.Nombre, permiso.IdModulo })
+                            : null
+                    );
 
-            TempData["Mensaje"] = "Permiso eliminado correctamente";
+                    TempData["Mensaje"] = "Permiso eliminado correctamente";
+                }
+                else
+                {
+                    TempData["Error"] = "No se encontró el permiso a eliminar";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
             return RedirectToAction(nameof(ListadoPermisos));
         }
 
-        // GET: Permiso/AsignarPermisos/5
-        public IActionResult AsignarPermisos(int id)
+        // ============================================================
+        // ASIGNAR PERMISOS A ROL
+        // ============================================================
+        public IActionResult AsignarPermisos(int idRol)
         {
-            // Aquí obtendrías el rol desde la BD (por ahora ejemplo)
-            var rol = new Rol
+            try
             {
-                IdRol = id,
-                Nombre = "Administrador",
-                Descripcion = "Acceso completo al sistema"
-            };
+                var rol = _listarRoles.ObtenerPorId(idRol);
+                if (rol == null)
+                {
+                    TempData["Error"] = "Rol no encontrado";
+                    return RedirectToAction("ListadoRoles", "Rol");
+                }
 
-            // Obtener módulos y permisos desde la BD
-            var modulos = _listarModulos.Obtener();
-            var permisos = _listarPermisos.Obtener();
-            var permisosAsignados = _listarPermisos.ObtenerPermisosDeRol(id);
+                var modulos = _listarModulos.BuscarPorEstado(true);
+                var permisos = _listarPermisos.Obtener().Where(p => p.Estado).ToList();
+                var permisosAsignados = _listarPermisos.ObtenerPermisosDeRol(idRol);
 
-            ViewBag.Rol = rol;
-            ViewBag.Modulos = modulos;
-            ViewBag.Permisos = permisos;
-            ViewBag.PermisosAsignados = permisosAsignados;
+                ViewBag.Rol = rol;
+                ViewBag.Modulos = modulos;
+                ViewBag.Permisos = permisos;
+                ViewBag.PermisosAsignados = permisosAsignados;
 
-            return View();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ASIGNAR PERMISOS ERROR] {ex.Message} | INNER: {ex.InnerException?.Message}");
+                TempData["Error"] = "Error al cargar la pantalla de permisos";
+                return RedirectToAction("ListadoRoles", "Rol");
+            }
         }
 
-        // POST: Permiso/GuardarPermisos
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult GuardarPermisos(int idRol, List<int> permisosSeleccionados)
         {
-            if (permisosSeleccionados == null)
+            try
             {
-                permisosSeleccionados = new List<int>();
-            }
+                if (permisosSeleccionados == null)
+                    permisosSeleccionados = new List<int>();
 
-            bool exito = _listarPermisos.AsignarPermisosARol(idRol, permisosSeleccionados);
+                bool exito = _listarPermisos.AsignarPermisosARol(idRol, permisosSeleccionados);
 
-            if (exito)
-            {
-                _crearBitacora.RegistrarAccion(
-                    idEmpleado: ObtenerIdEmpleadoSesion(),
-                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
-                    accion: Bitacora.Acciones.AsignarPermisos,
-                    tablaAfectada: "RolPermiso",
-                    descripcion: $"Se asignaron {permisosSeleccionados.Count} permiso(s) al rol ID: {idRol}",
-                    datosNuevos: JsonSerializer.Serialize(new
+                if (exito)
+                {
+                    try
                     {
-                        IdRol = idRol,
-                        Permisos = permisosSeleccionados
-                    })
-                );
+                        _crearBitacora.RegistrarAccion(
+                            idEmpleado: ObtenerIdEmpleadoSesion(),
+                            idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de permisos"),
+                            accion: Bitacora.Acciones.AsignarPermisos,
+                            tablaAfectada: "RolPermiso",
+                            descripcion: $"Se asignaron {permisosSeleccionados.Count} permiso(s) al rol ID: {idRol}",
+                            datosNuevos: JsonSerializer.Serialize(new { IdRol = idRol, Permisos = permisosSeleccionados })
+                        );
+                    }
+                    catch (Exception exBitacora)
+                    {
+                        // La bitácora falla pero la operación principal fue exitosa
+                        Console.WriteLine($"[BITACORA ERROR] {exBitacora.Message}");
+                    }
 
-                TempData["Mensaje"] = "Permisos asignados correctamente";
+                    TempData["Mensaje"] = "Permisos asignados correctamente";
+                }
+                else
+                {
+                    TempData["Error"] = "Error al asignar permisos";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                TempData["Mensaje"] = "Error al asignar permisos";
-                TempData["TipoMensaje"] = "error";
+                Console.WriteLine($"[GUARDAR PERMISOS ERROR] {ex.Message} | INNER: {ex.InnerException?.Message}");
+                TempData["Error"] = "Error inesperado al asignar permisos";
             }
 
             return RedirectToAction("ListadoRoles", "Rol");
         }
 
-        // Métodos auxiliares
+        // ============================================================
+        // AUXILIARES
+        // ============================================================
         private void CargarModulos()
         {
-            var modulos = _listarModulos.Obtener();
-            ViewBag.Modulos = modulos;
+            ViewBag.Modulos = _listarModulos.Obtener();
         }
 
         private void CargarModulosParaSelect(int? idModuloSeleccionado = null)
         {
-            var modulos = _listarModulos.BuscarPorEstado(true); // Solo activos
+            var modulos = _listarModulos.BuscarPorEstado(true);
             ViewBag.Modulos = new SelectList(modulos, "IdModulo", "Nombre", idModuloSeleccionado);
         }
     }

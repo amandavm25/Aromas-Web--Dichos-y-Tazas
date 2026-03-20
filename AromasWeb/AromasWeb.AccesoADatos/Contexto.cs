@@ -541,6 +541,8 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.IdPermiso).HasColumnName("idpermiso").ValueGeneratedOnAdd();
                 entity.Property(e => e.IdModulo).IsRequired().HasColumnName("idmodulo");
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100).HasColumnName("nombre");
+                entity.Property(e => e.Descripcion).IsRequired(false).HasMaxLength(500).HasColumnName("descripcion");
+                entity.Property(e => e.Estado).IsRequired().HasColumnName("estado").HasDefaultValue(true);
 
                 // Relación con Modulo
                 entity.HasOne(e => e.Modulo)
@@ -551,6 +553,7 @@ namespace AromasWeb.AccesoADatos
                 // Índices
                 entity.HasIndex(e => e.IdModulo);
                 entity.HasIndex(e => new { e.IdModulo, e.Nombre }).IsUnique();
+                entity.HasIndex(e => e.Estado);
             });
 
             // Configuración de RolPermiso

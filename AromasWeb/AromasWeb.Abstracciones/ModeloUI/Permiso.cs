@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace AromasWeb.Abstracciones.ModeloUI
@@ -17,17 +16,27 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [StringLength(100, ErrorMessage = "El nombre no puede exceder 100 caracteres")]
         public string Nombre { get; set; }
 
-        // Propiedades de navegación
-        public virtual Modulo Modulo { get; set; }
+        [DisplayName("Descripción")]
+        [StringLength(500, ErrorMessage = "La descripción no puede exceder 500 caracteres")]
+        public string Descripcion { get; set; }
+
+        [DisplayName("Estado")]
+        public bool Estado { get; set; } = true;
+
+        // Propiedad de navegación
+        public virtual Modulo? Modulo { get; set; }
 
         // Propiedades calculadas
         [DisplayName("Módulo")]
         public string NombreModulo
         {
-            get
-            {
-                return Modulo?.Nombre ?? "Sin módulo";
-            }
+            get { return Modulo?.Nombre ?? "Sin módulo"; }
+        }
+
+        [DisplayName("Estado")]
+        public string EstadoTexto
+        {
+            get { return Estado ? "Activo" : "Inactivo"; }
         }
     }
 }

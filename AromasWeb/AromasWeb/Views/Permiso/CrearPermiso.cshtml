@@ -24,9 +24,7 @@
         </div>
     </div>
     <div class="scroll-indicator">
-        <div class="mouse">
-            <div class="wheel"></div>
-        </div>
+        <div class="mouse"><div class="wheel"></div></div>
     </div>
 </section>
 
@@ -37,8 +35,21 @@
         {
             @Html.AntiForgeryToken()
 
+            @* TEMPORAL - para diagnóstico, quítalo después *@
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div style="background: #f8d7da; padding: 1rem; margin: 1rem 0; border-radius: 8px;">
+                    @foreach (var error in ViewData.ModelState)
+                    {
+                        foreach (var e in error.Value.Errors)
+                        {
+                            <p><strong>@error.Key:</strong> @e.ErrorMessage</p>
+                        }
+                    }
+                </div>
+            }
+
             <div class="admin-form-wrapper" data-aos="fade-up">
-                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                 <!-- Header -->
                 <div class="admin-form-header">
@@ -50,29 +61,31 @@
 
                     <!-- Módulo -->
                     <div class="form-group">
-                        <label>
-                            <i class="fas fa-cube"></i>
-                            Módulo
-                        </label>
+                        <label><i class="fas fa-cube"></i> Módulo</label>
                         @Html.DropDownListFor(model => model.IdModulo, (SelectList)ViewBag.Modulos, "-- Seleccione un módulo --", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.IdModulo, "", new { @class = "text-danger" })
                         <small class="admin-form-hint">
-                            <i class="fas fa-info-circle"></i>
-                            Selecciona el módulo al que pertenece este permiso
+                            <i class="fas fa-info-circle"></i> Selecciona el módulo al que pertenece este permiso
                         </small>
                     </div>
 
                     <!-- Nombre -->
                     <div class="form-group">
-                        <label>
-                            <i class="fas fa-tag"></i>
-                            Nombre del Permiso
-                        </label>
+                        <label><i class="fas fa-tag"></i> Nombre del Permiso</label>
                         @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Ver Empleados, Crear Empleados" } })
                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                         <small class="admin-form-hint">
-                            <i class="fas fa-info-circle"></i>
-                            Usa nombres descriptivos como "Ver", "Crear", "Editar", "Eliminar"
+                            <i class="fas fa-info-circle"></i> Usa nombres descriptivos como "Ver", "Crear", "Editar", "Eliminar"
+                        </small>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="form-group">
+                        <label><i class="fas fa-align-left"></i> Descripción</label>
+                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", placeholder = "Descripción del permiso (opcional)", rows = "3" })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i> Opcional — explica qué acción habilita este permiso
                         </small>
                     </div>
 
@@ -81,7 +94,7 @@
                         <i class="fas fa-info-circle"></i>
                         <div>
                             <strong>Registro de Nuevo Permiso</strong>
-                            <p>Este permiso podrá ser asignado a diferentes roles del sistema.</p>
+                            <p>Este permiso podrá ser asignado a diferentes roles del sistema. Se creará como activo por defecto.</p>
                         </div>
                     </div>
 

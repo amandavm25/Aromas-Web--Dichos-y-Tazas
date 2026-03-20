@@ -4,6 +4,7 @@
     ViewBag.Title = "Gestión de Permisos";
     var totalPermisos = Model?.Count ?? 0;
     var modulosUnicos = Model?.Select(p => p.NombreModulo).Distinct().Count() ?? 0;
+    var permisosActivos = Model?.Count(p => p.Estado) ?? 0;
 }
 
 <!-- Hero Section -->
@@ -25,9 +26,7 @@
         </div>
     </div>
     <div class="scroll-indicator">
-        <div class="mouse">
-            <div class="wheel"></div>
-        </div>
+        <div class="mouse"><div class="wheel"></div></div>
     </div>
 </section>
 
@@ -35,58 +34,51 @@
 <section style="padding: 4rem 0; background: var(--cream);">
     <div class="container" style="max-width: 1400px;">
 
-        <!-- Resumen de Permisos -->
+        <!-- Resumen -->
         <div class="features-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" data-aos="fade-up">
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="0">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalPermisos</h3>
                 <p style="margin: 0.5rem 0;">Total de Permisos</p>
             </div>
-
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-icon">
-                    <i class="fas fa-puzzle-piece"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@permisosActivos</h3>
+                <p style="margin: 0.5rem 0;">Permisos Activos</p>
+            </div>
+            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon"><i class="fas fa-puzzle-piece"></i></div>
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@modulosUnicos</h3>
                 <p style="margin: 0.5rem 0;">Módulos con Permisos</p>
             </div>
-
-            <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon">
-                    <i class="fas fa-calculator"></i>
-                </div>
-                <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
-                    @(modulosUnicos > 0 ? (totalPermisos / modulosUnicos).ToString() : "0")
-                </h3>
-                <p style="margin: 0.5rem 0;">Promedio por Módulo</p>
-            </div>
         </div>
 
-        <!-- Barra de búsqueda y botones -->
+        <!-- Barra de búsqueda y filtros -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
-            <form method="get" action="@Url.Action("ListadoPermisos", "Permiso")" style="position: relative; flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
-                <div style="position: relative; flex: 1;">
+            <form method="get" action="@Url.Action("ListadoPermisos", "Permiso")" style="flex: 1; min-width: 300px; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+
+                <!-- Buscar por nombre -->
+                <div style="position: relative; flex: 1; min-width: 200px;">
                     <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1;"></i>
                     <input type="text"
                            name="buscar"
                            value="@ViewBag.Buscar"
-                           placeholder="Buscar por nombre de permiso..."
-                           style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); transition: all 0.3s; box-shadow: var(--shadow-sm);">
+                           placeholder="Buscar por nombre..."
+                           style="width: 100%; padding: 1rem 1rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); box-shadow: var(--shadow-sm);">
                 </div>
 
+                <!-- Filtro por módulo -->
                 <div style="position: relative;">
                     <i class="fas fa-puzzle-piece" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--olive-green); z-index: 1; pointer-events: none;"></i>
                     <select name="filtroModulo"
-                            style="padding: 1rem 1.5rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); color: var(--dark-green); font-weight: 600; min-width: 200px;">
+                            style="padding: 1rem 1.5rem 1rem 50px; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); color: var(--dark-green); font-weight: 600; min-width: 180px;">
                         <option value="">Todos los módulos</option>
                         @if (ViewBag.Modulos != null)
                         {
                             foreach (var mod in ViewBag.Modulos)
                             {
                                 <option value="@mod.IdModulo"
-                                        @@(ViewBag.FiltroModulo != null && ViewBag.FiltroModulo == mod.IdModulo ? "selected" : "")>
+                                        @@(ViewBag.FiltroModulo !=null && ViewBag.FiltroModulo= =mod.IdModulo ? "selected" : "" )>
                                     @mod.Nombre
                                 </option>
                             }
@@ -94,11 +86,19 @@
                     </select>
                 </div>
 
+                <!-- Filtro por estado -->
+                <select name="filtroEstado"
+                        style="padding: 1rem 2rem; border: 2px solid var(--cream); border-radius: 50px; font-size: 1rem; background: var(--white); color: var(--dark-green); font-weight: 600;">
+                    <option value="">Todos los estados</option>
+                    <option value="true" @@(ViewBag.FiltroEstado= ="true" ? "selected" : "" )>Activos</option>
+                    <option value="false" @@(ViewBag.FiltroEstado= ="false" ? "selected" : "" )>Inactivos</option>
+                </select>
+
                 <button type="submit" class="btn btn-primary" style="border-radius: 50px; padding: 0 2rem; white-space: nowrap;">
                     <span><i class="fas fa-search"></i> Buscar</span>
                 </button>
 
-                @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || ViewBag.FiltroModulo != null)
+                @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || ViewBag.FiltroModulo != null || !string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string))
                 {
                     <a href="@Url.Action("ListadoPermisos", "Permiso")" class="btn btn-secondary" style="border-radius: 50px; padding: 0 1.5rem; white-space: nowrap;">
                         <span><i class="fas fa-times"></i> Limpiar</span>
@@ -106,15 +106,13 @@
                 }
             </form>
 
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("CrearPermiso", "Permiso")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                    <span><i class="fas fa-plus"></i> Agregar Permiso</span>
-                </a>
-            </div>
+            <a href="@Url.Action("CrearPermiso", "Permiso")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                <span><i class="fas fa-plus"></i> Agregar Permiso</span>
+            </a>
         </div>
 
-        <!-- Información de búsqueda -->
-        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || ViewBag.FiltroModulo != null)
+        <!-- Chip de filtros activos -->
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string) || ViewBag.FiltroModulo != null || !string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string))
         {
             <div class="feature-card" style="margin-bottom: 2rem; text-align: left;" data-aos="fade-up">
                 <p style="margin: 0; color: var(--dark-green); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
@@ -122,9 +120,13 @@
                     Filtros activos
                     @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
                     {
-                        <span>· Buscando: <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong></span>
+                        <span>· Nombre: <strong style="color: var(--gold-bright);">"@ViewBag.Buscar"</strong></span>
                     }
-                    - <strong>@(Model?.Count ?? 0)</strong> permiso(s) encontrado(s)
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.FiltroEstado as string))
+                    {
+                        <span>· Estado: <strong style="color: var(--gold-bright);">@(ViewBag.FiltroEstado == "true" ? "Activos" : "Inactivos")</strong></span>
+                    }
+                    — <strong>@(Model?.Count ?? 0)</strong> permiso(s) encontrado(s)
                 </p>
             </div>
         }
@@ -138,6 +140,8 @@
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">#</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Módulo</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Permiso</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none;">Descripción</th>
+                            <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Estado</th>
                             <th style="padding: 1.2rem; color: var(--white); font-weight: 600; border: none; text-align: center;">Acciones</th>
                         </tr>
                     </thead>
@@ -159,6 +163,19 @@
                                     <td style="padding: 1.2rem; color: var(--dark-green); font-weight: 600; font-size: 1.05rem;">
                                         @permiso.Nombre
                                     </td>
+                                    <td style="padding: 1.2rem; color: var(--charcoal); max-width: 300px;">
+                                        @(permiso.Descripcion ?? "—")
+                                    </td>
+                                    <td style="padding: 1.2rem; text-align: center;">
+                                        @if (permiso.Estado)
+                                        {
+                                            <span style="background: var(--green); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Activo</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="background: var(--red); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block;">Inactivo</span>
+                                        }
+                                    </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
                                         <button type="button"
                                                 class="btn btn-sm"
@@ -172,7 +189,9 @@
                                                 data-id="@permiso.IdPermiso"
                                                 data-nombre="@permiso.Nombre"
                                                 data-modulo="@permiso.NombreModulo"
-                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                data-descripcion="@(permiso.Descripcion ?? "Sin descripción")"
+                                                data-estado="@permiso.EstadoTexto"
+                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalDetallesPermiso"
                                                 title="Ver detalles">
@@ -186,7 +205,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="4" class="admin-table-empty">
+                                <td colspan="6" class="admin-table-empty">
                                     <i class="fas fa-inbox"></i>
                                     <p>No se encontraron permisos</p>
                                     @if (!string.IsNullOrWhiteSpace(ViewBag.Buscar as string))
@@ -200,18 +219,14 @@
                 </table>
             </div>
 
-            <!-- Footer de paginación -->
+            <!-- Footer paginación -->
             <div class="admin-table-footer">
                 <div class="admin-table-footer-text">
                     Mostrando <strong id="startRecord">0</strong> - <strong id="endRecord">0</strong> de <strong id="totalRecords">0</strong> registros
                 </div>
                 <div class="pagination-buttons">
-                    <button id="btnAnterior" class="pagination-btn">
-                        <i class="fas fa-chevron-left"></i> Anterior
-                    </button>
-                    <button id="btnSiguiente" class="pagination-btn">
-                        Siguiente <i class="fas fa-chevron-right"></i>
-                    </button>
+                    <button id="btnAnterior" class="pagination-btn"><i class="fas fa-chevron-left"></i> Anterior</button>
+                    <button id="btnSiguiente" class="pagination-btn">Siguiente <i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </div>

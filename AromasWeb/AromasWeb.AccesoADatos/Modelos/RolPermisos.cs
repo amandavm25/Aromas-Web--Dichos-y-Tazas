@@ -17,7 +17,7 @@ namespace AromasWeb.AccesoADatos.Modelos
         public int IdPermiso { get; set; }
 
         // Propiedades de navegación
-        public virtual PermisoAD Permiso { get; set; }
-        public virtual RolAD Rol { get; set; }
+        public virtual PermisoAD? Permiso { get; set; }
+        public virtual RolAD? Rol { get; set; }
     }
 }

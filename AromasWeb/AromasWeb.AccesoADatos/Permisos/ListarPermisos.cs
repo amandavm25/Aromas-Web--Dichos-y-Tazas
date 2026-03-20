@@ -14,41 +14,17 @@ namespace AromasWeb.AccesoADatos.Permisos
             {
                 try
                 {
-                    var permisosAD = contexto.Permiso.ToList();
-                    var permisos = new List<Abstracciones.ModeloUI.Permiso>();
+                    var permisosAD = contexto.Permiso
+                        .OrderBy(p => p.Nombre)
+                        .ToList();
 
-                    foreach (var permisoAD in permisosAD)
-                    {
-                        var permiso = ConvertirObjetoParaUI(permisoAD);
-
-                        // Obtener módulo
-                        var modulo = contexto.Modulo.FirstOrDefault(m => m.IdModulo == permisoAD.IdModulo);
-                        if (modulo != null)
-                        {
-                            permiso.Modulo = new Abstracciones.ModeloUI.Modulo
-                            {
-                                IdModulo = modulo.IdModulo,
-                                Nombre = modulo.Nombre,
-                                Descripcion = modulo.Descripcion,
-                                Estado = modulo.Estado
-                            };
-                        }
-
-                        permisos.Add(permiso);
-                    }
-
-                    return permisos;
+                    return permisosAD.Select(p => ConvertirConModulo(p, contexto)).ToList();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error al obtener permisos: {ex.Message}");
-                    Console.WriteLine($"Stack trace: {ex.StackTrace}");
-
                     if (ex.InnerException != null)
-                    {
                         Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                    }
-
                     throw;
                 }
             }
@@ -62,29 +38,10 @@ namespace AromasWeb.AccesoADatos.Permisos
                 {
                     var permisosAD = contexto.Permiso
                         .Where(p => p.IdModulo == idModulo)
+                        .OrderBy(p => p.Nombre)
                         .ToList();
 
-                    var permisos = new List<Abstracciones.ModeloUI.Permiso>();
-
-                    foreach (var permisoAD in permisosAD)
-                    {
-                        var permiso = ConvertirObjetoParaUI(permisoAD);
-
-                        // Obtener módulo
-                        var modulo = contexto.Modulo.FirstOrDefault(m => m.IdModulo == permisoAD.IdModulo);
-                        if (modulo != null)
-                        {
-                            permiso.Modulo = new Abstracciones.ModeloUI.Modulo
-                            {
-                                IdModulo = modulo.IdModulo,
-                                Nombre = modulo.Nombre
-                            };
-                        }
-
-                        permisos.Add(permiso);
-                    }
-
-                    return permisos;
+                    return permisosAD.Select(p => ConvertirConModulo(p, contexto)).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -107,6 +64,7 @@ namespace AromasWeb.AccesoADatos.Permisos
 
                     var permisosAD = contexto.Permiso
                         .Where(p => idsPermisos.Contains(p.IdPermiso))
+                        .OrderBy(p => p.Nombre)
                         .ToList();
 
                     return permisosAD.Select(p => ConvertirObjetoParaUI(p)).ToList();
@@ -126,24 +84,8 @@ namespace AromasWeb.AccesoADatos.Permisos
                 try
                 {
                     var permisoAD = contexto.Permiso.FirstOrDefault(p => p.IdPermiso == id);
-
-                    if (permisoAD == null)
-                        return null;
-
-                    var permiso = ConvertirObjetoParaUI(permisoAD);
-
-                    // Obtener módulo
-                    var modulo = contexto.Modulo.FirstOrDefault(m => m.IdModulo == permisoAD.IdModulo);
-                    if (modulo != null)
-                    {
-                        permiso.Modulo = new Abstracciones.ModeloUI.Modulo
-                        {
-                            IdModulo = modulo.IdModulo,
-                            Nombre = modulo.Nombre
-                        };
-                    }
-
-                    return permiso;
+                    if (permisoAD == null) return null;
+                    return ConvertirConModulo(permisoAD, contexto);
                 }
                 catch (Exception ex)
                 {
@@ -157,37 +99,35 @@ namespace AromasWeb.AccesoADatos.Permisos
         {
             using (var contexto = new Contexto())
             {
-                using (var transaction = contexto.Database.BeginTransaction())
+                try
                 {
-                    try
+                    // Eliminar permisos actuales del rol
+                    var permisosActuales = contexto.RolPermiso
+                        .Where(rp => rp.IdRol == idRol)
+                        .ToList();
+
+                    contexto.RolPermiso.RemoveRange(permisosActuales);
+
+                    // Agregar los nuevos permisos
+                    foreach (var idPermiso in idsPermisos)
                     {
-                        // Eliminar permisos actuales
-                        var permisosActuales = contexto.RolPermiso
-                            .Where(rp => rp.IdRol == idRol)
-                            .ToList();
-
-                        contexto.RolPermiso.RemoveRange(permisosActuales);
-
-                        // Agregar nuevos permisos
-                        foreach (var idPermiso in idsPermisos)
+                        contexto.RolPermiso.Add(new RolPermisoAD
                         {
-                            contexto.RolPermiso.Add(new RolPermisoAD
-                            {
-                                IdRol = idRol,
-                                IdPermiso = idPermiso
-                            });
-                        }
+                            IdRol = idRol,
+                            IdPermiso = idPermiso
+                        });
+                    }
 
-                        contexto.SaveChanges();
-                        transaction.Commit();
-                        return true;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        Console.WriteLine($"Error al asignar permisos: {ex.Message}");
-                        return false;
-                    }
+                    // SaveChanges ya maneja la transacción internamente
+                    contexto.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"ERROR ASIGNAR: {ex.Message}");
+                    Console.WriteLine($"INNER: {ex.InnerException?.Message}");
+                    Console.WriteLine($"STACK: {ex.StackTrace}");
+                    return false;
                 }
             }
         }
@@ -211,13 +151,35 @@ namespace AromasWeb.AccesoADatos.Permisos
             }
         }
 
+        // Convierte e incluye el módulo relacionado
+        private Abstracciones.ModeloUI.Permiso ConvertirConModulo(PermisoAD permisoAD, Contexto contexto)
+        {
+            var permiso = ConvertirObjetoParaUI(permisoAD);
+
+            var modulo = contexto.Modulo.FirstOrDefault(m => m.IdModulo == permisoAD.IdModulo);
+            if (modulo != null)
+            {
+                permiso.Modulo = new Abstracciones.ModeloUI.Modulo
+                {
+                    IdModulo = modulo.IdModulo,
+                    Nombre = modulo.Nombre,
+                    Descripcion = modulo.Descripcion,
+                    Estado = modulo.Estado
+                };
+            }
+
+            return permiso;
+        }
+
         private Abstracciones.ModeloUI.Permiso ConvertirObjetoParaUI(PermisoAD permisoAD)
         {
             return new Abstracciones.ModeloUI.Permiso
             {
                 IdPermiso = permisoAD.IdPermiso,
                 IdModulo = permisoAD.IdModulo,
-                Nombre = permisoAD.Nombre
+                Nombre = permisoAD.Nombre,
+                Descripcion = permisoAD.Descripcion,
+                Estado = permisoAD.Estado
             };
         }
     }

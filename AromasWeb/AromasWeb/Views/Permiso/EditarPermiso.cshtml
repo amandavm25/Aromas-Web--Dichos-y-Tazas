@@ -15,18 +15,16 @@
                 Actualizar Información
             </span>
             <h1 class="hero-title" style="font-size: 3.5rem;">
-                Editar un
+                Editar
                 <span class="hero-title-accent">Permiso</span>
             </h1>
             <p class="hero-subtitle">
-                Modifica la información del permiso en el sistema
+                Modifica la información del permiso
             </p>
         </div>
     </div>
     <div class="scroll-indicator">
-        <div class="mouse">
-            <div class="wheel"></div>
-        </div>
+        <div class="mouse"><div class="wheel"></div></div>
     </div>
 </section>
 
@@ -39,7 +37,6 @@
             @Html.HiddenFor(model => model.IdPermiso)
 
             <div class="admin-form-wrapper" data-aos="fade-up">
-                @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
 
                 <!-- Header -->
                 <div class="admin-form-header">
@@ -47,46 +44,50 @@
                     <h5>Información del Permiso</h5>
                 </div>
 
-                <div class="admin-form-body">
-
-                    <!-- Módulo -->
+                <!-- Módulo -->
                     <div class="form-group">
-                        <label>
-                            <i class="fas fa-cube"></i>
-                            Módulo
-                        </label>
+                        <label><i class="fas fa-cube"></i> Módulo</label>
                         @Html.DropDownListFor(model => model.IdModulo, (SelectList)ViewBag.Modulos, "-- Seleccione un módulo --", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.IdModulo, "", new { @class = "text-danger" })
                         <small class="admin-form-hint">
-                            <i class="fas fa-info-circle"></i>
-                            Selecciona el módulo al que pertenece este permiso
+                            <i class="fas fa-info-circle"></i> Selecciona el módulo al que pertenece este permiso
                         </small>
                     </div>
 
                     <!-- Nombre -->
                     <div class="form-group">
-                        <label>
-                            <i class="fas fa-tag"></i>
-                            Nombre del Permiso
-                        </label>
+                        <label><i class="fas fa-tag"></i> Nombre del Permiso</label>
                         @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Ver Empleados, Crear Empleados" } })
                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                         <small class="admin-form-hint">
-                            <i class="fas fa-info-circle"></i>
-                            Usa nombres descriptivos como "Ver", "Crear", "Editar", "Eliminar"
+                            <i class="fas fa-info-circle"></i> Usa nombres descriptivos como "Ver", "Crear", "Editar", "Eliminar"
                         </small>
                     </div>
 
-                    <!-- Info box -->
-                    <div class="admin-form-info-box">
-                        <i class="fas fa-info-circle"></i>
-                        <div>
-                            <strong>Actualización de Permiso</strong>
-                            <p>Los cambios afectarán a todos los roles que tengan asignado este permiso.</p>
-                        </div>
+                    <!-- Descripción -->
+                    <div class="form-group">
+                        <label><i class="fas fa-align-left"></i> Descripción</label>
+                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", placeholder = "Descripción del permiso (opcional)", rows = "3" })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i> Opcional — explica qué acción habilita este permiso
+                        </small>
                     </div>
 
-                </div>
+                    <!-- Estado -->
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--cream); border-radius: 15px; cursor: pointer;">
+                            @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-check-input", id = "estadoCheckbox" } })
+                            <span style="flex: 1;">
+                                <i class="fas fa-toggle-on"></i>
+                                Estado del Permiso (Activo/Inactivo)
+                            </span>
+                        </label>
+                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                        <small class="admin-form-hint">
+                            <i class="fas fa-info-circle"></i> Al desactivar un permiso, los roles que lo tengan asignado perderán ese acceso
+                        </small>
+                    </div>
 
                 <!-- Botones -->
                 <div class="admin-form-footer">
@@ -95,10 +96,11 @@
                         <span>Cancelar</span>
                     </button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-check"></i>
+                        <i class="fas fa-save"></i>
                         <span>Guardar Cambios</span>
                     </button>
                 </div>
+
             </div>
         }
     </div>

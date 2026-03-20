@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AromasWeb.AccesoADatos.Modelos
@@ -17,7 +16,13 @@ namespace AromasWeb.AccesoADatos.Modelos
         [StringLength(100)]
         public string Nombre { get; set; }
 
-        // Propiedades de navegación
-        public virtual ModuloAD Modulo { get; set; }
+        [StringLength(500)]
+        public string? Descripcion { get; set; }
+
+        [Required]
+        public bool Estado { get; set; }
+
+        // Propiedad de navegación
+        public virtual ModuloAD? Modulo { get; set; }
     }
 }

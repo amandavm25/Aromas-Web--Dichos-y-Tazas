@@ -16,24 +16,38 @@
             <!-- Body -->
             <div class="modal-body">
 
-                <!-- Nombre del Permiso -->
+                <!-- Nombre del permiso -->
                 <div class="modal-entity-header entity-block">
                     <h5 id="detalles-nombre-permiso" class="modal-entity-name"></h5>
                 </div>
 
-                <!-- ID y Módulo en 2 columnas -->
+                <!-- Módulo y Estado -->
                 <div class="modal-data-grid-2">
                     <div class="modal-data-cell">
                         <label class="modal-data-label">
-                            <i class="fas fa-hashtag"></i> ID del Permiso
+                            <i class="fas fa-puzzle-piece"></i> Módulo
                         </label>
-                        <p id="detalles-id-permiso" class="modal-data-value"></p>
+                        <p id="detalles-modulo-permiso" class="modal-data-value"></p>
                     </div>
                     <div class="modal-data-cell">
                         <label class="modal-data-label">
-                            <i class="fas fa-cube"></i> Módulo
+                            <i class="fas fa-toggle-on"></i> Estado
                         </label>
-                        <p id="detalles-modulo-permiso" class="modal-data-value"></p>
+                        <div>
+                            <span id="detalles-estado-badge-permiso" class="badge" style="font-size: 0.95rem; padding: 0.4rem 1.2rem; border-radius: 50px; font-weight: 600; display: inline-block;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Descripción -->
+                <h6 class="modal-subsection-title">
+                    <i class="fas fa-align-left"></i> Descripción
+                </h6>
+                <div class="modal-summary">
+                    <div class="modal-summary-grid" style="grid-template-columns: 1fr;">
+                        <div>
+                            <p id="detalles-descripcion-permiso" class="modal-summary-value" style="font-weight: 400; font-size: 1rem; line-height: 1.6; color: var(--charcoal);"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -45,17 +59,36 @@
                     <span><i class="fas fa-times"></i> Cerrar</span>
                 </button>
             </div>
+
         </div>
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.btn-detalles-permiso').forEach(btn => {
-            btn.addEventListener('click', function () {
-                document.getElementById('detalles-id-permiso').textContent = '#' + this.dataset.id;
-                document.getElementById('detalles-nombre-permiso').textContent = this.dataset.nombre;
-                document.getElementById('detalles-modulo-permiso').textContent = this.dataset.modulo || '—';
+        const botonesDetalles = document.querySelectorAll('.btn-detalles-permiso');
+
+        botonesDetalles.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const nombre      = this.getAttribute('data-nombre');
+                const modulo      = this.getAttribute('data-modulo');
+                const descripcion = this.getAttribute('data-descripcion');
+                const estado      = this.getAttribute('data-estado');
+
+                document.getElementById('detalles-nombre-permiso').textContent  = nombre;
+                document.getElementById('detalles-modulo-permiso').textContent  = modulo || '—';
+                document.getElementById('detalles-descripcion-permiso').textContent = descripcion || 'Sin descripción';
+
+                const estadoBadge = document.getElementById('detalles-estado-badge-permiso');
+                if (estado === 'Activo') {
+                    estadoBadge.textContent        = 'Activo';
+                    estadoBadge.style.background   = 'var(--green)';
+                    estadoBadge.style.color        = 'white';
+                } else {
+                    estadoBadge.textContent        = 'Inactivo';
+                    estadoBadge.style.background   = 'var(--red)';
+                    estadoBadge.style.color        = 'white';
+                }
             });
         });
     });
