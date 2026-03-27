@@ -36,7 +36,7 @@ namespace AromasWeb.Controllers
             if (idSesion.HasValue && idSesion.Value > 0)
                 return idSesion.Value;
 
-            return 1; // ← quitar el fallback del contexto temporalmente
+            throw new InvalidOperationException("No hay empleado autenticado en sesión.");
         }
 
         // GET: CategoriaInsumo/ListadoCategoriasInsumos

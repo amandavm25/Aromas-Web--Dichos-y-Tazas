@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Text.Json
+@{
     var usuarioTipo = Context.Session.GetString("UsuarioTipo");
     var usuarioNombre = Context.Session.GetString("UsuarioNombre");
     var usuarioCorreo = Context.Session.GetString("UsuarioCorreo");
@@ -6,6 +7,67 @@
     var esAdmin = usuarioTipo == "admin";
     var esCliente = usuarioTipo == "cliente";
     var esEmpleado = usuarioTipo == "empleado";
+
+    // Cargar IDs de permisos del rol desde sesión
+    HashSet<int> permisosRol = new HashSet<int>();
+    if (esEmpleado)
+    {
+        try
+        {
+            var json = Context.Session.GetString("PermisosRol");
+            if (!string.IsNullOrEmpty(json))
+            {
+                var lista = JsonSerializer.Deserialize<List<int>>(json);
+                if (lista != null) permisosRol = new HashSet<int>(lista);
+            }
+        }
+        catch { }
+    }
+
+    // Cargar mapa nombre → id de TODOS los permisos
+    // Se guarda en sesión al hacer login
+    Dictionary<string, int> mapaPermisos = new Dictionary<string, int>();
+    if (esEmpleado)
+    {
+        try
+        {
+            var jsonMapa = Context.Session.GetString("MapaPermisos");
+            if (!string.IsNullOrEmpty(jsonMapa))
+            {
+                var mapa = JsonSerializer.Deserialize<Dictionary<string, int>>(jsonMapa);
+                if (mapa != null) mapaPermisos = mapa;
+            }
+        }
+        catch { }
+    }
+
+    // Resuelve el id de un permiso por su nombre (devuelve -1 si no existe en BD)
+    int IdPermiso(string nombre) =>
+        mapaPermisos.TryGetValue(nombre, out int id) ? id : -1;
+
+    // true si admin o si el empleado tiene ese permiso asignado
+    bool TienePermiso(string nombre) =>
+        esAdmin || permisosRol.Contains(IdPermiso(nombre));
+
+    // Visibilidad de dropdowns
+    bool hayInsumos = TienePermiso("Ver Insumos")
+                   || TienePermiso("Ver Categorias Insumos")
+                   || TienePermiso("Ver Movimientos Insumos");
+
+    bool hayRecetas = TienePermiso("Ver Recetas")
+                   || TienePermiso("Ver Categorias Recetas");
+
+    bool hayPromociones = TienePermiso("Ver Promociones")
+                       || TienePermiso("Ver Tipos Promocion");
+
+    bool hayRRHH = TienePermiso("Ver Empleados")
+                || TienePermiso("Ver Tarifas")
+                || TienePermiso("Ver Asistencias")
+                || TienePermiso("Ver Planillas")
+                || TienePermiso("Ver Solicitudes Vacaciones")
+                || TienePermiso("Aprobar Vacaciones");
+
+    bool hayAsistenciaPropia = TienePermiso("Registrar Asistencia");
 }
 
 <!DOCTYPE html>
@@ -20,7 +82,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
-        /* FIX CRÍTICO PARA DROPDOWN */
         .nav-dropdown {
             position: relative;
         }
@@ -39,7 +100,7 @@
                 background: #FFFFFF !important;
                 min-width: 250px !important;
                 border-radius: 15px !important;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.15) !important;
                 padding: 0.5rem 0 !important;
                 opacity: 0 !important;
                 visibility: hidden !important;
@@ -96,13 +157,11 @@
                 transform: rotate(180deg);
             }
 
-            /* Dropdown de perfil alineado a la derecha */
             .nav-dropdown .dropdown-menu[style*="right"] {
                 right: 0 !important;
                 left: auto !important;
             }
 
-        /* Ajustar el contenedor del navbar */
         .navbar .container {
             display: flex !important;
             justify-content: flex-start !important;
@@ -112,12 +171,10 @@
             max-width: 100% !important;
         }
 
-        /* Logo a la izquierda */
         .logo {
             margin-right: auto !important;
         }
 
-        /* Menú optimizado */
         .nav-menu {
             display: flex !important;
             list-style: none !important;
@@ -127,241 +184,208 @@
             margin-left: auto !important;
         }
 
-        /* Evitar que el texto se rompa */
-        .nav-dropdown > .nav-link,
-        .nav-link {
+        .nav-dropdown > .nav-link, .nav-link {
             white-space: nowrap !important;
         }
 
-        /* Ajustar tamaño de elementos en pantallas grandes */
         @@media (min-width: 969px) and (max-width: 1400px) {
-            .nav-menu
-
-        {
-            gap: 0.9rem !important;
-        }
-
-        .nav-link {
-            font-size: 0.82rem !important;
-        }
-
-        .btn-nav {
-            padding: 0.65rem 1.3rem !important;
-            font-size: 0.82rem !important;
-        }
-
-        }
-
-        /* Ajuste para pantallas medianas */
-        @@media (min-width: 969px) and (max-width: 1200px) {
-            .navbar .container
-
-        {
-            gap: 1.5rem !important;
-        }
-
-        .nav-menu {
-            gap: 0.7rem !important;
-        }
-
-        .nav-link {
-            font-size: 0.78rem !important;
-            letter-spacing: 0.5px !important;
-        }
-
-        .btn-nav {
-            padding: 0.6rem 1.1rem !important;
-            font-size: 0.78rem !important;
-        }
-
-        .logo-circle {
-            width: 85px !important;
-            height: 85px !important;
-        }
-
-        .logo-main {
-            font-size: 1.6rem !important;
-        }
-
-        .logo-sub {
-            font-size: 0.65rem !important;
-        }
-
-        }
-
-        /* Mobile */
-        @@media (max-width: 968px) {
-            /* Resetear para móvil */
-            .navbar .container
-
-        {
-            justify-content: space-between !important;
-            gap: 1rem !important;
-        }
-
-        .logo {
-            margin-right: 0 !important;
-        }
-
-        .nav-menu {
-            position: fixed !important;
-            top: 100px !important;
-            left: -100% !important;
-            width: 100% !important;
-            height: calc(100vh - 100px) !important;
-            background: var(--white) !important;
-            flex-direction: column !important;
-            padding: 3rem 2rem !important;
-            box-shadow: var(--shadow-lg) !important;
-            transition: var(--transition-base) !important;
-            overflow-y: auto !important;
-            gap: 1.5rem !important;
-            margin-left: 0 !important;
-        }
-
-            .nav-menu.active {
-                left: 0 !important;
+            .nav-menu {
+                gap: 0.9rem !important;
             }
 
-        .nav-link {
-            font-size: 0.9rem !important;
+            .nav-link {
+                font-size: 0.82rem !important;
+            }
+
+            .btn-nav {
+                padding: 0.65rem 1.3rem !important;
+                font-size: 0.82rem !important;
+            }
         }
 
-        .btn-nav {
-            width: 100% !important;
-            justify-content: center !important;
-            padding: 0.8rem 1.8rem !important;
-            font-size: 0.9rem !important;
+        @@media (min-width: 969px) and (max-width: 1200px) {
+            .navbar .container {
+                gap: 1.5rem !important;
+            }
+
+            .nav-menu {
+                gap: 0.7rem !important;
+            }
+
+            .nav-link {
+                font-size: 0.78rem !important;
+                letter-spacing: 0.5px !important;
+            }
+
+            .btn-nav {
+                padding: 0.6rem 1.1rem !important;
+                font-size: 0.78rem !important;
+            }
+
+            .logo-circle {
+                width: 85px !important;
+                height: 85px !important;
+            }
+
+            .logo-main {
+                font-size: 1.6rem !important;
+            }
+
+            .logo-sub {
+                font-size: 0.65rem !important;
+            }
         }
 
-        .logo-circle {
-            width: 80px !important;
-            height: 80px !important;
+        @@media (max-width: 968px) {
+            .navbar .container {
+                justify-content: space-between !important;
+                gap: 1rem !important;
+            }
+
+            .logo {
+                margin-right: 0 !important;
+            }
+
+            .nav-menu {
+                position: fixed !important;
+                top: 100px !important;
+                left: -100% !important;
+                width: 100% !important;
+                height: calc(100vh - 100px) !important;
+                background: var(--white) !important;
+                flex-direction: column !important;
+                padding: 3rem 2rem !important;
+                box-shadow: var(--shadow-lg) !important;
+                transition: var(--transition-base) !important;
+                overflow-y: auto !important;
+                gap: 1.5rem !important;
+                margin-left: 0 !important;
+            }
+
+                .nav-menu.active {
+                    left: 0 !important;
+                }
+
+            .nav-link {
+                font-size: 0.9rem !important;
+            }
+
+            .btn-nav {
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 0.8rem 1.8rem !important;
+                font-size: 0.9rem !important;
+            }
+
+            .logo-circle {
+                width: 80px !important;
+                height: 80px !important;
+            }
+
+            .logo-main {
+                font-size: 1.4rem !important;
+            }
+
+            .logo-sub {
+                font-size: 0.6rem !important;
+            }
+
+            .nav-dropdown .dropdown-menu {
+                position: static !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                box-shadow: none !important;
+                background: #FEFAF5 !important;
+                margin: 0.5rem 0 0 1rem !important;
+                display: none !important;
+                border-radius: 10px !important;
+            }
+
+            .nav-dropdown.active .dropdown-menu {
+                display: block !important;
+            }
+
+            .nav-dropdown > .nav-link {
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .nav-dropdown.active > .nav-link i.fa-chevron-down {
+                transform: rotate(180deg);
+            }
         }
 
-        .logo-main {
-            font-size: 1.4rem !important;
-        }
-
-        .logo-sub {
-            font-size: 0.6rem !important;
-        }
-
-        /* Dropdowns en móvil */
-        .nav-dropdown .dropdown-menu {
-            position: static !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            transform: none !important;
-            box-shadow: none !important;
-            background: #FEFAF5 !important;
-            margin: 0.5rem 0 0 1rem !important;
-            display: none !important;
-            border-radius: 10px !important;
-        }
-
-        .nav-dropdown.active .dropdown-menu {
-            display: block !important;
-        }
-
-        .nav-dropdown > .nav-link {
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        .nav-dropdown.active > .nav-link i.fa-chevron-down {
-            transform: rotate(180deg);
-        }
-
-        }
-
-        /* Móviles pequeños */
         @@media (max-width: 600px) {
-            .navbar .container
+            .navbar .container {
+                padding: 0.8rem 15px !important;
+            }
 
-        {
-            padding: 0.8rem 15px !important;
-        }
+            .logo-circle {
+                width: 70px !important;
+                height: 70px !important;
+            }
 
-        .logo-circle {
-            width: 70px !important;
-            height: 70px !important;
-        }
+            .logo-main {
+                font-size: 1.2rem !important;
+                letter-spacing: 2px !important;
+            }
 
-        .logo-main {
-            font-size: 1.2rem !important;
-            letter-spacing: 2px !important;
-        }
-
-        .logo-sub {
-            font-size: 0.55rem !important;
-        }
-
+            .logo-sub {
+                font-size: 0.55rem !important;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- Loader -->
     <div class="loader-wrapper">
         <div class="tsuru-loader">
             <div class="leaf-container">
-                <div class="leaf"></div>
-                <div class="leaf"></div>
-                <div class="leaf"></div>
+                <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
             </div>
             <p>TSURÚ</p>
         </div>
     </div>
 
-    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
-
             <ul class="nav-menu" id="navMenu">
+
+                @* ══════════════════════════════════════════════════════════
+                   MENÚ ADMIN — acceso completo sin restricciones
+                   ══════════════════════════════════════════════════════════ *@
                 @if (esAdmin)
                 {
-                    <!-- MENÚ PARA ADMINISTRADOR -->
                     <li><a href="/" class="nav-link">Inicio</a></li>
 
-                    <!-- Dropdown de Insumos -->
                     <li class="nav-dropdown">
-                        <a href="#" class="nav-link">
-                            Insumos <i class="fas fa-chevron-down"></i>
-                        </a>
+                        <a href="#" class="nav-link">Insumos <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="/Insumo/ListadoInsumos">Insumos</a></li>
                             <li><a href="/CategoriaInsumo/ListadoCategoriasInsumos">Categorías de Insumos</a></li>
+                            <li><a href="/MovimientoInsumo/HistorialMovimientos">Movimientos</a></li>
                         </ul>
                     </li>
 
-                    <!-- Dropdown de Recetas -->
                     <li class="nav-dropdown">
-                        <a href="#" class="nav-link">
-                            Recetas <i class="fas fa-chevron-down"></i>
-                        </a>
+                        <a href="#" class="nav-link">Recetas <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="/Receta/ListadoRecetas">Recetas</a></li>
                             <li><a href="/CategoriaReceta/ListadoCategoriasRecetas">Categorías de Recetas</a></li>
                         </ul>
                     </li>
 
-                    <!-- Dropdown de Promociones -->
                     <li class="nav-dropdown">
-                        <a href="#" class="nav-link">
-                            Promociones <i class="fas fa-chevron-down"></i>
-                        </a>
+                        <a href="#" class="nav-link">Promociones <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="/Promocion/ListadoPromociones">Promociones</a></li>
                             <li><a href="/TipoPromocion/ListadoTiposPromociones">Tipos de Promoción</a></li>
                         </ul>
                     </li>
 
-                    <!-- Dropdown de Empleados -->
                     <li class="nav-dropdown">
-                        <a href="#" class="nav-link">
-                            Empleados <i class="fas fa-chevron-down"></i>
-                        </a>
+                        <a href="#" class="nav-link">Empleados <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="/Empleado/ListadoEmpleados">Empleados</a></li>
                             <li><a href="/HistorialTarifa/ListadoTarifas">Historial de Tarifas</a></li>
@@ -371,7 +395,6 @@
                         </ul>
                     </li>
 
-                    <!-- Links directos -->
                     <li><a href="/Cliente/ListadoClientes" class="nav-link">Clientes</a></li>
                     <li><a href="/Reserva/ListadoReservas" class="nav-link">Reservas</a></li>
                     <li><a href="/Modulo/ListadoModulos" class="nav-link">Módulos</a></li>
@@ -379,57 +402,171 @@
                     <li><a href="/Permiso/ListadoPermisos" class="nav-link">Permisos</a></li>
                     <li><a href="/Bitacora/ListadoBitacoras" class="nav-link">Auditoría</a></li>
                 }
+
+                @* ══════════════════════════════════════════════════════════
+                   MENÚ EMPLEADO — dinámico según permisos del rol
+                   ══════════════════════════════════════════════════════════ *@
                 else if (esEmpleado)
                 {
-                    <!-- MENÚ PARA EMPLEADO -->
                     <li><a href="/" class="nav-link">Inicio</a></li>
 
-                    <!-- Dropdown de Asistencias -->
-                    <li class="nav-dropdown">
-                        <a href="#" class="nav-link">
-                            Asistencias <i class="fas fa-chevron-down"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Asistencia/MiEntrada">Registrar Entrada</a></li>
-                            <li><a href="/Asistencia/MiSalida">Registrar Salida</a></li>
-                            <li><a href="/Asistencia/MiHistorialAsistencias">Mi Historial</a></li>
-                        </ul>
-                    </li>
+                    @* ── Insumos ── *@
+                    @if (hayInsumos)
+                    {
+                        <li class="nav-dropdown">
+                            <a href="#" class="nav-link">Insumos <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                @if (TienePermiso("Ver Insumos"))
+                                {
+                                    <li><a href="/Insumo/ListadoInsumos">Insumos</a></li>
+                                }
+                                @if (TienePermiso("Ver Categorias Insumos"))
+                                {
+                                    <li><a href="/CategoriaInsumo/ListadoCategoriasInsumos"> Categorías de Insumos</a></li>
+                                }
+                                @if (TienePermiso("Ver Movimientos Insumos"))
+                                {
+                                    <li><a href="/MovimientoInsumo/HistorialMovimientos">Movimientos</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
 
-                    <li><a href="/Planilla/MiPlanilla" class="nav-link">Mis Planillas</a></li>
+                    @* ── Recetas ── *@
+                    @if (hayRecetas)
+                    {
+                        <li class="nav-dropdown">
+                            <a href="#" class="nav-link">Recetas <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                @if (TienePermiso("Ver Recetas"))
+                                {
+                                    <li><a href="/Receta/ListadoRecetas">Recetas</a></li>
+                                }
+                                @if (TienePermiso("Ver Categorias Recetas"))
+                                {
+                                    <li><a href="/CategoriaReceta/ListadoCategoriasRecetas">Categorías de Recetas</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @* ── Promociones ── *@
+                    @if (hayPromociones)
+                    {
+                        <li class="nav-dropdown">
+                            <a href="#" class="nav-link">Promociones <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                @if (TienePermiso("Ver Promociones"))
+                                {
+                                    <li><a href="/Promocion/ListadoPromociones">Promociones</a></li>
+                                }
+                                @if (TienePermiso("Ver Tipos Promocion"))
+                                {
+                                    <li><a href="/TipoPromocion/ListadoTiposPromociones">Tipos de Promoción</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @* ── RRHH ── *@
+                    @if (hayRRHH)
+                    {
+                        <li class="nav-dropdown">
+                            <a href="#" class="nav-link">Empleados <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                @if (TienePermiso("Ver Empleados"))
+                                {
+                                    <li><a href="/Empleado/ListadoEmpleados">Empleados</a></li>
+                                }
+                                @if (TienePermiso("Ver Tarifas"))
+                                {
+                                    <li><a href="/HistorialTarifa/ListadoTarifas">Historial de Tarifas</a></li>
+                                }
+                                @if (TienePermiso("Ver Asistencias"))
+                                {
+                                    <li><a href="/Asistencia/ListadoAsistencias">Asistencias</a></li>
+                                }
+                                @if (TienePermiso("Ver Planillas"))
+                                {
+                                    <li><a href="/Planilla/ListadoPlanillas">Planillas</a></li>
+                                }
+                                @if (TienePermiso("Ver Solicitudes Vacaciones"))
+                                {
+                                    <li><a href="/SolicitudVacaciones/ListadoSolicitudes">Solicitudes de Vacaciones</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @* ── Self-service: asistencia propia ── *@
+                    @if (hayAsistenciaPropia)
+                    {
+                        <li class="nav-dropdown">
+                            <a href="#" class="nav-link">Mi Asistencia <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Asistencia/MiEntrada">Registrar Entrada</a></li>
+                                <li><a href="/Asistencia/MiSalida">Registrar Salida</a></li>
+                                <li><a href="/Asistencia/MiHistorialAsistencias">Mi Historial</a></li>
+                            </ul>
+                        </li>
+                    }
+
+                    @* ── Self-service: planilla y vacaciones propias ── *@
+                    <li><a href="/Planilla/MiPlanilla" class="nav-link">Mi Planilla</a></li>
                     <li><a href="/SolicitudVacaciones/MisSolicitudes" class="nav-link">Mis Vacaciones</a></li>
+
+                    @* ── Resto de secciones ── *@
+                    @if (TienePermiso("Ver Clientes"))
+                    {
+                        <li><a href="/Cliente/ListadoClientes" class="nav-link">Clientes</a></li>
+                    }
+
+                    @if (TienePermiso("Ver Reservas"))
+                    {
+                        <li><a href="/Reserva/ListadoReservas" class="nav-link">Reservas</a></li>
+                    }
+
+                    @if (TienePermiso("Ver Modulos"))
+                    {
+                        <li><a href="/Modulo/ListadoModulos" class="nav-link">Módulos</a></li>
+                    }
+
+                    @if (TienePermiso("Ver Roles"))
+                    {
+                        <li><a href="/Rol/ListadoRoles" class="nav-link">Roles</a></li>
+                    }
+
+                    @if (TienePermiso("Ver Permisos"))
+                    {
+                        <li><a href="/Permiso/ListadoPermisos" class="nav-link">Permisos</a></li>
+                    }
+
+                    @if (TienePermiso("Ver Bitacora"))
+                    {
+                        <li><a href="/Bitacora/ListadoBitacoras" class="nav-link">Auditoría</a></li>
+                    }
                 }
+
+                @* ══════════════════════════════════════════════════════════
+                   MENÚ PÚBLICO (cliente / no autenticado)
+                   ══════════════════════════════════════════════════════════ *@
                 else
                 {
-                    <!-- MENÚ PARA CLIENTES Y NO AUTENTICADOS -->
                     <li><a href="/#inicio" class="nav-link">Inicio</a></li>
-                    <li>
-                        <a href="https://heyzine.com/flip-book/56d6bb9fd9.html"
-                           class="nav-link"
-                           target="_blank"
-                           rel="noopener noreferrer">
-                            Menú
-                        </a>
-                    </li>
+                    <li><a href="https://heyzine.com/flip-book/56d6bb9fd9.html" class="nav-link" target="_blank" rel="noopener noreferrer">Menú</a></li>
                     <li><a href="/#especialidades" class="nav-link">Especialidades</a></li>
                     <li><a href="/#galeria" class="nav-link">Galería</a></li>
                     <li><a href="/#testimonios" class="nav-link">Reseñas</a></li>
                 }
 
+                @* ── Botones de acción ── *@
                 @if (estaAutenticado)
                 {
-                    <!-- SI ESTÁ AUTENTICADO -->
                     @if (esCliente)
                     {
-                        <!-- Botón Mis Reservas solo para clientes -->
-                        <li>
-                            <a href="/Reserva/MisReservas" class="btn btn-primary btn-elegant">
-                                <span>Mis Reservas</span>
-                            </a>
-                        </li>
+                        <li><a href="/Reserva/MisReservas" class="btn btn-primary btn-elegant"><span>Mis Reservas</span></a></li>
                     }
 
-                    <!-- Dropdown de perfil -->
                     <li class="nav-dropdown">
                         <a href="#" class="btn btn-primary btn-elegant">
                             <span>@usuarioNombre</span>
@@ -439,55 +576,48 @@
                             <li style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--gray-light); background: var(--cream);">
                                 <small style="color: var(--gray); display: block;">Sesión iniciada como:</small>
                                 <strong style="color: var(--dark-teal); font-size: 0.9rem;">@usuarioCorreo</strong>
+                                @if (esEmpleado || esAdmin)
+                                {
+                                    var nombreRolSesion = Context.Session.GetString("NombreRol") ?? "";
+                                    if (!string.IsNullOrEmpty(nombreRolSesion))
+                                    {
+                                        <small style="color: var(--olive-green); display: block; margin-top: 0.2rem;">
+                                            <i class="fas fa-user-shield" style="font-size: 0.75rem;"></i> @nombreRolSesion
+                                        </small>
+                                    }
+                                }
                             </li>
                             @if (esCliente)
                             {
                                 <li><a href="/Cliente/MiPerfil"><i class="fas fa-user"></i> Mi Perfil</a></li>
-                                <li><a href="/Auth/CerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                             }
-                            @if (esEmpleado)
-                            {
-                                <li><a href="/Auth/CerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-                            }
-                            @if (esAdmin)
-                            {
-                                <li><a href="/Auth/CerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-                            }
+                            <li><a href="/Auth/CerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                         </ul>
                     </li>
                 }
                 else
                 {
-                    <!-- SI NO ESTÁ AUTENTICADO -->
-                    <!-- Botón Reservar Mesa para no autenticados -->
                     <li>
                         <a href="/Reserva/CrearReserva" class="btn btn-primary btn-elegant">
-                            <i class="fas fa-calendar-check"></i>
-                            <span>Reservar Mesa</span>
+                            <i class="fas fa-calendar-check"></i><span>Reservar Mesa</span>
                         </a>
                     </li>
-
-                    <!-- Botón Login -->
                     <li>
                         <a href="/Auth/Login" class="btn btn-primary btn-elegant">
-                            <i class="fas fa-sign-in-alt"></i>
-                            <span>Iniciar Sesión</span>
+                            <i class="fas fa-sign-in-alt"></i><span>Iniciar Sesión</span>
                         </a>
                     </li>
                 }
+
             </ul>
 
             <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main>
-        <!-- Mensajes de TempData -->
         @if (TempData["Mensaje"] != null)
         {
             <div style="position: fixed; top: 100px; right: 20px; z-index: 10000; animation: slideInRight 0.5s ease;">
@@ -496,17 +626,8 @@
                     <span style="font-weight: 600;">@TempData["Mensaje"]</span>
                 </div>
             </div>
-            <script>
-                setTimeout(function() {
-                    var mensaje = document.querySelector('[style*="slideInRight"]');
-                    if (mensaje) {
-                        mensaje.style.animation = 'slideOutRight 0.5s ease';
-                        setTimeout(function() { mensaje.remove(); }, 500);
-                    }
-                }, 4000);
-            </script>
+            <script>setTimeout(function(){var m=document.querySelector('[style*="slideInRight"]');if(m){m.style.animation='slideOutRight 0.5s ease';setTimeout(function(){m.remove();},500);}},4000);</script>
         }
-
         @if (TempData["Error"] != null)
         {
             <div style="position: fixed; top: 100px; right: 20px; z-index: 10000; animation: slideInRight 0.5s ease;">
@@ -515,54 +636,33 @@
                     <span style="font-weight: 600;">@TempData["Error"]</span>
                 </div>
             </div>
-            <script>
-                setTimeout(function() {
-                    var error = document.querySelector('[style*="slideInRight"]');
-                    if (error) {
-                        error.style.animation = 'slideOutRight 0.5s ease';
-                        setTimeout(function() { error.remove(); }, 500);
-                    }
-                }, 4000);
-            </script>
+            <script>setTimeout(function(){var e=document.querySelector('[style*="slideInRight"]');if(e){e.style.animation='slideOutRight 0.5s ease';setTimeout(function(){e.remove();},500);}},4000);</script>
         }
 
         @RenderBody()
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-wave">
             <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
             </svg>
         </div>
-
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section footer-about">
                     <div class="footer-logo">
-                        <div class="footer-logo-circle">
-                            <span>TSURÚ</span>
-                        </div>
+                        <div class="footer-logo-circle"><span>TSURÚ</span></div>
                         <h3>Cocina y Jardín</h3>
                     </div>
-                    <p>Una experiencia gastronómica única donde la cocina de autor se encuentra con la naturaleza. Cada plato es una obra de arte creada con ingredientes frescos de nuestro propio jardín.</p>
+                    <p>Una experiencia gastronómica única donde la cocina de autor se encuentra con la naturaleza.</p>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/share/18AcB8NQdd/?mibextid=wwXIfr" class="social-link" data-tooltip="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.instagram.com/tsuru_restaurante?igsh=MW1vcTJzYTk3NmU0eQ==" class="social-link" data-tooltip="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://api.whatsapp.com/send?phone=50683469243&fbclid=IwRlRTSAPfXmdleHRuA2FlbQIxMABzcnRjBmFwcF9pZAo2NjI4NTY4Mzc5AAEea3iMUnjdrkdPjVhcWQCiHtgRI_80xNe3Nz4jfsrmzq49SDMAPiQrlgMNBdc_aem_DsqpJeyvruJAJ7UTIxLBSw" class="social-link" data-tooltip="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="https://waze.com/ul/hd1u1nsbb9" class="social-link" data-tooltip="Waze">
-                            <i class="fab fa-waze"></i>
-                        </a>
+                        <a href="https://www.facebook.com/share/18AcB8NQdd/?mibextid=wwXIfr" class="social-link" data-tooltip="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/tsuru_restaurante?igsh=MW1vcTJzYTk3NmU0eQ==" class="social-link" data-tooltip="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=50683469243" class="social-link" data-tooltip="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://waze.com/ul/hd1u1nsbb9" class="social-link" data-tooltip="Waze"><i class="fab fa-waze"></i></a>
                     </div>
                 </div>
-
                 <div class="footer-section">
                     <h4>Navegación</h4>
                     <ul class="footer-links">
@@ -572,11 +672,10 @@
                         {
                             <li><a href="/Cliente/MisReservas"><i class="fas fa-leaf"></i> Mis Reservas</a></li>
                         }
-                        @if (esEmpleado)
+                        @if (hayAsistenciaPropia)
                         {
                             <li><a href="/Asistencia/MiEntrada"><i class="fas fa-leaf"></i> Registrar Entrada</a></li>
                             <li><a href="/Asistencia/MiSalida"><i class="fas fa-leaf"></i> Registrar Salida</a></li>
-                            <li><a href="/Asistencia/MiHistorialAsistencias"><i class="fas fa-leaf"></i> Mi Historial de Asistencias</a></li>
                         }
                         <li><a href="#galeria"><i class="fas fa-leaf"></i> Galería</a></li>
                         @if (!estaAutenticado)
@@ -585,40 +684,20 @@
                         }
                     </ul>
                 </div>
-
                 <div class="footer-section">
                     <h4>Horario de Atención</h4>
                     <ul class="footer-schedule">
-                        <li>
-                            <span class="day">Miércoles - Viernes</span>
-                            <span class="time">12:00 PM - 10:00 PM</span>
-                        </li>
-                        <li>
-                            <span class="day">Sábado</span>
-                            <span class="time">07:30 AM - 10:00 PM</span>
-                        </li>
-                        <li>
-                            <span class="day">Domingo</span>
-                            <span class="time">07:30 AM - 08:00 PM</span>
-                        </li>
+                        <li><span class="day">Miércoles - Viernes</span><span class="time">12:00 PM - 10:00 PM</span></li>
+                        <li><span class="day">Sábado</span><span class="time">07:30 AM - 10:00 PM</span></li>
+                        <li><span class="day">Domingo</span><span class="time">07:30 AM - 08:00 PM</span></li>
                     </ul>
                 </div>
-
                 <div class="footer-section">
                     <h4>Contacto</h4>
                     <ul class="footer-contact">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Heredia, Costa Rica<br>San Rafael</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+506 8346-9243</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>tsurucocina@gmail.com</span>
-                        </li>
+                        <li><i class="fas fa-map-marker-alt"></i><span>Heredia, Costa Rica — San Rafael</span></li>
+                        <li><i class="fas fa-phone"></i><span>+506 8346-9243</span></li>
+                        <li><i class="fas fa-envelope"></i><span>tsurucocina@gmail.com</span></li>
                     </ul>
                     <div class="newsletter">
                         <h5>Newsletter</h5>
@@ -629,23 +708,16 @@
                     </div>
                 </div>
             </div>
-
             <div class="footer-bottom">
                 <p>&copy; 2026 TSURÚ Cocina y Jardín. Todos los derechos reservados.</p>
                 <div class="footer-bottom-links">
-                    <a href="#">Política de Privacidad</a>
-                    <span>|</span>
-                    <a href="#">Términos y Condiciones</a>
+                    <a href="#">Política de Privacidad</a><span>|</span><a href="#">Términos y Condiciones</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Botón scroll to top -->
-    <button class="scroll-to-top" id="scrollToTop">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
+    <button class="scroll-to-top" id="scrollToTop"><i class="fas fa-arrow-up"></i></button>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

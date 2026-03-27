@@ -19,7 +19,6 @@ namespace AromasWeb.LogicaDeNegocio.Bitacoras
             return _crearBitacora.Crear(bitacora);
         }
 
-        // Método de conveniencia — no es parte de la interfaz.
         // Es el que se usa desde los controllers y lógicas de negocio.
         public int RegistrarAccion(
             int idEmpleado,

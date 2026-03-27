@@ -39,7 +39,7 @@ namespace AromasWeb.Controllers
             int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
             if (idSesion.HasValue && idSesion.Value > 0)
                 return idSesion.Value;
-            return 1;
+            throw new InvalidOperationException("No hay empleado autenticado en sesión.");
         }
 
         // Limpia del ModelState los campos de navegación que no vienen del formulario
@@ -381,5 +381,3 @@ namespace AromasWeb.Controllers
     }
 
 }
-
-        

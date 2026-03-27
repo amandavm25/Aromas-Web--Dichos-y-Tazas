@@ -1,4 +1,5 @@
-﻿@model List<AromasWeb.Abstracciones.ModeloUI.Permiso>
+﻿@using AromasWeb.Helpers
+@model List<AromasWeb.Abstracciones.ModeloUI.Permiso>
 
 @{
     ViewBag.Title = "Gestión de Permisos";
@@ -106,9 +107,12 @@
                 }
             </form>
 
-            <a href="@Url.Action("CrearPermiso", "Permiso")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                <span><i class="fas fa-plus"></i> Agregar Permiso</span>
-            </a>
+            @if (PermisoHelper.TienePermiso(Context.Session, "Crear Permiso"))
+            {
+                <a href="@Url.Action("CrearPermiso", "Permiso")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                    <span><i class="fas fa-plus"></i> Agregar Permiso</span>
+                </a>
+            }
         </div>
 
         <!-- Chip de filtros activos -->
@@ -177,13 +181,16 @@
                                         }
                                     </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                        <button type="button"
-                                                class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarPermiso", "Permiso", new { id = permiso.IdPermiso })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
+                                        @if (PermisoHelper.TienePermiso(Context.Session, "Editar Permiso"))
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-sm"
+                                                    onclick="window.location.href='@Url.Action("EditarPermiso", "Permiso", new { id = permiso.IdPermiso })'"
+                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        }
                                         <button type="button"
                                                 class="btn btn-sm btn-detalles-permiso"
                                                 data-id="@permiso.IdPermiso"

@@ -37,7 +37,8 @@ namespace AromasWeb.Controllers
         private int ObtenerIdEmpleadoSesion()
         {
             int? id = HttpContext.Session.GetInt32("IdEmpleado");
-            return (id.HasValue && id.Value > 0) ? id.Value : 1;
+            if (id.HasValue && id.Value > 0) return id.Value;
+            throw new InvalidOperationException("No hay empleado autenticado en sesión.");
         }
 
         // ============================================================
@@ -154,6 +155,20 @@ namespace AromasWeb.Controllers
             try
             {
                 var anterior = _listarPermisos.ObtenerPorId(permiso.IdPermiso);
+                
+                // Validar que el nombre no haya sido modificado
+                if (anterior != null && anterior.Nombre != permiso.Nombre)
+                {
+                    TempData["Error"] = "No se puede modificar el nombre del permiso";
+                    CargarModulosParaSelect(permiso.IdModulo);
+                    return View(permiso);
+                }
+                
+                // Restaurar el nombre original para asegurar que no cambie
+                if (anterior != null)
+                {
+                    permiso.Nombre = anterior.Nombre;
+                }
                 int resultado = _actualizarPermiso.Actualizar(permiso);
 
                 if (resultado > 0)

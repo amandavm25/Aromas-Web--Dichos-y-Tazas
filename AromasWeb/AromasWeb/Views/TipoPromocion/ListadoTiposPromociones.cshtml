@@ -1,4 +1,5 @@
-﻿@model List<AromasWeb.Abstracciones.ModeloUI.TipoPromocion>
+﻿@using AromasWeb.Helpers
+@model List<AromasWeb.Abstracciones.ModeloUI.TipoPromocion>
 
 @{
     ViewBag.Title = "Tipos de Promociones";
@@ -80,9 +81,12 @@
             </form>
 
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("CrearTipoPromocion", "TipoPromocion")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                    <span><i class="fas fa-plus"></i> Agregar Tipo</span>
-                </a>
+                @if (PermisoHelper.TienePermiso(Context.Session, "Crear Tipo Promocion"))
+                {
+                    <a href="@Url.Action("CrearTipoPromocion", "TipoPromocion")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                        <span><i class="fas fa-plus"></i> Agregar Tipo</span>
+                    </a>
+                }
             </div>
         </div>
 
@@ -134,12 +138,15 @@
                                         }
                                     </td>
                                     <td style="text-align: center; white-space: nowrap;">
-                                        <button type="button"
-                                                class="btn-table-action btn-table-edit"
-                                                onclick="window.location.href='@Url.Action("EditarTipoPromocion", "TipoPromocion", new { id = tipo.IdTipoPromocion })'"
-                                                title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
+                                        @if (PermisoHelper.TienePermiso(Context.Session, "Editar Tipo Promocion"))
+                                        {
+                                            <button type="button"
+                                                    class="btn-table-action btn-table-edit"
+                                                    onclick="window.location.href='@Url.Action("EditarTipoPromocion", "TipoPromocion", new { id = tipo.IdTipoPromocion })'"
+                                                    title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        }
                                         <button type="button"
                                                 class="btn-table-action btn-table-view btn-detalles-tipo"
                                                 data-id="@tipo.IdTipoPromocion"

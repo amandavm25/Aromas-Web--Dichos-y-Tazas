@@ -36,7 +36,7 @@ namespace AromasWeb.Controllers
             if (idSesion.HasValue && idSesion.Value > 0)
                 return idSesion.Value;
 
-            return 1;
+            throw new InvalidOperationException("No hay empleado autenticado en sesión.");
         }
 
         // GET: CategoriaReceta/ListadoCategoriasRecetas

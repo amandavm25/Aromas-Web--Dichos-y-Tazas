@@ -1,4 +1,5 @@
-﻿@model List<AromasWeb.Abstracciones.ModeloUI.Receta>
+﻿@using AromasWeb.Helpers
+@model List<AromasWeb.Abstracciones.ModeloUI.Receta>
 
 @{
     ViewBag.Title = "Gestión de Recetas";
@@ -90,9 +91,12 @@
             </form>
 
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("CrearReceta", "Receta")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                    <span><i class="fas fa-plus"></i> Nueva Receta</span>
-                </a>
+                @if (PermisoHelper.TienePermiso(Context.Session, "Crear Receta"))
+                {
+                    <a href="@Url.Action("CrearReceta", "Receta")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                        <span><i class="fas fa-plus"></i> Nueva Receta</span>
+                    </a>
+                }
             </div>
         </div>
 
@@ -211,12 +215,15 @@
                                             }
                                         </td>
                                         <td style="text-align: center; white-space: nowrap;">
-                                            <button type="button"
-                                                    class="btn-table-action btn-table-edit"
-                                                    onclick="window.location.href='@Url.Action("EditarReceta", "Receta", new { id = receta.IdReceta })'"
-                                                    title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                            @if (PermisoHelper.TienePermiso(Context.Session, "Editar Receta"))
+                                            {
+                                                <button type="button"
+                                                        class="btn-table-action btn-table-edit"
+                                                        onclick="window.location.href='@Url.Action("EditarReceta", "Receta", new { id = receta.IdReceta })'"
+                                                        title="Editar">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            }
                                             <button type="button"
                                                     class="btn-table-action btn-table-view btn-detalles-receta"
                                                     data-id="@receta.IdReceta"

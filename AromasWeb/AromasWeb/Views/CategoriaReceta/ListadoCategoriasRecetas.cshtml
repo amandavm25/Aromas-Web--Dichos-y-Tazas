@@ -1,4 +1,5 @@
-﻿@model List<AromasWeb.Abstracciones.ModeloUI.CategoriaReceta>
+﻿@using AromasWeb.Helpers
+@model List<AromasWeb.Abstracciones.ModeloUI.CategoriaReceta>
 
 @{
     ViewBag.Title = "Categorías de Recetas";
@@ -80,9 +81,12 @@
             </form>
 
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("CrearCategoriaReceta", "CategoriaReceta")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                    <span><i class="fas fa-plus"></i> Agregar Categoría</span>
-                </a>
+                @if (PermisoHelper.TienePermiso(Context.Session, "Crear Categoria Receta"))
+                {
+                    <a href="@Url.Action("CrearCategoriaReceta", "CategoriaReceta")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                        <span><i class="fas fa-plus"></i> Agregar Categoría</span>
+                    </a>
+                }
             </div>
         </div>
 
@@ -141,13 +145,16 @@
                                         }
                                     </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                        <button type="button"
-                                                class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarCategoriaReceta", "CategoriaReceta", new { id = cat.IdCategoriaReceta })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
+                                        @if (PermisoHelper.TienePermiso(Context.Session, "Editar Categoria Receta"))
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-sm"
+                                                    onclick="window.location.href='@Url.Action("EditarCategoriaReceta", "CategoriaReceta", new { id = cat.IdCategoriaReceta })'"
+                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        }
                                         <button type="button"
                                                 class="btn btn-sm btn-detalles-categoria"
                                                 data-id="@cat.IdCategoriaReceta"

@@ -15,7 +15,7 @@ namespace AromasWeb.Controllers
         private readonly CrearBitacora _crearBitacora;
         private ICrearTiposPromociones _crearTiposPromociones;
         private IEditarTiposPromociones _editarTiposPromociones;
-        
+
 
         public TipoPromocionController()
         {
@@ -32,7 +32,7 @@ namespace AromasWeb.Controllers
             if (idSesion.HasValue && idSesion.Value > 0)
                 return idSesion.Value;
 
-            return 1;
+            throw new InvalidOperationException("No hay empleado autenticado en sesión.");
         }
 
         // GET: TipoPromocion/ListadoTiposPromociones
@@ -69,11 +69,11 @@ namespace AromasWeb.Controllers
         public IActionResult CrearTipoPromocion(TipoPromocion tipoPromocion)
         {
             if (ModelState.IsValid)
-            { 
+            {
                 _crearTiposPromociones.Ejecutar(tipoPromocion);
 
 
-            TempData["Mensaje"] = "Tipo de promoción registrado correctamente";
+                TempData["Mensaje"] = "Tipo de promoción registrado correctamente";
                 TempData["TipoMensaje"] = "success";
                 return RedirectToAction(nameof(ListadoTiposPromociones));
             }

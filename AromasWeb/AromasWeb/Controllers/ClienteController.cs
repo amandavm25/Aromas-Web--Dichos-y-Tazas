@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Cliente;
-using AromasWeb.AccesoADatos.Modulos;
-using AromasWeb.LogicaDeNegocio.Bitacoras;
 using System.Collections.Generic;
-using System.Text.Json;
 using System;
 using System.Threading.Tasks;
 using AromasWeb.Helpers;
@@ -17,7 +14,6 @@ namespace AromasWeb.Controllers
         private ICrearCliente _crearCliente;
         private IActualizarCliente _actualizarCliente;
         private IObtenerCliente _obtenerCliente;
-        private readonly CrearBitacora _crearBitacora;
 
         public ClienteController()
         {
@@ -25,17 +21,6 @@ namespace AromasWeb.Controllers
             _crearCliente = new LogicaDeNegocio.Clientes.CrearCliente();
             _actualizarCliente = new LogicaDeNegocio.Clientes.ActualizarCliente();
             _obtenerCliente = new LogicaDeNegocio.Clientes.ObtenerCliente();
-            _crearBitacora = new CrearBitacora();
-        }
-
-        // Helper de sesión
-        private int ObtenerIdEmpleadoSesion()
-        {
-            int? idSesion = HttpContext.Session.GetInt32("IdEmpleado");
-            if (idSesion.HasValue && idSesion.Value > 0)
-                return idSesion.Value;
-
-            return 1;
         }
 
         // GET: Cliente/ListadoClientes
@@ -123,23 +108,6 @@ namespace AromasWeb.Controllers
 
                 if (resultado > 0)
                 {
-                    _crearBitacora.RegistrarAccion(
-                        idEmpleado: ObtenerIdEmpleadoSesion(),
-                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de clientes"),
-                        accion: Bitacora.Acciones.Crear,
-                        tablaAfectada: "Cliente",
-                        descripcion: $"Se creó el cliente: {cliente.Nombre} {cliente.Apellidos}",
-                        datosNuevos: JsonSerializer.Serialize(new
-                        {
-                            cliente.Identificacion,
-                            cliente.Nombre,
-                            cliente.Apellidos,
-                            cliente.Correo,
-                            cliente.Telefono,
-                            cliente.Estado
-                        })
-                    );
-
                     TempData["Mensaje"] = "Cliente registrado correctamente";
                     return RedirectToAction(nameof(ListadoClientes));
                 }
@@ -154,17 +122,11 @@ namespace AromasWeb.Controllers
                 System.Diagnostics.Debug.WriteLine($"Error en CrearCliente: {ex.Message}");
 
                 if (ex.Message.Contains("identificación"))
-                {
                     TempData["Error"] = "Ya existe un cliente registrado con esa identificación";
-                }
                 else if (ex.Message.Contains("correo"))
-                {
                     TempData["Error"] = "Ya existe un cliente registrado con ese correo electrónico";
-                }
                 else
-                {
                     TempData["Error"] = $"Error al registrar el cliente: {ex.Message}";
-                }
 
                 return View(cliente);
             }
@@ -225,41 +187,21 @@ namespace AromasWeb.Controllers
                     }
 
                     if (string.IsNullOrWhiteSpace(ContrasenaActual))
-                    {
                         ModelState.AddModelError("ContrasenaActual", "Debes ingresar la contraseña actual");
-                    }
-                    else
-                    {
-                        if (clienteActual.Contrasena != ContrasenaActual)
-                        {
-                            ModelState.AddModelError("ContrasenaActual", "La contraseña actual es incorrecta");
-                        }
-                    }
+                    else if (clienteActual.Contrasena != ContrasenaActual)
+                        ModelState.AddModelError("ContrasenaActual", "La contraseña actual es incorrecta");
 
                     if (string.IsNullOrWhiteSpace(ContrasenaNueva))
-                    {
                         ModelState.AddModelError("ContrasenaNueva", "Debes ingresar la nueva contraseña");
-                    }
-                    else
-                    {
-                        if (!PasswordValidator.EsContrasenaValida(ContrasenaNueva, out string mensajeError))
-                        {
-                            ModelState.AddModelError("ContrasenaNueva", mensajeError);
-                        }
-                    }
+                    else if (!PasswordValidator.EsContrasenaValida(ContrasenaNueva, out string mensajeError))
+                        ModelState.AddModelError("ContrasenaNueva", mensajeError);
 
                     if (string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
-                    {
                         ModelState.AddModelError("ConfirmarContrasenaNueva", "Debes confirmar la nueva contraseña");
-                    }
 
                     if (!string.IsNullOrWhiteSpace(ContrasenaNueva) && !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
-                    {
                         if (ContrasenaNueva != ConfirmarContrasenaNueva)
-                        {
                             ModelState.AddModelError("ConfirmarContrasenaNueva", "Las contraseñas nuevas no coinciden");
-                        }
-                    }
 
                     if (!ModelState.IsValid)
                     {
@@ -280,41 +222,10 @@ namespace AromasWeb.Controllers
                     return View(cliente);
                 }
 
-                // Capturar datos anteriores ANTES de actualizar
-                var anterior = _obtenerCliente.Obtener(cliente.IdCliente);
-
                 int resultado = _actualizarCliente.Actualizar(cliente);
 
                 if (resultado > 0)
                 {
-                    _crearBitacora.RegistrarAccion(
-                        idEmpleado: ObtenerIdEmpleadoSesion(),
-                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de clientes"),
-                        accion: Bitacora.Acciones.Actualizar,
-                        tablaAfectada: "Cliente",
-                        descripcion: $"Se actualizó el cliente: {cliente.Nombre} {cliente.Apellidos} (ID: {cliente.IdCliente})",
-                        datosAnteriores: anterior != null
-                            ? JsonSerializer.Serialize(new
-                            {
-                                anterior.Identificacion,
-                                anterior.Nombre,
-                                anterior.Apellidos,
-                                anterior.Correo,
-                                anterior.Telefono,
-                                anterior.Estado
-                            })
-                            : null,
-                        datosNuevos: JsonSerializer.Serialize(new
-                        {
-                            cliente.Identificacion,
-                            cliente.Nombre,
-                            cliente.Apellidos,
-                            cliente.Correo,
-                            cliente.Telefono,
-                            cliente.Estado
-                        })
-                    );
-
                     TempData["Mensaje"] = "Cliente actualizado correctamente";
                     return RedirectToAction(nameof(ListadoClientes));
                 }
@@ -335,11 +246,14 @@ namespace AromasWeb.Controllers
         // GET: Cliente/MiPerfil
         public IActionResult MiPerfil()
         {
-            int idCliente = HttpContext.Session.GetInt32("IdCliente") ?? 1;
+            int? idCliente = HttpContext.Session.GetInt32("IdCliente");
+
+            if (!idCliente.HasValue || idCliente.Value <= 0)
+                return RedirectToAction("Login", "Auth");
 
             try
             {
-                var cliente = _obtenerCliente.Obtener(idCliente);
+                var cliente = _obtenerCliente.Obtener(idCliente.Value);
 
                 if (cliente == null)
                 {
@@ -359,11 +273,14 @@ namespace AromasWeb.Controllers
         // GET: Cliente/EditarPerfil
         public IActionResult EditarPerfil()
         {
-            int idCliente = HttpContext.Session.GetInt32("IdCliente") ?? 1;
+            int? idCliente = HttpContext.Session.GetInt32("IdCliente");
+
+            if (!idCliente.HasValue || idCliente.Value <= 0)
+                return RedirectToAction("Login", "Auth");
 
             try
             {
-                var cliente = _obtenerCliente.Obtener(idCliente);
+                var cliente = _obtenerCliente.Obtener(idCliente.Value);
 
                 if (cliente == null)
                 {
@@ -385,8 +302,12 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditarPerfil(Cliente cliente, string ContrasenaActual, string ContrasenaNueva, string ConfirmarContrasenaNueva)
         {
-            int idCliente = HttpContext.Session.GetInt32("IdCliente") ?? 1;
-            cliente.IdCliente = idCliente;
+            int? idCliente = HttpContext.Session.GetInt32("IdCliente");
+
+            if (!idCliente.HasValue || idCliente.Value <= 0)
+                return RedirectToAction("Login", "Auth");
+
+            cliente.IdCliente = idCliente.Value;
 
             try
             {
@@ -407,7 +328,7 @@ namespace AromasWeb.Controllers
 
                 if (intentaCambiarContrasena)
                 {
-                    var clienteActual = _obtenerCliente.Obtener(idCliente);
+                    var clienteActual = _obtenerCliente.Obtener(idCliente.Value);
 
                     if (clienteActual == null)
                     {
@@ -416,31 +337,19 @@ namespace AromasWeb.Controllers
                     }
 
                     if (string.IsNullOrWhiteSpace(ContrasenaActual))
-                    {
                         ModelState.AddModelError("ContrasenaActual", "Debes ingresar tu contraseña actual");
-                    }
                     else if (clienteActual.Contrasena != ContrasenaActual)
-                    {
                         ModelState.AddModelError("ContrasenaActual", "La contraseña actual es incorrecta");
-                    }
 
                     if (string.IsNullOrWhiteSpace(ContrasenaNueva))
-                    {
                         ModelState.AddModelError("ContrasenaNueva", "Debes ingresar la nueva contraseña");
-                    }
                     else if (!PasswordValidator.EsContrasenaValida(ContrasenaNueva, out string mensajeError))
-                    {
                         ModelState.AddModelError("ContrasenaNueva", mensajeError);
-                    }
 
                     if (string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva))
-                    {
                         ModelState.AddModelError("ConfirmarContrasenaNueva", "Debes confirmar la nueva contraseña");
-                    }
                     else if (!string.IsNullOrWhiteSpace(ContrasenaNueva) && ContrasenaNueva != ConfirmarContrasenaNueva)
-                    {
                         ModelState.AddModelError("ConfirmarContrasenaNueva", "Las contraseñas no coinciden");
-                    }
 
                     if (!ModelState.IsValid)
                     {
@@ -461,37 +370,10 @@ namespace AromasWeb.Controllers
                     return View(cliente);
                 }
 
-                // Capturar datos anteriores ANTES de actualizar
-                var anterior = _obtenerCliente.Obtener(idCliente);
-
                 int resultado = _actualizarCliente.Actualizar(cliente);
 
                 if (resultado > 0)
                 {
-                    _crearBitacora.RegistrarAccion(
-                        idEmpleado: ObtenerIdEmpleadoSesion(),
-                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de clientes"),
-                        accion: Bitacora.Acciones.Actualizar,
-                        tablaAfectada: "Cliente",
-                        descripcion: $"El cliente actualizó su perfil: {cliente.Nombre} {cliente.Apellidos} (ID: {idCliente})",
-                        datosAnteriores: anterior != null
-                            ? JsonSerializer.Serialize(new
-                            {
-                                anterior.Nombre,
-                                anterior.Apellidos,
-                                anterior.Correo,
-                                anterior.Telefono
-                            })
-                            : null,
-                        datosNuevos: JsonSerializer.Serialize(new
-                        {
-                            cliente.Nombre,
-                            cliente.Apellidos,
-                            cliente.Correo,
-                            cliente.Telefono
-                        })
-                    );
-
                     TempData["Mensaje"] = "Perfil actualizado correctamente";
                     return RedirectToAction(nameof(MiPerfil));
                 }

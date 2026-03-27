@@ -16,10 +16,12 @@ namespace AromasWeb.AccesoADatos.Bitacoras
                 try
                 {
                     List<BitacoraAD> bitacorasAD = contexto.Bitacora
+                        .Include(b => b.Empleado)
+                        .Include(b => b.Modulo)
                         .OrderByDescending(b => b.Fecha)
                         .ToList();
 
-                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b, contexto)).ToList();
+                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b)).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -42,7 +44,10 @@ namespace AromasWeb.AccesoADatos.Bitacoras
             {
                 try
                 {
-                    var query = contexto.Bitacora.AsQueryable();
+                    var query = contexto.Bitacora
+                        .Include(b => b.Empleado)
+                        .Include(b => b.Modulo)
+                        .AsQueryable();
 
                     // Guardar null checks: Descripcion y TablaAfectada pueden ser null en la BD
                     if (!string.IsNullOrWhiteSpace(buscar))
@@ -73,7 +78,7 @@ namespace AromasWeb.AccesoADatos.Bitacoras
                         .OrderByDescending(b => b.Fecha)
                         .ToList();
 
-                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b, contexto)).ToList();
+                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b)).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -108,11 +113,13 @@ namespace AromasWeb.AccesoADatos.Bitacoras
                 try
                 {
                     List<BitacoraAD> bitacorasAD = contexto.Bitacora
+                        .Include(b => b.Empleado)
+                        .Include(b => b.Modulo)
                         .Where(b => b.IdEmpleado == idEmpleado)
                         .OrderByDescending(b => b.Fecha)
                         .ToList();
 
-                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b, contexto)).ToList();
+                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b)).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -129,11 +136,13 @@ namespace AromasWeb.AccesoADatos.Bitacoras
                 try
                 {
                     List<BitacoraAD> bitacorasAD = contexto.Bitacora
+                        .Include(b => b.Empleado)
+                        .Include(b => b.Modulo)
                         .Where(b => b.IdModulo == idModulo)
                         .OrderByDescending(b => b.Fecha)
                         .ToList();
 
-                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b, contexto)).ToList();
+                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b)).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -152,11 +161,13 @@ namespace AromasWeb.AccesoADatos.Bitacoras
                 try
                 {
                     List<BitacoraAD> bitacorasAD = contexto.Bitacora
+                        .Include(b => b.Empleado)
+                        .Include(b => b.Modulo)
                         .Where(b => b.Fecha.Date >= fechaInicio.Date && b.Fecha.Date <= fechaFin.Date)
                         .OrderByDescending(b => b.Fecha)
                         .ToList();
 
-                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b, contexto)).ToList();
+                    return bitacorasAD.Select(b => ConvertirObjetoParaUI(b)).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -166,6 +177,34 @@ namespace AromasWeb.AccesoADatos.Bitacoras
             }
         }
 
+        private Abstracciones.ModeloUI.Bitacora ConvertirObjetoParaUI(BitacoraAD bitacoraAD)
+        {
+            // Usar datos ya cargados por Include() para evitar N+1 queries
+            string nombreEmpleado = bitacoraAD.Empleado != null
+                ? $"{bitacoraAD.Empleado.Nombre} {bitacoraAD.Empleado.Apellidos}".Trim()
+                : "Empleado Desconocido";
+
+            string nombreModulo = bitacoraAD.Modulo != null 
+                ? bitacoraAD.Modulo.Nombre 
+                : "Módulo Desconocido";
+
+            return new Abstracciones.ModeloUI.Bitacora
+            {
+                IdBitacora = bitacoraAD.IdBitacora,
+                IdEmpleado = bitacoraAD.IdEmpleado,
+                NombreEmpleado = nombreEmpleado,
+                IdModulo = bitacoraAD.IdModulo,
+                NombreModulo = nombreModulo,
+                Accion = bitacoraAD.Accion,
+                TablaAfectada = bitacoraAD.TablaAfectada ?? null,
+                Descripcion = bitacoraAD.Descripcion ?? null,
+                DatosAnteriores = bitacoraAD.DatosAnteriores ?? null,
+                DatosNuevos = bitacoraAD.DatosNuevos ?? null,
+                Fecha = bitacoraAD.Fecha
+            };
+        }
+
+        // Método para mantener compatibilidad si aún se usa en ObtenerPorId
         private Abstracciones.ModeloUI.Bitacora ConvertirObjetoParaUI(
             BitacoraAD bitacoraAD,
             Contexto contexto)

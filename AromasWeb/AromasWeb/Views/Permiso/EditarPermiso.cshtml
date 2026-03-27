@@ -54,13 +54,14 @@
                         </small>
                     </div>
 
-                    <!-- Nombre -->
+                    <!-- Nombre (Solo Lectura) -->
                     <div class="form-group">
                         <label><i class="fas fa-tag"></i> Nombre del Permiso</label>
-                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Ver Empleados, Crear Empleados" } })
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Ver Empleados, Crear Empleados", @readonly = "readonly", @disabled = "disabled" } })
+                        @Html.HiddenFor(model => model.Nombre)
                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                         <small class="admin-form-hint">
-                            <i class="fas fa-info-circle"></i> Usa nombres descriptivos como "Ver", "Crear", "Editar", "Eliminar"
+                            <i class="fas fa-info-circle"></i> El nombre del permiso no puede ser modificado
                         </small>
                     </div>
 

@@ -3,6 +3,7 @@ using AromasWeb.Abstracciones.ModeloUI;
 using AromasWeb.Abstracciones.Logica.Empleado;
 using AromasWeb.AccesoADatos.Modulos;
 using AromasWeb.LogicaDeNegocio.Bitacoras;
+using AromasWeb.Abstracciones.Logica.Rol;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace AromasWeb.Controllers
         private IObtenerEmpleado _obtenerEmpleado;
         private IActualizarEmpleado _actualizarEmpleado;
         private ICrearEmpleado _crearEmpleado;
+        private IListarRoles _listarRoles;
         private readonly CrearBitacora _crearBitacora;
 
         public EmpleadoController()
@@ -26,6 +28,7 @@ namespace AromasWeb.Controllers
             _obtenerEmpleado = new LogicaDeNegocio.Empleados.ObtenerEmpleado();
             _actualizarEmpleado = new LogicaDeNegocio.Empleados.ActualizarEmpleado();
             _crearEmpleado = new LogicaDeNegocio.Empleados.CrearEmpleado();
+            _listarRoles = new LogicaDeNegocio.Roles.ListarRoles();
             _crearBitacora = new CrearBitacora();
         }
 
@@ -36,7 +39,7 @@ namespace AromasWeb.Controllers
             if (idSesion.HasValue && idSesion.Value > 0)
                 return idSesion.Value;
 
-            return 1;
+            throw new InvalidOperationException("No hay empleado autenticado en sesión.");
         }
 
         // GET: Empleado/ListadoEmpleados
@@ -391,13 +394,16 @@ namespace AromasWeb.Controllers
         // Método auxiliar para cargar roles
         private void CargarRoles()
         {
-            var roles = new List<dynamic>
+            try
             {
-                new { IdRol = 1, Nombre = "Administrador" },
-                new { IdRol = 2, Nombre = "Empleado" }
-            };
-
-            ViewBag.Roles = roles;
+                var roles = _listarRoles.BuscarPorEstado(true);
+                ViewBag.Roles = roles;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al cargar roles: {ex.Message}");
+                ViewBag.Roles = new List<Rol>();
+            }
         }
     }
 }

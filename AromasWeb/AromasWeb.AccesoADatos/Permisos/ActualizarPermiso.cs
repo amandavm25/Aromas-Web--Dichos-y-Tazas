@@ -19,21 +19,17 @@ namespace AromasWeb.AccesoADatos.Permisos
                     if (permisoExistente == null)
                         return 0;
 
+                    // Validar que el nombre no sea modificado
+                    if (!string.Equals(permisoExistente.Nombre, permiso.Nombre, StringComparison.OrdinalIgnoreCase))
+                        throw new Exception("No se puede modificar el nombre del permiso");
+
                     // Validar que el módulo exista
                     bool moduloExiste = contexto.Modulo.Any(m => m.IdModulo == permiso.IdModulo);
                     if (!moduloExiste)
                         throw new Exception("El módulo seleccionado no existe");
 
-                    // Validar nombre duplicado excluyendo el propio registro
-                    bool nombreExiste = contexto.Permiso
-                        .Any(p => p.Nombre.ToLower() == permiso.Nombre.ToLower().Trim() &&
-                                  p.IdModulo == permiso.IdModulo &&
-                                  p.IdPermiso != permiso.IdPermiso);
-                    if (nombreExiste)
-                        throw new Exception("Ya existe otro permiso con ese nombre en el módulo seleccionado");
-
+                    // Actualizar solo los campos permitidos (deshabilitando cambio de nombre)
                     permisoExistente.IdModulo = permiso.IdModulo;
-                    permisoExistente.Nombre = permiso.Nombre?.Trim();
                     permisoExistente.Descripcion = permiso.Descripcion?.Trim();
                     permisoExistente.Estado = permiso.Estado;
 

@@ -1,4 +1,5 @@
-﻿@model List<AromasWeb.Abstracciones.ModeloUI.Cliente>
+﻿@using AromasWeb.Helpers
+@model List<AromasWeb.Abstracciones.ModeloUI.Cliente>
 
 @{
     ViewBag.Title = "Gestión de Clientes";
@@ -89,9 +90,12 @@
             </form>
 
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("CrearCliente", "Cliente")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                    <span><i class="fas fa-plus"></i> Agregar Cliente</span>
-                </a>
+                @if (PermisoHelper.TienePermiso(Context.Session, "Crear Cliente"))
+                {
+                    <a href="@Url.Action("CrearCliente", "Cliente")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                        <span><i class="fas fa-plus"></i> Agregar Cliente</span>
+                    </a>
+                }
             </div>
         </div>
 
@@ -177,20 +181,26 @@
                                         }
                                     </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                        <button type="button"
-                                                class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarCliente", "Cliente", new { id = cliente.IdCliente })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button type="button"
-                                                class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("HistorialReservas", "Reserva", new { id = cliente.IdCliente })'"
-                                                style="background: var(--dark-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Ver historial">
-                                            <i class="fas fa-history"></i>
-                                        </button>
+                                        @if (PermisoHelper.TienePermiso(Context.Session, "Editar Cliente"))
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-sm"
+                                                    onclick="window.location.href='@Url.Action("EditarCliente", "Cliente", new { id = cliente.IdCliente })'"
+                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        }
+                                        @if (PermisoHelper.TienePermiso(Context.Session, "Ver Historial Reservas"))
+                                        {
+                                            <button type="button"
+                                            class="btn btn-sm"
+                                            onclick="window.location.href='@Url.Action("HistorialReservas", "Reserva", new { id = cliente.IdCliente })'"
+                                            style="background: var(--dark-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                            title="Ver historial">
+                                                <i class="fas fa-history"></i>
+                                            </button>
+                                        }
                                         <button type="button"
                                                 class="btn btn-sm btn-detalles-cliente"
                                                 data-id="@cliente.IdCliente"

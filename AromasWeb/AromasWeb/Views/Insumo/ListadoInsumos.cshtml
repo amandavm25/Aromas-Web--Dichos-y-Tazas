@@ -1,4 +1,5 @@
-﻿@model List<AromasWeb.Abstracciones.ModeloUI.Insumo>
+﻿@using AromasWeb.Helpers
+@model List<AromasWeb.Abstracciones.ModeloUI.Insumo>
 
 @{
     ViewBag.Title = "Inventario de Insumos";
@@ -98,12 +99,18 @@
             </form>
 
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("HistorialMovimientos", "MovimientoInsumo")" class="btn btn-secondary" style="white-space: nowrap;">
-                    <span><i class="fas fa-history"></i> Historial</span>
-                </a>
-                <a href="@Url.Action("CrearInsumo", "Insumo")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                    <span><i class="fas fa-plus"></i> Agregar Insumo</span>
-                </a>
+                @if (PermisoHelper.TienePermiso(Context.Session, "Ver Movimientos Insumos"))
+                {
+                    <a href="@Url.Action("HistorialMovimientos", "MovimientoInsumo")" class="btn btn-secondary" style="white-space: nowrap;">
+                        <span><i class="fas fa-history"></i> Historial</span>
+                    </a>
+                }
+                @if (PermisoHelper.TienePermiso(Context.Session, "Crear Insumo"))
+                {
+                    <a href="@Url.Action("CrearInsumo", "Insumo")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                        <span><i class="fas fa-plus"></i> Agregar Insumo</span>
+                    </a>
+                }
             </div>
         </div>
 
@@ -213,12 +220,15 @@
                                             }
                                         </td>
                                         <td style="text-align: center; white-space: nowrap;">
-                                            <button type="button"
-                                                    class="btn-table-action btn-table-edit"
-                                                    onclick="window.location.href='@Url.Action("EditarInsumo", "Insumo", new { id = insumo.IdInsumo })'"
-                                                    title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                            @if (PermisoHelper.TienePermiso(Context.Session, "Editar Insumo"))
+                                            {
+                                                <button type="button"
+                                                        class="btn-table-action btn-table-edit"
+                                                        onclick="window.location.href='@Url.Action("EditarInsumo", "Insumo", new { id = insumo.IdInsumo })'"
+                                                        title="Editar">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            }
                                             <button type="button"
                                                     class="btn-table-action btn-table-view btn-detalles"
                                                     data-id="@insumo.IdInsumo"
@@ -234,13 +244,16 @@
                                                     title="Ver detalles">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <button type="button"
-                                                    class="btn-table-action"
-                                                    style="background: var(--olive-green); color: white;"
-                                                    onclick="window.location.href='@Url.Action("RegistrarMovimiento", "MovimientoInsumo", new { idInsumo = insumo.IdInsumo })'"
-                                                    title="Registrar movimiento">
-                                                <i class="fas fa-exchange-alt"></i>
-                                            </button>
+                                            @if (PermisoHelper.TienePermiso(Context.Session, "Registrar Movimiento Insumo"))
+                                            {
+                                                <button type="button"
+                                                        class="btn-table-action"
+                                                        style="background: var(--olive-green); color: white;"
+                                                        onclick="window.location.href='@Url.Action("RegistrarMovimiento", "MovimientoInsumo", new { idInsumo = insumo.IdInsumo })'"
+                                                        title="Registrar movimiento">
+                                                    <i class="fas fa-exchange-alt"></i>
+                                                </button>
+                                            }
                                         </td>
                                     </tr>
                                     contador++;

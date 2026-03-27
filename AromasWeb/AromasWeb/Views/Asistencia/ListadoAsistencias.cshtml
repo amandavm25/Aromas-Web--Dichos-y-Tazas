@@ -1,4 +1,6 @@
-﻿@model List<AromasWeb.Abstracciones.ModeloUI.Asistencia>
+﻿@using AromasWeb.Helpers
+@using AromasWeb.Helpers
+@model List<AromasWeb.Abstracciones.ModeloUI.Asistencia>
 
 @{
     ViewBag.Title = "Gestión de Asistencia";
@@ -80,9 +82,12 @@
             </form>
 
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("RegistrarEntrada", "Asistencia")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                    <span><i class="fas fa-sign-in-alt"></i> Registrar Entrada</span>
-                </a>
+                @if (PermisoHelper.TienePermiso(Context.Session, "Registrar Asistencia"))
+                {
+                    <a href="@Url.Action("RegistrarEntrada", "Asistencia")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                        <span><i class="fas fa-sign-in-alt"></i> Registrar Entrada</span>
+                    </a>
+                }
             </div>
         </div>
 
@@ -200,7 +205,7 @@
                                         </span>
                                     </td>
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
-                                        @if (!asistencia.HoraSalida.HasValue)
+                                        @if (!asistencia.HoraSalida.HasValue && PermisoHelper.TienePermiso(Context.Session, "Editar Asistencia"))
                                         {
                                             <button type="button"
                                                     class="btn btn-sm"
@@ -210,13 +215,16 @@
                                                 <i class="fas fa-sign-out-alt"></i>
                                             </button>
                                         }
-                                        <button type="button"
-                                                class="btn btn-sm"
-                                                onclick="window.location.href='@Url.Action("EditarAsistencia", "Asistencia", new { id = asistencia.IdAsistencia })'"
-                                                style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
+                                        @if (PermisoHelper.TienePermiso(Context.Session, "Editar Asistencia"))
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-sm"
+                                                    onclick="window.location.href='@Url.Action("EditarAsistencia", "Asistencia", new { id = asistencia.IdAsistencia })'"
+                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        }
                                         <button type="button"
                                                 class="btn btn-sm btn-detalles-asistencia"
                                                 data-nombre="@asistencia.NombreEmpleado"

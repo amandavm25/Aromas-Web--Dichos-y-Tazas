@@ -1,4 +1,5 @@
-﻿@model List<AromasWeb.Abstracciones.ModeloUI.MovimientoInsumo>
+﻿@using AromasWeb.Helpers
+@model List<AromasWeb.Abstracciones.ModeloUI.MovimientoInsumo>
 
 @{
     ViewBag.Title = "Historial de Movimientos";
@@ -101,9 +102,12 @@
             </form>
 
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="@Url.Action("RegistrarMovimiento", "MovimientoInsumo")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
-                    <span><i class="fas fa-arrow-down"></i> Registrar Movimiento</span>
-                </a>
+                @if (PermisoHelper.TienePermiso(Context.Session, "Registrar Movimiento Insumo"))
+                {
+                    <a href="@Url.Action("RegistrarMovimiento", "MovimientoInsumo")" class="btn btn-primary btn-3d" style="white-space: nowrap;">
+                        <span><i class="fas fa-arrow-down"></i> Registrar Movimiento</span>
+                    </a>
+                }
             </div>
         </div>
 
