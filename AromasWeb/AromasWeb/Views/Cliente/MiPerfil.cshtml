@@ -49,16 +49,6 @@
                     <p class="modal-entity-sub">
                         <i class="fas fa-envelope" style="color: var(--olive-green); margin-right: 0.4rem;"></i>@Model.Correo
                     </p>
-                    <div class="modal-entity-meta">
-                        <div class="modal-entity-meta-item">
-                            <small><i class="fas fa-calendar-plus"></i> Miembro Desde</small>
-                            <p>@Model.FechaRegistroFormateada</p>
-                        </div>
-                        <div class="modal-entity-meta-item">
-                            <small><i class="fas fa-calendar-check"></i> Última Reserva</small>
-                            <p>@Model.UltimaReservaFormateada</p>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Botón editar -->
@@ -112,21 +102,6 @@
                         </label>
                         <p class="modal-data-value">@Model.Telefono</p>
                     </div>
-
-                    <div class="modal-data-cell" style="background: var(--white);">
-                        <label class="modal-data-label">
-                            <i class="fas fa-calendar-plus"></i> Fecha de Registro
-                        </label>
-                        <p class="modal-data-value">@Model.FechaRegistroFormateada</p>
-                    </div>
-
-                    <div class="modal-data-cell" style="background: var(--white);">
-                        <label class="modal-data-label">
-                            <i class="fas fa-calendar-check"></i> Última Reserva
-                        </label>
-                        <p class="modal-data-value">@Model.UltimaReservaFormateada</p>
-                    </div>
-
                 </div>
 
                 <!-- Nota al pie -->

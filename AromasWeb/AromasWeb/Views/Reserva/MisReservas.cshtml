@@ -35,13 +35,9 @@
         <!-- Tarjeta del cliente -->
         <div class="admin-modal" data-aos="fade-up" style="margin-bottom: 2rem;">
             <div class="modal-entity-header">
-
-                <!-- Avatar -->
                 <div class="modal-entity-avatar">
                     <i class="fas fa-user"></i>
                 </div>
-
-                <!-- Nombre y datos -->
                 <div style="flex: 1;">
                     <h4 class="modal-entity-name">@ViewBag.NombreCliente</h4>
                     <p class="modal-entity-sub">
@@ -58,7 +54,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -123,14 +118,6 @@
                     }
                     @foreach (var reserva in Model)
                     {
-                        var estadoColor = reserva.Estado switch
-                        {
-                            "Confirmada" => "var(--green)",
-                            "Completada" => "var(--gold)",
-                            "Cancelada" => "var(--red)",
-                            "Pendiente" => "var(--yellow)",
-                            _ => "var(--charcoal)"
-                        };
                         var iconoEstado = reserva.Estado switch
                         {
                             "Confirmada" => "fa-check-circle",
@@ -231,32 +218,49 @@
                                     </div>
                                 }
 
-                                @if (reserva.PuedeModificar || reserva.PuedeCancelar)
+                                @if ((reserva.Estado == "Pendiente" || reserva.Estado == "Confirmada") && reserva.EsFutura)
                                 {
                                     <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--cream); display: flex; justify-content: flex-end; gap: 0.5rem;">
-                                        @if (reserva.PuedeModificar)
+
+                                        @if (reserva.Estado == "Pendiente")
                                         {
                                             <a href="@Url.Action("EditarMiReserva", "Reserva", new { id = reserva.IdReserva })"
                                                class="btn btn-secondary"
                                                style="font-size: 0.85rem; padding: 0.4rem 1.2rem; background: var(--olive-green); color: white; border: none;">
                                                 <span><i class="fas fa-edit"></i> Editar</span>
                                             </a>
-                                        }
-                                        @if (reserva.PuedeCancelar)
-                                        {
                                             <button type="button"
-                                                    class="btn btn-secondary btn-cancelar-reserva"
+                                                    class="btn btn-secondary btn-cancelar-mi-reserva"
                                                     style="font-size: 0.85rem; padding: 0.4rem 1.2rem;"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#modalCancelarReserva"
+                                                    data-bs-target="#modalCancelarMiReserva"
                                                     data-id="@reserva.IdReserva"
                                                     data-cliente="@reserva.NombreCliente"
                                                     data-fecha="@reserva.FechaFormateada"
                                                     data-hora="@reserva.HoraFormateada"
-                                                    data-personas="@reserva.CantidadPersonas">
+                                                    data-personas="@reserva.CantidadPersonas"
+                                                    data-dias-restantes="@((reserva.Fecha.Date - DateTime.Now.Date).Days)">
                                                 <span><i class="fas fa-ban"></i> Cancelar</span>
                                             </button>
                                         }
+
+                                        @if (reserva.Estado == "Confirmada")
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-secondary btn-cancelar-mi-reserva"
+                                                    style="font-size: 0.85rem; padding: 0.4rem 1.2rem;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalCancelarMiReserva"
+                                                    data-id="@reserva.IdReserva"
+                                                    data-cliente="@reserva.NombreCliente"
+                                                    data-fecha="@reserva.FechaFormateada"
+                                                    data-hora="@reserva.HoraFormateada"
+                                                    data-personas="@reserva.CantidadPersonas"
+                                                    data-dias-restantes="@((reserva.Fecha.Date - DateTime.Now.Date).Days)">
+                                                <span><i class="fas fa-ban"></i> Cancelar</span>
+                                            </button>
+                                        }
+
                                     </div>
                                 }
                             </div>
@@ -305,7 +309,7 @@
                             <i class="fas fa-edit" style="font-size: 1.5rem; color: white;"></i>
                             <div>
                                 <strong style="color: white; display: block; margin-bottom: 0.5rem;">Modificaciones</strong>
-                                <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">Puedes editar tu reserva hasta 24 horas antes</span>
+                                <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">Puedes editar tu reserva hasta 48 horas antes</span>
                             </div>
                         </div>
                     </div>
@@ -314,7 +318,7 @@
                             <i class="fas fa-ban" style="font-size: 1.5rem; color: white;"></i>
                             <div>
                                 <strong style="color: white; display: block; margin-bottom: 0.5rem;">Cancelaciones</strong>
-                                <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">Cancela sin cargo con 24 horas de anticipación</span>
+                                <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">Cancela hasta 48 horas de anticipación</span>
                             </div>
                         </div>
                     </div>
@@ -333,7 +337,7 @@
     </div>
 </section>
 
-<partial name="_ModalCancelarReserva" />
+<partial name="_ModalCancelarMiReserva" />
 
 @section Scripts {
     <script src="~/js/reserva.js"></script>

@@ -36,12 +36,39 @@
         @using (Html.BeginForm("EditarPerfil", "Cliente", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
+
             @Html.HiddenFor(model => model.IdCliente)
             @Html.HiddenFor(model => model.FechaRegistro)
             @Html.HiddenFor(model => model.Estado)
 
             <div class="admin-form-wrapper" data-aos="fade-up">
+
+                @* Resumen de errores generales *@
                 @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
+
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger" style="margin-bottom: 2rem;">
+                        <i class="fas fa-exclamation-triangle"></i> @ViewBag.ErrorMessage
+                    </div>
+                }
+
+                @* Bloque de errores detallados *@
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-warning" style="margin-bottom: 2rem;">
+                        <strong>Errores encontrados:</strong>
+                        <ul style="margin: 0.5rem 0 0 0;">
+                            @foreach (var modelState in ViewData.ModelState.Values)
+                            {
+                                foreach (var error in modelState.Errors)
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
 
                 <!-- Información Personal -->
                 <div class="admin-form-header">
@@ -106,7 +133,7 @@
                         </small>
                     </div>
 
-                    <!-- Información Adicional (solo lectura) -->
+                    <!-- Información de solo lectura -->
                     <div class="admin-form-info-box">
                         <i class="fas fa-info-circle"></i>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; flex: 1;">
@@ -145,6 +172,10 @@
                             Contraseña Actual
                         </label>
                         <input type="password" name="ContrasenaActual" class="form-control" placeholder="Ingresa tu contraseña actual" />
+                        @if (ViewData.ModelState.ContainsKey("ContrasenaActual"))
+                        {
+                            <span class="text-danger">@ViewData.ModelState["ContrasenaActual"].Errors.FirstOrDefault()?.ErrorMessage</span>
+                        }
                     </div>
 
                     <!-- Nueva Contraseña y Confirmar -->
@@ -155,6 +186,10 @@
                                 Nueva Contraseña
                             </label>
                             <input type="password" name="ContrasenaNueva" class="form-control" placeholder="Mínimo 8 caracteres" />
+                            @if (ViewData.ModelState.ContainsKey("ContrasenaNueva"))
+                            {
+                                <span class="text-danger">@ViewData.ModelState["ContrasenaNueva"].Errors.FirstOrDefault()?.ErrorMessage</span>
+                            }
                             <small class="admin-form-hint">
                                 <i class="fas fa-info-circle"></i>
                                 Mínimo 8 caracteres: 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial.
@@ -167,6 +202,10 @@
                                 Confirmar Nueva Contraseña
                             </label>
                             <input type="password" name="ConfirmarContrasenaNueva" class="form-control" placeholder="Repite la nueva contraseña" />
+                            @if (ViewData.ModelState.ContainsKey("ConfirmarContrasenaNueva"))
+                            {
+                                <span class="text-danger">@ViewData.ModelState["ConfirmarContrasenaNueva"].Errors.FirstOrDefault()?.ErrorMessage</span>
+                            }
                         </div>
                     </div>
 
@@ -174,7 +213,8 @@
 
                 <!-- Botones -->
                 <div class="admin-form-footer">
-                    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("MiPerfil", "Cliente")'">
+                    <button type="button" class="btn btn-secondary"
+                            onclick="window.location.href='@Url.Action("MiPerfil", "Cliente")'">
                         <i class="fas fa-times"></i>
                         <span>Cancelar</span>
                     </button>
@@ -183,6 +223,7 @@
                         <span>Guardar Cambios</span>
                     </button>
                 </div>
+
             </div>
         }
     </div>

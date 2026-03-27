@@ -1,14 +1,14 @@
-﻿<div class="modal fade admin-modal modal-warning" id="modalCancelarReserva" tabindex="-1" aria-labelledby="modalCancelarReservaLabel" aria-hidden="true">
+﻿<div class="modal fade admin-modal modal-warning" id="modalCancelarMiReserva" tabindex="-1" aria-labelledby="modalCancelarMiReservaLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Header -->
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCancelarReservaLabel">
+                <h5 class="modal-title" id="modalCancelarMiReservaLabel">
                     <div class="modal-icon">
                         <i class="fas fa-ban"></i>
                     </div>
-                    Cancelar Reserva
+                    Cancelar Mi Reserva
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -16,7 +16,7 @@
             <!-- Body -->
             <div class="modal-body">
 
-                <!-- Aviso -->
+                <!-- Aviso principal -->
                 <div class="modal-alert">
                     <div class="modal-alert-icon">
                         <i class="fas fa-exclamation-circle"></i>
@@ -28,6 +28,13 @@
                             La reserva permanecerá en el sistema para registro histórico.
                         </p>
                     </div>
+                </div>
+
+                <!-- Aviso de plazo (visible solo si diasRestantes < 2) -->
+                <div id="aviso-plazo-mi-reserva"
+                     style="display: none; background: rgba(231,76,60,0.08); border-left: 5px solid var(--red);
+                            padding: 1.2rem 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;
+                            color: #c0392b; font-size: 0.95rem; gap: 0.8rem; align-items: start;">
                 </div>
 
                 <!-- Detalles -->
@@ -42,28 +49,28 @@
                             <label class="modal-data-label">
                                 <i class="fas fa-users"></i> Personas
                             </label>
-                            <p id="cancelar-personas-reserva" class="modal-data-value value-large"></p>
+                            <p id="mi-cancelar-personas" class="modal-data-value value-large"></p>
                         </div>
 
                         <div class="modal-data-cell">
                             <label class="modal-data-label">
                                 <i class="fas fa-user"></i> Cliente
                             </label>
-                            <p id="cancelar-cliente-reserva" class="modal-data-value"></p>
+                            <p id="mi-cancelar-cliente" class="modal-data-value"></p>
                         </div>
 
                         <div class="modal-data-cell">
                             <label class="modal-data-label">
                                 <i class="fas fa-calendar-alt"></i> Fecha de Reserva
                             </label>
-                            <p id="cancelar-fecha-reserva" class="modal-data-value"></p>
+                            <p id="mi-cancelar-fecha" class="modal-data-value"></p>
                         </div>
 
                         <div class="modal-data-cell">
                             <label class="modal-data-label">
                                 <i class="fas fa-clock"></i> Hora
                             </label>
-                            <p id="cancelar-hora-reserva" class="modal-data-value"></p>
+                            <p id="mi-cancelar-hora" class="modal-data-value"></p>
                         </div>
 
                     </div>
@@ -75,11 +82,11 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <span><i class="fas fa-arrow-left"></i> Volver</span>
                 </button>
-                <form id="formCancelarReserva" method="post" action="" style="display:inline;">
+                <form id="formCancelarMiReserva" method="post" action="" style="display:inline;">
                     @Html.AntiForgeryToken()
-                    <input type="hidden" id="cancelar-id-reserva" name="IdReserva" />
+                    <input type="hidden" id="mi-cancelar-id-input" name="id" />
                     <button type="submit" class="btn btn-primary btn-3d">
-                        <span><i class="fas fa-ban"></i> Cancelar Reserva</span>
+                        <span><i class="fas fa-ban"></i> Cancelar Mi Reserva</span>
                     </button>
                 </form>
             </div>

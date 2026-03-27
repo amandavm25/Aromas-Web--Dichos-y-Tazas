@@ -1,4 +1,9 @@
-﻿// ============================================
+// ============================================
+// CONSTANTE DE POLÍTICA
+// ============================================
+const DIAS_MINIMOS_CANCELACION = 3;
+
+// ============================================
 // INICIALIZACIÓN Y ANIMACIONES
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
@@ -10,12 +15,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Paginación de tabla (ListadoSolicitudes)
     if (document.getElementById('laTablaDeSolicitudes')) {
         initTablePagination({
-            tableId: 'laTablaDeSolicitudes',
+            tableId:        'laTablaDeSolicitudes',
             recordsPerPage: 10,
-            prevButtonId: 'btnAnterior',
-            nextButtonId: 'btnSiguiente',
-            startRecordId: 'startRecord',
-            endRecordId: 'endRecord',
+            prevButtonId:   'btnAnterior',
+            nextButtonId:   'btnSiguiente',
+            startRecordId:  'startRecord',
+            endRecordId:    'endRecord',
             totalRecordsId: 'totalRecords'
         });
     }
@@ -23,12 +28,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Paginación de timeline/cards (MisSolicitudes y VerSolicitudesEmpleado)
     if (document.getElementById('historial-solicitudes-timeline')) {
         initCardsPagination({
-            containerId: 'historial-solicitudes-timeline',
+            containerId:  'historial-solicitudes-timeline',
             cardsPerPage: 3,
             prevButtonId: 'btnAnteriorCards',
             nextButtonId: 'btnSiguienteCards',
-            startCardId: 'startCard',
-            endCardId: 'endCard',
+            startCardId:  'startCard',
+            endCardId:    'endCard',
             totalCardsId: 'totalCards'
         });
     }
@@ -41,14 +46,13 @@ document.addEventListener('DOMContentLoaded', function () {
 // ANIMACIONES AL CARGAR
 // ============================================
 function animateOnLoad() {
-    const statCards = document.querySelectorAll('[style*="linear-gradient(135deg,"]');
-    statCards.forEach((card, index) => {
-        card.style.opacity = '0';
+    document.querySelectorAll('[style*="linear-gradient(135deg,"]').forEach((card, index) => {
+        card.style.opacity   = '0';
         card.style.transform = 'translateY(30px) scale(0.9)';
         setTimeout(() => {
             card.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0) scale(1)';
+            card.style.opacity    = '1';
+            card.style.transform  = 'translateY(0) scale(1)';
         }, index * 100);
     });
 }
@@ -57,27 +61,22 @@ function animateOnLoad() {
 // EFECTOS HOVER EN TABLA
 // ============================================
 function initializeTableHoverEffects() {
-    const tables = document.querySelectorAll('table');
-    tables.forEach(table => {
-        const tbody = table.querySelector('tbody');
-        if (!tbody) return;
-        tbody.querySelectorAll('tr').forEach(row => {
-            row.addEventListener('mouseenter', function () {
-                this.style.background = 'linear-gradient(90deg, rgba(143, 142, 106, 0.05) 0%, transparent 100%)';
-                this.style.transform = 'translateX(5px)';
-                this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
-            });
-            row.addEventListener('mouseleave', function () {
-                this.style.background = '';
-                this.style.transform = '';
-                this.style.boxShadow = '';
-            });
+    document.querySelectorAll('table tbody tr').forEach(row => {
+        row.addEventListener('mouseenter', function () {
+            this.style.background  = 'linear-gradient(90deg, rgba(143, 142, 106, 0.05) 0%, transparent 100%)';
+            this.style.transform   = 'translateX(5px)';
+            this.style.boxShadow   = '0 4px 12px rgba(0,0,0,0.08)';
+        });
+        row.addEventListener('mouseleave', function () {
+            this.style.background  = '';
+            this.style.transform   = '';
+            this.style.boxShadow   = '';
         });
     });
 }
 
 // ============================================
-// TOOLTIPS PERSONALIZADOS
+// TOOLTIPS
 // ============================================
 function initializeTooltips() {
     document.querySelectorAll('[title]').forEach(element => {
@@ -98,20 +97,16 @@ function showTooltip(event, text) {
     tooltipElement.style.cssText = `
         position: fixed;
         background: linear-gradient(135deg, var(--dark-green), var(--olive-green));
-        color: white;
-        padding: 0.7rem 1.2rem;
-        border-radius: 12px;
-        font-size: 0.9rem;
-        z-index: 10000;
+        color: white; padding: 0.7rem 1.2rem; border-radius: 12px;
+        font-size: 0.9rem; z-index: 10000;
         box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-        pointer-events: none;
-        white-space: nowrap;
+        pointer-events: none; white-space: nowrap;
         animation: tooltipFadeIn 0.3s ease;
     `;
     document.body.appendChild(tooltipElement);
     const rect = tooltipElement.getBoundingClientRect();
     tooltipElement.style.left = (event.clientX - rect.width / 2) + 'px';
-    tooltipElement.style.top = (event.clientY - rect.height - 10) + 'px';
+    tooltipElement.style.top  = (event.clientY - rect.height - 10) + 'px';
 }
 
 function hideTooltip() {
@@ -128,53 +123,45 @@ function hideTooltip() {
 // MODALES
 // ============================================
 function initializeModals() {
+
     // Modal de detalles
     document.querySelectorAll('.btn-detalles-solicitud').forEach(btn => {
         btn.addEventListener('click', function () {
             const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
-            set('detalles-nombre-empleado', this.dataset.empleado);
+            set('detalles-nombre-empleado',         this.dataset.empleado);
             set('detalles-identificacion-empleado', this.dataset.identificacion);
-            set('detalles-cargo-empleado', this.dataset.cargo);
-            set('detalles-fechasolicitud', this.dataset.fechaSolicitud);
-            set('detalles-fechainicio', this.dataset.fechaInicio);
-            set('detalles-fechafin', this.dataset.fechaFin);
-            set('detalles-diassolicitados', this.dataset.diasSolicitados);
-            set('detalles-antiguedad', this.dataset.antiguedad);
+            set('detalles-cargo-empleado',          this.dataset.cargo);
+            set('detalles-fechasolicitud',          this.dataset.fechaSolicitud);
+            set('detalles-fechainicio',             this.dataset.fechaInicio);
+            set('detalles-fechafin',                this.dataset.fechaFin);
+            set('detalles-diassolicitados',         this.dataset.diasSolicitados);
+            set('detalles-antiguedad',              this.dataset.antiguedad);
 
-            // Días disponibles con color via clase CSS
             const elDias = document.getElementById('detalles-diasdisponibles');
             if (elDias) {
                 const disponibles = parseFloat(this.dataset.diasDisponibles);
                 const solicitados = parseFloat(this.dataset.diasSolicitados);
                 elDias.textContent = this.dataset.diasDisponibles;
-                elDias.className = 'modal-summary-value ' + (disponibles >= solicitados ? 'summary-total' : 'summary-extra');
+                elDias.className   = 'modal-summary-value ' + (disponibles >= solicitados ? 'summary-total' : 'summary-extra');
                 elDias.style.color = disponibles >= solicitados ? 'var(--green)' : 'var(--red)';
             }
 
-            // Badge de estado
             const estadoBadge = document.getElementById('detalles-estado-badge');
             if (estadoBadge) {
                 const estado = this.dataset.estado;
                 const config = {
-                    'Aprobada': { icon: 'fa-check-circle', bg: 'var(--green)' },
-                    'Rechazada': { icon: 'fa-times-circle', bg: 'var(--red)' },
-                    'Pendiente': { icon: 'fa-clock', bg: 'var(--yellow)' },
-                    'Cancelada': { icon: 'fa-ban', bg: 'var(--charcoal)' }
+                    'Aprobada':  { icon: 'fa-check-circle',  bg: 'var(--green)'  },
+                    'Rechazada': { icon: 'fa-times-circle',  bg: 'var(--red)'    },
+                    'Pendiente': { icon: 'fa-clock',         bg: 'var(--yellow)' },
+                    'Cancelada': { icon: 'fa-ban',           bg: 'var(--charcoal)' }
                 };
                 const c = config[estado] || { icon: 'fa-question-circle', bg: 'var(--gray)' };
                 estadoBadge.innerHTML = `<i class="fas ${c.icon}"></i> ${estado}`;
-                estadoBadge.className = 'badge';
                 estadoBadge.style.cssText = `
-                    background: ${c.bg};
-                    color: white;
-                    font-size: 1rem;
-                    padding: 0.6rem 1.5rem;
-                    border-radius: 50px;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                    font-weight: 600;
+                    background: ${c.bg}; color: white; font-size: 1rem;
+                    padding: 0.6rem 1.5rem; border-radius: 50px;
+                    display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600;
                 `;
             }
         });
@@ -183,11 +170,11 @@ function initializeModals() {
     // Modal de aprobar
     document.querySelectorAll('.btn-aprobar-solicitud').forEach(btn => {
         btn.addEventListener('click', function () {
-            const id = this.dataset.id;
+            const id  = this.dataset.id;
             const set = (id2, val) => { const el = document.getElementById(id2); if (el) el.textContent = val; };
 
             set('aprobar-nombre-empleado', this.dataset.empleado);
-            set('aprobar-periodo', this.dataset.periodo);
+            set('aprobar-periodo',         this.dataset.periodo);
             set('aprobar-diassolicitados', this.dataset.diasSolicitados + ' días solicitados');
 
             const inputId = document.getElementById('aprobar-id-solicitud');
@@ -201,11 +188,11 @@ function initializeModals() {
     // Modal de rechazar
     document.querySelectorAll('.btn-rechazar-solicitud').forEach(btn => {
         btn.addEventListener('click', function () {
-            const id = this.dataset.id;
+            const id  = this.dataset.id;
             const set = (id2, val) => { const el = document.getElementById(id2); if (el) el.textContent = val; };
 
             set('rechazar-nombre-empleado', this.dataset.empleado);
-            set('rechazar-periodo', this.dataset.periodo);
+            set('rechazar-periodo',         this.dataset.periodo);
             set('rechazar-diassolicitados', this.dataset.diasSolicitados + ' días solicitados');
 
             const inputId = document.getElementById('rechazar-id-solicitud');
@@ -217,29 +204,56 @@ function initializeModals() {
     });
 
     // Modal de cancelar
-    document.querySelectorAll(".btn-cancelar-solicitud").forEach(btn => {
-        btn.addEventListener("click", function () {
-            const id = this.dataset.id;
+    document.querySelectorAll('.btn-cancelar-solicitud').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const id           = this.dataset.id;
+            const diasRestantes = parseInt(this.dataset.diasRestantes ?? '99');
             const set = (id2, val) => { const el = document.getElementById(id2); if (el) el.textContent = val; };
-            set("cancelar-nombre-empleado", this.dataset.empleado);
-            set("cancelar-periodo", this.dataset.periodo);
-            set("cancelar-diassolicitados", this.dataset.diasSolicitados + " días solicitados");
-            const inputId = document.getElementById("cancelar-id-solicitud");
+
+            set('cancelar-nombre-empleado',  this.dataset.empleado);
+            set('cancelar-periodo',          this.dataset.periodo);
+            set('cancelar-diassolicitados',  this.dataset.diasSolicitados + ' días solicitados');
+
+            const inputId = document.getElementById('cancelar-id-solicitud');
             if (inputId) inputId.value = id;
-            const form = document.getElementById("formCancelarSolicitud");
-            if (form) form.action = "/SolicitudVacaciones/CancelarSolicitud/" + id;
+
+            const form = document.getElementById('formCancelarSolicitud');
+            if (form) form.action = '/SolicitudVacaciones/CancelarSolicitud/' + id;
+
+            // Aviso si quedan menos de 3 días para el inicio
+            mostrarAviso3Dias('aviso-plazo-solicitud', diasRestantes);
         });
     });
+}
+
+// ============================================
+// AVISO DE PLAZO DE 3 DÍAS
+// ============================================
+function mostrarAviso3Dias(elementId, diasRestantes) {
+    const aviso = document.getElementById(elementId);
+    if (!aviso) return;
+
+    if (diasRestantes < DIAS_MINIMOS_CANCELACION) {
+        aviso.style.display = 'block';
+        aviso.innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Atención:</strong> Quedan <strong>${diasRestantes} día(s)</strong>
+            para el inicio de las vacaciones. La política permite cancelar solo con al menos
+            <strong>${DIAS_MINIMOS_CANCELACION} días</strong> de anticipación.
+        `;
+    } else {
+        aviso.style.display = 'none';
+    }
 }
 
 // ============================================
 // CÁLCULO DE DÍAS
 // ============================================
 function initializeDaysCalculation() {
-    const fechaInicio = document.getElementById('FechaInicio');
-    const fechaFin = document.getElementById('FechaFin');
+    const fechaInicio     = document.getElementById('FechaInicio');
+    const fechaFin        = document.getElementById('FechaFin');
     const diasCalculadosEl = document.getElementById('diasCalculados');
-    const hiddenDias = document.querySelector('input[name="DiasSolicitados"]');
+    const hiddenDias      = document.querySelector('input[name="DiasSolicitados"]');
 
     if (!fechaInicio || !fechaFin || !diasCalculadosEl) return;
 
@@ -250,30 +264,28 @@ function initializeDaysCalculation() {
             return;
         }
         const inicio = new Date(fechaInicio.value);
-        const fin = new Date(fechaFin.value);
+        const fin    = new Date(fechaFin.value);
         if (inicio > fin) {
             diasCalculadosEl.textContent = '0';
             if (hiddenDias) hiddenDias.value = '0';
             return;
         }
-        const diffTime = fin - inicio;
-        const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        const dias = Math.floor((fin - inicio) / (1000 * 60 * 60 * 24)) + 1;
         diasCalculadosEl.textContent = dias;
         if (hiddenDias) hiddenDias.value = dias;
     }
 
     fechaInicio.addEventListener('change', calcularDias);
     fechaFin.addEventListener('change', calcularDias);
-
     if (fechaInicio.value && fechaFin.value) calcularDias();
-} 
+}
 
 // ============================================
 // NOTIFICACIONES
 // ============================================
 function mostrarNotificacion(mensaje, tipo) {
-    const iconos = { success: 'fa-check-circle', error: 'fa-exclamation-triangle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
-    const colores = { success: 'var(--green)', error: 'var(--red)', warning: 'var(--yellow)', info: 'var(--gold)' };
+    const iconos  = { success: 'fa-check-circle', error: 'fa-exclamation-triangle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
+    const colores = { success: 'var(--green)',     error: 'var(--red)',              warning: 'var(--yellow)',           info: 'var(--gold)' };
 
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -301,10 +313,10 @@ if (!document.getElementById('solicitud-styles')) {
     const s = document.createElement('style');
     s.id = 'solicitud-styles';
     s.innerHTML = `
-        @keyframes slideInNotif { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideInNotif  { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes slideOutNotif { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
-        @keyframes tooltipFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes tooltipFadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
+        @keyframes tooltipFadeIn  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes tooltipFadeOut { from { opacity: 1; transform: translateY(0); }   to { opacity: 0; transform: translateY(10px); } }
     `;
     document.head.appendChild(s);
 }

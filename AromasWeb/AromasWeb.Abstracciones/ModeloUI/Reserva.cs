@@ -6,6 +6,8 @@ namespace AromasWeb.Abstracciones.ModeloUI
 {
     public class Reserva
     {
+        public const int DiasAnticipacionCancelacion = 2;
+
         public int IdReserva { get; set; }
 
         [DisplayName("Cliente")]
@@ -46,156 +48,95 @@ namespace AromasWeb.Abstracciones.ModeloUI
         public DateTime FechaCreacion { get; set; }
 
         // Propiedades calculadas
+
         [DisplayName("Fecha")]
-        public string FechaFormateada
-        {
-            get
-            {
-                return Fecha.ToString("dd/MM/yyyy");
-            }
-        }
+        public string FechaFormateada => Fecha.ToString("dd/MM/yyyy");
 
         [DisplayName("Hora")]
-        public string HoraFormateada
-        {
-            get
-            {
-                return Hora.ToString(@"hh\:mm");
-            }
-        }
+        public string HoraFormateada => Hora.ToString(@"hh\:mm");
 
         [DisplayName("Fecha y hora completa")]
-        public string FechaHoraCompleta
-        {
-            get
-            {
-                return $"{FechaFormateada} {HoraFormateada}";
-            }
-        }
+        public string FechaHoraCompleta => $"{FechaFormateada} {HoraFormateada}";
 
         [DisplayName("Fecha de creación")]
-        public string FechaCreacionFormateada
-        {
-            get
-            {
-                return FechaCreacion.ToString("dd/MM/yyyy HH:mm");
-            }
-        }
+        public string FechaCreacionFormateada => FechaCreacion.ToString("dd/MM/yyyy HH:mm");
 
         [DisplayName("Es futura")]
-        public bool EsFutura
-        {
-            get
-            {
-                var fechaHoraReserva = Fecha.Date + Hora;
-                return fechaHoraReserva > DateTime.Now;
-            }
-        }
+        public bool EsFutura => (Fecha.Date + Hora) > DateTime.Now;
 
         [DisplayName("Es hoy")]
-        public bool EsHoy
-        {
-            get
-            {
-                return Fecha.Date == DateTime.Now.Date;
-            }
-        }
+        public bool EsHoy => Fecha.Date == DateTime.Now.Date;
 
-        [DisplayName("Días restantes")]
-        public int? DiasRestantes
-        {
-            get
-            {
-                if (EsFutura)
-                {
-                    return (Fecha.Date - DateTime.Now.Date).Days;
-                }
-                return null;
-            }
-        }
-
-        [DisplayName("Color de estado")]
-        public string ColorEstado
-        {
-            get
-            {
-                return Estado switch
-                {
-                    "Pendiente" => "var(--yellow)",
-                    "Confirmada" => "var(--green)",
-                    "Completada" => "var(--gold)",
-                    "Cancelada" => "var(--red)",
-                    _ => "var(--gray)"
-                };
-            }
-        }
-
-        [DisplayName("Icono de estado")]
-        public string IconoEstado
-        {
-            get
-            {
-                return Estado switch
-                {
-                    "Pendiente" => "fa-clock",
-                    "Confirmada" => "fa-check-circle",
-                    "Completada" => "fa-check-double",
-                    "Cancelada" => "fa-times-circle",
-                    _ => "fa-question-circle"
-                };
-            }
-        }
-
-        [DisplayName("Tiene observaciones")]
-        public bool TieneObservaciones
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(Observaciones);
-            }
-        }
+        [DisplayName("Es pasada")]
+        public bool EsPasada => (Fecha.Date + Hora) <= DateTime.Now;
 
         [DisplayName("Días hasta la reserva")]
-        public int? DiasHastaReserva
-        {
-            get
-            {
-                if (EsFutura)
-                {
-                    return (Fecha.Date - DateTime.Now.Date).Days;
-                }
-                return null;
-            }
-        }
+        public int? DiasHastaReserva => EsFutura ? (int?)(Fecha.Date - DateTime.Now.Date).Days : null;
 
         [DisplayName("Puede cancelar")]
         public bool PuedeCancelar
         {
             get
             {
-                // Puede cancelar si:
-                // 1. La reserva es futura o es hoy
-                // 2. El estado NO es "Cancelada" ni "Completada"
-                return (EsFutura || EsHoy) &&
-                       Estado != "Cancelada" &&
-                       Estado != "Completada";
+                if (Estado == "Cancelada" || Estado == "Completada")
+                    return false;
+
+                int diasRestantes = (Fecha.Date - DateTime.Now.Date).Days;
+                return diasRestantes >= DiasAnticipacionCancelacion;
+            }
+        }
+
+        [DisplayName("Días para poder cancelar")]
+        public int DiasParaCancelar => (Fecha.Date - DateTime.Now.Date).Days - DiasAnticipacionCancelacion;
+
+        [DisplayName("Motivo sin cancelación")]
+        public string MotivoPuedeCancelar
+        {
+            get
+            {
+                if (Estado == "Cancelada") return "La reserva ya está cancelada.";
+                if (Estado == "Completada") return "La reserva ya fue completada.";
+
+                int dias = (Fecha.Date - DateTime.Now.Date).Days;
+                if (dias < DiasAnticipacionCancelacion)
+                    return $"Solo puedes cancelar con al menos {DiasAnticipacionCancelacion} días de anticipación. Quedan {dias} día(s).";
+
+                return string.Empty;
             }
         }
 
         [DisplayName("Puede modificar")]
-        public bool PuedeModificar
-        {
-            get
-            {
-                // Puede cancelar si:
-                // 1. La reserva es futura o es hoy
-                // 2. El estado NO es "Cancelada" ni "Completada"
-                return (EsFutura || EsHoy) &&
-                       Estado != "Cancelada" &&
-                       Estado != "Completada";
-            }
-        }
+        public bool PuedeModificar => PuedeCancelar;
 
-        public bool EsPasada { get; set; }
+        public string EstadoBadgeClass => Estado switch
+        {
+            "Confirmada" => "success",
+            "Cancelada" => "danger",
+            "Pendiente" => "warning",
+            "Completada" => "secondary",
+            _ => "secondary"
+        };
+
+        public string ColorEstado => Estado switch
+        {
+            "Pendiente" => "var(--yellow)",
+            "Confirmada" => "var(--green)",
+            "Completada" => "var(--gold)",
+            "Cancelada" => "var(--red)",
+            _ => "var(--gray)"
+        };
+
+        [DisplayName("Icono de estado")]
+        public string IconoEstado => Estado switch
+        {
+            "Pendiente" => "fa-clock",
+            "Confirmada" => "fa-check-circle",
+            "Completada" => "fa-check-double",
+            "Cancelada" => "fa-times-circle",
+            _ => "fa-question-circle"
+        };
+
+        [DisplayName("Tiene observaciones")]
+        public bool TieneObservaciones => !string.IsNullOrWhiteSpace(Observaciones);
     }
 }

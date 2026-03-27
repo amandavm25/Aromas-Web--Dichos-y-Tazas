@@ -183,6 +183,8 @@ namespace AromasWeb.Controllers
                     if (clienteActual == null)
                     {
                         ModelState.AddModelError("", "No se pudo cargar la información del cliente");
+                        // Recargar datos faltantes antes de devolver la vista
+                        RecargarDatosNoEditables(cliente);
                         return View(cliente);
                     }
 
@@ -205,6 +207,9 @@ namespace AromasWeb.Controllers
 
                     if (!ModelState.IsValid)
                     {
+                        // *** CORRECCIÓN: recargar FechaRegistro y UltimaReserva desde BD ***
+                        cliente.FechaRegistro = clienteActual.FechaRegistro;
+                        cliente.UltimaReserva = clienteActual.UltimaReserva;
                         ViewBag.ErrorMessage = "Por favor, corrige los errores en el cambio de contraseña";
                         return View(cliente);
                     }
@@ -218,6 +223,8 @@ namespace AromasWeb.Controllers
 
                 if (!ModelState.IsValid)
                 {
+                    // *** CORRECCIÓN: recargar datos no editables antes de devolver la vista ***
+                    RecargarDatosNoEditables(cliente);
                     ViewBag.ErrorMessage = "Por favor, corrige los errores del formulario";
                     return View(cliente);
                 }
@@ -232,6 +239,7 @@ namespace AromasWeb.Controllers
                 else
                 {
                     ModelState.AddModelError("", "No se pudo actualizar el cliente en la base de datos");
+                    RecargarDatosNoEditables(cliente);
                     return View(cliente);
                 }
             }
@@ -239,6 +247,7 @@ namespace AromasWeb.Controllers
             {
                 System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
                 ModelState.AddModelError("", $"Error al actualizar el cliente: {ex.Message}");
+                RecargarDatosNoEditables(cliente);
                 return View(cliente);
             }
         }
@@ -307,6 +316,7 @@ namespace AromasWeb.Controllers
             if (!idCliente.HasValue || idCliente.Value <= 0)
                 return RedirectToAction("Login", "Auth");
 
+            // Forzar el ID de la sesión para que no sea manipulable desde el form
             cliente.IdCliente = idCliente.Value;
 
             try
@@ -322,20 +332,27 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("ContrasenaNueva");
                 ModelState.Remove("ConfirmarContrasenaNueva");
 
+                // *** CORRECCIÓN: siempre cargamos el cliente actual para restaurar
+                //     FechaRegistro, UltimaReserva y Estado (que no son editables en el perfil) ***
+                var clienteActual = _obtenerCliente.Obtener(idCliente.Value);
+
+                if (clienteActual == null)
+                {
+                    TempData["Error"] = "No se pudo cargar tu información";
+                    return RedirectToAction(nameof(MiPerfil));
+                }
+
+                // Restaurar campos que no vienen del formulario
+                cliente.FechaRegistro = clienteActual.FechaRegistro;
+                cliente.UltimaReserva = clienteActual.UltimaReserva;
+                cliente.Estado = clienteActual.Estado;
+
                 bool intentaCambiarContrasena = !string.IsNullOrWhiteSpace(ContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ConfirmarContrasenaNueva) ||
                                                  !string.IsNullOrWhiteSpace(ContrasenaActual);
 
                 if (intentaCambiarContrasena)
                 {
-                    var clienteActual = _obtenerCliente.Obtener(idCliente.Value);
-
-                    if (clienteActual == null)
-                    {
-                        ModelState.AddModelError("", "No se pudo cargar tu información");
-                        return View(cliente);
-                    }
-
                     if (string.IsNullOrWhiteSpace(ContrasenaActual))
                         ModelState.AddModelError("ContrasenaActual", "Debes ingresar tu contraseña actual");
                     else if (clienteActual.Contrasena != ContrasenaActual)
@@ -386,8 +403,37 @@ namespace AromasWeb.Controllers
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error en EditarPerfil: {ex.Message}");
-                ModelState.AddModelError("", $"Error al actualizar el perfil: {ex.Message}");
+
+                if (ex.Message.Contains("identificación"))
+                    ModelState.AddModelError("", "Ya existe otro cliente registrado con esa identificación");
+                else if (ex.Message.Contains("correo"))
+                    ModelState.AddModelError("", "Ya existe otro cliente registrado con ese correo electrónico");
+                else
+                    ModelState.AddModelError("", $"Error al actualizar el perfil: {ex.Message}");
+
                 return View(cliente);
+            }
+        }
+
+        // -------------------------------------------------------
+        // Método auxiliar: recarga FechaRegistro y UltimaReserva
+        // desde la BD para no mostrar valores vacíos en la vista
+        // cuando se devuelve con errores de validación.
+        // -------------------------------------------------------
+        private void RecargarDatosNoEditables(Cliente cliente)
+        {
+            try
+            {
+                var clienteBD = _obtenerCliente.Obtener(cliente.IdCliente);
+                if (clienteBD != null)
+                {
+                    cliente.FechaRegistro = clienteBD.FechaRegistro;
+                    cliente.UltimaReserva = clienteBD.UltimaReserva;
+                }
+            }
+            catch
+            {
+                // Si falla la recarga no bloqueamos el flujo principal
             }
         }
     }
