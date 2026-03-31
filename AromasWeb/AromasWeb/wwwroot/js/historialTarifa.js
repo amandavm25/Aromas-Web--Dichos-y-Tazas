@@ -3,7 +3,6 @@
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
     animateOnLoad();
-    initializeTooltips();
     initializeTableHoverEffects();
     initializeModals();
 

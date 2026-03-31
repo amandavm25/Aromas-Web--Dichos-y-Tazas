@@ -3,7 +3,6 @@
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
     animateOnLoad();
-    initializeTooltips();
     initializeTableHoverEffects();
 
     // Inicializar paginación de tabla usando la función general de site.js

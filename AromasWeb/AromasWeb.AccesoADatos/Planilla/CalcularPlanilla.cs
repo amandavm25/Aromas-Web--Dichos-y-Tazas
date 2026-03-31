@@ -21,9 +21,27 @@ namespace AromasWeb.AccesoADatos.Planilla
                 if (empleado == null)
                     throw new InvalidOperationException("Empleado no encontrado");
 
-                decimal tarifaHora = empleado.TarifaHora;
+                // Buscar tarifa vigente en HistorialTarifa
+                var tarifaVigente = contexto.HistorialTarifa
+                    .Where(t => t.IdEmpleado == idEmpleado
+                             && t.FechaInicio <= periodoFin.Date
+                             && (t.FechaFin == null || t.FechaFin >= periodoInicio.Date))
+                    .OrderByDescending(t => t.FechaInicio)
+                    .FirstOrDefault();
+
+                decimal tarifaHora = 0m;
+
+                if (tarifaVigente != null)
+                {
+                    tarifaHora = tarifaVigente.TarifaHora;
+                }
+                else
+                {
+                    tarifaHora = empleado.TarifaHora;
+                }
+
                 if (tarifaHora <= 0)
-                    throw new InvalidOperationException("La tarifa por hora debe ser mayor a cero");
+                    throw new InvalidOperationException("El empleado seleccionado no tiene una tarifa vigente asignada.");
 
                 var asistencias = contexto.Asistencia
                     .Where(a => a.IdEmpleado == idEmpleado
@@ -41,8 +59,8 @@ namespace AromasWeb.AccesoADatos.Planilla
                 var planillaAD = new PlanillaAD
                 {
                     IdEmpleado = idEmpleado,
-                    PeriodoInicio = periodoInicio.Date,
-                    PeriodoFin = periodoFin.Date,
+                    PeriodoInicio = DateTime.SpecifyKind(periodoInicio.Date, DateTimeKind.Utc),
+                    PeriodoFin = DateTime.SpecifyKind(periodoFin.Date, DateTimeKind.Utc),
                     TarifaHora = tarifaHora,
                     Estado = "Calculado",
 
@@ -95,7 +113,7 @@ namespace AromasWeb.AccesoADatos.Planilla
                     {
                         IdPlanilla = planillaAD.IdPlanilla,
                         IdAsistencia = a.IdAsistencia,
-                        Fecha = a.Fecha,
+                        Fecha = DateTime.SpecifyKind(a.Fecha, DateTimeKind.Utc),
                         HorasRegulares = Math.Round(horasRegulares, 2),
                         HorasExtras = Math.Round(horasExtras, 2),
                         Subtotal = Math.Round(subtotalDia, 2)

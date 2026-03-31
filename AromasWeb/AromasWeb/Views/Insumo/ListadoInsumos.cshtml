@@ -13,8 +13,8 @@
 <section class="hero" style="min-height: 40vh; padding: 8rem 0 4rem;">
     <div class="hero-bg-overlay"></div>
     <div class="hero-leaves"></div>
-    <div class="container hero-container" style="display: block;">
-        <div class="hero-content" data-aos="fade-up" style="text-align: center;">
+    <div class="container hero-container" style="display: flex; justify-content: center; align-items: center;">
+        <div class="hero-content" data-aos="fade-up" style="text-align: center; max-width: 700px; margin: 0">
             <span class="hero-badge">
                 <i class="fas fa-warehouse"></i>
                 Gestión de Inventario
@@ -22,7 +22,7 @@
             <h1 class="hero-title" style="font-size: 3.5rem;">
                 Inventario de Insumos
             </h1>
-            <p class="hero-subtitle">
+            <p class="hero-subtitle" style="text-align: center;">
                 Administra y visualiza todos los insumos del negocio
             </p>
         </div>
@@ -71,7 +71,7 @@
                 <h3 id="valorTotal" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">
                     @if (Model != null && Model.Any())
                     {
-                        @:₡@(Model.Sum(i => i.ValorTotal).ToString("N2"))
+                        @:₡@(Model.Sum(i => i.ValorTotal).ToString("N2", new System.Globalization.CultureInfo("en-US")))
                     }
                     else
                     {
@@ -183,7 +183,7 @@
                                         <td>@insumo.UnidadMedida</td>
                                         <td>@insumo.CostoUnitario.ToString("C2")</td>
                                         <td>
-                                            <span class="badge-cantidad">@insumo.CantidadDisponible.ToString("N2")</span>
+                                            <span class="badge-cantidad">@insumo.CantidadDisponible.ToString("N2", new System.Globalization.CultureInfo("en-US"))</span>
                                         </td>
                                         <td>
                                             @if (insumo.EstadoStock == "Bajo")
@@ -225,7 +225,9 @@
                                                 <button type="button"
                                                         class="btn-table-action btn-table-edit"
                                                         onclick="window.location.href='@Url.Action("EditarInsumo", "Insumo", new { id = insumo.IdInsumo })'"
-                                                        title="Editar">
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-placement="top"
+                                                        data-bs-title="Editar">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                             }
@@ -239,18 +241,23 @@
                                                     data-cantidad="@insumo.CantidadDisponible.ToString("N2")"
                                                     data-stockminimo="@insumo.StockMinimo.ToString("N2")"
                                                     data-estado="@(insumo.Estado ? "Activo" : "Inactivo")"
-                                                    data-bs-toggle="modal"
                                                     data-bs-target="#modalDetallesInsumo"
-                                                    title="Ver detalles">
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    data-bs-title="Ver detalles">
                                                 <i class="fas fa-eye"></i>
                                             </button>
+
+
                                             @if (PermisoHelper.TienePermiso(Context.Session, "Registrar Movimiento Insumo"))
                                             {
                                                 <button type="button"
                                                         class="btn-table-action"
                                                         style="background: var(--olive-green); color: white;"
                                                         onclick="window.location.href='@Url.Action("RegistrarMovimiento", "MovimientoInsumo", new { idInsumo = insumo.IdInsumo })'"
-                                                        title="Registrar movimiento">
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-placement="top"
+                                                        data-bs-title="Registrar movimiento">
                                                     <i class="fas fa-exchange-alt"></i>
                                                 </button>
                                             }

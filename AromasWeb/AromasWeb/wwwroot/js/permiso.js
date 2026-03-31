@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     animarFilas();
-    initializeTooltips();
     initializeTableHoverEffects();
     initializeModalDetalles();
     inicializarCheckboxes();
@@ -64,50 +63,6 @@ function initializeTableHoverEffects() {
     });
 }
 
-// ============================================
-// TOOLTIPS PERSONALIZADOS
-// ============================================
-function initializeTooltips() {
-    let tooltipElement = null;
-
-    document.querySelectorAll('[title]').forEach(element => {
-        const title = element.getAttribute('title');
-        element.removeAttribute('title');
-        element.setAttribute('data-tooltip', title);
-
-        element.addEventListener('mouseenter', function (e) {
-            if (tooltipElement) tooltipElement.remove();
-
-            tooltipElement = document.createElement('div');
-            tooltipElement.textContent = title;
-            tooltipElement.style.cssText = `
-                position: fixed;
-                background: linear-gradient(135deg, var(--dark-green), var(--olive-green));
-                color: white;
-                padding: 0.7rem 1.2rem;
-                border-radius: 12px;
-                font-size: 0.9rem;
-                z-index: 10000;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-                pointer-events: none;
-                white-space: nowrap;
-                animation: tooltipFadeIn 0.3s ease;
-            `;
-            document.body.appendChild(tooltipElement);
-
-            const rect = tooltipElement.getBoundingClientRect();
-            tooltipElement.style.left = (e.clientX - rect.width / 2) + 'px';
-            tooltipElement.style.top = (e.clientY - rect.height - 10) + 'px';
-        });
-
-        element.addEventListener('mouseleave', function () {
-            if (tooltipElement) {
-                tooltipElement.remove();
-                tooltipElement = null;
-            }
-        });
-    });
-}
 
 // ============================================
 // MODAL DETALLES PERMISO — lee todos los campos

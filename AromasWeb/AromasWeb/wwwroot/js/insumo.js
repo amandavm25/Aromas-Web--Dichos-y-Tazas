@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     animateOnLoad();
-    initializeTooltips();
     initializeTableHoverEffects();
     initializeModals();
     initStockBajoPagination();
@@ -101,60 +100,14 @@ function initializeTableHoverEffects() {
     });
 }
 
-// ============================================
-// TOOLTIPS PERSONALIZADOS
-// ============================================
-let tooltipElement = null;
 
-function initializeTooltips() {
-    document.querySelectorAll('[title]').forEach(element => {
-        const title = element.getAttribute('title');
-        element.removeAttribute('title');
-        element.setAttribute('data-tooltip', title);
-        element.addEventListener('mouseenter', (e) => showTooltip(e, title));
-        element.addEventListener('mouseleave', hideTooltip);
-    });
-}
-
-function showTooltip(event, text) {
-    hideTooltip();
-    tooltipElement = document.createElement('div');
-    tooltipElement.textContent = text;
-    tooltipElement.style.cssText = `
-        position: fixed;
-        background: linear-gradient(135deg, var(--dark-green), var(--olive-green));
-        color: white;
-        padding: 0.7rem 1.2rem;
-        border-radius: 12px;
-        font-size: 0.9rem;
-        z-index: 10000;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-        pointer-events: none;
-        white-space: nowrap;
-        animation: tooltipFadeIn 0.3s ease;
-    `;
-    document.body.appendChild(tooltipElement);
-    const rect = tooltipElement.getBoundingClientRect();
-    tooltipElement.style.left = (event.clientX - rect.width / 2) + 'px';
-    tooltipElement.style.top = (event.clientY - rect.height - 10) + 'px';
-}
-
-function hideTooltip() {
-    if (tooltipElement) {
-        tooltipElement.style.animation = 'tooltipFadeOut 0.2s ease';
-        setTimeout(() => {
-            if (tooltipElement && tooltipElement.parentNode) tooltipElement.remove();
-            tooltipElement = null;
-        }, 200);
-    }
-}
 
 // ============================================
 // MODALES
 // ============================================
 function initializeModals() {
     // Modal de detalles de insumo
-    document.querySelectorAll('.btn-detalles-insumo').forEach(btn => {
+    document.querySelectorAll('.btn-detalles').forEach(btn => {
         btn.addEventListener('click', function () {
             const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
