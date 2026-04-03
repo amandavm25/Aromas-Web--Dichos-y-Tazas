@@ -199,6 +199,34 @@ namespace AromasWeb.AccesoADatos.Promocion
             }
         }
 
+        public List<Abstracciones.ModeloUI.Promocion> ObtenerCatalogo()
+        {
+            using (var contexto = new Contexto())
+            {
+                try
+                {
+                    DateTime hoy = DateTime.UtcNow.Date;
+                    List<PromocionAD> promocionesAD = contexto.Promocion
+                        .Include(p => p.TipoPromocion)
+                        .Include(p => p.PromocionRecetas)
+                            .ThenInclude(pr => pr.Receta)
+                                .ThenInclude(r => r.CategoriaReceta)
+                        .Where(p => p.Estado == true && p.FechaFin >= hoy)
+                        .OrderBy(p => p.Nombre)
+                        .ToList();
+
+                    return promocionesAD
+                        .Select(p => ConvertirObjetoParaUIConRecetas(p))
+                        .ToList();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al obtener catálogo de promociones: {ex.Message}");
+                    throw;
+                }
+            }
+        }
+
         // Conversión básica (para listados)
         private Abstracciones.ModeloUI.Promocion ConvertirObjetoParaUI(PromocionAD promocionAD)
         {

@@ -39,6 +39,51 @@ interactiveElements.forEach(el => {
     });
 });
 
+/// ============================================
+// TOOLTIPS UNIFICADOS — reemplaza initAutoTooltips
+// ============================================
+function initAutoTooltips() {
+
+    // 1. Botones con title= 
+    document.querySelectorAll('[title]').forEach(el => {
+        const text = el.getAttribute('title');
+        if (!text) return;
+        el.setAttribute('data-tooltip', text);
+        el.removeAttribute('title');
+    });
+
+    // 2. Botones con data-bs-title=
+    //    Los convertimos al mismo sistema para consistencia
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+        const text = el.getAttribute('data-bs-title') || el.getAttribute('data-original-title');
+        if (!text) return;
+        el.setAttribute('data-tooltip', text);
+        el.removeAttribute('data-bs-toggle');
+        el.removeAttribute('data-bs-placement');
+        el.removeAttribute('data-bs-title');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initAutoTooltips);
+
+// ============================================
+// HOVER EFFECTS EN TABLAS — función global reutilizable
+// ============================================
+function initializeTableHoverEffects() {
+    document.querySelectorAll('.admin-table tbody tr').forEach(fila => {
+        fila.addEventListener('mouseenter', function () {
+            this.style.background = 'linear-gradient(90deg, rgba(32, 116, 118, 0.05) 0%, transparent 100%)';
+            this.style.transform = 'translateX(5px)';
+            this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+        });
+        fila.addEventListener('mouseleave', function () {
+            this.style.background = '';
+            this.style.transform = '';
+            this.style.boxShadow = '';
+        });
+    });
+}
+
 // ============================================
 // NAVBAR
 // ============================================

@@ -163,7 +163,7 @@
                                     <td>
                                         <strong style="color: var(--dark-green); font-size: 1rem; display: block;">
                                             <i class="fas fa-user-tie" style="color: var(--gold-bright); margin-right: 0.4rem;"></i>
-                                            Empleado #@tarifa.IdEmpleado
+                                            @tarifa.NombreEmpleado
                                         </strong>
                                     </td>
                                     <td>
@@ -199,46 +199,50 @@
                                     <td style="text-align: center; white-space: nowrap;">
                                         @if (tarifa.EstadoVigencia == "Vigente" && PermisoHelper.TienePermiso(Context.Session, "Finalizar Tarifa"))
                                         {
-                                            <button type="button"
-                                                    class="btn btn-sm btn-finalizar-tarifa"
-                                                    data-id="@tarifa.IdHistorialTarifa"
-                                                    data-empleado="Empleado #@tarifa.IdEmpleado"
-                                                    data-tarifa="₡@tarifa.TarifaHora.ToString("N2")"
-                                                    style="background: var(--yellow); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalFinalizarTarifa"
-                                                    title="Finalizar tarifa">
-                                                <i class="fas fa-stop-circle"></i>
-                                            </button>
+                                            <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizar tarifa">
+                                                <button type="button"
+                                                        class="btn btn-sm btn-finalizar-tarifa"
+                                                        data-id="@tarifa.IdHistorialTarifa"
+                                                        data-empleado="@tarifa.NombreEmpleado"
+                                                        data-tarifa="₡@tarifa.TarifaHora.ToString("N2")"
+                                                        style="background: var(--yellow); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalFinalizarTarifa">
+                                                    <i class="fas fa-stop-circle"></i>
+                                                </button>
+                                            </span>
                                         }
-                                        <button type="button"
-                                                class="btn btn-sm btn-detalles-tarifa"
-                                                data-id="@tarifa.IdHistorialTarifa"
-                                                data-empleado="Empleado #@tarifa.IdEmpleado"
-                                                data-cargo=""
-                                                data-tarifa="@tarifa.TarifaHora.ToString("N2")"
-                                                data-salario="@tarifa.SalarioMensualEstimado.ToString("N2")"
-                                                data-motivo="@tarifa.Motivo"
-                                                data-fecha-inicio="@tarifa.FechaInicioFormateada"
-                                                data-fecha-fin="@tarifa.FechaFinFormateada"
-                                                data-fecha-registro="@tarifa.FechaRegistroFormateada"
-                                                data-estado="@tarifa.EstadoVigencia"
-                                                data-cumple-minimo="@(tarifa.CumpleSalarioMinimo ? "Sí" : "No")"
-                                                data-dias-vigencia="@tarifa.DiasVigencia"
-                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalDetallesTarifa"
-                                                title="Ver detalles">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ver detalles">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-detalles-tarifa"
+                                                    data-id="@tarifa.IdHistorialTarifa"
+                                                    data-empleado="@tarifa.NombreEmpleado"
+                                                    data-identificacion="@tarifa.IdentificacionEmpleado"
+                                                    data-cargo="@tarifa.CargoEmpleado"
+                                                    data-tarifa="@tarifa.TarifaHora.ToString("N2")"
+                                                    data-salario="@tarifa.SalarioMensualEstimado.ToString("N2")"
+                                                    data-motivo="@tarifa.Motivo"
+                                                    data-fecha-inicio="@tarifa.FechaInicioFormateada"
+                                                    data-fecha-fin="@tarifa.FechaFinFormateada"
+                                                    data-fecha-registro="@tarifa.FechaRegistroFormateada"
+                                                    data-estado="@tarifa.EstadoVigencia"
+                                                    data-cumple-minimo="@(tarifa.CumpleSalarioMinimo ? "Sí" : "No")"
+                                                    data-dias-vigencia="@tarifa.DiasVigencia"
+                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalDetallesTarifa">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </span>
                                         @if (PermisoHelper.TienePermiso(Context.Session, "Ver Historial Tarifa Emp"))
                                         {
-                                            <a href="@Url.Action("VerHistorialEmpleado", "HistorialTarifa", new { id = tarifa.IdEmpleado })"
-                                            class="btn btn-sm"
-                                            style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px; text-decoration: none; display: inline-block;"
-                                            title="Ver historial completo">
-                                                <i class="fas fa-history"></i>
-                                            </a>
+                                            <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ver historial completo">
+                                                <a href="@Url.Action("VerHistorialEmpleado", "HistorialTarifa", new { id = tarifa.IdEmpleado })"
+                                                   class="btn btn-sm"
+                                                   style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px; text-decoration: none; display: inline-block;">
+                                                    <i class="fas fa-history"></i>
+                                                </a>
+                                            </span>
                                         }
                                     </td>
                                 </tr>

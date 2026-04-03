@@ -207,44 +207,47 @@
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
                                         @if (!asistencia.HoraSalida.HasValue && PermisoHelper.TienePermiso(Context.Session, "Editar Asistencia"))
                                         {
-                                            <button type="button"
-                                                    class="btn btn-sm"
-                                                    onclick="window.location.href='@Url.Action("RegistrarSalida", "Asistencia", new { id = asistencia.IdAsistencia })'"
-                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                    title="Registrar Salida">
-                                                <i class="fas fa-sign-out-alt"></i>
-                                            </button>
+                                            <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Registrar Salida">
+                                                <button type="button"
+                                                        class="btn btn-sm"
+                                                        onclick="window.location.href='@Url.Action("RegistrarSalida", "Asistencia", new { id = asistencia.IdAsistencia })'"
+                                                        style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;">
+                                                    <i class="fas fa-sign-out-alt"></i>
+                                                </button>
+                                            </span>
                                         }
                                         @if (PermisoHelper.TienePermiso(Context.Session, "Editar Asistencia"))
                                         {
-                                            <button type="button"
-                                                    class="btn btn-sm"
-                                                    onclick="window.location.href='@Url.Action("EditarAsistencia", "Asistencia", new { id = asistencia.IdAsistencia })'"
-                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                    title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                            <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar">
+                                                <button type="button"
+                                                        class="btn btn-sm"
+                                                        onclick="window.location.href='@Url.Action("EditarAsistencia", "Asistencia", new { id = asistencia.IdAsistencia })'"
+                                                        style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </span>
                                         }
-                                        <button type="button"
-                                                class="btn btn-sm btn-detalles-asistencia"
-                                                data-nombre="@asistencia.NombreEmpleado"
-                                                data-identificacion="@asistencia.IdentificacionEmpleado"
-                                                data-cargo="@asistencia.CargoEmpleado"
-                                                data-fecha="@asistencia.Fecha.ToString("dd/MM/yyyy")"
-                                                data-dia="@diaSemana"
-                                                data-entrada="@asistencia.HoraEntrada.ToString(@"hh\:mm")"
-                                                data-salida="@(asistencia.HoraSalida.HasValue? asistencia.HoraSalida.Value.ToString(@"hh\:mm") : "Pendiente")"
-                                                data-almuerzo="@asistencia.TiempoAlmuerzo minutos"
-                                                data-horastotales="@asistencia.HorasTotales.ToString("F2") horas"
-                                                data-horasregulares="@asistencia.HorasRegulares.ToString("F2")"
-                                                data-horasextras="@asistencia.HorasExtras.ToString("F2")"
-                                                data-estado="@estado"
-                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalDetallesAsistencia"
-                                                title="Ver detalles">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ver detalles">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-detalles-asistencia"
+                                                    data-nombre="@asistencia.NombreEmpleado"
+                                                    data-identificacion="@asistencia.IdentificacionEmpleado"
+                                                    data-cargo="@asistencia.CargoEmpleado"
+                                                    data-fecha="@asistencia.Fecha.ToString("dd/MM/yyyy")"
+                                                    data-dia="@diaSemana"
+                                                    data-entrada="@asistencia.HoraEntrada.ToString(@"hh\:mm")"
+                                                    data-salida="@(asistencia.HoraSalida.HasValue? asistencia.HoraSalida.Value.ToString(@"hh\:mm") : "Pendiente")"
+                                                    data-almuerzo="@asistencia.TiempoAlmuerzo minutos"
+                                                    data-horastotales="@asistencia.HorasTotales.ToString("F2") horas"
+                                                    data-horasregulares="@asistencia.HorasRegulares.ToString("F2")"
+                                                    data-horasextras="@asistencia.HorasExtras.ToString("F2")"
+                                                    data-estado="@estado"
+                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalDetallesAsistencia">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </span>
                                     </td>
                                 </tr>
                                 contador++;

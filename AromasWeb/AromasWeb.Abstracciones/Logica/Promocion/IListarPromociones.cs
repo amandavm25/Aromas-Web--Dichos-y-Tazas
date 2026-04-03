@@ -13,5 +13,7 @@ namespace AromasWeb.Abstracciones.Logica.Promocion
         PromocionUI ObtenerPorId(int id);
         List<PromocionUI> ObtenerVigentes();
         List<PromocionUI> ObtenerPorFecha(DateTime fecha);
+
+        List<PromocionUI> ObtenerCatalogo();
     }
 }

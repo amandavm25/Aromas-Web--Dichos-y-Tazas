@@ -217,64 +217,69 @@
                                         {
                                             @if (PermisoHelper.TienePermiso(Context.Session, "Aprobar Vacaciones"))
                                             {
-                                                <button type="button"
-                                                        class="btn btn-sm btn-aprobar-solicitud"
-                                                        data-id="@solicitud.IdSolicitud"
-                                                        data-empleado="@solicitud.NombreEmpleado"
-                                                        data-periodo="@solicitud.PeriodoVacaciones"
-                                                        data-dias-solicitados="@solicitud.DiasSolicitados"
-                                                        style="background: var(--green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalAprobarSolicitud"
-                                                        title="Aprobar">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
+                                                <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Aprobar">
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-aprobar-solicitud"
+                                                            data-id="@solicitud.IdSolicitud"
+                                                            data-empleado="@solicitud.NombreEmpleado"
+                                                            data-periodo="@solicitud.PeriodoVacaciones"
+                                                            data-dias-solicitados="@solicitud.DiasSolicitados"
+                                                            style="background: var(--green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalAprobarSolicitud">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </span>
                                             }
                                             @if (PermisoHelper.TienePermiso(Context.Session, "Rechazar Vacaciones"))
                                             {
-                                                <button type="button"
-                                                        class="btn btn-sm btn-rechazar-solicitud"
-                                                        data-id="@solicitud.IdSolicitud"
-                                                        data-empleado="@solicitud.NombreEmpleado"
-                                                        data-periodo="@solicitud.PeriodoVacaciones"
-                                                        data-dias-solicitados="@solicitud.DiasSolicitados"
-                                                        style="background: var(--red); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalRechazarSolicitud"
-                                                        title="Rechazar">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
+                                                <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Rechazar">
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-rechazar-solicitud"
+                                                            data-id="@solicitud.IdSolicitud"
+                                                            data-empleado="@solicitud.NombreEmpleado"
+                                                            data-periodo="@solicitud.PeriodoVacaciones"
+                                                            data-dias-solicitados="@solicitud.DiasSolicitados"
+                                                            style="background: var(--red); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalRechazarSolicitud">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </span>
                                             }
                                             @if (PermisoHelper.TienePermiso(Context.Session, "Editar Solicitud Vacaciones"))
                                             {
-                                                <button type="button"
-                                                        class="btn btn-sm"
-                                                        onclick="window.location.href='@Url.Action("EditarSolicitud", "SolicitudVacaciones", new { id = solicitud.IdSolicitud })'"
-                                                        style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                        title="Editar">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar">
+                                                    <button type="button"
+                                                            class="btn btn-sm"
+                                                            onclick="window.location.href='@Url.Action("EditarSolicitud", "SolicitudVacaciones", new { id = solicitud.IdSolicitud })'"
+                                                            style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </span>
                                             }
                                         }
-                                        <button type="button"
-                                                class="btn btn-sm btn-detalles-solicitud"
-                                                data-id="@solicitud.IdSolicitud"
-                                                data-empleado="@solicitud.NombreEmpleado"
-                                                data-identificacion="@solicitud.IdentificacionEmpleado"
-                                                data-cargo="@solicitud.CargoEmpleado"
-                                                data-fecha-solicitud="@solicitud.FechaSolicitudFormateada"
-                                                data-fecha-inicio="@solicitud.FechaInicioFormateada"
-                                                data-fecha-fin="@solicitud.FechaFinFormateada"
-                                                data-dias-solicitados="@solicitud.DiasSolicitados"
-                                                data-dias-disponibles="@solicitud.DiasDisponibles.ToString("F0")"
-                                                data-estado="@solicitud.Estado"
-                                                data-antiguedad="@solicitud.AntiguedadTexto"
-                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalDetallesSolicitud"
-                                                title="Ver detalles">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
+
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ver detalles">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-detalles-solicitud"
+                                                    data-id="@solicitud.IdSolicitud"
+                                                    data-empleado="@solicitud.NombreEmpleado"
+                                                    data-identificacion="@solicitud.IdentificacionEmpleado"
+                                                    data-cargo="@solicitud.CargoEmpleado"
+                                                    data-fecha-solicitud="@solicitud.FechaSolicitudFormateada"
+                                                    data-fecha-inicio="@solicitud.FechaInicioFormateada"
+                                                    data-fecha-fin="@solicitud.FechaFinFormateada"
+                                                    data-dias-solicitados="@solicitud.DiasSolicitados"
+                                                    data-dias-disponibles="@solicitud.DiasDisponibles.ToString("F0")"
+                                                    data-estado="@solicitud.Estado"
+                                                    data-antiguedad="@solicitud.AntiguedadTexto"
+                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalDetallesSolicitud">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </span>
                                     </td>
                                 </tr>
                                 contador++;

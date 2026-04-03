@@ -147,26 +147,29 @@
                                     <td style="padding: 1.2rem; text-align: center; white-space: nowrap;">
                                         @if (PermisoHelper.TienePermiso(Context.Session, "Editar Categoria Receta"))
                                         {
-                                            <button type="button"
-                                                    class="btn btn-sm"
-                                                    onclick="window.location.href='@Url.Action("EditarCategoriaReceta", "CategoriaReceta", new { id = cat.IdCategoriaReceta })'"
-                                                    style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                    title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                            <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar">
+                                                <button type="button"
+                                                        class="btn btn-sm"
+                                                        onclick="window.location.href='@Url.Action("EditarCategoriaReceta", "CategoriaReceta", new { id = cat.IdCategoriaReceta })'"
+                                                        style="background: var(--olive-green); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </span>
                                         }
-                                        <button type="button"
-                                                class="btn btn-sm btn-detalles-categoria"
-                                                data-id="@cat.IdCategoriaReceta"
-                                                data-nombre="@cat.Nombre"
-                                                data-descripcion="@(cat.Descripcion ?? "Sin descripción")"
-                                                data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
-                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalDetallesCategoria"
-                                                title="Ver detalles">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
+
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ver detalles">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-detalles-categoria"
+                                                    data-id="@cat.IdCategoriaReceta"
+                                                    data-nombre="@cat.Nombre"
+                                                    data-descripcion="@(cat.Descripcion ?? "Sin descripción")"
+                                                    data-estado="@(cat.Estado ? "Activa" : "Inactiva")"
+                                                    style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalDetallesCategoria">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </span>
                                     </td>
                                 </tr>
                                 contador++;

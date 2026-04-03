@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Linq;
 using System;
+using AromasWeb.AccesoADatos.Promocion;
 
 namespace AromasWeb.Controllers
 {
@@ -378,6 +379,11 @@ namespace AromasWeb.Controllers
                 return View(promocion);
             }
         }
-    }
 
+        public IActionResult Catalogo()
+        {
+            var promociones = _listarPromociones.ObtenerCatalogo();
+            return View(promociones);
+        }
+    }
 }

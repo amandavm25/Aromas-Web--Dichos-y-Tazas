@@ -49,5 +49,10 @@ namespace AromasWeb.LogicaDeNegocio.Promociones
         {
             return _listarPromociones.ObtenerPorFecha(fecha);
         }
+
+        public List<PromocionUI> ObtenerCatalogo()
+        {
+            return _listarPromociones.ObtenerCatalogo();
+        }
     }
 }

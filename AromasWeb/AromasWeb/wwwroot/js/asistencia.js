@@ -52,92 +52,25 @@ function animateOnLoad() {
 }
 
 // ============================================
-// EFECTOS HOVER MEJORADOS
+// EFECTOS HOVER EN TABLA
 // ============================================
-function initializeTableHoverEffects() {
-    const tables = document.querySelectorAll('table');
+const tabla = document.getElementById('laTablaDeAsistencias');
+if (tabla) {
+    const filas = tabla.querySelectorAll('tbody tr');
 
-    tables.forEach(table => {
-        const tbody = table.querySelector('tbody');
-        if (!tbody) return;
+    filas.forEach(fila => {
+        fila.addEventListener('mouseenter', function () {
+            this.style.background = 'linear-gradient(90deg, rgba(32, 116, 118, 0.05) 0%, transparent 100%)';
+            this.style.transform = 'translateX(5px)';
+            this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+        });
 
-        const rows = tbody.querySelectorAll('tr');
-
-        rows.forEach(row => {
-            row.addEventListener('mouseenter', function () {
-                this.style.background = 'linear-gradient(90deg, rgba(32, 116, 118, 0.05) 0%, transparent 100%)';
-                this.style.transform = 'translateX(5px)';
-                this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
-            });
-
-            row.addEventListener('mouseleave', function () {
-                this.style.background = '';
-                this.style.transform = '';
-                this.style.boxShadow = '';
-            });
+        fila.addEventListener('mouseleave', function () {
+            this.style.background = '';
+            this.style.transform = '';
+            this.style.boxShadow = '';
         });
     });
-}
-
-// ============================================
-// TOOLTIPS PERSONALIZADOS
-// ============================================
-function initializeTooltips() {
-    const elementsWithTitle = document.querySelectorAll('[title]');
-
-    elementsWithTitle.forEach(element => {
-        const title = element.getAttribute('title');
-        element.removeAttribute('title');
-        element.setAttribute('data-tooltip', title);
-
-        element.addEventListener('mouseenter', function (e) {
-            showTooltip(e, title);
-        });
-
-        element.addEventListener('mouseleave', function () {
-            hideTooltip();
-        });
-    });
-}
-
-let tooltipElement = null;
-
-function showTooltip(event, text) {
-    hideTooltip();
-
-    tooltipElement = document.createElement('div');
-    tooltipElement.textContent = text;
-    tooltipElement.style.cssText = `
-        position: fixed;
-        background: linear-gradient(135deg, var(--dark-teal), var(--teal));
-        color: white;
-        padding: 0.7rem 1.2rem;
-        border-radius: 12px;
-        font-size: 0.9rem;
-        z-index: 10000;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        pointer-events: none;
-        white-space: nowrap;
-        animation: tooltipFadeIn 0.3s ease;
-    `;
-
-    document.body.appendChild(tooltipElement);
-
-    const rect = tooltipElement.getBoundingClientRect();
-    tooltipElement.style.left = (event.clientX - rect.width / 2) + 'px';
-    tooltipElement.style.top = (event.clientY - rect.height - 10) + 'px';
-}
-
-function hideTooltip() {
-    if (tooltipElement) {
-        tooltipElement.style.animation = 'tooltipFadeOut 0.2s ease';
-        setTimeout(() => {
-            if (tooltipElement && tooltipElement.parentNode) {
-                tooltipElement.remove();
-            }
-            tooltipElement = null;
-        }, 200);
-    }
 }
 
 // ============================================

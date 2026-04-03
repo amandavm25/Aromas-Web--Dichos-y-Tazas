@@ -1,0 +1,257 @@
+﻿@model List<AromasWeb.Abstracciones.ModeloUI.Promocion>
+
+@{
+    ViewData["Title"] = "Promociones";
+    var promocionesVigentes = Model?.Where(p => p.EstaVigente).ToList() ?? new List<AromasWeb.Abstracciones.ModeloUI.Promocion>();
+    var promocionesProximas = Model?.Where(p => p.VigenciaTexto == "Proxima").ToList() ?? new List<AromasWeb.Abstracciones.ModeloUI.Promocion>();
+    int contador = 1;
+}
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="promo-hero">
+    <div class="promo-hero-overlay"></div>
+    <div class="container">
+        <div class="promo-hero-content" data-aos="fade-up">
+            <span class="section-badge">
+                <i class="fas fa-tags"></i>
+                Ofertas Especiales
+            </span>
+            <h1 class="section-title" style="text-align:center;">
+                Nuestras
+                <span class="title-accent">Promociones</span>
+            </h1>
+            <p class="section-subtitle" style="text-align:center; margin:0 auto;">
+                Descubre las mejores ofertas en nuestros platillos exclusivos y vive
+                una experiencia gastronómica única a un precio especial
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PROMOCIONES VIGENTES
+     ============================================================ -->
+<section class="specialties-section promo-vigentes-section" id="promociones-vigentes">
+    <div class="container">
+
+        <div class="section-header" data-aos="fade-up" style="text-align:center; margin-bottom:3.5rem;">
+            <span class="section-badge">
+                <i class="fas fa-fire"></i>
+                Disponibles Ahora
+            </span>
+            <h2 class="section-title">Promociones <span class="title-accent">Vigentes</span></h2>
+            <p class="section-subtitle">Aprovecha estas ofertas exclusivas antes de que terminen</p>
+        </div>
+
+        @if (promocionesVigentes.Any())
+        {
+            <div class="specialties-grid">
+                @foreach (var promo in promocionesVigentes)
+                {
+                    string icono = "fa-tags";
+                    if (promo.NombreTipoPromocion != null)
+                    {
+                        var tipo = promo.NombreTipoPromocion.ToLower();
+                        if (tipo.Contains("degust")) icono = "fa-crown";
+                        else if (tipo.Contains("estacion") || tipo.Contains("temporada")) icono = "fa-leaf";
+                        else if (tipo.Contains("especial")) icono = "fa-star";
+                        else if (tipo.Contains("fin") || tipo.Contains("semana")) icono = "fa-calendar-alt";
+                        else if (tipo.Contains("happy") || tipo.Contains("hora")) icono = "fa-clock";
+                        else if (tipo.Contains("combo")) icono = "fa-layer-group";
+                    }
+
+                    string numStr = contador.ToString("D2");
+                    contador++;
+
+                    <div class="specialty-card luxury-card" data-aos="fade-up">
+
+                        <!-- Badge urgencia -->
+                        @if (promo.DiasRestantes > 0 && promo.DiasRestantes <= 7)
+                        {
+                            <div class="promo-urgency-badge">
+                                <i class="fas fa-clock"></i>
+                                ¡Solo @promo.DiasRestantes día@(promo.DiasRestantes == 1 ? "" : "s")!
+                            </div>
+                        }
+
+                        <!-- Imagen con ícono -->
+                        <div class="specialty-image">
+                            <div class="placeholder-image" style="border-radius:0;">
+                                <i class="fas @icono"></i>
+                            </div>
+                            <div class="promo-discount-badge">
+                                -@promo.PorcentajeDescuento.ToString("0")%
+                            </div>
+                        </div>
+
+                        <!-- Contenido -->
+                        <div class="specialty-content">
+
+                            @if (!string.IsNullOrEmpty(promo.NombreTipoPromocion))
+                            {
+                                <span class="promo-type-tag">@promo.NombreTipoPromocion</span>
+                            }
+
+                            <h3>@promo.Nombre</h3>
+
+                            @if (!string.IsNullOrEmpty(promo.Descripcion))
+                            {
+                                <p>@promo.Descripcion</p>
+                            }
+
+                            <!-- Recetas -->
+                            @if (promo.Recetas != null && promo.Recetas.Any())
+                            {
+                                <div class="promo-recetas">
+                                    <p class="promo-recetas-title">
+                                        <i class="fas fa-list-ul"></i> Incluye:
+                                    </p>
+                                    @foreach (var receta in promo.Recetas.Take(3))
+                                    {
+                                        <div class="promo-receta-item">
+                                            <span class="promo-receta-nombre">@receta.NombreReceta</span>
+                                            <div class="promo-receta-precios">
+                                                <span class="precio-tachado">₡@receta.PrecioOriginal.ToString("N0")</span>
+                                                <span class="precio-promo">₡@receta.PrecioPromocional.ToString("N0")</span>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (promo.Recetas.Count > 3)
+                                    {
+                                        <p class="promo-mas-recetas">+@(promo.Recetas.Count - 3) más...</p>
+                                    }
+                                </div>
+                            }
+
+                            <!-- Meta inferior -->
+                            <div class="specialty-meta">
+                                <span>
+                                    <i class="fas fa-calendar-check"></i>
+                                    Válido hasta @promo.FechaFin.ToString("dd MMM yyyy")
+                                </span>
+                                @if (promo.DiasRestantes > 0)
+                                {
+                                    <span class="specialty-price" style="font-size:1.3rem;">
+                                        @promo.DiasRestantes día@(promo.DiasRestantes == 1 ? "" : "s")
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="promo-empty" data-aos="fade-up">
+                <div class="specialty-number" style="position:static; margin:0 auto 2rem; width:80px; height:80px;">
+                    <i class="fas fa-tags" style="font-size:1.8rem;"></i>
+                </div>
+                <h3>No hay promociones activas en este momento</h3>
+                <p>¡Estamos preparando ofertas especiales para ti! Suscríbete al newsletter para ser el primero en enterarte.</p>
+            </div>
+        }
+
+    </div>
+</section>
+
+<!-- ============================================================
+     PRÓXIMAS PROMOCIONES
+     ============================================================ -->
+@if (promocionesProximas.Any())
+{
+    <section class="specialties-section promo-proximas-section">
+        <div class="container">
+
+            <div class="section-header" data-aos="fade-up" style="text-align:center; margin-bottom:3.5rem;">
+                <span class="section-badge">
+                    <i class="fas fa-calendar-alt"></i>
+                    Muy Pronto
+                </span>
+                <h2 class="section-title">Próximas <span class="title-accent">Promociones</span></h2>
+                <p class="section-subtitle">Guarda la fecha — estas ofertas estarán disponibles pronto</p>
+            </div>
+
+            <div class="specialties-grid">
+                @foreach (var promo in promocionesProximas)
+                {
+                    string numStr = contador.ToString("D2");
+                    contador++;
+
+                    <div class="specialty-card luxury-card promo-proxima" data-aos="fade-up">
+
+                        <div class="specialty-number">@numStr</div>
+
+                        <div class="promo-soon-badge">
+                            <i class="fas fa-calendar"></i> Próximamente
+                        </div>
+
+                        <div class="specialty-image">
+                            <div class="placeholder-image promo-img-proxima" style="border-radius:0;">
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+
+                        <div class="specialty-content">
+
+                            @if (!string.IsNullOrEmpty(promo.NombreTipoPromocion))
+                            {
+                                <span class="promo-type-tag">@promo.NombreTipoPromocion</span>
+                            }
+
+                            <h3>@promo.Nombre</h3>
+
+                            @if (!string.IsNullOrEmpty(promo.Descripcion))
+                            {
+                                <p>@promo.Descripcion</p>
+                            }
+
+                            <div class="specialty-meta">
+                                <span>
+                                    <i class="fas fa-calendar-day"></i>
+                                    Inicia @promo.FechaInicio.ToString("dd MMM yyyy")
+                                </span>
+                                <span class="specialty-price" style="font-size:1.3rem;">
+                                    -@promo.PorcentajeDescuento.ToString("0")%
+                                </span>
+                            </div>
+
+                            <a href="#newsletter" class="btn btn-secondary btn-elegant promo-btn">
+                                <span>Notificarme</span>
+                                <i class="fas fa-bell"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </section>
+}
+
+<!-- ============================================================
+     NEWSLETTER
+     ============================================================ -->
+<section class="newsletter-section" id="newsletter">
+    <div class="container">
+        <div class="newsletter-content" data-aos="zoom-in">
+            <div class="newsletter-icon">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <div class="newsletter-text">
+                <h3>¿No quieres perderte ninguna oferta?</h3>
+                <p>Suscríbete y recibe nuestras promociones exclusivas antes que nadie</p>
+            </div>
+            <form class="newsletter-form-inline">
+                <input type="email" placeholder="Ingresa tu email" required>
+                <button type="submit" class="btn btn-primary">
+                    <span>Suscribirse</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>

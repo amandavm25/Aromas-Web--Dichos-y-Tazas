@@ -35,6 +35,16 @@ namespace AromasWeb.Abstracciones.ModeloUI
         [DisplayName("Fecha de registro")]
         public DateTime FechaRegistro { get; set; }
 
+        // Propiedades de navegación
+        [DisplayName("Empleado")]
+        public string NombreEmpleado { get; set; }
+
+        [DisplayName("Identificación")]
+        public string IdentificacionEmpleado { get; set; }
+
+        [DisplayName("Cargo")]
+        public string CargoEmpleado { get; set; }
+
         // Propiedades calculadas
         [DisplayName("Estado de vigencia")]
         public string EstadoVigencia
@@ -119,7 +129,7 @@ namespace AromasWeb.Abstracciones.ModeloUI
         {
             get
             {
-                // Salario mínimo en Costa Rica 2025 (ejemplo): ₡367,640
+                // Salario mínimo en Costa Rica 2025
                 decimal salarioMinimoMensual = 367640m;
                 decimal horasMensuales = 207.84m;
                 decimal tarifaMinimaLegal = salarioMinimoMensual / horasMensuales;

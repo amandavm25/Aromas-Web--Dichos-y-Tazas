@@ -59,21 +59,24 @@ function animateOnLoad() {
 // ============================================
 // EFECTOS HOVER EN TABLA
 // ============================================
-function initializeTableHoverEffects() {
-    document.querySelectorAll('table tbody tr').forEach(row => {
-        row.addEventListener('mouseenter', function () {
-            this.style.background  = 'linear-gradient(90deg, rgba(143, 142, 106, 0.05) 0%, transparent 100%)';
-            this.style.transform   = 'translateX(5px)';
-            this.style.boxShadow   = '0 4px 12px rgba(0,0,0,0.08)';
+const tabla = document.getElementById('laTablaDeSolicitudes');
+if (tabla) {
+    const filas = tabla.querySelectorAll('tbody tr');
+
+    filas.forEach(fila => {
+        fila.addEventListener('mouseenter', function () {
+            this.style.background = 'linear-gradient(90deg, rgba(32, 116, 118, 0.05) 0%, transparent 100%)';
+            this.style.transform = 'translateX(5px)';
+            this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
         });
-        row.addEventListener('mouseleave', function () {
-            this.style.background  = '';
-            this.style.transform   = '';
-            this.style.boxShadow   = '';
+
+        fila.addEventListener('mouseleave', function () {
+            this.style.background = '';
+            this.style.transform = '';
+            this.style.boxShadow = '';
         });
     });
 }
-
 
 
 // ============================================

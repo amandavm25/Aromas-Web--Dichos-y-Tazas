@@ -140,25 +140,27 @@
                                     <td style="text-align: center; white-space: nowrap;">
                                         @if (PermisoHelper.TienePermiso(Context.Session, "Editar Tipo Promocion"))
                                         {
-                                            <button type="button"
-                                                    class="btn-table-action btn-table-edit"
-                                                    onclick="window.location.href='@Url.Action("EditarTipoPromocion", "TipoPromocion", new { id = tipo.IdTipoPromocion })'"
-                                                    title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                            <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar">
+                                                <button type="button"
+                                                        class="btn-table-action btn-table-edit"
+                                                        onclick="window.location.href='@Url.Action("EditarTipoPromocion", "TipoPromocion", new { id = tipo.IdTipoPromocion })'">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </span>
                                         }
-                                        <button type="button"
-                                                class="btn-table-action btn-table-view btn-detalles-tipo"
-                                                data-id="@tipo.IdTipoPromocion"
-                                                data-nombre="@tipo.Nombre"
-                                                data-descripcion="@(tipo.Descripcion ?? "")"
-                                                data-estado="@tipo.EstadoTexto"
-                                                data-cantidad="@tipo.CantidadPromociones"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalDetallesTipo"
-                                                title="Ver detalles">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ver detalles">
+                                            <button type="button"
+                                                    class="btn-table-action btn-table-view btn-detalles-tipo"
+                                                    data-id="@tipo.IdTipoPromocion"
+                                                    data-nombre="@tipo.Nombre"
+                                                    data-descripcion="@(tipo.Descripcion ?? "")"
+                                                    data-estado="@tipo.EstadoTexto"
+                                                    data-cantidad="@tipo.CantidadPromociones"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalDetallesTipo">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </span>
                                     </td>
                                 </tr>
                                 contador++;

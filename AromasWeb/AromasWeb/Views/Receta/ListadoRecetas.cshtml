@@ -217,29 +217,31 @@
                                         <td style="text-align: center; white-space: nowrap;">
                                             @if (PermisoHelper.TienePermiso(Context.Session, "Editar Receta"))
                                             {
-                                                <button type="button"
-                                                        class="btn-table-action btn-table-edit"
-                                                        onclick="window.location.href='@Url.Action("EditarReceta", "Receta", new { id = receta.IdReceta })'"
-                                                        title="Editar">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar">
+                                                    <button type="button"
+                                                            class="btn-table-action btn-table-edit"
+                                                            onclick="window.location.href='@Url.Action("EditarReceta", "Receta", new { id = receta.IdReceta })'">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </span>
                                             }
-                                            <button type="button"
-                                                    class="btn-table-action btn-table-view btn-detalles-receta"
-                                                    data-id="@receta.IdReceta"
-                                                    data-nombre="@receta.Nombre"
-                                                    data-categoria="@receta.NombreCategoria"
-                                                    data-porciones="@receta.CantidadPorciones"
-                                                    data-costo="@receta.CostoTotal.ToString("N2")"
-                                                    data-precio="@receta.PrecioVenta"
-                                                    data-ganancia="@receta.GananciaNeta.ToString("N2")"
-                                                    data-margen="@receta.PorcentajeMargen"
-                                                    data-disponibilidad="@(receta.Disponibilidad ? "Disponible" : "No disponible")"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalDetallesReceta"
-                                                    title="Ver detalles">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
+                                            <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ver detalles">
+                                                <button type="button"
+                                                        class="btn-table-action btn-table-view btn-detalles-receta"
+                                                        data-id="@receta.IdReceta"
+                                                        data-nombre="@receta.Nombre"
+                                                        data-categoria="@receta.NombreCategoria"
+                                                        data-porciones="@receta.CantidadPorciones"
+                                                        data-costo="@receta.CostoTotal.ToString("N2")"
+                                                        data-precio="@receta.PrecioVenta"
+                                                        data-ganancia="@receta.GananciaNeta.ToString("N2")"
+                                                        data-margen="@receta.PorcentajeMargen"
+                                                        data-disponibilidad="@(receta.Disponibilidad ? "Disponible" : "No disponible")"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalDetallesReceta">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </span>
                                         </td>
                                     </tr>
                                     contador++;

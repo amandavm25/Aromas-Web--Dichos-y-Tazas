@@ -17,7 +17,7 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
                     List<HistorialTarifaAD> historialAD = contexto.HistorialTarifa
                         .OrderByDescending(h => h.FechaRegistro)
                         .ToList();
-                    return historialAD.Select(h => ConvertirObjetoParaUI(h)).ToList();
+                    return historialAD.Select(h => ConvertirObjetoParaUI(h, contexto)).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -44,7 +44,7 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
                         .Where(h => h.IdEmpleado == idEmpleado)
                         .OrderByDescending(h => h.FechaInicio)
                         .ToList();
-                    return historialAD.Select(h => ConvertirObjetoParaUI(h)).ToList();
+                    return historialAD.Select(h => ConvertirObjetoParaUI(h, contexto)).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -91,7 +91,7 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
                             .ToList();
                     }
 
-                    return historialAD.Select(h => ConvertirObjetoParaUI(h)).ToList();
+                    return historialAD.Select(h => ConvertirObjetoParaUI(h, contexto)).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -108,7 +108,7 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
                 try
                 {
                     var historialAD = contexto.HistorialTarifa.FirstOrDefault(h => h.IdHistorialTarifa == id);
-                    return historialAD != null ? ConvertirObjetoParaUI(historialAD) : null;
+                    return historialAD != null ? ConvertirObjetoParaUI(historialAD, contexto) : null;
                 }
                 catch (Exception ex)
                 {
@@ -132,7 +132,7 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
                         .OrderByDescending(h => h.FechaInicio)
                         .FirstOrDefault();
 
-                    return historialAD != null ? ConvertirObjetoParaUI(historialAD) : null;
+                    return historialAD != null ? ConvertirObjetoParaUI(historialAD, contexto) : null;
                 }
                 catch (Exception ex)
                 {
@@ -142,8 +142,31 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
             }
         }
 
-        private Abstracciones.ModeloUI.HistorialTarifa ConvertirObjetoParaUI(HistorialTarifaAD historialAD)
+        private Abstracciones.ModeloUI.HistorialTarifa ConvertirObjetoParaUI(HistorialTarifaAD historialAD, Contexto contexto = null)
         {
+            string nombreEmpleado = "Desconocido";
+            string identificacionEmpleado = "";
+            string cargoEmpleado = "";
+
+            var ctx = contexto;
+            bool crearContexto = ctx == null;
+            if (crearContexto) ctx = new Contexto();
+
+            try
+            {
+                var empleado = ctx.Empleado.FirstOrDefault(e => e.IdEmpleado == historialAD.IdEmpleado);
+                if (empleado != null)
+                {
+                    nombreEmpleado = $"{empleado.Nombre} {empleado.Apellidos}";
+                    identificacionEmpleado = empleado.Identificacion;
+                    cargoEmpleado = empleado.Cargo;
+                }
+            }
+            finally
+            {
+                if (crearContexto) ctx.Dispose();
+            }
+
             return new Abstracciones.ModeloUI.HistorialTarifa
             {
                 IdHistorialTarifa = historialAD.IdHistorialTarifa,
@@ -152,7 +175,10 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
                 Motivo = historialAD.Motivo,
                 FechaInicio = historialAD.FechaInicio,
                 FechaFin = historialAD.FechaFin,
-                FechaRegistro = historialAD.FechaRegistro
+                FechaRegistro = historialAD.FechaRegistro,
+                NombreEmpleado = nombreEmpleado,
+                IdentificacionEmpleado = identificacionEmpleado,
+                CargoEmpleado = cargoEmpleado
             };
         }
     }

@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ============================================
-    // HOVER EFFECTS EN TABLA
+    // EFECTOS HOVER EN TABLA
     // ============================================
     const tabla = document.getElementById('laTablaDeProm');
     if (tabla) {

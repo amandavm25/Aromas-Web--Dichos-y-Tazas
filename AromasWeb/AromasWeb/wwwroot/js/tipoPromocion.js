@@ -66,3 +66,25 @@ function paginaAnterior() {
 function paginaSiguiente() {
     console.log('Página siguiente');
 }
+
+// ============================================
+// EFECTOS HOVER EN TABLA
+// ============================================
+const tabla = document.getElementById('laTablaDeTipos');
+if (tabla) {
+    const filas = tabla.querySelectorAll('tbody tr');
+
+    filas.forEach(fila => {
+        fila.addEventListener('mouseenter', function () {
+            this.style.background = 'linear-gradient(90deg, rgba(32, 116, 118, 0.05) 0%, transparent 100%)';
+            this.style.transform = 'translateX(5px)';
+            this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+        });
+
+        fila.addEventListener('mouseleave', function () {
+            this.style.background = '';
+            this.style.transform = '';
+            this.style.boxShadow = '';
+        });
+    });
+}
