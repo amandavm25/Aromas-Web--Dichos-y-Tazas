@@ -101,9 +101,13 @@
             <a href="@ViewBag.ReturnUrl" class="btn btn-secondary">
                 <span><i class="fas fa-arrow-left"></i> Volver</span>
             </a>
-            <button onclick="window.print()" class="btn btn-primary" style="margin-left: auto;">
-                <span><i class="fas fa-print"></i> Imprimir Desglose</span>
-            </button>
+            <a href="@Url.Action("GenerarPdfDetalle", "Planilla", new { id = planilla.IdPlanilla })"
+               class="btn btn-primary"
+               style="margin-left: auto;"
+               target="_blank"
+               title="Descarga el comprobante de esta planilla en PDF">
+                <span><i class="fas fa-file-pdf"></i> Descargar Comprobante PDF</span>
+            </a>
         </div>
 
         <!-- Tabla de Desglose Diario -->

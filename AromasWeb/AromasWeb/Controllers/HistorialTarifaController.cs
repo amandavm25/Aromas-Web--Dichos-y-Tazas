@@ -5,6 +5,7 @@ using AromasWeb.AccesoADatos;
 using AromasWeb.AccesoADatos.Modulos;
 using AromasWeb.LogicaDeNegocio.Bitacoras;
 using Microsoft.AspNetCore.Mvc;
+using AromasWeb.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -223,6 +224,40 @@ namespace AromasWeb.Controllers
                     Console.WriteLine($"Error al obtener empleado: {ex.Message}");
                     return null;
                 }
+            }
+        }
+
+        // GET: HistorialTarifa/GenerarPdf/1
+        public IActionResult GenerarPdf(int id)
+        {
+            var historial = _listarHistorialTarifa.ObtenerPorEmpleado(id);
+
+            if (historial == null || !historial.Any())
+            {
+                TempData["Error"] = "No se encontró historial para este empleado";
+                return RedirectToAction(nameof(ListadoTarifas));
+            }
+
+            var empleado = ObtenerDatosEmpleado(id);
+            if (empleado == null)
+            {
+                TempData["Error"] = "Empleado no encontrado";
+                return RedirectToAction(nameof(ListadoTarifas));
+            }
+
+            try
+            {
+                byte[] pdf = PdfService.GenerarHistorialTarifas(empleado, historial);
+
+                string nombreArchivo = $"HistorialTarifas_{empleado.Nombre}_{empleado.Apellidos}_{DateTime.Now:yyyyMMdd}.pdf"
+                    .Replace(" ", "_");
+
+                return File(pdf, "application/pdf", nombreArchivo);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Error al generar el PDF: " + ex.Message;
+                return RedirectToAction(nameof(VerHistorialEmpleado), new { id });
             }
         }
 

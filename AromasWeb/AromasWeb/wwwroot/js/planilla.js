@@ -20,6 +20,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Paginación de cards (MiPlanilla)
+    if (document.getElementById('historial-timeline')) {
+        initCardsPagination({
+            containerId: 'historial-timeline',
+            cardsPerPage: 3,
+            prevButtonId: 'btnAnteriorCards',
+            nextButtonId: 'btnSiguienteCards',
+            startCardId: 'startCard',
+            endCardId: 'endCard',
+            totalCardsId: 'totalCards'
+        });
+    }
+
     // Validación de formularios
     initializeFormValidation();
 });

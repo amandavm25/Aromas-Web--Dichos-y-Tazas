@@ -101,15 +101,16 @@
 
         <!-- Botones de Acción -->
         <div style="display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;" data-aos="fade-up">
-            <a href="@Url.Action("CalcularPlanilla", "Planilla", new { idEmpleado = empleado.IdEmpleado })" class="btn btn-primary btn-3d">
-                <span><i class="fas fa-calculator"></i> Calcular Nueva Planilla</span>
-            </a>
-            <a href="@Url.Action("ListadoPlanillas", "Planilla")" class="btn btn-secondary">
+            <a href="@Url.Action("ListadoEmpleados", "Empleado")" class="btn btn-secondary">
                 <span><i class="fas fa-arrow-left"></i> Volver al Listado</span>
             </a>
-            <button onclick="window.print()" class="btn btn-primary" style="background: var(--green); margin-left: auto;">
-                <span><i class="fas fa-print"></i> Imprimir Historial</span>
-            </button>
+            <a href="@Url.Action("GenerarPdfEmpleado", "Planilla", new { id = empleado.IdEmpleado })"
+               class="btn btn-primary"
+               style="background: var(--dark-green); border: 2px solid var(--gold); margin-left: auto;"
+               target="_blank"
+               title="Descarga el historial de planillas en PDF">
+                <span><i class="fas fa-file-pdf"></i> Descargar PDF</span>
+            </a>
         </div>
 
         <!-- Filtros de Fecha -->

@@ -126,9 +126,12 @@
             <a href="@Url.Action("ListadoTarifas", "HistorialTarifa")" class="btn btn-secondary">
                 <span><i class="fas fa-arrow-left"></i> Volver al Listado</span>
             </a>
-            <button onclick="window.print()" class="btn" style="background: var(--olive-green); color: white; border: none; margin-left: auto;">
-                <span><i class="fas fa-print"></i> Imprimir Historial</span>
-            </button>
+            <a href="@Url.Action("GenerarPdf", "HistorialTarifa", new { id = empleado.IdEmpleado })"
+               class="btn"
+               style="background: var(--dark-green); color: var(--cream); border: 2px solid var(--gold); margin-left: auto;"
+               target="_blank">
+                <span><i class="fas fa-file-pdf"></i> Descargar PDF</span>
+            </a>
         </div>
 
         <!-- Timeline de Tarifas -->

@@ -4,6 +4,7 @@ using AromasWeb.Abstracciones.Logica.Planilla;
 using AromasWeb.AccesoADatos;
 using AromasWeb.AccesoADatos.Modulos;
 using AromasWeb.LogicaDeNegocio.Bitacoras;
+using AromasWeb.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -299,6 +300,64 @@ namespace AromasWeb.Controllers
                     Console.WriteLine($"Error al obtener datos del empleado: {ex.Message}");
                     return null;
                 }
+            }
+        }
+
+        // GET: Planilla/GenerarPdfEmpleado/1
+        // Genera el PDF con todas las planillas de un empleado
+        public IActionResult GenerarPdfEmpleado(int id)
+        {
+            var empleado = ObtenerDatosEmpleadoPorId(id);
+            if (empleado == null)
+            {
+                TempData["Error"] = "Empleado no encontrado";
+                return RedirectToAction(nameof(ListadoPlanillas));
+            }
+
+            var planillas = _listarPlanillas.ObtenerPorEmpleado(id);
+
+            try
+            {
+                byte[] pdf = PdfService.GenerarPlanillasEmpleado(empleado, planillas);
+
+                string nombreArchivo = $"Planillas_{empleado.Nombre}_{empleado.Apellidos}_{DateTime.Now:yyyyMMdd}.pdf"
+                    .Replace(" ", "_");
+
+                return File(pdf, "application/pdf", nombreArchivo);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Error al generar el PDF: " + ex.Message;
+                return RedirectToAction(nameof(PlanillasEmpleado), new { id });
+            }
+        }
+
+        // GET: Planilla/GenerarPdfDetalle/1
+        // Genera el comprobante (recibo) de una planilla individual
+        public IActionResult GenerarPdfDetalle(int id)
+        {
+            var planilla = _listarPlanillas.ObtenerPorId(id);
+            if (planilla == null)
+            {
+                TempData["Error"] = "Planilla no encontrada";
+                return RedirectToAction(nameof(ListadoPlanillas));
+            }
+
+            var detalles = _listarPlanillas.ObtenerDetallesPorPlanilla(id);
+
+            try
+            {
+                byte[] pdf = PdfService.GenerarDetallePlanilla(planilla, detalles);
+
+                string nombreArchivo = $"Planilla_{planilla.NombreEmpleado}_{planilla.PeriodoInicio:yyyyMMdd}_{planilla.PeriodoFin:yyyyMMdd}.pdf"
+                    .Replace(" ", "_");
+
+                return File(pdf, "application/pdf", nombreArchivo);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Error al generar el PDF: " + ex.Message;
+                return RedirectToAction(nameof(VerDetallePlanilla), new { id });
             }
         }
 
