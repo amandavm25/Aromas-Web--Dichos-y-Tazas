@@ -195,6 +195,37 @@ namespace AromasWeb.AccesoADatos.MovimientosInsumo
             }
         }
 
+        public void Guardar(Abstracciones.ModeloUI.MovimientoInsumo movimiento)
+        {
+            using (var contexto = new Contexto())
+            {
+                var entidad = new MovimientoInsumoAD
+                {
+                    IdInsumo = movimiento.IdInsumo,
+                    TipoMovimiento = movimiento.TipoMovimiento,
+                    Cantidad = movimiento.Cantidad,
+                    Motivo = movimiento.Motivo,
+                    CostoUnitario = movimiento.CostoUnitario,
+                    IdEmpleado = movimiento.IdEmpleado,
+                    FechaMovimiento = DateTime.SpecifyKind(movimiento.FechaMovimiento, DateTimeKind.Utc)
+                };
+                contexto.MovimientoInsumo.Add(entidad);
+
+                var insumo = contexto.Insumo.FirstOrDefault(i => i.IdInsumo == movimiento.IdInsumo);
+                if (insumo != null)
+                {
+                    if (movimiento.TipoMovimiento == "E")
+                        insumo.CantidadDisponible += movimiento.Cantidad;
+                    else
+                        insumo.CantidadDisponible -= movimiento.Cantidad;
+
+                    insumo.FechaActualizacion = DateTime.UtcNow;
+                }
+
+                contexto.SaveChanges();
+            }
+        }
+
         private Abstracciones.ModeloUI.MovimientoInsumo ConvertirObjetoParaUI(MovimientoInsumoAD movimientoAD)
         {
             return new Abstracciones.ModeloUI.MovimientoInsumo

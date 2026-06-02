@@ -82,34 +82,54 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RegistrarMovimiento(MovimientoInsumo movimiento)
         {
+            ModelState.Remove("NombreInsumo");
+            ModelState.Remove("NombreEmpleado");
+            ModelState.Remove("UnidadMedida");
+            ModelState.Remove("FechaMovimiento");
+            ModelState.Remove("IdEmpleado");
+
             if (ModelState.IsValid)
             {
-                movimiento.FechaMovimiento = DateTime.Now;
-                movimiento.IdEmpleado = ObtenerIdEmpleadoSesion();
+                try
+                {
+                    movimiento.FechaMovimiento = DateTime.UtcNow;
+                    movimiento.IdEmpleado = ObtenerIdEmpleadoSesion();
 
-                string tipoTexto = movimiento.TipoMovimiento == "E" ? "Entrada" : "Salida";
-                var insumo = _listarInsumos.ObtenerPorId(movimiento.IdInsumo);
+                    _listarMovimientos.Guardar(movimiento);
 
-                _crearBitacora.RegistrarAccion(
-                    idEmpleado: ObtenerIdEmpleadoSesion(),
-                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Movimientos de insumos"),
-                    accion: Bitacora.Acciones.RegistrarMovimiento,
-                    tablaAfectada: "MovimientoInsumo",
-                    descripcion: $"Se registró {tipoTexto} de insumo: {insumo?.NombreInsumo ?? movimiento.IdInsumo.ToString()} — Cantidad: {movimiento.Cantidad} {insumo?.UnidadMedida}",
-                    datosNuevos: JsonSerializer.Serialize(new
-                    {
-                        movimiento.IdInsumo,
-                        NombreInsumo = insumo?.NombreInsumo,
-                        movimiento.TipoMovimiento,
-                        movimiento.Cantidad,
-                        movimiento.CostoUnitario,
-                        movimiento.Motivo,
-                        FechaMovimiento = movimiento.FechaMovimiento.ToString("dd/MM/yyyy HH:mm")
-                    })
-                );
+                    string tipoTexto = movimiento.TipoMovimiento == "E" ? "Entrada" : "Salida";
+                    var insumo = _listarInsumos.ObtenerPorId(movimiento.IdInsumo);
 
-                TempData["Mensaje"] = "Movimiento registrado correctamente";
-                return RedirectToAction(nameof(HistorialMovimientos));
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: movimiento.IdEmpleado,
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Movimientos de insumos"),
+                        accion: Bitacora.Acciones.RegistrarMovimiento,
+                        tablaAfectada: "MovimientoInsumo",
+                        descripcion: $"Se registró {tipoTexto} de insumo: {insumo?.NombreInsumo ?? movimiento.IdInsumo.ToString()} — Cantidad: {movimiento.Cantidad} {insumo?.UnidadMedida}",
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            movimiento.IdInsumo,
+                            NombreInsumo = insumo?.NombreInsumo,
+                            movimiento.TipoMovimiento,
+                            movimiento.Cantidad,
+                            movimiento.CostoUnitario,
+                            movimiento.Motivo,
+                            FechaMovimiento = movimiento.FechaMovimiento.ToString("dd/MM/yyyy HH:mm")
+                        })
+                    );
+
+                    TempData["Mensaje"] = "Movimiento registrado correctamente";
+                    return RedirectToAction(nameof(HistorialMovimientos));
+                }
+                catch (InvalidOperationException)
+                {
+                    TempData["Error"] = "Debes iniciar sesión para registrar movimientos.";
+                    return RedirectToAction("Login", "Account");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = $"Error al registrar el movimiento: {ex.Message}";
+                }
             }
 
             ViewBag.TodosInsumos = _listarInsumos.Obtener();

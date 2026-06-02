@@ -42,7 +42,8 @@
             @Html.AntiForgeryToken()
 
             <!-- Hidden que se actualiza con JS según el combobox -->
-            <input type="hidden" name="IdInsumo" id="hiddenIdInsumo" value="@Model?.IdInsumo" />
+            <input type="hidden" id="hiddenIdInsumo" value="@Model?.IdInsumo" />
+            <input type="hidden" name="CostoUnitario" id="hiddenCostoUnitario" value="0" />
 
             <div class="admin-form-wrapper" data-aos="fade-up">
                 @Html.ValidationSummary(true, "Por favor, corrige los siguientes errores:", new { @class = "alert alert-danger" })
@@ -61,7 +62,7 @@
                             <i class="fas fa-box"></i>
                             Insumo
                         </label>
-                        <select id="selectorInsumo" class="form-control" required>
+                        <select id="selectorInsumo" name="IdInsumo" class="form-control" required>
                             <option value="">-- Selecciona un insumo --</option>
                             @foreach (var ins in todosInsumos)
                             {
@@ -71,7 +72,7 @@
                                         data-stock="@ins.StockMinimo.ToString(System.Globalization.CultureInfo.InvariantCulture)"
                                         data-costo="@ins.CostoUnitario.ToString(System.Globalization.CultureInfo.InvariantCulture)"
                                         data-unidad="@ins.UnidadMedida"
-                                        @@(insumo !=null && ins.IdInsumo= =insumo.IdInsumo ? "selected" : "" )>
+                                        @@(insumo != null && ins.IdInsumo == insumo.IdInsumo ? "selected" : "")>
                                     @ins.NombreInsumo — @ins.CantidadDisponible.ToString("N2") @ins.UnidadMedida
                                 </option>
                             }

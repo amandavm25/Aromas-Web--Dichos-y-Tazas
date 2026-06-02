@@ -48,5 +48,10 @@ namespace AromasWeb.LogicaDeNegocio.MovimientosInsumo
         {
             return _listarMovimientos.ObtenerUltimosMovimientos(cantidad);
         }
+
+        public void Guardar(MovimientoInsumo movimiento)
+        {
+            _listarMovimientos.Guardar(movimiento);
+        }
     }
 }

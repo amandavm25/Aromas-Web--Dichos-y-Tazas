@@ -66,7 +66,7 @@ namespace AromasWeb.AccesoADatos
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string connectionString = "Host=db.qtwtmksixuzgsjyqcqjn.supabase.co;Port=5432;Database=postgres;Username=postgres;Password=aromas.2025-;SSL Mode=Require;Trust Server Certificate=true;Timeout=30;Command Timeout=60;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100";
+                string connectionString = "Host=aws-0-us-west-2.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.qtwtmksixuzgsjyqcqjn;Password=aromas.2025-;SSL Mode=Require;Trust Server Certificate=true;Timeout=30;Command Timeout=60;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100";
 
                 try
                 {
@@ -297,7 +297,6 @@ namespace AromasWeb.AccesoADatos
                 entity.HasIndex(e => e.Estado);
             });
 
-            // Configuración de MovimientoInsumo
             modelBuilder.Entity<MovimientoInsumoAD>(entity =>
             {
                 entity.ToTable("movimientoinsumo");
@@ -309,9 +308,8 @@ namespace AromasWeb.AccesoADatos
                 entity.Property(e => e.Motivo).IsRequired().HasMaxLength(500).HasColumnName("motivo");
                 entity.Property(e => e.CostoUnitario).IsRequired().HasColumnType("decimal(18,2)").HasColumnName("costounitario");
                 entity.Property(e => e.IdEmpleado).IsRequired().HasColumnName("idempleado");
-                entity.Property(e => e.FechaMovimiento).IsRequired().HasColumnName("fechamovimiento").HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.FechaMovimiento).IsRequired().HasColumnName("fechamovimiento");
 
-                // Relación con Insumo
                 entity.HasOne(e => e.Insumo)
                     .WithMany()
                     .HasForeignKey(e => e.IdInsumo)

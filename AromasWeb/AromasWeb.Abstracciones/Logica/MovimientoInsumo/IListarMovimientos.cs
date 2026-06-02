@@ -13,5 +13,6 @@ namespace AromasWeb.Abstracciones.Logica.MovimientoInsumo
         List<MovimientoInsumoUI> BuscarConFiltros(string nombreInsumo, string tipo, DateTime? fechaDesde, DateTime? fechaHasta);
         MovimientoInsumoUI ObtenerPorId(int id);
         List<MovimientoInsumoUI> ObtenerUltimosMovimientos(int cantidad);
+        void Guardar(MovimientoInsumoUI movimiento);
     }
 }

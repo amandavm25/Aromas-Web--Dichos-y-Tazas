@@ -3,7 +3,7 @@
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
     animateOnLoad();
-    initializeTableHoverEffects();
+    initTableHoverEffects();
 
     // Paginación de tabla (HistorialMovimientos)
     if (document.getElementById('laTablaDeMovimientos')) {
@@ -74,6 +74,7 @@ function initializeMovimientoForm() {
     const resumenCosto = document.getElementById('resumenCosto');
     const cantidadResumen = document.getElementById('cantidadResumen');
     const costoTotalSpan = document.getElementById('costoTotal');
+    document.getElementById('hiddenCostoUnitario').value = costoUnitario;
 
     const radioEntrada = document.querySelector('input[value="E"]');
     const radioSalida = document.querySelector('input[value="S"]');
@@ -188,4 +189,19 @@ if (!document.getElementById('movimiento-styles')) {
         @keyframes tooltipFadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
     `;
     document.head.appendChild(s);
+}
+
+function initTableHoverEffects() {
+    const tabla = document.getElementById('laTablaDeMovimientos');
+    if (!tabla) return;
+    tabla.querySelectorAll('tbody tr').forEach(fila => {
+        fila.addEventListener('mouseenter', function () {
+            this.style.background = 'linear-gradient(90deg, rgba(32,116,118,0.05) 0%, transparent 100%)';
+            this.style.transform = 'translateX(5px)';
+        });
+        fila.addEventListener('mouseleave', function () {
+            this.style.background = '';
+            this.style.transform = '';
+        });
+    });
 }
