@@ -66,13 +66,14 @@
                             <option value="">-- Selecciona un insumo --</option>
                             @foreach (var ins in todosInsumos)
                             {
+                                var esSeleccionado = insumo != null && ins.IdInsumo == insumo.IdInsumo;
                                 <option value="@ins.IdInsumo"
                                         data-nombre="@ins.NombreInsumo"
                                         data-cantidad="@ins.CantidadDisponible.ToString(System.Globalization.CultureInfo.InvariantCulture)"
                                         data-stock="@ins.StockMinimo.ToString(System.Globalization.CultureInfo.InvariantCulture)"
                                         data-costo="@ins.CostoUnitario.ToString(System.Globalization.CultureInfo.InvariantCulture)"
                                         data-unidad="@ins.UnidadMedida"
-                                        @@(insumo != null && ins.IdInsumo == insumo.IdInsumo ? "selected" : "")>
+                                        selected="@esSeleccionado">
                                     @ins.NombreInsumo — @ins.CantidadDisponible.ToString("N2") @ins.UnidadMedida
                                 </option>
                             }
@@ -243,10 +244,9 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        // Variables globales que usa movimiento.js — se actualizan cuando cambia el combobox
-        let cantidadActual = @(insumo != null ? insumo.CantidadDisponible.ToString(System.Globalization.CultureInfo.InvariantCulture) : "0");
-        let costoUnitario  = @(insumo != null ? insumo.CostoUnitario.ToString(System.Globalization.CultureInfo.InvariantCulture) : "0");
-        let unidad         = "@Html.Raw(insumo?.UnidadMedida ?? "")";
+        var cantidadActual = 0;
+        var costoUnitario  = 0;
+        var unidad         = '';
 
         document.getElementById('selectorInsumo').addEventListener('change', function () {
             const opt = this.options[this.selectedIndex];
@@ -260,41 +260,68 @@
                 document.getElementById('hiddenIdInsumo').value = '';
                 document.getElementById('nuevaCantidad').textContent = '—';
                 document.getElementById('costoUnitarioResumen').textContent = '₡0.00';
+                document.getElementById('hiddenCostoUnitario').value = 0;
                 return;
             }
 
-            // Leer data-attributes de la opción seleccionada
             cantidadActual = parseFloat(opt.dataset.cantidad) || 0;
             costoUnitario  = parseFloat(opt.dataset.costo)    || 0;
             unidad         = opt.dataset.unidad || '';
 
-            // Actualizar hidden field
             document.getElementById('hiddenIdInsumo').value = this.value;
-
-            // Actualizar panel visual
+            document.getElementById('hiddenCostoUnitario').value = costoUnitario;
             document.getElementById('infoNombre').textContent   = opt.dataset.nombre;
             document.getElementById('infoCantidad').textContent = cantidadActual.toFixed(2) + ' ' + unidad;
             document.getElementById('infoStock').textContent    = parseFloat(opt.dataset.stock).toFixed(2) + ' ' + unidad;
             document.getElementById('infoCosto').textContent    = '₡' + costoUnitario.toLocaleString('es-CR', { minimumFractionDigits: 2 });
             document.getElementById('costoUnitarioResumen').textContent = '₡' + costoUnitario.toLocaleString('es-CR', { minimumFractionDigits: 2 });
-
             panel.style.display = 'block';
 
-            // Recalcular nueva cantidad si ya hay algo en el input
-            const inputCantidad = document.getElementById('cantidadMovimiento');
-            if (inputCantidad) inputCantidad.dispatchEvent(new Event('input'));
+            calcularNuevaCantidadVista();
         });
 
-        // Si ya viene un insumo preseleccionado, mostrar su costo unitario en el resumen
-        (function () {
-            const sel = document.getElementById('selectorInsumo');
-            if (sel && sel.value) {
-                const opt = sel.options[sel.selectedIndex];
-                const cu = parseFloat(opt.dataset.costo) || 0;
-                document.getElementById('costoUnitarioResumen').textContent =
-                    '₡' + cu.toLocaleString('es-CR', { minimumFractionDigits: 2 });
+        function calcularNuevaCantidadVista() {
+            const inputCantidad = document.getElementById('cantidadMovimiento');
+            const nuevaCantidadSpan = document.getElementById('nuevaCantidad');
+            const alertaStock = document.getElementById('alertaStockInsuficiente');
+            const btnRegistrar = document.getElementById('btnRegistrar');
+            const radioSalida = document.querySelector('input[value="S"]');
+
+            if (!inputCantidad) return;
+            const cantidad = parseFloat(inputCantidad.value) || 0;
+
+            if (radioSalida && radioSalida.checked) {
+                const nueva = cantidadActual - cantidad;
+                if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toFixed(2) + ' ' + unidad;
+                if (nueva < 0) {
+                    if (alertaStock) alertaStock.style.display = 'block';
+                    if (btnRegistrar) btnRegistrar.disabled = true;
+                } else {
+                    if (alertaStock) alertaStock.style.display = 'none';
+                    if (btnRegistrar) btnRegistrar.disabled = false;
+                }
+            } else {
+                const nueva = cantidadActual + cantidad;
+                if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toFixed(2) + ' ' + unidad;
+                if (alertaStock) alertaStock.style.display = 'none';
+                if (btnRegistrar) btnRegistrar.disabled = false;
             }
-        })();
+        }
+
+        document.querySelector('input[value="E"]').addEventListener('change', function() {
+            setTimeout(calcularNuevaCantidadVista, 0);
+        });
+        document.querySelector('input[value="S"]').addEventListener('change', function() {
+            setTimeout(calcularNuevaCantidadVista, 0);
+        });
+        document.getElementById('cantidadMovimiento').addEventListener('input', function() {
+            setTimeout(calcularNuevaCantidadVista, 0);
+        });
+
+        // Disparar change al cargar para inicializar si hay insumo preseleccionado
+        setTimeout(function() {
+            document.getElementById('selectorInsumo').dispatchEvent(new Event('change'));
+        }, 0);
     </script>
     <script src="~/js/movimiento.js"></script>
 }

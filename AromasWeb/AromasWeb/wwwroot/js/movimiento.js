@@ -66,27 +66,13 @@ if (tabla) {
 // FORMULARIO DE MOVIMIENTO
 // ============================================
 function initializeMovimientoForm() {
-    // cantidadActual, costoUnitario y unidad son inyectados por la vista en una etiqueta <script>
-    const inputCantidad = document.getElementById('cantidadMovimiento');
-    const nuevaCantidadSpan = document.getElementById('nuevaCantidad');
-    const alertaStock = document.getElementById('alertaStockInsuficiente');
-    const btnRegistrar = document.getElementById('btnRegistrar');
     const resumenCosto = document.getElementById('resumenCosto');
-    const cantidadResumen = document.getElementById('cantidadResumen');
-    const costoTotalSpan = document.getElementById('costoTotal');
-    document.getElementById('hiddenCostoUnitario').value = costoUnitario;
-
     const radioEntrada = document.querySelector('input[value="E"]');
     const radioSalida = document.querySelector('input[value="S"]');
     const entradaLabel = document.getElementById('entradaLabel');
     const salidaLabel = document.getElementById('salidaLabel');
 
-    if (!inputCantidad || !radioEntrada || !radioSalida) return;
-
-    // Valores del insumo definidos desde la vista
-    const stockActual = typeof cantidadActual !== 'undefined' ? cantidadActual : 0;
-    const costo = typeof costoUnitario !== 'undefined' ? costoUnitario : 0;
-    const ud = typeof unidad !== 'undefined' ? unidad : '';
+    if (!radioEntrada || !radioSalida) return;
 
     function actualizarEstilosRadio() {
         if (radioEntrada.checked) {
@@ -104,50 +90,11 @@ function initializeMovimientoForm() {
         }
     }
 
-    function calcularNuevaCantidad() {
-        const cantidad = parseFloat(inputCantidad.value) || 0;
+    radioEntrada.addEventListener('change', actualizarEstilosRadio);
+    radioSalida.addEventListener('change', actualizarEstilosRadio);
 
-        if (radioEntrada.checked) {
-            const nueva = stockActual + cantidad;
-            if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toFixed(2) + ' ' + ud;
-            if (alertaStock) alertaStock.style.display = 'none';
-            if (btnRegistrar) btnRegistrar.disabled = false;
-
-            // Resumen de costo
-            if (cantidadResumen) cantidadResumen.textContent = cantidad.toFixed(2) + ' ' + ud;
-            if (costoTotalSpan) {
-                const total = costo * cantidad;
-                costoTotalSpan.textContent = '₡' + total.toLocaleString('es-CR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            }
-        } else {
-            const nueva = stockActual - cantidad;
-            if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toFixed(2) + ' ' + ud;
-
-            if (nueva < 0) {
-                if (alertaStock) alertaStock.style.display = 'block';
-                if (btnRegistrar) btnRegistrar.disabled = true;
-            } else {
-                if (alertaStock) alertaStock.style.display = 'none';
-                if (btnRegistrar) btnRegistrar.disabled = false;
-            }
-        }
-    }
-
-    radioEntrada.addEventListener('change', function () {
-        actualizarEstilosRadio();
-        calcularNuevaCantidad();
-    });
-
-    radioSalida.addEventListener('change', function () {
-        actualizarEstilosRadio();
-        calcularNuevaCantidad();
-    });
-
-    inputCantidad.addEventListener('input', calcularNuevaCantidad);
-
-    // Inicializar estado
+    // Solo estilos iniciales, sin tocar el cálculo
     actualizarEstilosRadio();
-    calcularNuevaCantidad();
 }
 
 // ============================================
