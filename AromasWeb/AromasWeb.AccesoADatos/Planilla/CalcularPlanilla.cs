@@ -17,6 +17,9 @@ namespace AromasWeb.AccesoADatos.Planilla
                 if (periodoInicio > periodoFin)
                     throw new InvalidOperationException("La fecha de inicio debe ser anterior a la fecha de fin");
 
+                var inicioUtc = DateTime.SpecifyKind(periodoInicio.Date, DateTimeKind.Utc);
+                var finUtc = DateTime.SpecifyKind(periodoFin.Date, DateTimeKind.Utc);
+
                 var empleado = contexto.Empleado.FirstOrDefault(e => e.IdEmpleado == idEmpleado);
                 if (empleado == null)
                     throw new InvalidOperationException("Empleado no encontrado");
@@ -24,8 +27,8 @@ namespace AromasWeb.AccesoADatos.Planilla
                 // Buscar tarifa vigente en HistorialTarifa
                 var tarifaVigente = contexto.HistorialTarifa
                     .Where(t => t.IdEmpleado == idEmpleado
-                             && t.FechaInicio <= periodoFin.Date
-                             && (t.FechaFin == null || t.FechaFin >= periodoInicio.Date))
+                             && t.FechaInicio <= finUtc
+                             && (t.FechaFin == null || t.FechaFin >= inicioUtc))
                     .OrderByDescending(t => t.FechaInicio)
                     .FirstOrDefault();
 
@@ -45,8 +48,8 @@ namespace AromasWeb.AccesoADatos.Planilla
 
                 var asistencias = contexto.Asistencia
                     .Where(a => a.IdEmpleado == idEmpleado
-                             && a.Fecha >= periodoInicio.Date
-                             && a.Fecha <= periodoFin.Date)
+                            && a.Fecha >= inicioUtc
+                            && a.Fecha <= finUtc)
                     .OrderBy(a => a.Fecha)
                     .ToList();
 
@@ -59,8 +62,8 @@ namespace AromasWeb.AccesoADatos.Planilla
                 var planillaAD = new PlanillaAD
                 {
                     IdEmpleado = idEmpleado,
-                    PeriodoInicio = DateTime.SpecifyKind(periodoInicio.Date, DateTimeKind.Utc),
-                    PeriodoFin = DateTime.SpecifyKind(periodoFin.Date, DateTimeKind.Utc),
+                    PeriodoInicio = inicioUtc,
+                    PeriodoFin = finUtc,
                     TarifaHora = tarifaHora,
                     Estado = "Calculado",
 
@@ -113,7 +116,7 @@ namespace AromasWeb.AccesoADatos.Planilla
                     {
                         IdPlanilla = planillaAD.IdPlanilla,
                         IdAsistencia = a.IdAsistencia,
-                        Fecha = DateTime.SpecifyKind(a.Fecha, DateTimeKind.Utc),
+                        Fecha = DateTime.SpecifyKind(a.Fecha.Date, DateTimeKind.Utc),
                         HorasRegulares = Math.Round(horasRegulares, 2),
                         HorasExtras = Math.Round(horasExtras, 2),
                         Subtotal = Math.Round(subtotalDia, 2)
