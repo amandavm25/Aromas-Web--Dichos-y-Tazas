@@ -120,7 +120,7 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CalcularPlanilla(int idEmpleado, DateTime periodoInicio, DateTime periodoFin)
         {
-            if (periodoInicio >= periodoFin)
+            if (periodoInicio > periodoFin)
             {
                 TempData["Error"] = "La fecha de inicio debe ser anterior a la fecha de fin";
                 CargarEmpleados();

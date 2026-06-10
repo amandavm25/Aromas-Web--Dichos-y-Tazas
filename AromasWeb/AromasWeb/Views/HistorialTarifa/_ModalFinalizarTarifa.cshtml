@@ -76,6 +76,7 @@
                 <form id="formFinalizarTarifa" method="post" action="" style="display:inline;">
                     @Html.AntiForgeryToken()
                     <input type="hidden" id="finalizar-id-tarifa" name="id" />
+                    <input type="hidden" id="finalizar-fecha-fin-hidden" name="fechaFin" />
                     <button type="submit" class="btn btn-primary btn-3d">
                         <span><i class="fas fa-stop-circle"></i> Finalizar Tarifa</span>
                     </button>

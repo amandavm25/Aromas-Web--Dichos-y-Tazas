@@ -60,10 +60,22 @@
                         <i class="fas fa-user"></i>
                         Seleccionar Empleado
                     </label>
-                    @Html.DropDownListFor(model => model.IdEmpleado,
-                    new SelectList(ViewBag.Empleados, "IdEmpleado", "NombreCompleto"),
-                                "-- Selecciona un empleado --",
-                                new { @class = "form-control", id = "selectEmpleado" })
+                    <select id="selectEmpleado" name="IdEmpleado" class="form-control">
+                        <option value="">-- Selecciona un empleado --</option>
+                        @foreach (var emp in ViewBag.Empleados)
+                        {
+                            <option value="@emp.IdEmpleado"
+                                    data-cargo="@emp.Cargo"
+                                    data-identificacion="@emp.Identificacion"
+                                    data-tarifa-actual="@emp.TarifaActual"
+                                    @@(Model != null && Model.IdEmpleado == emp.IdEmpleado ? "selected" : "")>
+                                @emp.NombreCompleto
+                            </option>
+                        }
+                    </select>
+
+                    <input type="hidden" id="hidden-identificacion" name="IdentificacionEmpleado" value="@Model.IdentificacionEmpleado" />
+                    <input type="hidden" id="hidden-cargo" name="CargoEmpleado" value="@Model.CargoEmpleado" />
                 @Html.ValidationMessageFor(model => model.IdEmpleado, "", new { @class = "text-danger" })
             </div>
 

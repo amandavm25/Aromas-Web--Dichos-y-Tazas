@@ -126,7 +126,7 @@ function initializeModals() {
                     estadoBadge.style.color = 'white';
                 } else {
                     estadoBadge.textContent = 'En curso';
-                    estadoBadge.style.background = 'var(--amber)';
+                    estadoBadge.style.background = 'var(--gold)';
                     estadoBadge.style.color = 'white';
                 }
             }

@@ -44,7 +44,7 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
 
                     // Validar que FechaFin sea mayor a FechaInicio si está definida
                     if (historialTarifa.FechaFin.HasValue &&
-                        historialTarifa.FechaFin.Value <= historialTarifa.FechaInicio)
+                        historialTarifa.FechaFin.Value.Date <= historialTarifa.FechaInicio.Date)
                     {
                         throw new Exception("La fecha de fin debe ser mayor a la fecha de inicio");
                     }

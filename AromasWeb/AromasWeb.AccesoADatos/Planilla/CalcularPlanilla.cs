@@ -1,7 +1,8 @@
-﻿using System;
-using System.Linq;
-using AromasWeb.Abstracciones.Logica.Planilla;
+﻿using AromasWeb.Abstracciones.Logica.Planilla;
 using AromasWeb.AccesoADatos.Modelos;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace AromasWeb.AccesoADatos.Planilla
 {
@@ -149,6 +150,8 @@ namespace AromasWeb.AccesoADatos.Planilla
                 planillaAD.OtrasDeducciones = otrasDeducciones;
                 planillaAD.TotalDeducciones = totalDeducciones;
                 planillaAD.PagoNeto = pagoNeto;
+
+                contexto.Entry(planillaAD).State = EntityState.Modified;
 
                 contexto.SaveChanges();
 

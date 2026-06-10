@@ -43,6 +43,11 @@ namespace AromasWeb.LogicaDeNegocio.Empleados
             return _listarEmpleados.BuscarPorRol(idRol);
         }
 
+        public List<Empleado> BuscarGeneral(string termino)
+        {
+            return _listarEmpleados.BuscarGeneral(termino);
+        }
+
         public Empleado ObtenerPorId(int id)
         {
             return _listarEmpleados.ObtenerPorId(id);

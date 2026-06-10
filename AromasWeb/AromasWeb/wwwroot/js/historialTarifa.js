@@ -125,8 +125,22 @@ function initializeModals() {
             set('finalizar-empleado', this.dataset.empleado);
             set('finalizar-tarifa', this.dataset.tarifa);
 
+            const inputId = document.getElementById('finalizar-id-tarifa');
+            if (inputId) inputId.value = id;
+
+            // ✅ AGREGAR: sincronizar fecha visible → hidden
+            const inputVisible = document.getElementById('finalizar-fecha-fin');
+            const inputHidden = document.getElementById('finalizar-fecha-fin-hidden');
+            if (inputVisible && inputHidden) {
+                inputVisible.value = ''; // limpiar fecha anterior
+                inputHidden.value = '';
+                inputVisible.oninput = function () {
+                    inputHidden.value = this.value;
+                };
+            }
+
             const form = document.getElementById('formFinalizarTarifa');
-            if (form) form.action = '/HistorialTarifa/FinalizarTarifa?id=' + id;
+            if (form) form.action = '/HistorialTarifa/FinalizarTarifa';
         });
     });
 }

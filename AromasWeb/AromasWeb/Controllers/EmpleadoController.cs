@@ -52,7 +52,7 @@ namespace AromasWeb.Controllers
 
             if (!string.IsNullOrEmpty(buscar))
             {
-                empleados = _listarEmpleados.BuscarPorNombre(buscar);
+                empleados = _listarEmpleados.BuscarGeneral(buscar);
             }
             else
             {
@@ -339,6 +339,7 @@ namespace AromasWeb.Controllers
             {
                 System.Diagnostics.Debug.WriteLine($"Excepción capturada: {ex.Message}");
                 ModelState.AddModelError("", $"Error al actualizar el empleado: {ex.Message}");
+                ViewBag.ErrorMessage = ex.Message;
                 CargarRoles();
                 return View(empleado);
             }

@@ -88,6 +88,13 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CrearTarifa(HistorialTarifa tarifa)
         {
+            if (tarifa.FechaRegistro == DateTime.MinValue)
+                tarifa.FechaRegistro = DateTime.Now;
+
+            ModelState.Remove("NombreEmpleado");
+            ModelState.Remove("IdentificacionEmpleado");
+            ModelState.Remove("CargoEmpleado");
+
             if (ModelState.IsValid)
             {
                 if (!tarifa.CumpleSalarioMinimo)
@@ -96,6 +103,7 @@ namespace AromasWeb.Controllers
                     CargarEmpleados();
                     return View(tarifa);
                 }
+
                 if (tarifa.FechaFin.HasValue && tarifa.FechaFin.Value <= tarifa.FechaInicio)
                 {
                     TempData["Error"] = "La fecha de fin debe ser posterior a la fecha de inicio";
@@ -103,25 +111,43 @@ namespace AromasWeb.Controllers
                     return View(tarifa);
                 }
 
-                _crearBitacora.RegistrarAccion(
-                    idEmpleado: ObtenerIdEmpleadoSesion(),
-                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Historial de tarifas"),
-                    accion: Bitacora.Acciones.ActualizarTarifa,
-                    tablaAfectada: "HistorialTarifa",
-                    descripcion: $"Se registró nueva tarifa para el empleado ID {tarifa.IdEmpleado} — Tarifa: ₡{tarifa.TarifaHora:N2}/h, vigente desde {tarifa.FechaInicio:dd/MM/yyyy}",
-                    datosNuevos: JsonSerializer.Serialize(new
-                    {
-                        tarifa.IdEmpleado,
-                        tarifa.TarifaHora,
-                        tarifa.Motivo,
-                        FechaInicio = tarifa.FechaInicio.ToString("dd/MM/yyyy"),
-                        FechaFin = tarifa.FechaFin?.ToString("dd/MM/yyyy")
-                    })
-                );
+                try
+                {
+                    // Instanciar y llamar al creador
+                    var crearTarifa = new LogicaDeNegocio.HistorialTarifas.CrearHistorialTarifa();
+                    tarifa.FechaRegistro = DateTime.Now;
+                    crearTarifa.Crear(tarifa).GetAwaiter().GetResult();
 
-                TempData["Mensaje"] = "Tarifa registrada correctamente";
-                return RedirectToAction(nameof(ListadoTarifas));
+                    _crearBitacora.RegistrarAccion(
+                        idEmpleado: ObtenerIdEmpleadoSesion(),
+                        idModulo: ObtenerModulo.ObtenerIdPorNombre("Historial de tarifas"),
+                        accion: Bitacora.Acciones.ActualizarTarifa,
+                        tablaAfectada: "HistorialTarifa",
+                        descripcion: $"Se registró nueva tarifa para el empleado ID {tarifa.IdEmpleado} — Tarifa: ₡{tarifa.TarifaHora:N2}/h, vigente desde {tarifa.FechaInicio:dd/MM/yyyy}",
+                        datosNuevos: JsonSerializer.Serialize(new
+                        {
+                            tarifa.IdEmpleado,
+                            tarifa.TarifaHora,
+                            tarifa.Motivo,
+                            FechaInicio = tarifa.FechaInicio.ToString("dd/MM/yyyy"),
+                            FechaFin = tarifa.FechaFin?.ToString("dd/MM/yyyy")
+                        })
+                    );
+
+                    TempData["Mensaje"] = "Tarifa registrada correctamente";
+                    return RedirectToAction(nameof(ListadoTarifas));
+                }
+                catch (Exception ex)
+                {
+                    // Mostrar el error en vez de silenciarlo
+                    TempData["Error"] = "Error al registrar la tarifa: " + ex.Message;
+                    CargarEmpleados();
+                    return View(tarifa);
+                }
             }
+
+            // Mostrar errores de validación del modelo
+            TempData["Error"] = "Por favor corrige los errores del formulario";
             CargarEmpleados();
             return View(tarifa);
         }
@@ -150,32 +176,48 @@ namespace AromasWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult FinalizarTarifa(int id, DateTime fechaFin)
         {
-            // Capturar datos ANTES de finalizar
-            var tarifa = _listarHistorialTarifa.Obtener()
-                .FirstOrDefault(t => t.IdHistorialTarifa == id);
+            try
+            {
+                //  Obtener la tarifa actual
+                var tarifa = _listarHistorialTarifa.ObtenerPorId(id);
+                if (tarifa == null)
+                {
+                    TempData["Error"] = "Tarifa no encontrada";
+                    return RedirectToAction(nameof(ListadoTarifas));
+                }
 
-            _crearBitacora.RegistrarAccion(
-                idEmpleado: ObtenerIdEmpleadoSesion(),
-                idModulo: ObtenerModulo.ObtenerIdPorNombre("Historial de tarifas"),
-                accion: Bitacora.Acciones.FinalizarTarifa,
-                tablaAfectada: "HistorialTarifa",
-                descripcion: $"Se finalizó la tarifa ID {id}" + (tarifa != null ? $" del empleado ID {tarifa.IdEmpleado}" : "") + $" — Fecha de fin: {fechaFin:dd/MM/yyyy}",
-                datosAnteriores: tarifa != null
-                    ? JsonSerializer.Serialize(new
+                // Actualizar la fecha de fin en BD
+                tarifa.FechaFin = fechaFin;
+                var actualizarTarifa = new LogicaDeNegocio.HistorialTarifas.ActualizarHistorialTarifa();
+                actualizarTarifa.Actualizar(tarifa);
+
+                // Registrar bitácora
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: ObtenerIdEmpleadoSesion(),
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Historial de tarifas"),
+                    accion: Bitacora.Acciones.FinalizarTarifa,
+                    tablaAfectada: "HistorialTarifa",
+                    descripcion: $"Se finalizó la tarifa ID {id} del empleado ID {tarifa.IdEmpleado} — Fecha de fin: {fechaFin:dd/MM/yyyy}",
+                    datosAnteriores: JsonSerializer.Serialize(new
                     {
                         tarifa.IdEmpleado,
                         tarifa.TarifaHora,
                         FechaInicio = tarifa.FechaInicio.ToString("dd/MM/yyyy"),
-                        FechaFin = tarifa.FechaFin?.ToString("dd/MM/yyyy")
+                        FechaFin = "Sin definir"
+                    }),
+                    datosNuevos: JsonSerializer.Serialize(new
+                    {
+                        FechaFin = fechaFin.ToString("dd/MM/yyyy")
                     })
-                    : null,
-                datosNuevos: JsonSerializer.Serialize(new
-                {
-                    FechaFin = fechaFin.ToString("dd/MM/yyyy")
-                })
-            );
+                );
 
-            TempData["Mensaje"] = "Tarifa finalizada correctamente";
+                TempData["Mensaje"] = "Tarifa finalizada correctamente";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Error al finalizar la tarifa: " + ex.Message;
+            }
+
             return RedirectToAction(nameof(ListadoTarifas));
         }
 
@@ -271,7 +313,10 @@ namespace AromasWeb.Controllers
                 IdEmpleado = e.IdEmpleado,
                 NombreCompleto = $"{e.Nombre} {e.Apellidos}",
                 Cargo = e.Cargo,
-                Identificacion = e.Identificacion
+                Identificacion = e.Identificacion,
+                // Obtener tarifa vigente de cada empleado
+                TarifaActual = _listarHistorialTarifa
+                    .ObtenerTarifaActualPorEmpleado(e.IdEmpleado)?.TarifaHora.ToString("F2") ?? ""
             }).ToList();
 
             ViewBag.Empleados = empleadosDropdown;

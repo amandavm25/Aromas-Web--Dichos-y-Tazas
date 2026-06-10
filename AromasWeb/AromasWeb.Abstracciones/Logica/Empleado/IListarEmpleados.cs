@@ -11,6 +11,7 @@ namespace AromasWeb.Abstracciones.Logica.Empleado
         List<EmpleadoUI> BuscarPorCargo(string cargo);
         List<EmpleadoUI> BuscarPorEstado(bool estado);
         List<EmpleadoUI> BuscarPorRol(int idRol);
+        List<EmpleadoUI> BuscarGeneral(string termino);
         EmpleadoUI ObtenerPorId(int id);
     }
 }

@@ -124,7 +124,7 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
             {
                 try
                 {
-                    DateTime hoy = DateTime.Today;
+                    DateTime hoy = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Utc);
                     var historialAD = contexto.HistorialTarifa
                         .Where(h => h.IdEmpleado == idEmpleado
                                  && h.FechaInicio <= hoy

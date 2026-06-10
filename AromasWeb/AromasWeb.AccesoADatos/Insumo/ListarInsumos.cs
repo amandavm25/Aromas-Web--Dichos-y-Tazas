@@ -132,6 +132,14 @@ namespace AromasWeb.AccesoADatos.Insumos
         {
             using (var contexto = new Contexto())
             {
+                // Verificar si ya existe un insumo con el mismo nombre
+                bool existe = contexto.Insumo
+                    .Any(i => i.NombreInsumo.ToLower() == insumo.NombreInsumo.ToLower());
+
+                if (existe)
+                    throw new InvalidOperationException(
+                        "El insumo ya se encuentra registrado en el inventario.");
+
                 var entidad = new InsumoAD
                 {
                     NombreInsumo = insumo.NombreInsumo,
@@ -155,6 +163,15 @@ namespace AromasWeb.AccesoADatos.Insumos
         {
             using (var contexto = new Contexto())
             {
+                // Verificar si ya existe OTRO insumo con el mismo nombre
+                bool existe = contexto.Insumo
+                    .Any(i => i.NombreInsumo.ToLower() == insumo.NombreInsumo.ToLower()
+                           && i.IdInsumo != insumo.IdInsumo);
+
+                if (existe)
+                    throw new InvalidOperationException(
+                        "El insumo ya se encuentra registrado en el inventario.");
+
                 var entidad = contexto.Insumo.FirstOrDefault(i => i.IdInsumo == insumo.IdInsumo);
                 if (entidad != null)
                 {

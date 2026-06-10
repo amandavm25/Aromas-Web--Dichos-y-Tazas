@@ -57,7 +57,7 @@
                             <i class="fas fa-box"></i>
                             Nombre del Insumo
                         </label>
-                        @Html.EditorFor(model => model.NombreInsumo, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej: Harina de Trigo" } })
+                        @Html.TextBoxFor(model => model.NombreInsumo, new { @class = "form-control", placeholder = "Ej: Harina de Trigo" })
                         @Html.ValidationMessageFor(model => model.NombreInsumo, "", new { @class = "text-danger" })
                     </div>
 
@@ -105,7 +105,7 @@
                             <i class="fas fa-coins"></i>
                             Costo Unitario (₡)
                         </label>
-                        @Html.EditorFor(model => model.CostoUnitario, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" } })
+                        @Html.TextBoxFor(model => model.CostoUnitario, "{0:0.##}", new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" })
                         @Html.ValidationMessageFor(model => model.CostoUnitario, "", new { @class = "text-danger" })
                     </div>
 
@@ -115,7 +115,8 @@
                             <i class="fas fa-boxes"></i>
                             Cantidad Disponible (Solo Lectura)
                         </label>
-                        @Html.EditorFor(model => model.CantidadDisponible, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", disabled = "disabled", style = "background: var(--cream); cursor: not-allowed;" } })
+                        @Html.TextBoxFor(model => model.CantidadDisponible, "{0:0.##}", new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly", style = "background: var(--cream); cursor: not-allowed;" })
+                        @Html.HiddenFor(model => model.CantidadDisponible)
                         <small class="admin-form-hint">
                             <i class="fas fa-info-circle"></i>
                             Para modificar la cantidad, registra una entrada o salida
@@ -128,14 +129,13 @@
                             <i class="fas fa-chart-line"></i>
                             Stock Mínimo
                         </label>
-                        @Html.EditorFor(model => model.StockMinimo, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0" } })
+                        @Html.TextBoxFor(model => model.StockMinimo, "{0:0.##}", new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0" })
                         @Html.ValidationMessageFor(model => model.StockMinimo, "", new { @class = "text-danger" })
                         <small class="admin-form-hint">
                             <i class="fas fa-info-circle"></i>
                             Se mostrará una alerta cuando la cantidad sea igual o menor a este valor
                         </small>
                     </div>
-
 
                     <!-- Información adicional -->
                     <div class="admin-form-info-box">
@@ -158,7 +158,6 @@
                             Estado del Insumo (Activo/Inactivo)
                         </span>
                     </label>
-                    @* Hidden para enviar false cuando el checkbox no está marcado (comportamiento equivalente a CheckBoxFor) *@
                     <input type="hidden" name="Estado" value="false" />
                     @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
                     <small class="admin-form-hint">

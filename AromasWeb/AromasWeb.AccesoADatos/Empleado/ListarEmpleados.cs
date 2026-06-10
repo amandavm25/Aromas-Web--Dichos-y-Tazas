@@ -143,6 +143,26 @@ namespace AromasWeb.AccesoADatos.Empleados
             }
         }
 
+        public List<Abstracciones.ModeloUI.Empleado> BuscarGeneral(string termino)
+        {
+            using (var contexto = new Contexto())
+            {
+                var t = termino.ToLower();
+                List<EmpleadoAD> empleadosAD = contexto.Empleado
+                    .Where(e =>
+                        e.Nombre.ToLower().Contains(t) ||
+                        e.Apellidos.ToLower().Contains(t) ||
+                        (e.Nombre + " " + e.Apellidos).ToLower().Contains(t) ||
+                        e.Identificacion.Contains(t) ||
+                        e.Cargo.ToLower().Contains(t) ||
+                        e.Correo.ToLower().Contains(t))
+                    .OrderBy(e => e.Nombre)
+                    .ThenBy(e => e.Apellidos)
+                    .ToList();
+                return empleadosAD.Select(e => ConvertirObjetoParaUI(e, contexto)).ToList();
+            }
+        }
+
         public Abstracciones.ModeloUI.Empleado ObtenerPorId(int id)
         {
             using (var contexto = new Contexto())

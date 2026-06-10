@@ -73,8 +73,7 @@ namespace AromasWeb.Controllers
         }
 
         //EMPLEADO - MI HISTORIAL
-
-        public IActionResult MiHistorialAsistencias()
+        public IActionResult MiHistorialAsistencias(DateTime? fechaInicio, DateTime? fechaFin)
         {
             int idEmpleado = HttpContext.Session.GetInt32("IdEmpleado") ?? 0;
 
@@ -83,8 +82,21 @@ namespace AromasWeb.Controllers
 
             var empleado = _listarEmpleados.ObtenerPorId(idEmpleado);
             ViewBag.Empleado = empleado;
+            ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd");
+            ViewBag.FechaFin = fechaFin?.ToString("yyyy-MM-dd");
 
-            var asistencias = _listarAsistencias.BuscarPorEmpleado(idEmpleado);
+            List<Asistencia> asistencias;
+
+            if (fechaInicio.HasValue && fechaFin.HasValue)
+            {
+                asistencias = _listarAsistencias.BuscarPorRangoFechas(fechaInicio.Value, fechaFin.Value)
+                    .Where(a => a.IdEmpleado == idEmpleado)
+                    .ToList();
+            }
+            else
+            {
+                asistencias = _listarAsistencias.BuscarPorEmpleado(idEmpleado);
+            }
 
             foreach (var asistencia in asistencias)
             {
