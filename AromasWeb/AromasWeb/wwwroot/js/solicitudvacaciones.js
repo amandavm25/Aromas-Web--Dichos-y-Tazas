@@ -218,7 +218,10 @@ function initializeDaysCalculation() {
     if (!fechaInicio || !fechaFin || !diasCalculadosEl) return;
 
     function calcularDias() {
-        if (!fechaInicio.value || !fechaFin.value) {
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+
+        if (fechaInicio.value && new Date(fechaInicio.value) < hoy) {
             diasCalculadosEl.textContent = '0';
             if (hiddenDias) hiddenDias.value = '0';
             return;

@@ -23,8 +23,9 @@ namespace AromasWeb.AccesoADatos.Clientes
                 try
                 {
                     // Validar que no exista otro cliente con la misma identificación
+                    string identificacionNormalizada = NormalizarIdentificacion(cliente.Identificacion);
                     bool identificacionExiste = contexto.Cliente
-                        .Any(c => c.Identificacion == cliente.Identificacion);
+                        .Any(c => c.Identificacion == identificacionNormalizada);
 
                     if (identificacionExiste)
                     {
@@ -78,7 +79,7 @@ namespace AromasWeb.AccesoADatos.Clientes
 
             return new ClienteAD
             {
-                Identificacion = cliente.Identificacion?.Trim(),
+                Identificacion = NormalizarIdentificacion(cliente.Identificacion),
                 Nombre = cliente.Nombre?.Trim(),
                 Apellidos = cliente.Apellidos?.Trim(),
                 Correo = cliente.Correo?.Trim().ToLower(),
@@ -87,6 +88,14 @@ namespace AromasWeb.AccesoADatos.Clientes
                 Estado = cliente.Estado,
                 FechaRegistro = fechaRegistroUtc
             };
+        }
+
+        private string NormalizarIdentificacion(string identificacion)
+        {
+            if (string.IsNullOrWhiteSpace(identificacion))
+                return identificacion;
+            // Elimina guiones y espacios, deja solo dígitos (y letras para pasaportes)
+            return identificacion.Trim().Replace("-", "").Replace(" ", "");
         }
     }
 }

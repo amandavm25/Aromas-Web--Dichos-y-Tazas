@@ -25,6 +25,10 @@ namespace AromasWeb.AccesoADatos.SolicitudesVacaciones
                     DateTime fechaInicioUtc = EnsureUtc(solicitud.FechaInicio);
                     DateTime fechaFinUtc = EnsureUtc(solicitud.FechaFin);
 
+                    DateTime hoyUtc = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Utc);
+                    if (fechaInicioUtc.Date < hoyUtc.Date)
+                        throw new Exception("La fecha de inicio no puede ser en el pasado");
+
                     bool empleadoExiste = await contexto.Empleado
                         .AnyAsync(e => e.IdEmpleado == solicitud.IdEmpleado);
                     if (!empleadoExiste)

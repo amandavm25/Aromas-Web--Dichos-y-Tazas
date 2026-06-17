@@ -395,8 +395,17 @@ namespace AromasWeb.Controllers
             {
                 try
                 {
+                    // Normalizar lo que escribió el empleado (quitar guiones)
+                    string identificacionNormalizada = identificacion?.Trim()
+                        .Replace("-", "").Replace(" ", "") ?? "";
+
                     var cliente = contexto.Cliente
-                        .Where(c => c.Identificacion == identificacion && c.Estado == true)
+                        .Where(c => c.Estado == true &&
+                            (
+                                c.Identificacion == identificacion.Trim() ||          // exacta
+                                c.Identificacion == identificacionNormalizada ||        // sin guiones
+                                c.Identificacion.Replace("-", "") == identificacionNormalizada // BD con guiones
+                            ))
                         .Select(c => new
                         {
                             Id = c.IdCliente,

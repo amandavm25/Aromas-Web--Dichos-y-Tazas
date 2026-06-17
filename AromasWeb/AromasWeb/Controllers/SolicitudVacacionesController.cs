@@ -294,6 +294,9 @@ namespace AromasWeb.Controllers
                 if (solicitud.DiasSolicitados <= 0)
                     ModelState.AddModelError("DiasSolicitados", "Debe seleccionar al menos un día");
 
+                if (solicitud.FechaInicio.Date < DateTime.Today)
+                    ModelState.AddModelError("FechaInicio", "La fecha de inicio no puede ser en el pasado");
+
                 if (!ModelState.IsValid)
                 {
                     CargarEmpleados();

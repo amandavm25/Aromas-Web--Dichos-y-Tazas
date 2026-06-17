@@ -64,6 +64,14 @@ namespace AromasWeb.Controllers
                 historial = _listarHistorialTarifa.Obtener();
             }
 
+            if (!string.IsNullOrEmpty(buscar))
+            {
+                historial = historial
+                    .Where(h => h.NombreEmpleado != null &&
+                           h.NombreEmpleado.ToLower().Contains(buscar.ToLower()))
+                    .ToList();
+            }
+
             return View(historial);
         }
 

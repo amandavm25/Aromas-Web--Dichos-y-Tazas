@@ -60,7 +60,7 @@ namespace AromasWeb.AccesoADatos.HistorialTarifas
             {
                 try
                 {
-                    DateTime hoy = DateTime.Today;
+                    DateTime hoy = DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Utc);
                     List<HistorialTarifaAD> historialAD;
 
                     if (estado.ToLower() == "vigente")
