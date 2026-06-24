@@ -218,23 +218,28 @@ function initializeDaysCalculation() {
     if (!fechaInicio || !fechaFin || !diasCalculadosEl) return;
 
     function calcularDias() {
+        const permitePasado = fechaInicio.dataset.permitePasado === 'true';
         const hoy = new Date();
         hoy.setHours(0, 0, 0, 0);
 
-        if (fechaInicio.value && new Date(fechaInicio.value) < hoy) {
+        if (!permitePasado && fechaInicio.value && new Date(fechaInicio.value) < hoy) {
             diasCalculadosEl.textContent = '0';
             if (hiddenDias) hiddenDias.value = '0';
             return;
         }
+
         const inicio = new Date(fechaInicio.value);
-        const fin    = new Date(fechaFin.value);
+        const fin = new Date(fechaFin.value);
+
         if (inicio > fin) {
             diasCalculadosEl.textContent = '0';
             if (hiddenDias) hiddenDias.value = '0';
             return;
         }
+
         const dias = Math.floor((fin - inicio) / (1000 * 60 * 60 * 24)) + 1;
         diasCalculadosEl.textContent = dias;
+
         if (hiddenDias) hiddenDias.value = dias;
     }
 

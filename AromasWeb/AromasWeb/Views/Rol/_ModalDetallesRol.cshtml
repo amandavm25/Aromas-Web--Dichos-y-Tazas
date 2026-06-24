@@ -22,7 +22,7 @@
                 </div>
 
                 <!-- Estado -->
-                <div class="modal-data-grid-2">
+                <div class="modal-data-grid-1">
                     <div class="modal-data-cell">
                         <label class="modal-data-label">
                             <i class="fas fa-toggle-on"></i> Estado
@@ -56,3 +56,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.btn-detalles-rol').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.getElementById('detalles-nombre-rol').textContent      = this.dataset.nombre;
+                document.getElementById('detalles-descripcion-rol').textContent = this.dataset.descripcion || 'Sin descripción';
+
+                const badge  = document.getElementById('detalles-estado-badge-rol');
+                const estado = this.dataset.estado;
+                badge.textContent      = estado;
+                badge.style.background = estado === 'Activo' ? 'var(--green)' : 'var(--red)';
+                badge.style.color      = 'white';
+            });
+        });
+    });
+</script>

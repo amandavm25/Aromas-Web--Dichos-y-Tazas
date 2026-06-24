@@ -1,0 +1,74 @@
+﻿<div class="modal fade admin-modal modal-success" id="modalCompletarReserva" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <div class="modal-icon">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+                    Completar Reserva
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <div class="modal-alert alert-success">
+                    <div class="modal-alert-icon">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+                    <div>
+                        <h6>Marcar como Completada</h6>
+                        <p>Al completar esta reserva, quedará registrada como <strong>Completada</strong>. Esto indica que el cliente ya se presentó y disfrutó su visita.</p>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h6 class="modal-section-title">
+                        <i class="fas fa-calendar-check"></i> Detalles de la Reserva
+                    </h6>
+                    <div class="modal-data-grid-2">
+
+                        <div class="modal-data-cell cell-gold">
+                            <label class="modal-data-label"><i class="fas fa-users"></i> Personas</label>
+                            <p id="completar-personas-reserva" class="modal-data-value value-large"></p>
+                        </div>
+
+                        <div class="modal-data-cell">
+                            <label class="modal-data-label"><i class="fas fa-user"></i> Cliente</label>
+                            <p id="completar-cliente-reserva" class="modal-data-value"></p>
+                        </div>
+
+                        <div class="modal-data-cell">
+                            <label class="modal-data-label"><i class="fas fa-calendar-alt"></i> Fecha</label>
+                            <p id="completar-fecha-reserva" class="modal-data-value"></p>
+                        </div>
+
+                        <div class="modal-data-cell">
+                            <label class="modal-data-label"><i class="fas fa-clock"></i> Hora</label>
+                            <p id="completar-hora-reserva" class="modal-data-value"></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer footer-between">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <span><i class="fas fa-times"></i> Cancelar</span>
+                </button>
+                <form id="formCompletarReserva" method="post" action="" style="display:inline;">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="completar-id-reserva" name="id" />
+                    <button type="submit" class="btn btn-primary btn-3d">
+                        <span><i class="fas fa-check-double"></i> Marcar como Completada</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -213,7 +213,7 @@ namespace AromasWeb.AccesoADatos.Asistencias
             }
         }
 
-        public void RegistrarSalida(int idAsistencia, TimeSpan horaSalida)
+        public void RegistrarSalida(int idAsistencia, TimeSpan horaSalida, int tiempoAlmuerzo)
         {
             using (var contexto = new Contexto())
             {
@@ -226,9 +226,10 @@ namespace AromasWeb.AccesoADatos.Asistencias
                     throw new Exception("Esta asistencia ya tiene salida registrada.");
 
                 asistencia.HoraSalida = horaSalida;
+                asistencia.TiempoAlmuerzo = tiempoAlmuerzo;
 
                 var tiempoTrabajado = asistencia.HoraSalida.Value - asistencia.HoraEntrada;
-                var horasTrabajadas = (decimal)tiempoTrabajado.TotalHours - (asistencia.TiempoAlmuerzo / 60m);
+                var horasTrabajadas = (decimal)tiempoTrabajado.TotalHours - (tiempoAlmuerzo / 60m);
                 asistencia.HorasTotales = Math.Max(0, horasTrabajadas);
 
                 if (asistencia.HorasTotales <= 8)

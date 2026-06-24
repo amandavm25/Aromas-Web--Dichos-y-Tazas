@@ -60,7 +60,7 @@
                 <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@totalEntradas</h3>
                 <p style="margin: 0.5rem 0;">Entradas</p>
                 <small style="opacity: 0.7; display: block; margin-top: 0.5rem;">
-                    <i class="fas fa-coins"></i> @valorEntradas.ToString("C2") invertido
+                    ₡@valorEntradas.ToString("N0", new System.Globalization.CultureInfo("es-CR")) invertido
                 </small>
             </div>
             <div class="feature-card" style="background: white;" data-aos="fade-up" data-aos-delay="200">
@@ -237,13 +237,13 @@
                                         </span>
                                     </td>
                                     <td style="padding: 1.2rem; color: @mov.ColorMovimiento; font-weight: 700; font-size: 1.1rem;">
-                                        @mov.SimboloMovimiento@mov.Cantidad.ToString("N2")
+                                        @mov.SimboloMovimiento@mov.Cantidad.ToString("N2", new System.Globalization.CultureInfo("es-CR"))
                                     </td>
                                     <td style="padding: 1.2rem; color: var(--charcoal);">@mov.UnidadMedida</td>
                                     <td style="padding: 1.2rem; color: var(--gold); font-weight: 600;">
                                         @if (mov.EsEntrada)
                                         {
-                                            <span>@mov.ValorMovimiento.ToString("C2")</span>
+                                            <span>₡@((mov.Cantidad * mov.CostoUnitario).ToString("N0", new System.Globalization.CultureInfo("es-CR")))</span>
                                         }
                                         else
                                         {

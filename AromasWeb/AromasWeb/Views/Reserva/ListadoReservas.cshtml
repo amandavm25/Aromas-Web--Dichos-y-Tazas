@@ -260,6 +260,23 @@
                                             }
                                             @if (reserva.Estado == "Confirmada")
                                             {
+                                                @if (PermisoHelper.TienePermiso(Context.Session, "Completar Reserva"))
+                                                {
+                                                    <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Marcar como completada">
+                                                        <button type="button"
+                                                                class="btn btn-sm btn-completar-reserva"
+                                                                data-id="@reserva.IdReserva"
+                                                                data-cliente="@reserva.NombreCliente"
+                                                                data-fecha="@reserva.FechaFormateada"
+                                                                data-hora="@reserva.HoraFormateada"
+                                                                data-personas="@reserva.CantidadPersonas"
+                                                                style="background: var(--gold); color: var(--white); border: none; margin: 0 0.25rem; padding: 0.5rem 0.8rem; border-radius: 8px;"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modalCompletarReserva">
+                                                            <i class="fas fa-check-double"></i>
+                                                        </button>
+                                                    </span>
+                                                }
                                                 @if (reserva.PuedeCancelar && PermisoHelper.TienePermiso(Context.Session, "Cancelar Reserva"))
                                                 {
                                                     <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cancelar">
@@ -396,6 +413,7 @@
 <partial name="_ModalDetallesReserva" />
 <partial name="_ModalCancelarReserva" />
 <partial name="_ModalConfirmarReserva" />
+<partial name="_ModalCompletarReserva" />
 
 @section Scripts {
     <script src="~/js/reserva.js"></script>

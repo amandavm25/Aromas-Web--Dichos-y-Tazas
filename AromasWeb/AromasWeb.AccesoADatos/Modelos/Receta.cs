@@ -12,10 +12,10 @@ namespace AromasWeb.AccesoADatos.Modelos
         public string Descripcion { get; set; }
         public int CantidadPorciones { get; set; }
         public string PasosPreparacion { get; set; }
-        public decimal? PrecioVenta { get; set; }
-        public decimal CostoTotal { get; set; }
-        public decimal CostoPorcion { get; set; }
-        public decimal GananciaNeta { get; set; }
+        public int? PrecioVenta { get; set; }
+        public int CostoTotal { get; set; }
+        public int CostoPorcion { get; set; }
+        public int GananciaNeta { get; set; }
         public decimal PorcentajeMargen { get; set; }
         public bool Disponibilidad { get; set; }
 

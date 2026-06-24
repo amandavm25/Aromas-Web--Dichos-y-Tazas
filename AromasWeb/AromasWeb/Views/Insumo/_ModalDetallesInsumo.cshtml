@@ -31,14 +31,8 @@
                     </div>
                 </div>
 
-                <!-- ID, Estado, Stock -->
-                <div class="modal-data-grid-3">
-                    <div class="modal-data-cell">
-                        <label class="modal-data-label">
-                            <i class="fas fa-hashtag"></i> ID
-                        </label>
-                        <p id="detalles-id-insumo" class="modal-data-value"></p>
-                    </div>
+                <!-- Estado y Stock Mínimo -->
+                <div class="modal-data-grid-2">
                     <div class="modal-data-cell">
                         <label class="modal-data-label">
                             <i class="fas fa-toggle-on"></i> Estado
@@ -100,28 +94,28 @@
 
         botonesDetalles.forEach(boton => {
             boton.addEventListener('click', function () {
-                const id          = this.getAttribute('data-id');
                 const nombre      = this.getAttribute('data-nombre');
                 const unidad      = this.getAttribute('data-unidad');
                 const categoria   = this.getAttribute('data-categoria');
-                const costo       = this.getAttribute('data-costo');
-                const cantidad    = this.getAttribute('data-cantidad');
-                const stockMinimo = this.getAttribute('data-stockminimo');
+                const costo       = parseInt(this.getAttribute('data-costo'));
+                const cantidad    = parseFloat(this.getAttribute('data-cantidad'));
+                const stockMinimo = parseFloat(this.getAttribute('data-stockminimo'));
                 const estado      = this.getAttribute('data-estado');
 
-                document.getElementById('detalles-id-insumo').textContent          = id;
-                document.getElementById('detalles-nombre-insumo').textContent       = nombre;
-                document.getElementById('detalles-categoria-insumo').textContent    = categoria;
-                document.getElementById('detalles-unidad-insumo').textContent       = unidad;
-                document.getElementById('detalles-costo-insumo').textContent        = costo;
-                document.getElementById('detalles-cantidad-insumo').textContent     = cantidad;
-                document.getElementById('detalles-stockminimo-insumo').textContent  = stockMinimo;
+                document.getElementById('detalles-nombre-insumo').textContent    = nombre;
+                document.getElementById('detalles-categoria-insumo').textContent = categoria;
+                document.getElementById('detalles-unidad-insumo').textContent    = unidad;
 
-                const costoNum    = parseFloat(costo.replace(/[^0-9.-]+/g, ''));
-                const cantidadNum = parseFloat(cantidad.replace(/,/g, ''));
-                const valorTotal  = costoNum * cantidadNum;
+                document.getElementById('detalles-costo-insumo').textContent =
+                    '₡' + costo.toLocaleString('es-CR');
+                document.getElementById('detalles-cantidad-insumo').textContent =
+                    cantidad.toLocaleString('es-CR', { minimumFractionDigits: 2 });
+                document.getElementById('detalles-stockminimo-insumo').textContent =
+                    stockMinimo.toLocaleString('es-CR', { minimumFractionDigits: 2 });
+
+                const valorTotal = costo * cantidad;
                 document.getElementById('detalles-valor-total-insumo').textContent =
-                    '₡' + valorTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    '₡' + valorTotal.toLocaleString('es-CR', { maximumFractionDigits: 0 });
 
                 const estadoBadge = document.getElementById('detalles-estado-badge-insumo');
                 if (estado === 'Activo') {

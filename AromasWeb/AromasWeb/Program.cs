@@ -1,7 +1,8 @@
-﻿using System.Globalization;
-using AromasWeb.Abstracciones.Servicios;
+﻿using AromasWeb.Abstracciones.Servicios;
 using AromasWeb.Services;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,10 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(@"C:\temp-keys-aromasweb"))
+    .SetApplicationName("AromasWeb");
 
 // HttpContextAccessor
 builder.Services.AddHttpContextAccessor();

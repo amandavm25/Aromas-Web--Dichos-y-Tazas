@@ -32,21 +32,16 @@ namespace AromasWeb.Abstracciones.ModeloUI
         public string PasosPreparacion { get; set; }
 
         [DisplayName("Precio de venta")]
-        [Range(0, double.MaxValue, ErrorMessage = "El precio debe ser mayor o igual a 0")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal? PrecioVenta { get; set; }
+        public int? PrecioVenta { get; set; }
 
         [DisplayName("Costo total")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal CostoTotal { get; set; }
+        public int CostoTotal { get; set; }
 
         [DisplayName("Costo por porción")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal CostoPorcion { get; set; }
+        public int CostoPorcion { get; set; }
 
         [DisplayName("Ganancia neta")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal GananciaNeta { get; set; }
+        public int GananciaNeta { get; set; }
 
         [DisplayName("Porcentaje de margen")]
         [DisplayFormat(DataFormatString = "{0:N2}%", ApplyFormatInEditMode = false)]

@@ -20,20 +20,8 @@
                     <h5 id="detalles-nombre-tipo" class="modal-entity-name"></h5>
                 </div>
 
-                <!-- ID, Promociones y Estado -->
-                <div class="modal-data-grid-3">
-                    <div class="modal-data-cell" style="display:none;">
-                        <label class="modal-data-label">
-                            <i class="fas fa-hashtag"></i> ID
-                        </label>
-                        <p id="detalles-id-tipo" class="modal-data-value"></p>
-                    </div>
-                    <div class="modal-data-cell">
-                        <label class="modal-data-label">
-                            <i class="fas fa-tags"></i> Promociones
-                        </label>
-                        <p id="detalles-cantidad-tipo" class="modal-data-value"></p>
-                    </div>
+                <!-- Estado -->
+                <div class="modal-data-grid-1">
                     <div class="modal-data-cell">
                         <label class="modal-data-label">
                             <i class="fas fa-toggle-on"></i> Estado
@@ -74,16 +62,12 @@
 
         botonesDetalles.forEach(boton => {
             boton.addEventListener('click', function () {
-                const id          = this.getAttribute('data-id');
                 const nombre      = this.getAttribute('data-nombre');
                 const descripcion = this.getAttribute('data-descripcion');
                 const estado      = this.getAttribute('data-estado');
-                const cantidad    = this.getAttribute('data-cantidad');
 
-                document.getElementById('detalles-id-tipo').textContent         = id;
                 document.getElementById('detalles-nombre-tipo').textContent      = nombre;
                 document.getElementById('detalles-descripcion-tipo').textContent = descripcion || 'Sin descripción';
-                document.getElementById('detalles-cantidad-tipo').textContent    = cantidad + ' promoción(es)';
 
                 const estadoBadge = document.getElementById('detalles-estado-badge-tipo');
                 if (estado === 'Activo') {

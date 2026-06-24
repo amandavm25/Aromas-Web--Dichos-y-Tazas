@@ -22,8 +22,7 @@ namespace AromasWeb.AccesoADatos.Modelos
         public int IdCategoria { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal CostoUnitario { get; set; }
+        public int CostoUnitario { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]

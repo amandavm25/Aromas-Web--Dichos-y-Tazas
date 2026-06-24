@@ -33,7 +33,7 @@
 
                 <!-- Disponibilidad, Margen -->
                 <div class="modal-data-grid-2">
-                    <div class="modal-data-cell" style="grid-column: span 2;">
+                    <div class="modal-data-cell">
                         <label class="modal-data-label">
                             <i class="fas fa-toggle-on"></i> Disponibilidad
                         </label>
@@ -60,6 +60,12 @@
                                 <i class="fas fa-coins"></i> Costo Total
                             </label>
                             <p id="detalles-costo-receta" class="modal-summary-value"></p>
+                        </div>
+                        <div>
+                            <label class="modal-summary-label">
+                                <i class="fas fa-utensils"></i> Costo por Porción
+                            </label>
+                            <p id="detalles-porcion-receta" class="modal-summary-value"></p>
                         </div>
                         <div>
                             <label class="modal-summary-label">
@@ -121,6 +127,7 @@
                 const categoria    = this.getAttribute('data-categoria');
                 const porciones    = this.getAttribute('data-porciones');
                 const costo        = this.getAttribute('data-costo');
+                const porcion      = this.getAttribute('data-porcion');
                 const precio       = this.getAttribute('data-precio');
                 const ganancia     = this.getAttribute('data-ganancia');
                 const margen       = parseFloat(this.getAttribute('data-margen'));
@@ -132,11 +139,13 @@
                 document.getElementById('detalles-margen-receta').textContent    = margen.toFixed(2) + '%';
 
                 document.getElementById('detalles-costo-receta').textContent =
-                    '₡' + parseFloat(costo).toLocaleString('es-CR', { minimumFractionDigits: 2 });
+                    '₡' + parseInt(costo).toLocaleString('es-CR');
+                document.getElementById('detalles-porcion-receta').textContent =
+                    '₡' + parseInt(porcion).toLocaleString('es-CR');
                 document.getElementById('detalles-precio-receta').textContent =
-                    '₡' + parseFloat(precio).toLocaleString('es-CR', { minimumFractionDigits: 2 });
+                    precio > 0 ? '₡' + parseInt(precio).toLocaleString('es-CR') : '-';
                 document.getElementById('detalles-ganancia-receta').textContent =
-                    '₡' + parseFloat(ganancia).toLocaleString('es-CR', { minimumFractionDigits: 2 });
+                    '₡' + parseInt(ganancia).toLocaleString('es-CR');
 
                 // Badge de disponibilidad
                 const dispBadge = document.getElementById('detalles-disponibilidad-badge-receta');
@@ -197,7 +206,7 @@
                                 </small>
                             </div>
                             <p class="modal-summary-value" style="margin:0;white-space:nowrap;">
-                                ₡${ing.costoTotalIngrediente.toLocaleString('es-CR', { minimumFractionDigits: 2 })}
+                                ₡${ing.costoTotalIngrediente.toLocaleString('es-CR')}
                             </p>
                         `;
                         listaIngredientes.appendChild(div);

@@ -49,7 +49,7 @@ namespace AromasWeb.Controllers
         // Helper para recargar ViewBags en caso de error
         private void CargarViewBags()
         {
-            try { ViewBag.TodasCategorias = _listarCategoriasReceta.Obtener(); }
+            try { ViewBag.TodasCategorias = _listarCategoriasReceta.Obtener().Where(c => c.Estado).ToList(); }
             catch { ViewBag.TodasCategorias = new List<CategoriaReceta>(); }
 
             try { ViewBag.TodosInsumos = _listarInsumos.Obtener(); }
@@ -182,7 +182,7 @@ namespace AromasWeb.Controllers
                                     IdInsumo = IngredientesIdInsumo[i],
                                     CantidadUtilizada = IngredientesCantidad[i],
                                     CostoUnitario = insumo.CostoUnitario,
-                                    CostoTotalIngrediente = IngredientesCantidad[i] * insumo.CostoUnitario
+                                    CostoTotalIngrediente = (int)Math.Round(IngredientesCantidad[i] * insumo.CostoUnitario)
                                 });
                             }
                         }
@@ -197,14 +197,14 @@ namespace AromasWeb.Controllers
                 }
 
                 decimal costoTotal = receta.Ingredientes.Sum(i => i.CostoTotalIngrediente);
-                receta.CostoTotal = costoTotal;
+                receta.CostoTotal = (int)Math.Round(costoTotal);
                 receta.CostoPorcion = receta.CantidadPorciones > 0
-                    ? costoTotal / receta.CantidadPorciones
+                    ? (int)Math.Round(costoTotal / receta.CantidadPorciones)
                     : 0;
 
                 if (receta.PrecioVenta.HasValue && receta.PrecioVenta.Value > 0)
                 {
-                    receta.GananciaNeta = receta.PrecioVenta.Value - costoTotal;
+                    receta.GananciaNeta = receta.PrecioVenta.Value - (int)Math.Round(costoTotal);
                     receta.PorcentajeMargen = costoTotal > 0
                         ? ((receta.PrecioVenta.Value - costoTotal) / costoTotal) * 100
                         : 0;

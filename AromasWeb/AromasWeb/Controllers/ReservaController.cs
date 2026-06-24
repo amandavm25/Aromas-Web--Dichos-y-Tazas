@@ -58,6 +58,9 @@ namespace AromasWeb.Controllers
         // GET: Reserva/ListadoReservas
         public IActionResult ListadoReservas(string buscar, string filtroEstado, string filtroFecha)
         {
+            // Completar automáticamente reservas confirmadas cuya fecha/hora ya pasó
+            AutocompletarReservasPasadas();
+
             ViewBag.Buscar = buscar;
             ViewBag.FiltroEstado = filtroEstado;
             ViewBag.FiltroFecha = filtroFecha;
@@ -643,7 +646,95 @@ namespace AromasWeb.Controllers
             return RedirectToAction(nameof(ListadoReservas));
         }
 
+        // POST: Reserva/CompletarReserva/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CompletarReserva(int id)
+        {
+            try
+            {
+                int idEmpleado = RequiereEmpleadoSesion();
+                var reserva = _obtenerReserva.Obtener(id);
+
+                if (reserva == null)
+                {
+                    TempData["Error"] = "Reserva no encontrada.";
+                    return RedirectToAction(nameof(ListadoReservas));
+                }
+
+                if (reserva.Estado != "Confirmada")
+                {
+                    TempData["Error"] = "Solo se pueden completar reservas en estado Confirmada.";
+                    return RedirectToAction(nameof(ListadoReservas));
+                }
+
+                _actualizarReserva.ActualizarEstado(id, "Completada");
+
+                _crearBitacora.RegistrarAccion(
+                    idEmpleado: idEmpleado,
+                    idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de reservas"),
+                    accion: Bitacora.Acciones.CambiarEstado,
+                    tablaAfectada: "Reserva",
+                    descripcion: $"Se completó la reserva ID: {id} (cliente: {reserva.NombreCliente})",
+                    datosAnteriores: JsonSerializer.Serialize(new { reserva.Estado }),
+                    datosNuevos: JsonSerializer.Serialize(new { Estado = "Completada" })
+                );
+
+                TempData["Mensaje"] = "Reserva marcada como completada.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            return RedirectToAction(nameof(ListadoReservas));
+        }
+
         // Privados
+
+        private void AutocompletarReservasPasadas()
+        {
+            try
+            {
+                DateTime ahora = DateTime.Now;
+
+                // Buscar todas las confirmadas y filtrar en memoria las que ya pasaron
+                // (evita comparaciones DateTime+TimeSpan complejas en SQL)
+                var confirmadas = _listarReservas.BuscarPorEstado("Confirmada");
+
+                var paraCompletar = confirmadas
+                    .Where(r => (r.Fecha.Date + r.Hora) < ahora)
+                    .ToList();
+
+                if (!paraCompletar.Any())
+                    return;
+
+                int? idEmpleado = ObtenerIdEmpleadoSesion();
+
+                foreach (var reserva in paraCompletar)
+                {
+                    _actualizarReserva.ActualizarEstado(reserva.IdReserva, "Completada");
+
+                    if (idEmpleado.HasValue)
+                    {
+                        _crearBitacora.RegistrarAccion(
+                            idEmpleado: idEmpleado.Value,
+                            idModulo: ObtenerModulo.ObtenerIdPorNombre("Gestión de reservas"),
+                            accion: Bitacora.Acciones.CambiarEstado,
+                            tablaAfectada: "Reserva",
+                            descripcion: $"[Automático] Reserva ID: {reserva.IdReserva} marcada como Completada " +
+                                         $"(cliente: {reserva.NombreCliente}, fecha: {reserva.FechaFormateada} {reserva.HoraFormateada})",
+                            datosAnteriores: JsonSerializer.Serialize(new { Estado = "Confirmada" }),
+                            datosNuevos: JsonSerializer.Serialize(new { Estado = "Completada" })
+                        );
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // No interrumpir la carga del listado si falla el autocompletado
+                System.Diagnostics.Debug.WriteLine($"Error en AutocompletarReservasPasadas: {ex.Message}");
+            }
+        }
 
         private void CargarClientesEnViewBag()
         {

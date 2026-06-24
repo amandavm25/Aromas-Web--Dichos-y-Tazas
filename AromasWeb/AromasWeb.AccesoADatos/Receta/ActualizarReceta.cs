@@ -66,7 +66,7 @@ namespace AromasWeb.AccesoADatos.Recetas
                                     IdInsumo = ingrediente.IdInsumo,
                                     CantidadUtilizada = ingrediente.CantidadUtilizada,
                                     CostoUnitario = insumo.CostoUnitario,
-                                    CostoTotalIngrediente = costoIngrediente
+                                    CostoTotalIngrediente = (int)Math.Round(costoIngrediente)
                                 };
 
                                 contexto.RecetaInsumo.Add(nuevoIngrediente);
@@ -75,15 +75,15 @@ namespace AromasWeb.AccesoADatos.Recetas
                     }
 
                     // Actualizar costos calculados
-                    recetaExistente.CostoTotal = costoTotal;
+                    recetaExistente.CostoTotal = (int)Math.Round(costoTotal);
                     recetaExistente.CostoPorcion = laReceta.CantidadPorciones > 0
-                        ? costoTotal / laReceta.CantidadPorciones
+                        ? (int)Math.Round(costoTotal / laReceta.CantidadPorciones)
                         : 0;
 
                     // Calcular ganancia solo si hay precio de venta
                     if (laReceta.PrecioVenta.HasValue && laReceta.PrecioVenta.Value > 0)
                     {
-                        recetaExistente.GananciaNeta = laReceta.PrecioVenta.Value - costoTotal;
+                        recetaExistente.GananciaNeta = laReceta.PrecioVenta.Value - (int)Math.Round(costoTotal);
                         recetaExistente.PorcentajeMargen = costoTotal > 0
                             ? ((laReceta.PrecioVenta.Value - costoTotal) / costoTotal) * 100
                             : 0;

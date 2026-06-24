@@ -8,13 +8,6 @@ namespace AromasWeb.AccesoADatos.CategoriasReceta
 {
     public class CrearCategoriaReceta : ICrearCategoriaReceta
     {
-        private Contexto _contexto;
-
-        public CrearCategoriaReceta()
-        {
-            _contexto = new Contexto();
-        }
-
         public async Task<int> Crear(Abstracciones.ModeloUI.CategoriaReceta categoriaReceta)
         {
             using (var contexto = new Contexto())
@@ -31,12 +24,12 @@ namespace AromasWeb.AccesoADatos.CategoriasReceta
                     }
 
                     CategoriaRecetaAD categoriaAGuardar = ConvertirObjetoParaAD(categoriaReceta);
-                    _contexto.CategoriaReceta.Add(categoriaAGuardar);
+                    contexto.CategoriaReceta.Add(categoriaAGuardar);
                     int cantidadDeDatosAgregados = await contexto.SaveChangesAsync();
 
                     return cantidadDeDatosAgregados;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }

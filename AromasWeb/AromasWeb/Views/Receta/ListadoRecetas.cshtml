@@ -69,7 +69,7 @@
                 <div class="feature-icon">
                     <i class="fas fa-coins"></i>
                 </div>
-                <h3 id="gananciaTotalPotencial" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">@gananciaTotal.ToString("C2")</h3>
+                <h3 id="gananciaTotalPotencial" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">₡@gananciaTotal.ToString("N0", new System.Globalization.CultureInfo("es-CR"))</h3>
                 <p style="margin: 0.5rem 0;">Ganancia Total Potencial</p>
             </div>
         </div>
@@ -192,8 +192,8 @@
                                             <span class="badge-cantidad">@receta.NombreCategoria</span>
                                         </td>
                                         <td style="text-align: center;">@receta.CantidadPorciones</td>
-                                        <td style="text-align: right; font-weight: 600; color: var(--gold);">@receta.CostoTotal</td>
-                                        <td style="text-align: right; font-weight: 600; color: var(--green);">@receta.PrecioVenta</td>
+                                        <td style="text-align: right; font-weight: 600; color: var(--gold);">₡@receta.CostoTotal.ToString("N0", new System.Globalization.CultureInfo("es-CR"))</td>
+                                        <td style="text-align: right; font-weight: 600; color: var(--green);">@(receta.PrecioVenta.HasValue ? "₡" + receta.PrecioVenta.Value.ToString("N0", new System.Globalization.CultureInfo("es-CR")) : "-")</td>
                                         <td style="text-align: right;">
                                             @{
                                                 var colorMargen = receta.PorcentajeMargen >= 50 ? "var(--green)" : (receta.PorcentajeMargen >= 30 ? "var(--yellow)" : "var(--red)");
@@ -232,10 +232,11 @@
                                                         data-nombre="@receta.Nombre"
                                                         data-categoria="@receta.NombreCategoria"
                                                         data-porciones="@receta.CantidadPorciones"
-                                                        data-costo="@receta.CostoTotal.ToString("N2")"
-                                                        data-precio="@receta.PrecioVenta"
-                                                        data-ganancia="@receta.GananciaNeta.ToString("N2")"
-                                                        data-margen="@receta.PorcentajeMargen"
+                                                        data-costo="@receta.CostoTotal"
+                                                        data-porcion="@receta.CostoPorcion"
+                                                        data-precio="@(receta.PrecioVenta ?? 0)"
+                                                        data-ganancia="@receta.GananciaNeta"
+                                                        data-margen="@receta.PorcentajeMargen.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)"
                                                         data-disponibilidad="@(receta.Disponibilidad ? "Disponible" : "No disponible")"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalDetallesReceta">
@@ -314,7 +315,7 @@
                                                 <span style="font-weight: 600; color: #28a745; font-size: 1rem;">@receta.PorcentajeMargen.ToString("N2")%</span>
                                             </div>
                                             <div style="font-size: 0.85rem; color: var(--charcoal);">
-                                                Ganancia: <strong style="color: var(--olive-green);">@receta.GananciaNeta.ToString("C2")</strong>
+                                                Ganancia: <strong style="color: var(--olive-green);">₡@receta.GananciaNeta.ToString("N0", new System.Globalization.CultureInfo("es-CR"))</strong>
                                             </div>
                                         </div>
                                     }
@@ -356,7 +357,7 @@
                                                     <div style="width: @porcentajeObjetivo.ToString("N0")%; height: 100%; background: @colorBarra; transition: width 0.3s;"></div>
                                                 </div>
                                                 <div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--charcoal);">
-                                                    Ganancia: <strong style="color: var(--gold);">@receta.GananciaNeta.ToString("C2")</strong>
+                                                    Ganancia: <strong style="color: var(--gold);">₡@receta.GananciaNeta.ToString("N0", new System.Globalization.CultureInfo("es-CR"))</strong>
                                                 </div>
                                             </div>
                                         }

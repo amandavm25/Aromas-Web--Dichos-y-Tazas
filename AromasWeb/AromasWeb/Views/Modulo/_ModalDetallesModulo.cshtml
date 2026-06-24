@@ -22,7 +22,7 @@
                 </div>
 
                 <!--Estado-->
-                <div class="modal-data-grid-2">
+                <div class="modal-data-grid-1">
                     <div class="modal-data-cell">
                         <label class="modal-data-label">
                             <i class="fas fa-toggle-on"></i> Estado
@@ -61,8 +61,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.btn-detalles-modulo').forEach(btn => {
             btn.addEventListener('click', function () {
-                document.getElementById('detalles-id-modulo').textContent = '#' + this.dataset.id;
-                document.getElementById('detalles-nombre-modulo').textContent = this.dataset.nombre;
+                document.getElementById('detalles-nombre-modulo').textContent      = this.dataset.nombre;
                 document.getElementById('detalles-descripcion-modulo').textContent = this.dataset.descripcion || 'Sin descripción';
 
                 const badge = document.getElementById('detalles-estado-badge-modulo');

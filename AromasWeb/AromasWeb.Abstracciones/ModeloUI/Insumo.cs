@@ -24,9 +24,7 @@ namespace AromasWeb.Abstracciones.ModeloUI
 
         [DisplayName("Costo unitario")]
         [Required(ErrorMessage = "El costo unitario es requerido")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "El costo debe ser mayor a 0")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal CostoUnitario { get; set; }
+        public int CostoUnitario { get; set; }
 
         [DisplayName("Cantidad disponible")]
         [Required(ErrorMessage = "La cantidad es requerida")]
@@ -49,13 +47,7 @@ namespace AromasWeb.Abstracciones.ModeloUI
 
         // Propiedades calculadas
         [DisplayName("Valor total")]
-        public decimal ValorTotal
-        {
-            get
-            {
-                return CostoUnitario * CantidadDisponible;
-            }
-        }
+        public decimal ValorTotal => CostoUnitario * CantidadDisponible;
 
         [DisplayName("Estado del stock")]
         public string EstadoStock

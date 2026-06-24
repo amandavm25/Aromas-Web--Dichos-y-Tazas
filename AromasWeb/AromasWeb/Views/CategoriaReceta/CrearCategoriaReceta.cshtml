@@ -33,7 +33,7 @@
 <!-- Formulario Section -->
 <section class="admin-form-section">
     <div class="container" style="max-width: 80%;">
-        @using (Html.BeginForm("CrearCategoriaReceta", "CategoriaReceta", FormMethod.Post, new { @class = "contact-form" }))
+        @using (Html.BeginForm("CrearCategoriaReceta", "CategoriaReceta", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 

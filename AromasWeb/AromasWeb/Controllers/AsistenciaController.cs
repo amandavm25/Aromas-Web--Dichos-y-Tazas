@@ -223,7 +223,7 @@ namespace AromasWeb.Controllers
 
             asistencia.CalcularHoras();
 
-            _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value);
+            _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value, asistencia.TiempoAlmuerzo);
 
             _crearBitacora.RegistrarAccion(
                 idEmpleado: idEmpleado,
@@ -371,7 +371,7 @@ namespace AromasWeb.Controllers
                 return View(asistencia);
 
             asistencia.CalcularHoras();
-            _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value);
+            _listarAsistencias.RegistrarSalida(asistencia.IdAsistencia, asistencia.HoraSalida.Value, asistencia.TiempoAlmuerzo);
 
             _crearBitacora.RegistrarAccion(
                 idEmpleado: ObtenerIdEmpleadoSesion(),

@@ -237,11 +237,33 @@ namespace AromasWeb.Controllers
         // GET: Planilla/MiPlanilla
         public IActionResult MiPlanilla()
         {
-            int idEmpleadoActual = 1;
+            int idEmpleadoActual = ObtenerIdEmpleadoSesion();
             ViewBag.IdEmpleado = idEmpleadoActual;
 
             var empleadoInfo = ObtenerDatosEmpleadoPorId(idEmpleadoActual);
             ViewBag.EmpleadoInfo = empleadoInfo;
+
+            // Leer la tarifa vigente desde HistorialTarifa (igual que CalcularPlanilla)
+            decimal tarifaVigente = 0m;
+            using (var contexto = new Contexto())
+            {
+                var hoy = DateTime.UtcNow.Date;
+                var historial = contexto.HistorialTarifa
+                    .Where(t => t.IdEmpleado == idEmpleadoActual
+                             && t.FechaInicio <= hoy
+                             && (t.FechaFin == null || t.FechaFin >= hoy))
+                    .OrderByDescending(t => t.FechaInicio)
+                    .FirstOrDefault();
+
+                if (historial != null)
+                    tarifaVigente = historial.TarifaHora;
+                else if (empleadoInfo != null)
+                    tarifaVigente = contexto.Empleado
+                        .Where(e => e.IdEmpleado == idEmpleadoActual)
+                        .Select(e => e.TarifaHora)
+                        .FirstOrDefault();
+            }
+            ViewBag.TarifaVigente = tarifaVigente;
 
             var misPlanillas = _listarPlanillas.ObtenerPorEmpleado(idEmpleadoActual);
 
@@ -292,7 +314,8 @@ namespace AromasWeb.Controllers
                         Telefono = empleadoAD.Telefono,
                         Cargo = empleadoAD.Cargo,
                         FechaContratacion = empleadoAD.FechaContratacion,
-                        Estado = empleadoAD.Estado
+                        Estado = empleadoAD.Estado,
+                        TarifaActual = empleadoAD.TarifaHora
                     };
                 }
                 catch (Exception ex)

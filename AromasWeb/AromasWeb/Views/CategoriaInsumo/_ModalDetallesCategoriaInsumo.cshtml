@@ -20,15 +20,9 @@
                     <h5 id="detalles-nombre-categoria" class="modal-entity-name"></h5>
                 </div>
 
-                <!-- ID y Estado -->
-                <div class="modal-data-grid-3">
+                <!-- Estado -->
+                <div class="modal-data-grid-1">
                     <div class="modal-data-cell">
-                        <label class="modal-data-label">
-                            <i class="fas fa-hashtag"></i> ID
-                        </label>
-                        <p id="detalles-id-categoria" class="modal-data-value"></p>
-                    </div>
-                    <div class="modal-data-cell" style="grid-column: span 2;">
                         <label class="modal-data-label">
                             <i class="fas fa-toggle-on"></i> Estado
                         </label>
@@ -67,12 +61,10 @@
 
         botonesDetalles.forEach(boton => {
             boton.addEventListener('click', function () {
-                const id = this.getAttribute('data-id');
                 const nombre = this.getAttribute('data-nombre');
                 const descripcion = this.getAttribute('data-descripcion');
                 const estado = this.getAttribute('data-estado');
 
-                document.getElementById('detalles-id-categoria').textContent = id;
                 document.getElementById('detalles-nombre-categoria').textContent = nombre;
                 document.getElementById('detalles-descripcion-categoria').textContent = descripcion || 'Sin descripción';
 

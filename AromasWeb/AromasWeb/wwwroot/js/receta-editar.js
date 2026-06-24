@@ -113,8 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const insumo = insumos.find(i => i.idInsumo == idInsumo);
 
         if (insumo) {
-            const costoTotal = cantidad * insumo.costoUnitario;
-            inputCosto.value = `₡${costoTotal.toFixed(2)}`;
+            const costoTotal = Math.round(cantidad * insumo.costoUnitario);
+            inputCosto.value = '₡' + costoTotal.toLocaleString('es-CR');
 
             // Verificar disponibilidad en stock
             if (cantidad > insumo.cantidadDisponible) {
@@ -137,17 +137,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         items.forEach(item => {
             const costoTexto = item.querySelector('.costo-ingrediente').value;
-            const costo = parseFloat(costoTexto.replace('₡', '').replace(',', '')) || 0;
+            const costo = parseInt(costoTexto.replace(/[₡.]/g, '').replace(',', '.')) || 0;
             costoTotal += costo;
         });
 
         // Actualizar el resumen
-        document.getElementById('costoTotalReceta').textContent = `₡${costoTotal.toFixed(2)}`;
+        document.getElementById('costoTotalReceta').textContent = '₡' + costoTotal.toLocaleString('es-CR');
 
         // Calcular costo por porción
         const porciones = parseInt(document.querySelector('input[name="CantidadPorciones"]').value) || 1;
         const costoPorPorcion = costoTotal / porciones;
-        document.getElementById('costoPorPorcion').textContent = `₡${costoPorPorcion.toFixed(2)}`;
+        document.getElementById('costoPorPorcion').textContent = '₡' + Math.round(costoPorPorcion).toLocaleString('es-CR');
 
         // Calcular ganancia si hay precio de venta
         const precioVentaInput = document.querySelector('input[name="PrecioVenta"]');
@@ -155,10 +155,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (precioVenta > 0) {
             document.getElementById('resumenGanancia').style.display = 'block';
-            document.getElementById('precioVentaMostrar').textContent = `₡${precioVenta.toFixed(2)}`;
+            document.getElementById('precioVentaMostrar').textContent = '₡' + parseInt(precioVenta).toLocaleString('es-CR');
 
             const ganancia = precioVenta - costoTotal;
-            document.getElementById('gananciaNeta').textContent = `₡${ganancia.toFixed(2)}`;
+            document.getElementById('gananciaNeta').textContent = '₡' + Math.round(ganancia).toLocaleString('es-CR');
 
             const margen = costoTotal > 0 ? ((ganancia / costoTotal) * 100) : 0;
             document.getElementById('margenGanancia').textContent = `${margen.toFixed(2)}%`;

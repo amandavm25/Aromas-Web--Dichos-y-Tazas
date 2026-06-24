@@ -74,7 +74,7 @@
                                         data-costo="@ins.CostoUnitario.ToString(System.Globalization.CultureInfo.InvariantCulture)"
                                         data-unidad="@ins.UnidadMedida"
                                         selected="@esSeleccionado">
-                                    @ins.NombreInsumo — @ins.CantidadDisponible.ToString("N2") @ins.UnidadMedida
+                                    @ins.NombreInsumo — @ins.CantidadDisponible.ToString("N2", new System.Globalization.CultureInfo("es-CR")) @ins.UnidadMedida
                                 </option>
                             }
                         </select>
@@ -96,19 +96,19 @@
                                     <div>
                                         <span style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">Cantidad disponible</span>
                                         <p id="infoCantidad" style="margin: 0; color: white; font-weight: 600;">
-                                            @(insumo != null ? $"{insumo.CantidadDisponible:N2} {insumo.UnidadMedida}" : "")
+                                            @(insumo != null ? insumo.CantidadDisponible.ToString("N2", new System.Globalization.CultureInfo("es-CR")) + " " + insumo.UnidadMedida : "")
                                         </p>
                                     </div>
                                     <div>
                                         <span style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">Stock mínimo</span>
                                         <p id="infoStock" style="margin: 0; color: white; font-weight: 600;">
-                                            @(insumo != null ? $"{insumo.StockMinimo:N2} {insumo.UnidadMedida}" : "")
+                                            @(insumo != null ? insumo.StockMinimo.ToString("N2", new System.Globalization.CultureInfo("es-CR")) + " " + insumo.UnidadMedida : "")
                                         </p>
                                     </div>
                                     <div>
                                         <span style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">Costo unitario</span>
                                         <p id="infoCosto" style="margin: 0; color: white; font-weight: 600;">
-                                            @(insumo != null ? insumo.CostoUnitario.ToString("C2") : "")
+                                            @(insumo != null ? "₡" + insumo.CostoUnitario.ToString("N0", new System.Globalization.CultureInfo("es-CR")) : "")
                                         </p>
                                     </div>
                                 </div>
@@ -271,14 +271,26 @@
             document.getElementById('hiddenIdInsumo').value = this.value;
             document.getElementById('hiddenCostoUnitario').value = costoUnitario;
             document.getElementById('infoNombre').textContent   = opt.dataset.nombre;
-            document.getElementById('infoCantidad').textContent = cantidadActual.toFixed(2) + ' ' + unidad;
-            document.getElementById('infoStock').textContent    = parseFloat(opt.dataset.stock).toFixed(2) + ' ' + unidad;
-            document.getElementById('infoCosto').textContent    = '₡' + costoUnitario.toLocaleString('es-CR', { minimumFractionDigits: 2 });
-            document.getElementById('costoUnitarioResumen').textContent = '₡' + costoUnitario.toLocaleString('es-CR', { minimumFractionDigits: 2 });
+            document.getElementById('infoCantidad').textContent = cantidadActual.toLocaleString('es-CR', { minimumFractionDigits: 2 }) + ' ' + unidad;
+            document.getElementById('infoStock').textContent    = parseFloat(opt.dataset.stock).toLocaleString('es-CR', { minimumFractionDigits: 2 }) + ' ' + unidad;
+            document.getElementById('infoCosto').textContent    = '₡' + costoUnitario.toLocaleString('es-CR');
+            document.getElementById('costoUnitarioResumen').textContent = '₡' + costoUnitario.toLocaleString('es-CR');
             panel.style.display = 'block';
+
+            actualizarResumenCosto();
 
             calcularNuevaCantidadVista();
         });
+
+        function actualizarResumenCosto() {
+            const cantidad = parseFloat(document.getElementById('cantidadMovimiento').value) || 0;
+            const costoTotalVal = Math.round(cantidad * costoUnitario);
+
+            document.getElementById('cantidadResumen').textContent =
+                cantidad.toLocaleString('es-CR', { minimumFractionDigits: 2 });
+            document.getElementById('costoTotal').textContent =
+                '₡' + costoTotalVal.toLocaleString('es-CR');
+        }
 
         function calcularNuevaCantidadVista() {
             const inputCantidad = document.getElementById('cantidadMovimiento');
@@ -292,7 +304,7 @@
 
             if (radioSalida && radioSalida.checked) {
                 const nueva = cantidadActual - cantidad;
-                if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toFixed(2) + ' ' + unidad;
+                if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toLocaleString('es-CR', { minimumFractionDigits: 2 }) + ' ' + unidad;
                 if (nueva < 0) {
                     if (alertaStock) alertaStock.style.display = 'block';
                     if (btnRegistrar) btnRegistrar.disabled = true;
@@ -302,7 +314,7 @@
                 }
             } else {
                 const nueva = cantidadActual + cantidad;
-                if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toFixed(2) + ' ' + unidad;
+                if (nuevaCantidadSpan) nuevaCantidadSpan.textContent = nueva.toLocaleString('es-CR', { minimumFractionDigits: 2 }) + ' ' + unidad;
                 if (alertaStock) alertaStock.style.display = 'none';
                 if (btnRegistrar) btnRegistrar.disabled = false;
             }
@@ -316,6 +328,7 @@
         });
         document.getElementById('cantidadMovimiento').addEventListener('input', function() {
             setTimeout(calcularNuevaCantidadVista, 0);
+            actualizarResumenCosto();
         });
 
         // Disparar change al cargar para inicializar si hay insumo preseleccionado

@@ -22,12 +22,10 @@ namespace AromasWeb.Abstracciones.ModeloUI
         public decimal CantidadUtilizada { get; set; }
 
         [DisplayName("Costo unitario")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal CostoUnitario { get; set; }
+        public int CostoUnitario { get; set; }
 
         [DisplayName("Costo total ingrediente")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal CostoTotalIngrediente { get; set; }
+        public int CostoTotalIngrediente { get; set; }
 
         // Propiedades de navegación
         [DisplayName("Nombre del insumo")]

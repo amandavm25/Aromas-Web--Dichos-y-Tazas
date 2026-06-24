@@ -206,6 +206,25 @@ function initializeModals() {
             if (form) form.action = '/Reserva/ConfirmarReserva/' + id;
         });
     });
+
+    // ── Modal completar reserva ──────────────────────────────────────────
+    document.querySelectorAll('.btn-completar-reserva').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const set = (elId, val) => { const el = document.getElementById(elId); if (el) el.textContent = val; };
+
+            set('completar-cliente-reserva', this.dataset.cliente);
+            set('completar-fecha-reserva', this.dataset.fecha);
+            set('completar-hora-reserva', this.dataset.hora);
+            set('completar-personas-reserva', this.dataset.personas + ' persona(s)');
+
+            const inputId = document.getElementById('completar-id-reserva');
+            if (inputId) inputId.value = id;
+
+            const form = document.getElementById('formCompletarReserva');
+            if (form) form.action = '/Reserva/CompletarReserva/' + id;
+        });
+    });
 }
 
 // ============================================
