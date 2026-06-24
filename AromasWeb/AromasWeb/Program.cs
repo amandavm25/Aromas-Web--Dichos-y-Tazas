@@ -21,8 +21,14 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+var keysFolder = builder.Environment.IsDevelopment()
+    ? @"C:\temp-keys-aromasweb"
+    : Path.Combine(
+        Environment.GetEnvironmentVariable("HOME") ?? Path.GetTempPath(),
+        "ASP.NET", "DataProtection-Keys");
+
 builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo(@"C:\temp-keys-aromasweb"))
+    .PersistKeysToFileSystem(new DirectoryInfo(keysFolder))
     .SetApplicationName("AromasWeb");
 
 // HttpContextAccessor
