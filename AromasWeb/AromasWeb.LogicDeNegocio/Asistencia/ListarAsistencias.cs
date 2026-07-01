@@ -55,5 +55,8 @@ namespace AromasWeb.LogicaDeNegocio.Asistencias
         public void RegistrarSalida(int idAsistencia, TimeSpan horaSalida, int tiempoAlmuerzo) =>
             _listarAsistencias.RegistrarSalida(idAsistencia, horaSalida, tiempoAlmuerzo);
 
+        public void Actualizar(Asistencia asistencia) =>
+            _listarAsistencias.Actualizar(asistencia);
+
     }
 }

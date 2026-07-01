@@ -419,6 +419,8 @@ namespace AromasWeb.Controllers
             {
                 asistencia.CalcularHoras();
 
+                _listarAsistencias.Actualizar(asistencia);
+
                 _crearBitacora.RegistrarAccion(
                     idEmpleado: ObtenerIdEmpleadoSesion(),
                     idModulo: ObtenerModulo.ObtenerIdPorNombre("Control de asistencia"),
@@ -438,7 +440,6 @@ namespace AromasWeb.Controllers
                     })
                 );
 
-                // Aquí iría la lógica para actualizar en la base de datos
                 TempData["Mensaje"] = "Asistencia actualizada correctamente";
                 return RedirectToAction(nameof(ListadoAsistencias));
             }

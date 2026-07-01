@@ -15,6 +15,6 @@ namespace AromasWeb.Abstracciones.Logica.Asistencia
         void CrearEntrada(AsistenciaUI asistencia);
         AsistenciaUI ObtenerEntradaAbierta(int idEmpleado);
         void RegistrarSalida(int idAsistencia, TimeSpan horaSalida, int tiempoAlmuerzo);
-
+        void Actualizar(AsistenciaUI asistencia);
     }
 }

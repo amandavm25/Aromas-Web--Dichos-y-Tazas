@@ -247,6 +247,28 @@ namespace AromasWeb.AccesoADatos.Asistencias
             }
         }
 
+        public void Actualizar(Abstracciones.ModeloUI.Asistencia asistencia)
+        {
+            using (var contexto = new Contexto())
+            {
+                var entidad = contexto.Asistencia.FirstOrDefault(a => a.IdAsistencia == asistencia.IdAsistencia);
+
+                if (entidad == null)
+                    throw new Exception("No se encontró la asistencia a actualizar.");
+
+                entidad.IdEmpleado = asistencia.IdEmpleado;
+                entidad.Fecha = DateTime.SpecifyKind(asistencia.Fecha.Date, DateTimeKind.Utc);
+                entidad.HoraEntrada = asistencia.HoraEntrada;
+                entidad.HoraSalida = asistencia.HoraSalida;
+                entidad.TiempoAlmuerzo = asistencia.TiempoAlmuerzo;
+                entidad.HorasRegulares = asistencia.HorasRegulares;
+                entidad.HorasExtras = asistencia.HorasExtras;
+                entidad.HorasTotales = asistencia.HorasTotales;
+
+                contexto.SaveChanges();
+            }
+        }
+
     }
 
 }
