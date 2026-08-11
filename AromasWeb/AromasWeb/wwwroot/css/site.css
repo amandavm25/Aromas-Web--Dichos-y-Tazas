@@ -634,7 +634,7 @@ section {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding-top: 120px;
+    padding-top: 170px;
     position: relative;
     background: linear-gradient(135deg, var(--cream) 0%, #F5EDD8 100%);
     overflow: hidden;
@@ -765,7 +765,9 @@ section {
 }
 
 .hero-placeholder {
+    height: 550px;
     min-height: 550px;
+    max-height: 550px;
     border-radius: 20px;
 }
 

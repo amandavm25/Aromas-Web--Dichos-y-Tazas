@@ -56,6 +56,26 @@ namespace AromasWeb.Controllers
             catch { ViewBag.TodosInsumos = new List<Insumo>(); }
         }
 
+
+        // Parsea el precio aceptando tanto "2500.00" como "2500,00"
+        private int? ParsearPrecioVenta()
+        {
+            var valor = Request.Form["PrecioVenta"].ToString();
+
+            if (string.IsNullOrWhiteSpace(valor))
+                return null;
+
+            var normalizado = valor.Replace(",", ".");
+
+            if (decimal.TryParse(normalizado, System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out var resultado))
+            {
+                return (int)Math.Round(resultado);
+            }
+
+            return null;
+        }
+
         // GET: Receta/ListadoRecetas
         public IActionResult ListadoRecetas(string buscar, int? categoria, string disponibilidad)
         {
@@ -156,6 +176,8 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("PorcentajeMargen");
                 ModelState.Remove("NombreCategoria");
                 ModelState.Remove("Ingredientes");
+                ModelState.Remove("PrecioVenta");
+                receta.PrecioVenta = ParsearPrecioVenta();
 
                 if (!ModelState.IsValid)
                 {
@@ -290,7 +312,8 @@ namespace AromasWeb.Controllers
                 ModelState.Remove("GananciaNeta");
                 ModelState.Remove("PorcentajeMargen");
                 ModelState.Remove("NombreCategoria");
-                ModelState.Remove("Ingredientes");
+                ModelState.Remove("PrecioVenta");
+                receta.PrecioVenta = ParsearPrecioVenta();
 
                 if (!ModelState.IsValid)
                 {
@@ -470,5 +493,6 @@ namespace AromasWeb.Controllers
 
             return RedirectToAction(nameof(ListadoRecetas));
         }
+
     }
 }
